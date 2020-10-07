@@ -40,7 +40,7 @@ class GameController {
   GameLoop(that) {
       that.ManageTime();
       that.input.Update();
-      that.graphics.UpdateDimensions();
+      //that.graphics.UpdateDimensions();
       that.currentScene.Update();
       /*let obj = that.currentScene.gameObjects.get('firstObject');
       if(obj){

@@ -29,8 +29,8 @@ class Graphics {
 
     if (!gl) alert('Your browser does not support WebGL');
 
-    canvas.width = window.innerWidth* window.devicePixelRatio;
-    canvas.height = window.innerHeight* window.devicePixelRatio;
+    //canvas.width = window.innerWidth* window.devicePixelRatio;
+    //canvas.height = window.innerHeight* window.devicePixelRatio;
     gl.viewport(0,0,canvas.width,canvas.height);
 
     gl.clearColor(0.3, 0.7, 1.0, 1.0); //Blue by default
