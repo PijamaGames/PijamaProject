@@ -3,7 +3,6 @@ var gl;
 class Graphics{
   constructor(){
     this.InitContext();
-
   }
 
   InitContext(){

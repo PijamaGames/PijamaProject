@@ -1,9 +1,10 @@
 "use strict;"
 const DEBUG = true;
 
+var manager;
 function Main(){
   Log("Main")
-  var g = new Graphics();
+  manager = new Manager();
 }
 
 function Log(text){
