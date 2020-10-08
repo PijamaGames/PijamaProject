@@ -5,6 +5,7 @@ var manager;
 function Main(){
   Log("Main")
   manager = new Manager();
+  manager.Start();
 }
 
 function Log(text){

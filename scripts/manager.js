@@ -45,6 +45,11 @@ class Manager{
     this.input.AddKey('KeyA');
     this.input.AddKey('KeyS');
     this.input.AddKey('KeyD');
+    //arrow keys
+    this.input.AddKey('ArrowLeft');
+    this.input.AddKey('ArrowRight');
+    this.input.AddKey('ArrowUp');
+    this.input.AddKey('ArrowDown');
   }
 
   AddScene(scene) {

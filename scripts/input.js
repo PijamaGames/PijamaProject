@@ -11,10 +11,10 @@ class Key{
 
 class Input{
   constructor(){
-    canvas.onclick = function() {
+    /*canvas.onclick = function() {
       canvas.requestPointerLock();
       //canvas.exitPointerLock()
-    }
+    }*/
 
 
     this.mouseX = 0.0;
@@ -117,7 +117,7 @@ class Input{
       this.mouseLeftUp = false;
     }
 
-    let lerp = gameController.delta/ this.mouseGravity;
+    let lerp = manager.delta/ this.mouseGravity;
     this.mouseX = this.mouseX *lerp;
     this.mouseY = this.mouseY *lerp;
 
@@ -151,8 +151,8 @@ class Input{
         value.up = false;
       }
     }
-    //var key = this.keys.get('KeyA');
-    //console.log("A down: " + key.down + " | up: " + key.up + " | pressed: " + key.pressed);
+    //var key = this.keys.get('ArrowLeft');
+    //console.log("ArrowLeft down: " + key.down + " | up: " + key.up + " | pressed: " + key.pressed);
     //console.log("left mouse down: " + this.mouseLeftDown + " | up: " + this.mouseLeftUp + " | pressed: " + this.mouseLeft);
     //console.log("mouse move: ("+this.mouseX+" "+this.mouseY+")");
   }
