@@ -1,6 +1,8 @@
 class Key{
-  constructor(_key){
-    this.key = _key;
+  constructor(key){
+
+    Object.assign(this,{key});
+
     this.down = false;
     this.firstFrameDown = false;
     this.pressed = false;

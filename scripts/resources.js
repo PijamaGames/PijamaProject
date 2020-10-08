@@ -33,16 +33,19 @@ class Resources{
     //LOAD SHADERS
     this.LoadShaders(0, this,function(){
       //Once shaders are loaded
+      Log("Shaders loaded");
 
       //LOAD TEXTURES
       for(var name of textureNames){
         that.LoadTexture(name);
       }
       gl.bindTexture(gl.TEXTURE_2D, null);
+      Log("Textures loaded");
 
       //Once textures are loaded
       //LOAD MODELS
       //that.LoadModels(0,that,OnLoadFunc);
+      Log("All resources loaded");
       OnLoadFunc();
     });
   }

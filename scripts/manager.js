@@ -20,8 +20,11 @@ class Manager{
     that.input.Update();
 
     //Update scene
-    //Update Physics
-    //Render graphics
+    if(this.scene){
+      this.scene.Update();
+      //Update Physics
+      //Render graphics
+    }
 
     window.requestAnimationFrame(function(){
       that.GameLoop(that);
@@ -29,13 +32,20 @@ class Manager{
   }
 
   Start(){
-    this.ms = Date.now();
     this.AddInputKeys();
 
     var that = this;
     this.resources.Load(function(){
+      let obj = new Gameobj('firstObj', null, testScene, []);
+      let obj2 = new Gameobj('secondObj', obj, testScene, []);
 
+      /*obj.transform.position = new Vec2(1,0);
+      obj2.transform.position=new Vec2(3,4);
+      Log(obj2.transform.worldPos);
+      obj2.transform.worldPos = new Vec2(0,0);
+      Log(obj2.transform.position);*/
 
+      that.ms = Date.now();
       that.GameLoop(that);
     });
   }
@@ -57,6 +67,6 @@ class Manager{
   }
 
   LoadScene(sceneName) {
-    this.currentScene = this.scenes.get(sceneName);
+    this.scene = this.scenes.get(sceneName);
   }
 }
