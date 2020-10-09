@@ -1,7 +1,7 @@
 class Manager{
   constructor(){
     this.graphics = new Graphics();
-    this.resources = new Resources();
+    resources = new Resources();
     this.input = new Input();
     this.scene = null;
     this.scenes = new Map();
