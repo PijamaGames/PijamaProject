@@ -1,10 +1,9 @@
 class BoxCollider extends Collider{
-  constructor(height,width,position){
+  constructor(height,width,colliderGroup){
     super();
-    Object.assign(this,{height,width,position});
+    Object.assign(this,{height,width,colliderGroup});
     this.type="boxCollider";
-    this.collider=this;
-
+    this.position=colliderGroup.gameobj.transform.position;
   }
 
   OncolisionEnter(otherCollider){
@@ -31,6 +30,7 @@ class BoxCollider extends Collider{
   }
 
   get downPos(){
+    Log(this.position.x);
     return new Vec2(this.position.x,this.position.y-(this.height/2));
   }
 

@@ -1,10 +1,10 @@
 class CircleCollider extends Collider{
-  constructor(radius,displacement,position){
+  constructor(radius,displacement,colliderGroup){
     super();
-    Object.assign(this,{radius,displacement,position});
+    Object.assign(this,{radius,displacement,colliderGroup});
     this.type="circleCollider";
+    this.position=colliderGroup.gameobj.transform.position;
     this.position.Add(this.displacement);
-    this.collider=this;
 
   }
 
