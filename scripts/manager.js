@@ -38,9 +38,13 @@ class Manager{
     resources.Load(function(){
       that.graphics.LoadResources();
 
-      let obj = new Gameobj('firstObj', null, testScene, []);
+      let obj = new Gameobj('firstObj', null, testScene, [new ColliderGroup()]);
       let obj2 = new Gameobj('secondObj', obj, testScene, []);
-
+      /*obj.colliderGroup.AddColliders([new CircleCollider(2,new Vec2(-3,0),new Vec2(2,0))]);
+      Log(obj.colliderGroup.colliders[0].collider.OncolisionEnter(new CircleCollider(2,new Vec2(-3,0),new Vec2(3,0))));
+      */
+      obj.colliderGroup.AddColliders([new BoxCollider(2,3,new Vec2(2,0))]); //col1
+      Log(obj.colliderGroup.colliders[0].collider.OncolisionEnter(new BoxCollider(2,1,new Vec2(0,2.1))));
       /*obj.transform.position = new Vec2(1,0);
       obj2.transform.position=new Vec2(3,4);
       Log(obj2.transform.worldPos);
