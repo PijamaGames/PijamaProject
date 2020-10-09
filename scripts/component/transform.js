@@ -1,9 +1,12 @@
 class Transform extends Component{
-  constructor(){
+  constructor(position = new Vec2(), height = 0.0, scale = new Vec2(1,1), anchor = new Vec2(0.5,0.5)){
     super();
+    Object.assign(this, {position, height, scale, anchor});
     this.type = "transform";
-    this.position = new Vec2();
-    this.scale = new Vec2(1,1);
+    //this.position = new Vec2();
+    //this.height = 0.0;
+    //this.scale = new Vec2(1,1);
+    //this.anchor = new Vec2(0.5,0.5);
   }
 
   get worldPos(){
@@ -18,6 +21,15 @@ class Transform extends Component{
 
   set worldPos(pos){
     this.position = Vec2.Add(this.position, Vec2.Sub(pos,this.worldPos));
+  }
+
+  //For callbacks
+  GetWorldPos(){
+    return worldPos;
+  }
+
+  GetAnchor(){
+    return this.anchor;
   }
 
   Rotate(rad, displacement = new Vec2()){

@@ -1,12 +1,49 @@
 class Program{
-  constructor(_vertexShaderName, _fragmentShaderName){
+  constructor(name, _vertexShaderName, _fragmentShaderName)
+  {
+    this.name = name;
+    manager.graphics.programs.set(this.name, this);
     this.CreateProgram(_vertexShaderName, _fragmentShaderName);
     this.verticesLocation = gl.getAttribLocation(this.program, 'vertPosition');
     this.texCoordsLocation = gl.getAttribLocation(this.program, 'texCoords');
+    this.constUniforms = [];
+    this.objUniforms = [];
+    this.uniforms = [];
+    this.texUnitOffset = 0;
+    this.renderers = new Map();
+
+    manager.graphics.SetBuffers(this);
+  }
+
+  SetUniforms(constUniforms = [], uniforms = [], objUniforms = []){
+    this.constUniforms = constUniforms;
+    this.objUniforms = objUniforms;
+    this.uniforms = uniforms;
+    this.LoadConstUniforms();
+  }
+
+  LoadConstUniforms(){
+    this.Use();
+    let i = 0;
+    for(var uniform of this.constUniforms){
+      if(uniform.texture){
+        uniform.Load(i);
+        i+=1;
+      } else {
+        uniform.Load();
+      }
+    }
   }
 
   Use(){
     gl.useProgram(this.program);
+  }
+
+  Render(){
+    this.Use();
+    for(var [name, renderer] of this.renderers){
+      manager.graphics.Draw();
+    }
   }
 
   CreateProgram(_vertexShaderName, _fragmentShaderName){

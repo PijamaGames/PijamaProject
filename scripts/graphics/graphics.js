@@ -35,16 +35,22 @@ class Graphics{
   }
 
   Render(scene){
-    let program = this.programs.get('opaque');
-    program.Use();
+
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    //this.CreateBuffers();
-    this.SetBuffers(program);
+    this.programs.get('opaque').Render();
+    //this.SetBuffers(program);
+
+  }
+
+  Draw(){
     gl.drawElements(gl.TRIANGLES, this.mesh.indices.length, gl.UNSIGNED_SHORT, 0);
   }
 
   CreatePrograms(){
-    this.programs.set('opaque', new Program('vs_opaque', 'fs_opaque'));
+    let opaqueProgram = new Program('opaque', 'vs_opaque', 'fs_opaque');
+    opaqueProgram.SetUniforms([
+      new UniformTex('colorTex', opaqueProgram, 'tilesTex')
+    ]);
   }
 
   CreateBuffers(){
@@ -89,6 +95,7 @@ class Graphics{
     //gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indicesBuffer);
     //gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, this.mesh.indices, gl.STATIC_DRAW);
 
+    program.Use();
     //VERTEX POSITIONS
     gl.bindBuffer(gl.ARRAY_BUFFER, this.verticesBuffer);
     //gl.bufferData(gl.ARRAY_BUFFER, this.mesh.vertices, gl.STATIC_DRAW);

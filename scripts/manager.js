@@ -39,7 +39,7 @@ class Manager{
       that.graphics.LoadResources();
 
       let obj = new Gameobj('firstObj', null, testScene, [new ColliderGroup()]);
-      let obj2 = new Gameobj('secondObj', obj, testScene, []);
+      let obj2 = new Gameobj('secondObj', obj, testScene, [new Renderer(['opaque'])]);
       /*obj.colliderGroup.AddColliders([new CircleCollider(2,new Vec2(-3,0),new Vec2(2,0))]);
       Log(obj.colliderGroup.colliders[0].collider.OncolisionEnter(new CircleCollider(2,new Vec2(-3,0),new Vec2(3,0))));
       */
