@@ -1,7 +1,8 @@
 var textureNames = [
   'boxTex',
   'juanTex',
-  'grassTex'
+  'grassTex',
+  'tilesTex'
 ];
 
 var modelURLs = [
@@ -12,6 +13,8 @@ var modelURLs = [
 ];
 
 var shaderURLs = [ //name, url
+  ['vs_opaque', 'scripts/shaders/vs_opaque.glsl'],
+  ['fs_opaque', 'scripts/shaders/fs_opaque.glsl']
   /*['vs_default', 'scripts/Graphics/VS/vs_default.glsl'],
   ['fs_opaque', 'scripts/Graphics/FS/fs_opaque.glsl'],
   ['vs_postProcess', 'scripts/Graphics/VS/vs_postProcess.glsl'],
@@ -21,6 +24,7 @@ var shaderURLs = [ //name, url
   ['fs_depth', 'scripts/Graphics/FS/fs_depth.glsl']*/
 ];
 
+var resources;
 class Resources{
   constructor(){
     this.textures = new Map();

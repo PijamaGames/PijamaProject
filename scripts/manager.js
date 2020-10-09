@@ -1,7 +1,7 @@
 class Manager{
   constructor(){
     this.graphics = new Graphics();
-    this.resources = new Resources();
+    resources = new Resources();
     this.input = new Input();
     this.scene = null;
     this.scenes = new Map();
@@ -19,11 +19,11 @@ class Manager{
     that.ManageTime();
     that.input.Update();
 
-    //Update scene
+
     if(this.scene){
       this.scene.Update();
       //Update Physics
-      //Render graphics
+      this.graphics.Render();
     }
 
     window.requestAnimationFrame(function(){
@@ -35,7 +35,9 @@ class Manager{
     this.AddInputKeys();
 
     var that = this;
-    this.resources.Load(function(){
+    resources.Load(function(){
+      that.graphics.LoadResources();
+
       let obj = new Gameobj('firstObj', null, testScene, []);
       let obj2 = new Gameobj('secondObj', obj, testScene, []);
 

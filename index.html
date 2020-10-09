@@ -7,16 +7,18 @@
 </head>
 
 <body onload="Main()">
-  <canvas id="game_surface" width="480" height="270"></canvas>
+  <canvas id="game_surface" width="640" height="480"></canvas>
 
-  <img hidden=true id="boxTex" src="resources/box.png">
-  <img hidden = true id="juanTex", src="resources/JUAN_UV1.png" alt="">
-  <img hidden = true id="grassTex", src="resources/grass.jpg" alt="">
+  <img hidden=true, id="boxTex", src="resources/box.png">
+  <img hidden = true, id="juanTex", src="resources/JUAN_UV1.png" alt="">
+  <img hidden = true, id="grassTex", src="resources/grass.jpg" alt="">
+  <img hidden = true, id="tilesTex", src="resources/dirt-tiles.png" alt="">
 
   <script src="scripts/vec2.js" charset="utf-8"></script>
-  <script src="scripts/graphics.js" charset="utf-8"></script>
-  <script src="scripts/component/rigidbody.js" charset="utf-8"></script>
+  <script src="scripts/graphics/graphics.js" charset="utf-8"></script>
+  <script src="scripts/graphics/program.js" charset="utf-8"></script>
   <script src="scripts/component/component.js" charset="utf-8"></script>
+  <script src="scripts/component/rigidbody.js" charset="utf-8"></script>
   <script src="scripts/component/colliders/collider.js" charset="utf-8"></script>
   <script src="scripts/component/colliders/colliderGroup.js" charset="utf-8"></script>
   <script src="scripts/component/colliders/boxCollider.js" charset="utf-8"></script>
