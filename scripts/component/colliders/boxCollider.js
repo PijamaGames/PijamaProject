@@ -30,7 +30,6 @@ class BoxCollider extends Collider{
   }
 
   get downPos(){
-    Log(this.position.x);
     return new Vec2(this.position.x,this.position.y-(this.height/2));
   }
 

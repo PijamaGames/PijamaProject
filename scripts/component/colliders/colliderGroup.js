@@ -6,7 +6,6 @@ class ColliderGroup extends Component{
   }
 
   AddColliders(_colliders){
-    var len=_colliders.length;
     for (var c of _colliders)
       this.colliders.push(c);
 

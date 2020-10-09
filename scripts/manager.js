@@ -1,7 +1,7 @@
 class Manager{
   constructor(){
     this.graphics = new Graphics();
-    resources = new Resources();
+    this.resources = new Resources();
     this.input = new Input();
     this.scene = null;
     this.scenes = new Map();
@@ -39,17 +39,16 @@ class Manager{
       that.graphics.LoadResources();
 
       let obj = new Gameobj('firstObj', null, testScene, [new ColliderGroup()]);
-      let obj2 = new Gameobj('secondObj', obj, testScene, [new Renderer(['opaque'])]);
+      let obj2 = new Gameobj('secondObj', null, testScene, [new ColliderGroup(),new Renderer(['opaque'])]);
       /*obj.colliderGroup.AddColliders([new CircleCollider(2,new Vec2(-3,0),new Vec2(2,0))]);
       Log(obj.colliderGroup.colliders[0].collider.OncolisionEnter(new CircleCollider(2,new Vec2(-3,0),new Vec2(3,0))));
       */
-      obj.colliderGroup.AddColliders([new BoxCollider(2,3,new Vec2(2,0))]); //col1
-      Log(obj.colliderGroup.colliders[0].collider.OncolisionEnter(new BoxCollider(2,1,new Vec2(0,2.1))));
-      /*obj.transform.position = new Vec2(1,0);
-      obj2.transform.position=new Vec2(3,4);
-      Log(obj2.transform.worldPos);
-      obj2.transform.worldPos = new Vec2(0,0);
-      Log(obj2.transform.position);*/
+      obj.transform.position = new Vec2(2,0);
+      obj2.transform.position=new Vec2(0,2.1);
+      obj.colliderGroup.AddColliders([new BoxCollider(2,3,obj.colliderGroup)]);
+      obj2.colliderGroup.AddColliders([new BoxCollider(2,1,obj2.colliderGroup)]);
+      Log(obj.colliderGroup.colliders[0].OncolisionEnter(obj2.colliderGroup.colliders[0]));
+
 
       that.ms = Date.now();
       that.GameLoop(that);
