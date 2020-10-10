@@ -118,7 +118,8 @@ class Vec2 {
     va_vb.Norm();
     let d = Vec2.Dot(va_p, va_vb);
     va_vb.Scale(d);
-    return Vec2.Add(va, va_vb);
+    let projPoint=Vec2.Add(va, va_vb);
+    return new Vec2(projPoint.x, projPoint.y);
   }
 
   get x(){

@@ -2,7 +2,7 @@ class Manager{
   constructor(){
     this.graphics = new Graphics();
     resources = new Resources();
-    input = new Input();
+    this.input = new Input();
     this.scene = null;
     this.scenes = new Map();
     this.delta = 0.0;
@@ -17,7 +17,7 @@ class Manager{
 
   GameLoop(that){
     that.ManageTime();
-    input.Update();
+    that.input.Update();
 
 
     if(this.scene){
@@ -37,18 +37,28 @@ class Manager{
     var that = this;
     resources.Load(function(){
       that.graphics.LoadResources();
-
-      let obj = new Gameobj('firstObj', null, testScene, [new ColliderGroup()]);
-      //let obj2 = new Gameobj('secondObj', null, testScene, [new ColliderGroup(),new Renderer(['opaque'], new Vec2(0,130))]);
+      //comprobacion colision entre dos circulos
+      /*let obj = new Gameobj('firstObj', null, testScene, [new ColliderGroup()], new Transform(new Vec2(4.1,0)));
       let obj2 = PF_Tree(new Vec2(0,0));
-      PF_Box();
-      /*obj.colliderGroup.AddColliders([new CircleCollider(2,new Vec2(-3,0),new Vec2(2,0))]);
-      Log(obj.colliderGroup.colliders[0].collider.OncolisionEnter(new CircleCollider(2,new Vec2(-3,0),new Vec2(3,0))));
-      */
-      obj.transform.position = new Vec2(2,0);
-      obj.colliderGroup.AddColliders([new BoxCollider(2,3,obj.colliderGroup)]);
-      obj2.colliderGroup.AddColliders([new BoxCollider(2,1,obj2.colliderGroup)]);
+
+      obj.colliderGroup.AddColliders([new CircleCollider(2,new Vec2(),obj.colliderGroup)]);
+      obj2.colliderGroup.AddColliders([new CircleCollider(2,new Vec2(),obj2.colliderGroup)]);
       Log(obj.colliderGroup.colliders[0].OnColisionEnter(obj2.colliderGroup.colliders[0]));
+      */
+      //comprobacion colision entre dos planos
+      /*let obj = new Gameobj('firstObj', null, testScene, [new ColliderGroup()], new Transform(new Vec2(3,0)));
+      let obj2 = PF_Tree(new Vec2(0,0));
+
+      obj.colliderGroup.AddColliders([new BoxCollider(2,3,obj.colliderGroup)]);
+      obj2.colliderGroup.AddColliders([new BoxCollider(2,3,obj2.colliderGroup)]);
+      Log(obj.colliderGroup.colliders[0].OnColisionEnter(obj2.colliderGroup.colliders[0]));*/
+      //comprobacion colision entre plano-circulo
+      /*let obj = new Gameobj('firstObj', null, testScene, [new ColliderGroup()], new Transform(new Vec2(2.5,0)));
+      let obj2 = PF_Tree(new Vec2(0,0));
+
+      obj.colliderGroup.AddColliders([new CircleCollider(1,new Vec2(),obj.colliderGroup)]);
+      obj2.colliderGroup.AddColliders([new BoxCollider(2,3,obj2.colliderGroup)]);
+      Log(obj.colliderGroup.colliders[0].OnColisionEnter(obj2.colliderGroup.colliders[0]));*/
 
       that.ms = Date.now();
       that.GameLoop(that);
@@ -56,15 +66,15 @@ class Manager{
   }
 
   AddInputKeys(){
-    input.AddKey('KeyW');
-    input.AddKey('KeyA');
-    input.AddKey('KeyS');
-    input.AddKey('KeyD');
+    this.input.AddKey('KeyW');
+    this.input.AddKey('KeyA');
+    this.input.AddKey('KeyS');
+    this.input.AddKey('KeyD');
     //arrow keys
-    input.AddKey('ArrowLeft');
-    input.AddKey('ArrowRight');
-    input.AddKey('ArrowUp');
-    input.AddKey('ArrowDown');
+    this.input.AddKey('ArrowLeft');
+    this.input.AddKey('ArrowRight');
+    this.input.AddKey('ArrowUp');
+    this.input.AddKey('ArrowDown');
   }
 
   AddScene(scene) {

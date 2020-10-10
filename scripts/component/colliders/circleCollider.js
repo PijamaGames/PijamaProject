@@ -3,7 +3,7 @@ class CircleCollider extends Collider{
     super();
     Object.assign(this,{radius,displacement,colliderGroup});
     this.type="circleCollider";
-    this.position=colliderGroup.gameobj.transform.position;
+    this.position=this.colliderGroup.gameobj.transform.position;
     this.position.Add(this.displacement);
 
   }
