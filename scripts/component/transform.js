@@ -28,6 +28,14 @@ class Transform extends Component{
     return worldPos;
   }
 
+  GetWorldPosPerfect(){
+    let wp = this.worldPos;
+    return new Vec2(
+      Math.round(wp.x*tileSize)/tileSize,
+      Math.round(wp.y*tileSize)/tileSize
+    )
+  }
+
   GetAnchor(){
     return this.anchor;
   }

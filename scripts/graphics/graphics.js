@@ -77,7 +77,7 @@ class Graphics {
       new Uniform1f('height', opaqueProgram, (obj) => obj.transform.height),
       new Uniform1f('vertical', opaqueProgram, (obj) => obj.renderer.vertical ? 1.0 : 0.0),
       new Uniform2f('vertDisplacement', opaqueProgram, function(obj){
-        let pos = obj.transform.position;
+        let pos = obj.transform.GetWorldPosPerfect();
         let scl = obj.transform.scale;
         let acr = obj.transform.anchor;
         let h = obj.transform.height;
@@ -90,7 +90,7 @@ class Graphics {
         return Vec2.Scale(obj.transform.scale, tileSize).Div(res);
       }),
       new Uniform1f('floorPos', opaqueProgram, function(obj){
-        let pos = obj.transform.position.y;
+        let pos = obj.transform.GetWorldPosPerfect().y;
         let scale = obj.transform.scale.y;
         let anchor = obj.transform.anchor.y;
         let camPos = manager.scene.camera.transform.position.y;
