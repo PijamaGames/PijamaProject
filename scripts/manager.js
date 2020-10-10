@@ -47,7 +47,7 @@ class Manager{
       obj2.transform.position=new Vec2(0,2.1);
       obj.colliderGroup.AddColliders([new BoxCollider(2,3,obj.colliderGroup)]);
       obj2.colliderGroup.AddColliders([new BoxCollider(2,1,obj2.colliderGroup)]);
-      Log(obj.colliderGroup.colliders[0].OncolisionEnter(obj2.colliderGroup.colliders[0]));
+      Log(obj.colliderGroup.colliders[0].OnColisionEnter(obj2.colliderGroup.colliders[0]));
 
 
       that.ms = Date.now();

@@ -6,7 +6,7 @@ class BoxCollider extends Collider{
     this.position=colliderGroup.gameobj.transform.position;
   }
 
-  OncolisionEnter(otherCollider){
+  OnColisionEnter(otherCollider){
     if(otherCollider.type=="circleCollider")
       return this.BoxCircleColision(this,otherCollider);
 

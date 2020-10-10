@@ -32,6 +32,7 @@ class Input{
     //this.mouseRightDownFirstFrame = false;
     this.mouseLeftUpFirstFrame = false;
     //this.mouseRightUpFristFrame = false;
+    this.keys = new Map();
 
     var that = this;
 
@@ -76,7 +77,6 @@ class Input{
     };
 
 
-    this.keys = new Map();
     document.addEventListener('keydown', (e) => {
       for(var [key, value] of that.keys){
         if(e.code == key && !value.pressed){
