@@ -13,9 +13,10 @@ varying vec2 fTexCoords;
 
 uniform vec2 anchor;
 uniform vec2 scale;
-uniform vec2 camPosition;
 uniform vec2 position;
-uniform vec2 height;
+uniform float height;
+
+uniform vec2 camPosition;
 //varying float depth;
 
 void main()
@@ -26,11 +27,11 @@ void main()
   const vec2 res = vec2(640,480);
   const float tileSize = 32.0;
 
-  vec2 anchor = vec2(0.5, 0.5);
+  /*vec2 anchor = vec2(0.5, 0.5);
   vec2 scale = vec2(2,2);
   vec2 camPosition = vec2(0,0);
   vec2 position = vec2(0,0);
-  float height = 0.0;
+  float height = 0.0;*/
 
 
   vec2 pos = vec2(
@@ -49,5 +50,5 @@ void main()
   float finalHeight = ((texCoords.y * scale.y + height)/res.y)*tileSize;
   float depth = 1.0-length(vec2(floorPos, 1.0-clamp(finalHeight, 0.0,1.0)))/maxDepth;*/
 
-  gl_Position = vec4(pos+cam,0.0,1.0);
+  gl_Position = vec4(pos-cam,0.0,1.0);
 }

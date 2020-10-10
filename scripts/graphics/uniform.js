@@ -1,6 +1,5 @@
 class Uniform{
   constructor(name, program){
-    //Object.assign(this, {name, program});
     this.name = name;
     this.program = program;
     this.location = gl.getUniformLocation(this.program.program, this.name);

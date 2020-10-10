@@ -40,12 +40,11 @@ class Manager{
 
       let obj = new Gameobj('firstObj', null, testScene, [new ColliderGroup()]);
       //let obj2 = new Gameobj('secondObj', null, testScene, [new ColliderGroup(),new Renderer(['opaque'], new Vec2(0,130))]);
-      let obj2 = PF_Tree();
+      let obj2 = PF_Tree(new Vec2(0,0));
       /*obj.colliderGroup.AddColliders([new CircleCollider(2,new Vec2(-3,0),new Vec2(2,0))]);
       Log(obj.colliderGroup.colliders[0].collider.OncolisionEnter(new CircleCollider(2,new Vec2(-3,0),new Vec2(3,0))));
       */
       obj.transform.position = new Vec2(2,0);
-      obj2.transform.position=new Vec2(0,2.1);
       obj.colliderGroup.AddColliders([new BoxCollider(2,3,obj.colliderGroup)]);
       obj2.colliderGroup.AddColliders([new BoxCollider(2,1,obj2.colliderGroup)]);
       Log(obj.colliderGroup.colliders[0].OnColisionEnter(obj2.colliderGroup.colliders[0]));

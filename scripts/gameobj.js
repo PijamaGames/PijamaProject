@@ -1,5 +1,5 @@
 class Gameobj {
-  constructor(name, parent, scene, components = []) {
+  constructor(name, parent, scene, components = [], transform = null) {
     Object.assign(this, {
       name,
       parent,
@@ -9,7 +9,10 @@ class Gameobj {
     this.components = new Map();
     this.children = new Map();
     this.SetParent(this.parent);
-    this.SetComponent(new Transform());
+    let t;
+    if(transform) t = transform;
+    else t = new Transform();
+    this.SetComponent(t);
     this.AddComponents(components);
   }
 

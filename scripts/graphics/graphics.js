@@ -47,16 +47,27 @@ class Graphics{
   }
 
   CreatePrograms(){
+
     let opaqueProgram = new Program('opaque', 'vs_opaque', 'fs_opaque');
     let tileMap = resources.textures.get('tileMap');
     opaqueProgram.SetConstUniforms([
       new UniformTex('tileMap', opaqueProgram, 'tileMap'),
       new Uniform2f('tileMapRes', opaqueProgram, ()=>new Vec2(tileMap.width, tileMap.height))
     ]);
+    opaqueProgram.SetUniforms([
+      new Uniform2f('camPosition', opaqueProgram, ()=>manager.scene.camera.transform.position)
+    ]);
+    /*uniform vec2 anchor;
+    uniform vec2 scale;
+    uniform vec2 position;
+    uniform float height;*/
     opaqueProgram.SetObjUniforms([
-      new Uniform2f('tile', opaqueProgram, function(obj){
-        return obj.renderer.tile;
-      })
+      new Uniform2f('tile', opaqueProgram, (obj)=>obj.renderer.tile),
+      new Uniform2f('anchor', opaqueProgram, (obj)=>obj.transform.anchor),
+      new Uniform2f('scale', opaqueProgram, (obj)=>obj.transform.scale),
+      new Uniform2f('position', opaqueProgram, (obj)=>obj.transform.position),
+      new Uniform1f('height', opaqueProgram, (obj)=>obj.transform.height),
+      new Uniform1f('vertical', opaqueProgram, (obj)=>obj.renderer.vertical ? 1.0 : 0.0)
     ]);
   }
 
