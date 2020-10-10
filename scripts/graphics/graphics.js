@@ -64,20 +64,16 @@ class Graphics {
     let res = new Vec2(canvas.width, canvas.height);
     opaqueProgram.SetConstUniforms([
       new UniformTex('tileMap', opaqueProgram, 'tilesTex'),
-      new Uniform2f('tileMapRes', opaqueProgram, () => new Vec2(tileMap.width, tileMap.height)),
-      new Uniform2f('res', opaqueProgram, () => res),
-      new Uniform1f('tileSize', opaqueProgram, () => tileSize)
+      new Uniform2f('tileSizeDIVres', opaqueProgram, () => new Vec2(tileSize/res.x, tileSize/res.y)),
+      new Uniform2f('tileMapResDIVtileSize', opaqueProgram, ()=>new Vec2(tileMap.width / tileSize, tileMap.height / tileSize))
     ]);
     let camTransform = manager.scene.camera.transform;
     opaqueProgram.SetUniforms([
-      new Uniform2f('camPosition', opaqueProgram, () => camTransform.position),
       new Uniform2f('camTransformed', opaqueProgram, ()=>Vec2.Scale(camTransform.position,2.0).Div(res).Scale(tileSize))
     ]);
     opaqueProgram.SetObjUniforms([
       new Uniform2f('tile', opaqueProgram, (obj) => obj.renderer.tile),
-      new Uniform2f('anchor', opaqueProgram, (obj) => obj.transform.anchor),
       new Uniform2f('scale', opaqueProgram, (obj) => obj.transform.scale),
-      new Uniform2f('position', opaqueProgram, (obj) => obj.transform.position),
       new Uniform1f('height', opaqueProgram, (obj) => obj.transform.height),
       new Uniform1f('vertical', opaqueProgram, (obj) => obj.renderer.vertical ? 1.0 : 0.0),
       new Uniform2f('vertDisplacement', opaqueProgram, function(obj){
@@ -89,6 +85,16 @@ class Graphics {
           (pos.x/scl.x-acr.x)*2.0+1.0,
           ((pos.y+h)/scl.y-acr.y)*2.0+1.0
         )
+      }),
+      new Uniform2f('scaleMULtileSizeDIVres',opaqueProgram, function(obj){
+        return Vec2.Scale(obj.transform.scale, tileSize).Div(res);
+      }),
+      new Uniform1f('floorPos', opaqueProgram, function(obj){
+        let pos = obj.transform.position.y;
+        let scl = obj.transform.scale.y;
+        let acr = obj.transform.anchor.y;
+        let c = manager.scene.camera.transform.position.y;
+        return (pos-scl/2.0-acr-c)*tileSize/res.y;
       })
     ]);
   }
