@@ -2,7 +2,7 @@ class Manager{
   constructor(){
     this.graphics = new Graphics();
     resources = new Resources();
-    this.input = new Input();
+    input = new Input();
     this.scene = null;
     this.scenes = new Map();
     this.delta = 0.0;
@@ -18,7 +18,7 @@ class Manager{
   GameLoop(that){
     Log("Gameloop iteration");
     that.ManageTime();
-    that.input.Update();
+    input.Update();
 
     if(this.scene){
       this.scene.Update();
@@ -57,15 +57,15 @@ class Manager{
   }
 
   AddInputKeys(){
-    this.input.AddKey('KeyW');
-    this.input.AddKey('KeyA');
-    this.input.AddKey('KeyS');
-    this.input.AddKey('KeyD');
+    input.AddKey('KeyW');
+    input.AddKey('KeyA');
+    input.AddKey('KeyS');
+    input.AddKey('KeyD');
     //arrow keys
-    this.input.AddKey('ArrowLeft');
-    this.input.AddKey('ArrowRight');
-    this.input.AddKey('ArrowUp');
-    this.input.AddKey('ArrowDown');
+    input.AddKey('ArrowLeft');
+    input.AddKey('ArrowRight');
+    input.AddKey('ArrowUp');
+    input.AddKey('ArrowDown');
   }
 
   AddScene(scene) {
