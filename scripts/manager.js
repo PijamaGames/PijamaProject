@@ -40,7 +40,7 @@ class Manager{
 
       let obj = new Gameobj('firstObj', null, testScene, [new ColliderGroup()]);
       //let obj2 = new Gameobj('secondObj', null, testScene, [new ColliderGroup(),new Renderer(['opaque'], new Vec2(0,130))]);
-      let obj2 = PF_Tree.Create();
+      let obj2 = PF_Tree();
       /*obj.colliderGroup.AddColliders([new CircleCollider(2,new Vec2(-3,0),new Vec2(2,0))]);
       Log(obj.colliderGroup.colliders[0].collider.OncolisionEnter(new CircleCollider(2,new Vec2(-3,0),new Vec2(3,0))));
       */
