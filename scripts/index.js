@@ -5,9 +5,8 @@ var manager;
 function Main(){
   Log("Main")
   manager = new Manager();
-  testScene = new Scene("game");
-  manager.AddScene(testScene);
-  manager.LoadScene(testScene.name);
+  manager.AddScene(new Scene("testScene", BC_testScene));
+  //manager.LoadScene(testScene.name);
   manager.Start();
 
   //let p = new Vec2(-2, -5);

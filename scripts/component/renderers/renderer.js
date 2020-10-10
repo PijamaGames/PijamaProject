@@ -11,6 +11,11 @@ class Renderer extends Component{
     this.vertical = vertical;
   }
 
+  /*get verticalF(){
+    if(this.vertical === true) return 1.0;
+    else return 0.0;
+  }*/
+
   SetGameobj(gameobj){
     this.gameobj = gameobj;
     this.gameobj.renderer = this;

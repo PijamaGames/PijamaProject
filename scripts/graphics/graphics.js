@@ -15,7 +15,6 @@ class Graphics {
     }
 
     if (!gl) alert('Your browser does not support WebGL');
-
     this.GetExtensions();
 
     //canvas.width = window.innerWidth* window.devicePixelRatio;
@@ -67,9 +66,10 @@ class Graphics {
       new Uniform2f('tileSizeDIVres', opaqueProgram, () => new Vec2(tileSize/res.x, tileSize/res.y)),
       new Uniform2f('tileMapResDIVtileSize', opaqueProgram, ()=>new Vec2(tileMap.width / tileSize, tileMap.height / tileSize))
     ]);
-    let camTransform = manager.scene.camera.transform;
+    //let camTransform = manager.scene.camera.transform;
     opaqueProgram.SetUniforms([
-      new Uniform2f('camTransformed', opaqueProgram, ()=>Vec2.Scale(camTransform.position,2.0).Div(res).Scale(tileSize))
+      new Uniform2f('camTransformed', opaqueProgram, ()=>Vec2.Scale(manager.scene.camera.transform.position,2.0).Div(res).Scale(tileSize)),
+      new Uniform2f('camPosition', opaqueProgram, ()=>manager.scene.camera.transform.position)
     ]);
     opaqueProgram.SetObjUniforms([
       new Uniform2f('tile', opaqueProgram, (obj) => obj.renderer.tile),
@@ -91,10 +91,10 @@ class Graphics {
       }),
       new Uniform1f('floorPos', opaqueProgram, function(obj){
         let pos = obj.transform.position.y;
-        let scl = obj.transform.scale.y;
-        let acr = obj.transform.anchor.y;
-        let c = manager.scene.camera.transform.position.y;
-        return (pos-scl/2.0-acr-c)*tileSize/res.y;
+        let scale = obj.transform.scale.y;
+        let anchor = obj.transform.anchor.y;
+        let camPos = manager.scene.camera.transform.position.y;
+        return (pos-scale*anchor-camPos)/*/res.y*tileSize*/;
       })
     ]);
   }
