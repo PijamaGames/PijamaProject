@@ -16,7 +16,19 @@ class Vec2 {
     this.y -= v2.y;
   }
   static Sub(v1,v2){
-    return new Vec2(v1.x-v2.x,v1.y-v2.y);
+    //let v1x = parseFloat(v1.x);
+    //let v1y = parseFloat(v1.y);
+    //let v2x = parseFloat(v2.x);
+    //let v2y = parseFloat(v2.y);
+    //return new Vec2(v1x-v1y, v2x - v2y);
+    return new Vec2(v1.x-v2.x, v1.y-v2.y);
+    /*let x = v1.x-v2.x;
+    Log(x);
+    let y = v1.y-v2.y;
+    Log(x);
+    let v = new Vec2(x,y);
+    Log(new Vec2(x,y));
+    return new Vec2(x,y);*/
   }
 
   Div(v2){
@@ -82,6 +94,28 @@ class Vec2 {
     let v2 = new Vec2(v.x,v.y);
     v2.RotAround(rad, pos);
     return v2;
+  }
+
+  toString(name = ''){
+    return name+'('+this.x+','+this.y+')';
+  }
+
+  /*
+  * Returns the projection of a point
+  * on a rect defined by two points
+  */
+  static ProjectOnRect(p, va, vb){
+    //Log(p);
+    //Log(va.toString('va'));
+    //Log(vb.toString('vb'));
+    let va_vb = Vec2.Sub(vb,va);
+    //Log(va_vb.toString('va_vb'));
+    let va_p = Vec2.Sub(p, va);
+    //Log(va_p.toString('va_p'));
+    va_vb.Norm();
+    let d = Vec2.Dot(va_p, va_vb);
+    va_vb.Scale(d);
+    return Vec2.Add(va, va_vb);
   }
 
   get x(){

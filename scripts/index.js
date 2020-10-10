@@ -10,6 +10,11 @@ function Main(){
   manager.LoadScene(testScene.name);
   manager.Start();
 
+  //let p = new Vec2(-2, -5);
+  //let v1 = new Vec2(-1,0);
+  //let v2 = new Vec2(-1,5);
+  //Log(Vec2.ProjectOnRect(p, v1, v2).toString('Projection'));
+
   /*let v1 = new Vec2(1,3);
   let v2 = new Vec2(4,2);
 
