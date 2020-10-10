@@ -74,6 +74,7 @@ class Program{
         uniform.Load(i);
         i+=1;
       } else {
+        //Log(obj);
         uniform.Load(obj);
       }
     }

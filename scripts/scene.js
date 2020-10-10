@@ -4,8 +4,9 @@ class Scene{
     this.gameobjs = new Map();
     manager.scenes.set(this.name, this);
     this.camera = /*this.AddGameobj(*/new Gameobj('camera', null, this, [
-      new Camera()
-    ], new Transform(new Vec2(3,5)));
+      new Camera(),
+      //new DebugController(),
+    ], new Transform(new Vec2(2,2)));
   }
 
   Update(){

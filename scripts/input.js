@@ -1,7 +1,9 @@
-class Key{
-  constructor(key){
+class Key {
+  constructor(key) {
 
-    Object.assign(this,{key});
+    Object.assign(this, {
+      key
+    });
 
     this.down = false;
     this.firstFrameDown = false;
@@ -11,8 +13,9 @@ class Key{
   }
 }
 
-class Input{
-  constructor(){
+var input;
+class Input {
+  constructor() {
     /*canvas.onclick = function() {
       canvas.requestPointerLock();
       //canvas.exitPointerLock()
@@ -37,13 +40,13 @@ class Input{
     var that = this;
 
     //canvas.addEventListener('onmousedown', (e) => {
-    canvas.onmousedown = function(e){
-      if(e.button == 0 && !that.mouseLeft){ //Left click
-        that.mouseLeftDown=true;
-        that.mouseLeft=true;
-        that.mouseLeftUp=false;
-        that.mouseLeftDownFirstFrame=true;
-        that.mouseLeftUpFirstFrame=false;
+    canvas.onmousedown = function(e) {
+      if (e.button == 0 && !that.mouseLeft) { //Left click
+        that.mouseLeftDown = true;
+        that.mouseLeft = true;
+        that.mouseLeftUp = false;
+        that.mouseLeftDownFirstFrame = true;
+        that.mouseLeftUpFirstFrame = false;
       }
       /*if(e.button == 1 && !that.mouseRight){ // Right click
         that.mouseRightDown = true;
@@ -54,13 +57,13 @@ class Input{
       }*/
     };
 
-    canvas.onmouseup = function(e){
-      if(e.button == 0 && that.mouseLeft){ //Left click
-        that.mouseLeftDown=false;
-        that.mouseLeft=false;
-        that.mouseLeftUp=true;
-        that.mouseLeftDownFirstFrame=false;
-        that.mouseLeftUpFirstFrame=true;
+    canvas.onmouseup = function(e) {
+      if (e.button == 0 && that.mouseLeft) { //Left click
+        that.mouseLeftDown = false;
+        that.mouseLeft = false;
+        that.mouseLeftUp = true;
+        that.mouseLeftDownFirstFrame = false;
+        that.mouseLeftUpFirstFrame = true;
       }
       /*if(e.button == 1 && that.mouseRight){ // Right click
         that.mouseRightDown = false;
@@ -71,15 +74,15 @@ class Input{
       }*/
     };
 
-    document.onmousemove = function(e){
+    document.onmousemove = function(e) {
       that.mouseX = e.movementX;
       that.mouseY = e.movementY;
     };
 
 
     document.addEventListener('keydown', (e) => {
-      for(var [key, value] of that.keys){
-        if(e.code == key && !value.pressed){
+      for (var [key, value] of that.keys) {
+        if (e.code == key && !value.pressed) {
           //console.log('down');
           value.down = true;
           value.firstFrameDown = true;
@@ -90,38 +93,36 @@ class Input{
       }
     });
     document.addEventListener('keyup', (e) => {
-      for(var [key, value] of that.keys){
-        if(e.code == key){
+      for (var [key, value] of that.keys) {
+        if (e.code == key) {
           //console.log("up");
           value.down = false;
           value.firstFrameUp = true;
           value.pressed = false;
           value.up = true;
-          value.firstFrameDown=false;
+          value.firstFrameDown = false;
         }
       }
     });
   }
 
-  Update(){
+  Update() {
     //MOUSE
-    if(this.mouseLeftDown && this.mouseLeftDownFirstFrame){
+    if (this.mouseLeftDown && this.mouseLeftDownFirstFrame) {
       this.mouseLeftDownFirstFrame = false;
-    }
-    else if(this.mouseLeftDown){
+    } else if (this.mouseLeftDown) {
       this.mouseLeftDown = false;
     }
 
-    if(this.mouseLeftUp && this.mouseLeftUpFirstFrame){
+    if (this.mouseLeftUp && this.mouseLeftUpFirstFrame) {
       this.mouseLeftUpFirstFrame = false;
-    }
-    else if(this.mouseLeftUp){
+    } else if (this.mouseLeftUp) {
       this.mouseLeftUp = false;
     }
 
-    let lerp = manager.delta/ this.mouseGravity;
-    this.mouseX = this.mouseX *lerp;
-    this.mouseY = this.mouseY *lerp;
+    let lerp = manager.delta / this.mouseGravity;
+    this.mouseX = this.mouseX * lerp;
+    this.mouseY = this.mouseY * lerp;
 
     /*if(this.mouseRightDown && this.mouseRightDownFirstFrame){
       this.mouseRightDownFirstFrame = false;
@@ -138,18 +139,16 @@ class Input{
     }*/
 
     //KEYS
-    for(var [key, value] of this.keys){
-      if(value.down && value.firstFrameDown){
+    for (var [key, value] of this.keys) {
+      if (value.down && value.firstFrameDown) {
         value.firstFrameDown = false;
-      }
-      else if (value.down){
+      } else if (value.down) {
         value.down = false;
       }
 
-      if(value.up && value.firstFrameUp){
+      if (value.up && value.firstFrameUp) {
         value.firstFrameUp = false;
-      }
-      else if (value.up){
+      } else if (value.up) {
         value.up = false;
       }
     }
@@ -159,23 +158,32 @@ class Input{
     //console.log("mouse move: ("+this.mouseX+" "+this.mouseY+")");
   }
 
-  AddKey(key){
+  AddKey(key) {
     this.keys.set(key, new Key(key));
   }
 
-  GetKeyDown(key){
+  GetKeyDown(key) {
     let val = this.keys.get(key);
-    if(!val) return false;
+    if (!val) return false;
     return val.down;
   }
-  GetKeyUp(key){
-    let val=this.keys.get(key);
+  GetKeyDownF(key) {
+    return this.GetKeyDown(key) ? 1.0 : 0.0;
+  }
+  GetKeyUp(key) {
+    let val = this.keys.get(key);
     if (!val) return false;
     return val.up;
   }
-  GetKeyPressed(key){
+  getKeyUpF(key) {
+    return this.GetKeyUp(key) ? 1.0 : 0.0;
+  }
+  GetKeyPressed(key) {
     let val = this.keys.get(key);
-    if(!val) return false;
+    if (!val) return false;
     return val.pressed;
+  }
+  GetKeyPressedF(key) {
+    return this.GetKeyPressed(key) ? 1.0 : 0.0;
   }
 }

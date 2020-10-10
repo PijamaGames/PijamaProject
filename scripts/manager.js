@@ -2,7 +2,7 @@ class Manager{
   constructor(){
     this.graphics = new Graphics();
     resources = new Resources();
-    this.input = new Input();
+    input = new Input();
     this.scene = null;
     this.scenes = new Map();
     this.delta = 0.0;
@@ -17,7 +17,7 @@ class Manager{
 
   GameLoop(that){
     that.ManageTime();
-    that.input.Update();
+    input.Update();
 
 
     if(this.scene){
@@ -41,6 +41,7 @@ class Manager{
       let obj = new Gameobj('firstObj', null, testScene, [new ColliderGroup()]);
       //let obj2 = new Gameobj('secondObj', null, testScene, [new ColliderGroup(),new Renderer(['opaque'], new Vec2(0,130))]);
       let obj2 = PF_Tree(new Vec2(0,0));
+      PF_Box();
       /*obj.colliderGroup.AddColliders([new CircleCollider(2,new Vec2(-3,0),new Vec2(2,0))]);
       Log(obj.colliderGroup.colliders[0].collider.OncolisionEnter(new CircleCollider(2,new Vec2(-3,0),new Vec2(3,0))));
       */
@@ -55,15 +56,15 @@ class Manager{
   }
 
   AddInputKeys(){
-    this.input.AddKey('KeyW');
-    this.input.AddKey('KeyA');
-    this.input.AddKey('KeyS');
-    this.input.AddKey('KeyD');
+    input.AddKey('KeyW');
+    input.AddKey('KeyA');
+    input.AddKey('KeyS');
+    input.AddKey('KeyD');
     //arrow keys
-    this.input.AddKey('ArrowLeft');
-    this.input.AddKey('ArrowRight');
-    this.input.AddKey('ArrowUp');
-    this.input.AddKey('ArrowDown');
+    input.AddKey('ArrowLeft');
+    input.AddKey('ArrowRight');
+    input.AddKey('ArrowUp');
+    input.AddKey('ArrowDown');
   }
 
   AddScene(scene) {

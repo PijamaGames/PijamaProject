@@ -29,12 +29,14 @@ class Vec2 {
 
   Norm(){
     let mod = this.mod;
+    if(mod == 0.0) return;
     this.x /= mod;
     this.y /= mod;
   }
 
   static Norm(v){
     let mod = v.mod;
+    if(mod == 0.0) return;
     return new Vec2(v.x/mod,v.y/mod);
   }
 
