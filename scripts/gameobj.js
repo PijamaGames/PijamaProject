@@ -1,9 +1,10 @@
 class Gameobj {
-  constructor(name, parent, scene, components = [], transform = null) {
+  constructor(name, parent, scene, components = [], transform = null, isStatic = false) {
     Object.assign(this, {
       name,
       parent,
-      scene
+      scene,
+      isStatic
     });
     this.active = true;
     this.components = new Map();
@@ -44,7 +45,12 @@ class Gameobj {
   SetParent(parent) {
     this.parent = parent;
     if (!parent)
-      this.scene.AddGameobj(this);
+      if(this.isStatic){
+        this.scene.AddStaticGameobj(this);
+      }
+      else{
+        this.scene.AddGameobj(this);
+      }
     else
       parent.AddChild(this);
   }

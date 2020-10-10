@@ -6,6 +6,7 @@ class Vec2 {
   Add(v2){
     this.x += v2.x;
     this.y += v2.y;
+    return this;
   }
   static Add(v1,v2){
     return new Vec2(v1.x+v2.x,v1.y+v2.y);
@@ -14,29 +15,27 @@ class Vec2 {
   Sub(v2){
     this.x -= v2.x;
     this.y -= v2.y;
+    return this;
   }
   static Sub(v1,v2){
-    //let v1x = parseFloat(v1.x);
-    //let v1y = parseFloat(v1.y);
-    //let v2x = parseFloat(v2.x);
-    //let v2y = parseFloat(v2.y);
-    //return new Vec2(v1x-v1y, v2x - v2y);
     return new Vec2(v1.x-v2.x, v1.y-v2.y);
-    /*let x = v1.x-v2.x;
-    Log(x);
-    let y = v1.y-v2.y;
-    Log(x);
-    let v = new Vec2(x,y);
-    Log(new Vec2(x,y));
-    return new Vec2(x,y);*/
   }
 
   Div(v2){
     this.x /= v2.x;
     this.y /= v2.y;
+    return this;
+  }
+  DivScalar(s){
+    this.x/=s;
+    this.y/=s;
+    return this;
   }
   static Div(v1,v2){
     return new Vec2(v1.x/v2.x,v1.y/v2.y);
+  }
+  static DivScalar(v,s){
+    return new Vec2(v.x/s, v.y/s);
   }
 
   Norm(){
@@ -44,6 +43,7 @@ class Vec2 {
     if(mod == 0.0) return;
     this.x /= mod;
     this.y /= mod;
+    return this;
   }
 
   static Norm(v){
@@ -55,6 +55,7 @@ class Vec2 {
   Mul(v2){
     this.x *= v2.x;
     this.y *= v2.y;
+    return this;
   }
   static Mul(v1,v2){
     return new Vec2(v1.x*v2.x,v1.y*v2.y);
@@ -63,6 +64,7 @@ class Vec2 {
   Scale(s){
     this.x *=s;
     this.y *=s;
+    return this;
   }
   static Scale(v,s){
     return new Vec2(v.x*s, v.y*s);
@@ -88,6 +90,7 @@ class Vec2 {
     this.x = this.x*cosR - this.y*sinR;
     this.y = x*sinR+this.y*cosR;
     this.Add(pos);
+    return this;
   }
 
   static RotAround(v,rad, pos = new Vec2()){

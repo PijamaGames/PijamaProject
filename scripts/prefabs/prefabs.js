@@ -3,7 +3,7 @@ function PF_Tree(position = new Vec2(), height = 0.0){
   return new Gameobj('tree'+PF_TreeCount++, null, manager.scene, [
     new ColliderGroup(),
     new Renderer(['opaque'], new Vec2(20, 9/*130*/), true)
-  ], new Transform(position, height, new Vec2(4,7), new Vec2(0.5,0.5)))
+  ], new Transform(position, height, new Vec2(4,7), new Vec2(0.5,0.5)), true)
 }
 
 PF_BoxCount = 0;
