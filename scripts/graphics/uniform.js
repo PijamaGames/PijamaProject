@@ -28,8 +28,8 @@ class Uniform1f extends Uniform{
     super(name, program);
     this.getValue = getFunc;
   }
-  Load(unit){
-    gl.uniform1f(this.location, this.getValue());
+  Load(obj){
+    gl.uniform1f(this.location, this.getValue(obj));
   }
 }
 
@@ -38,8 +38,8 @@ class Uniform2f extends Uniform{
     super(name, program);
     this.getValue = getFunc;
   }
-  Load(unit){
-    let v = this.getValue();
+  Load(obj){
+    let v = this.getValue(obj);
     gl.uniform2f(this.location, v.x, v.y);
   }
 }

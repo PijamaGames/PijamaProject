@@ -15,13 +15,23 @@ class Program{
     manager.graphics.SetBuffers(this);
   }
 
-  SetUniforms(constUniforms = [], uniforms = [], objUniforms = []){
-    this.constUniforms = constUniforms;
-    this.objUniforms = objUniforms;
+  SetUniforms(uniforms = []){
     this.uniforms = uniforms;
+  }
+  SetObjUniforms(objUniforms = []){
+    this.objUniforms = objUniforms;
+  }
+  SetConstUniforms(constUniforms = []){
+    this.constUniforms = constUniforms;
     this.LoadConstUniforms();
+    //Since this info is constant
+    //it can be sent only once
   }
 
+  /*
+  * Sends the uniform info that
+  * stays constant always
+  */
   LoadConstUniforms(){
     this.Use();
     let i = 0;
@@ -35,13 +45,49 @@ class Program{
     }
   }
 
+  /*
+  * Sends the uniform info that's
+  * constant for all objects but dynamic
+  * in the game world
+  */
+  LoadUniforms(){
+    let i = this.texUnitOffset;
+    for(var uniform of this.uniforms){
+      if(uniform.texture){
+        uniform.Load(i);
+        i+=1;
+      } else {
+        uniform.Load();
+      }
+    }
+    return i;
+  }
+
+  /*
+  * Sends the uniform info
+  * relative to the object
+  */
+  LoadObjUniforms(obj, texUnitOffset){
+    let i = texUnitOffset;
+    for(var uniform of this.objUniforms){
+      if(uniform.texture){
+        uniform.Load(i);
+        i+=1;
+      } else {
+        uniform.Load(obj);
+      }
+    }
+  }
+
   Use(){
     gl.useProgram(this.program);
   }
 
   Render(){
     this.Use();
+    let texUnitOffset = this.LoadUniforms();
     for(var [name, renderer] of this.renderers){
+      this.LoadObjUniforms(renderer.gameobj, texUnitOffset);
       manager.graphics.Draw();
     }
   }

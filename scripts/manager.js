@@ -39,7 +39,8 @@ class Manager{
       that.graphics.LoadResources();
 
       let obj = new Gameobj('firstObj', null, testScene, [new ColliderGroup()]);
-      let obj2 = new Gameobj('secondObj', null, testScene, [new ColliderGroup(),new Renderer(['opaque'])]);
+      //let obj2 = new Gameobj('secondObj', null, testScene, [new ColliderGroup(),new Renderer(['opaque'], new Vec2(0,130))]);
+      let obj2 = PF_Tree.Create();
       /*obj.colliderGroup.AddColliders([new CircleCollider(2,new Vec2(-3,0),new Vec2(2,0))]);
       Log(obj.colliderGroup.colliders[0].collider.OncolisionEnter(new CircleCollider(2,new Vec2(-3,0),new Vec2(3,0))));
       */
@@ -48,7 +49,6 @@ class Manager{
       obj.colliderGroup.AddColliders([new BoxCollider(2,3,obj.colliderGroup)]);
       obj2.colliderGroup.AddColliders([new BoxCollider(2,1,obj2.colliderGroup)]);
       Log(obj.colliderGroup.colliders[0].OnColisionEnter(obj2.colliderGroup.colliders[0]));
-
 
       that.ms = Date.now();
       that.GameLoop(that);

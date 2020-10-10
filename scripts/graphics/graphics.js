@@ -48,8 +48,15 @@ class Graphics{
 
   CreatePrograms(){
     let opaqueProgram = new Program('opaque', 'vs_opaque', 'fs_opaque');
-    opaqueProgram.SetUniforms([
-      new UniformTex('colorTex', opaqueProgram, 'tilesTex')
+    let tileMap = resources.textures.get('tileMap');
+    opaqueProgram.SetConstUniforms([
+      new UniformTex('tileMap', opaqueProgram, 'tileMap'),
+      new Uniform2f('tileMapRes', opaqueProgram, ()=>new Vec2(tileMap.width, tileMap.height))
+    ]);
+    opaqueProgram.SetObjUniforms([
+      new Uniform2f('tile', opaqueProgram, function(obj){
+        return obj.renderer.tile;
+      })
     ]);
   }
 

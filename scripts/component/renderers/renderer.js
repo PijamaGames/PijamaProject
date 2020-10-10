@@ -1,5 +1,5 @@
 class Renderer extends Component{
-  constructor(programs = [], name = null){
+  constructor(programs = [], tile = new Vec2(), name = null){
     super();
     this.type = "renderer";
     this.programs = [];
@@ -7,6 +7,7 @@ class Renderer extends Component{
       this.programs.push(manager.graphics.programs.get(program));
     }
     this.name = name;
+    this.tile = tile;
   }
 
   SetGameobj(gameobj){

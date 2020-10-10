@@ -26,11 +26,12 @@ void main()
   const vec2 res = vec2(640,480);
   const float tileSize = 32.0;
 
-  vec2 anchor = vec2(0.5, 0.0);
-  vec2 scale = vec2(1,15);
+  vec2 anchor = vec2(0.5, 0.5);
+  vec2 scale = vec2(2,2);
   vec2 camPosition = vec2(0,0);
-  vec2 position = vec2(0,-7.5);
-  float height = 7.0;
+  vec2 position = vec2(0,0);
+  float height = 0.0;
+
 
   vec2 pos = vec2(
     ((vertPosition.x+position.x/scale.x*2.0-anchor.x*2.0+1.0)/res.x)*scale.x,
