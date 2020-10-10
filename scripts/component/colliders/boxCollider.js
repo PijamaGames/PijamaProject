@@ -3,7 +3,11 @@ class BoxCollider extends Collider{
     super();
     Object.assign(this,{height,width,colliderGroup});
     this.type="boxCollider";
-    this.position=colliderGroup.gameobj.transform.position;
+    this.position=this.colliderGroup.gameobj.transform.position;
+    this.leftUpCorner=new Vec2(this.leftPos.x,this.upPos.y);
+    this.leftDownCorner=new Vec2(this.leftPos.x,this.downPos.y);
+    this.rightUpCorner=new Vec2(this.rightPos.x,this.upPos.y);
+    this.rightDownCorner=new Vec2(this.rightPos.x,this.downPos.y);
   }
 
   OnColisionEnter(otherCollider){
