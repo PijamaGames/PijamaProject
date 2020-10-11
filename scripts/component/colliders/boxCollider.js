@@ -18,7 +18,7 @@ class BoxCollider extends Collider{
       return this.BoxesCollision(this,otherCollider);
 
     else
-      return false;
+      return [];
   }
 
   get leftPos(){

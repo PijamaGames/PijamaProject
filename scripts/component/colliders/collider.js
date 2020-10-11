@@ -105,7 +105,11 @@ class Collider{
       dir.Vec2.Set(0,1);
       p=penetration.y;
     }
-    return [dir,p];
+
+    if (contX>=1 && contY>=1)
+      return [dir,p];
+    else
+      return [dir,0];
     //return contX>=1 && contY>=1;
   }
 }

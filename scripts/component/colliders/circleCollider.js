@@ -16,6 +16,6 @@ class CircleCollider extends Collider{
       return this.BoxCircleCollision(this,otherCollider);
 
     else
-      return false;
+      return [];
   }
 }

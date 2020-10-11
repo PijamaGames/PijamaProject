@@ -5,7 +5,6 @@ class Rigidbody extends Component{
     this.type="rigidbody";
     this.frictionCoefficient=-0.5;
     this.substeps=5;
-    this.collision=false;
     //necesito coger el delta del manager
     this.delta=60;
     this.movementForce=0.0;
@@ -43,7 +42,6 @@ class Rigidbody extends Component{
 
   ResolveCollision(dir,penetration){
     
-    this.collision=false;
   }
 
   GameobjForces(){
