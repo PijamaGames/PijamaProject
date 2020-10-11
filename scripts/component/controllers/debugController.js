@@ -17,6 +17,10 @@ class DebugController extends Component{
     v.Norm();
     v.Scale(this.speed*manager.delta);
     this.gameobj.transform.position.Add(v)
+    /*this.gameobj.transform.position.Set(
+      input.mouseGridPosition.x,
+      input.mouseGridPosition.y
+    )*/
   }
 
   Destroy(){

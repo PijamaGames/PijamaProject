@@ -7,6 +7,7 @@ class Manager{
     this.scenes = new Map();
     this.delta = 0.0;
     this.ms = null;
+    mapPlacer = new MapPlacer();
   }
 
   ManageTime(){
@@ -24,6 +25,9 @@ class Manager{
       this.scene.Update();
       //Update Physics
       this.graphics.Render();
+
+      //Update map placer
+      if(mapPlacer) mapPlacer.Update();
     }
 
     window.requestAnimationFrame(function(){
@@ -76,6 +80,8 @@ class Manager{
     input.AddKey('ArrowRight');
     input.AddKey('ArrowUp');
     input.AddKey('ArrowDown');
+
+    input.AddKey('Space');
   }
 
   AddScene(scene) {

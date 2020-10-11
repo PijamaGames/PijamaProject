@@ -1,6 +1,6 @@
 var canvas = document.getElementById('game_surface');
 var gl;
-const tileSize = 16.0;
+const tileSize = 32.0;
 class Graphics {
   constructor() {
     this.programs = new Map();
@@ -59,17 +59,17 @@ class Graphics {
   CreatePrograms() {
 
     let opaqueProgram = new Program('opaque', 'vs_opaque', 'fs_opaque');
-    let tileMap = resources.textures.get('tilesTex');
+    let tileMap = resources.textures.get('tileMap');
     let res = new Vec2(canvas.width, canvas.height);
     opaqueProgram.SetConstUniforms([
-      new UniformTex('tileMap', opaqueProgram, 'tilesTex'),
+      new UniformTex('tileMap', opaqueProgram, 'tileMap'),
       new Uniform2f('tileSizeDIVres', opaqueProgram, () => new Vec2(tileSize/res.x, tileSize/res.y)),
       new Uniform2f('tileMapResDIVtileSize', opaqueProgram, ()=>new Vec2(tileMap.width / tileSize, tileMap.height / tileSize))
     ]);
     //let camTransform = manager.scene.camera.transform;
     opaqueProgram.SetUniforms([
-      new Uniform2f('camTransformed', opaqueProgram, ()=>Vec2.Scale(manager.scene.camera.transform.position,2.0).Div(res).Scale(tileSize)),
-      new Uniform2f('camPosition', opaqueProgram, ()=>manager.scene.camera.transform.position)
+      new Uniform2f('camTransformed', opaqueProgram, ()=>Vec2.Scale(manager.scene.camera.transform.GetWorldPosPerfect(),2.0).Div(res).Scale(tileSize)),
+      new Uniform2f('camPosition', opaqueProgram, ()=>manager.scene.camera.transform.GetWorldPosPerfect())
     ]);
     opaqueProgram.SetObjUniforms([
       new Uniform2f('tile', opaqueProgram, (obj) => obj.renderer.tile),

@@ -1,12 +1,12 @@
 "use strict;"
-const DEBUG = false;
+const DEBUG = true;
+const EDITOR_MODE = true;
 
 var manager;
 function Main(){
   Log("Main")
   manager = new Manager();
   manager.AddScene(new Scene("testScene", BC_testScene));
-  //manager.LoadScene(testScene.name);
   manager.Start();
 
   //let p = new Vec2(-2, -5);

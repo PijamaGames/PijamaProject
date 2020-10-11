@@ -9,12 +9,31 @@
 <body onload="Main()">
   <canvas id="game_surface" width="640" height="480"></canvas>
 
-  <img hidden=true, id="boxTex", src="resources/box.png">
-  <img hidden = true, id="juanTex", src="resources/JUAN_UV1.png" alt="">
-  <img hidden = true, id="grassTex", src="resources/grass.jpg" alt="">
-  <img hidden = true, id="tilesTex", src="resources/dirt-tiles.png" alt="">
-  <img hidden = true, id="tileMap", src="resources/tileMap.png" alt="">
+  <div hidden="true" id="editor" class="editor">
 
+    <p><strong>Controls:</strong> Space: create object | Left click: Place object</p>
+
+    <label for="objectType">Object type</label>
+    <input type="text" id='objectType' name="objectType" value="">
+    <input id='create' type="submit" value="Create">
+    <input id='add' type="submit" value="AddToBytecode">
+
+
+    <h3>Object types:</h3>
+    <div id="objectTypeDiv"></div>
+    <h3>Bytecode text:</h3>
+    <button type="button" id="copyButton">Copy bytecode</button><br />
+    <!--<p id="bytecodeText">Empty scene</p>-->
+    <textarea id ="bytecodeText" rows="8" cols="80"></textarea>
+    <!--<input type="text" id="bytecodeText" value="">-->
+
+  </div>
+
+
+
+
+  <img hidden=true, id="tilesTex" , src="resources/dirt-tiles.png" alt="">
+  <img hidden=true, id="tileMap" , src="resources/tileMap.png" alt="">
 
   <script src="scripts/graphics/graphics.js" charset="utf-8"></script>
   <script src="scripts/graphics/program.js" charset="utf-8"></script>
@@ -39,6 +58,8 @@
   <script src="scripts/prefabs/prefabs.js" charset="utf-8"></script>
 
   <script src="scripts/scenes/BC_testScene.js" charset="utf-8"></script>
+
+  <script src="scripts/mapPlacer.js" charset="utf-8"></script>
 
   <script src="scripts/index.js" charset="utf-8"></script>
 </body>
