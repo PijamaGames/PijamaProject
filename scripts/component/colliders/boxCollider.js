@@ -10,15 +10,15 @@ class BoxCollider extends Collider{
     this.rightDownCorner=new Vec2(this.rightPos.x,this.downPos.y);
   }
 
-  OnColisionEnter(otherCollider){
+  OnCollisionEnter(otherCollider){
     if(otherCollider.type=="circleCollider")
-      return this.BoxCircleColision(this,otherCollider);
+      return this.BoxCircleCollision(this,otherCollider);
 
     else if(otherCollider.type=="boxCollider")
-      return this.BoxesColision(this,otherCollider);
+      return this.BoxesCollision(this,otherCollider);
 
     else
-      return false;
+      return [];
   }
 
   get leftPos(){

@@ -62,6 +62,9 @@ class Gameobj {
     for(var [key, component] of this.components){
       component.Destroy();
       this.components.delete(key);
+
+    //Destroy colliderGroup
+    this.scene.colliderGroups.delete(this.colliderGroup);
     }
 
     //Destroy Children

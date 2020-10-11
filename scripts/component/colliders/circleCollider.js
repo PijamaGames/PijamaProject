@@ -8,14 +8,14 @@ class CircleCollider extends Collider{
 
   }
 
-  OnColisionEnter(otherCollider){
+  OnCollisionEnter(otherCollider){
     if(otherCollider.type=="circleCollider")
-      return this.CirclesColision(this,otherCollider);
+      return this.CirclesCollision(this,otherCollider);
 
     else if(otherCollider.type=="boxCollider")
-      return this.BoxCircleColision(this,otherCollider);
+      return this.BoxCircleCollision(this,otherCollider);
 
     else
-      return false;
+      return [];
   }
 }

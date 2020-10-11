@@ -3,6 +3,7 @@ class Scene{
     Object.assign(this, {name, bytecode});
     this.gameobjs = new Map();
     this.staticGameobjs = new Map();
+    this.colliderGroups= new Set();
     manager.scenes.set(this.name, this);
     this.camera = /*this.AddGameobj(*/new Gameobj('camera', null, this, [
       new Camera(),
