@@ -6,7 +6,7 @@ class Scene{
     manager.scenes.set(this.name, this);
     this.camera = /*this.AddGameobj(*/new Gameobj('camera', null, this, [
       new Camera(),
-      //new DebugController(10),
+      new DebugController(10),
     ], new Transform(new Vec2(0,0)));
   }
 

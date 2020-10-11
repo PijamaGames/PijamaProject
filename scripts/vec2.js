@@ -3,6 +3,11 @@ class Vec2 {
     this.v = new Float32Array([x, y]); //Vector value
   }
 
+  Set(x, y){
+    this.x = x;
+    this.y = y;
+  }
+
   Add(v2){
     this.x += v2.x;
     this.y += v2.y;

@@ -22,8 +22,10 @@ class Input {
     }*/
 
 
-    this.mouseX = 0.0;
-    this.mouseY = 0.0;
+    this.mousePosition = new Vec2();
+    this.mouseWorldPosition = new Vec2();
+    this.mouseGridPosition = new Vec2();
+    this.mouseMovement = new Vec2();
     this.mouseGravity = 0.05;
     this.mouseLeftDown = false;
     //this.mouseRightDown = false;
@@ -74,9 +76,21 @@ class Input {
       }*/
     };
 
-    document.onmousemove = function(e) {
-      that.mouseX = e.movementX;
-      that.mouseY = e.movementY;
+    canvas.onmousemove = function(e) {
+      //that.mousePosition.Set(e.clientX, e.clientY);
+      //that.mousePosition.Set(e.screenX, e.screenY);
+      that.mousePosition.Set(e.offsetX, e.offsetY);
+      that.mouseMovement.Set(e.movementX, e.movementY);
+      that.mouseWorldPosition.Set(
+        (that.mousePosition.x - canvas.width / 2.0) / tileSize + manager.scene.camera.transform.position.x,
+        (that.mousePosition.y - canvas.height / 2.0) / -tileSize + manager.scene.camera.transform.position.y
+      );
+      that.mouseGridPosition.Set(
+        Math.round(that.mouseWorldPosition.x),
+        Math.round(that.mouseWorldPosition.y)
+      )
+      //that.mouseX = e.movementX;
+      //that.mouseY = e.movementY;
     };
 
 
@@ -120,23 +134,9 @@ class Input {
       this.mouseLeftUp = false;
     }
 
+    //Log(this.mouseGridPosition.toString('mouse pos'));
     let lerp = manager.delta / this.mouseGravity;
-    this.mouseX = this.mouseX * lerp;
-    this.mouseY = this.mouseY * lerp;
-
-    /*if(this.mouseRightDown && this.mouseRightDownFirstFrame){
-      this.mouseRightDownFirstFrame = false;
-    }
-    else if(this.mouseRightDown){
-      this.mouseRightDown = false;
-    }
-
-    if(this.mouseRightUp && this.mouseRightUpFirstFrame){
-      this.mouseRightUpFirstFrame = false;
-    }
-    else if(this.mouseRightUp){
-      this.mouseRightUp = false;
-    }*/
+    this.mouseMovement.Scale(lerp);
 
     //KEYS
     for (var [key, value] of this.keys) {
@@ -152,7 +152,8 @@ class Input {
         value.up = false;
       }
     }
-    //var key = this.keys.get('ArrowLeft');
+    //var key = this.keys.get('Space');
+    //Log(key);
     //console.log("ArrowLeft down: " + key.down + " | up: " + key.up + " | pressed: " + key.pressed);
     //console.log("left mouse down: " + this.mouseLeftDown + " | up: " + this.mouseLeftUp + " | pressed: " + this.mouseLeft);
     //console.log("mouse move: ("+this.mouseX+" "+this.mouseY+")");
