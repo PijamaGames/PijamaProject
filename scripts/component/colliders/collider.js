@@ -3,32 +3,42 @@ class Collider{
     this.type = "collider";
   }
 
-
-  CirclesColision(collider,otherCollider){
-    /*let distX=this.Distance(collider.position.x,otherCollider.position.x);
-    let distY=this.Distance(collider.position.y,otherCollider.position.y);*/
-    let dist=Vec2.Mod(Vec2.Sub(collider.position,otherCollider.position));
+  CirclesCollision(collider,otherCollider){
+    let dir=Vec2.Sub(otherCollider.position,collider.position);
+    let dist=Vec2.Mod(v1v2);
     let sumRadius=collider.radius+otherCollider.radius;
-    return dist<=sumRadius;
+    let penetration=sumRadius-dist;
+    dir.Norm();
+    return [dir,penetration];
+    //return dist<=sumRadius;
   }
 
-  BoxCircleColision(collider,otherCollider){
+  BoxCircleCollision(collider,otherCollider){
     let dist;
-    let distX;
-    let distY;
+    let dir=new Vec2();
+    let penetration=0.0;
     if (collider.type='circleCollider'){
       dist=this.Projections(collider,otherCollider);
-      return dist<=collider.radius;
+      penetration=collider.radius-dist;
+      dir=Vec2.Sub(otherCollider.position,collider.position);
+      dir.Norm();
+      //return dist<=collider.radius;
     }
     else if(collider.type='boxCollider'){
       dist=this.Projections(otherCollider,collider);
-      return dist<=otherCollider.radius;
+      penetration=otherCollider.radius-dist;
+      dir=Vec2.Sub(collider.position,otherCollider.position);
+      dir.Norm();
+      //return dist<=otherCollider.radius;
     }
-    return false;
+    //devolver penetration y dir!!!!!!!!!!!!!
+    //return false;
+    return [dir,penetration];
   }
 
   Projections(circle,box){
     let minDist;
+    let distancias=[];
     let projectionPointUp=Vec2.ProjectOnRect(circle.position,box.rightUpCorner,box.leftUpCorner);
     let projectionPointDown=Vec2.ProjectOnRect(circle.position,box.rightDownCorner,box.leftDownCorner);
     let projectionPointLeft=Vec2.ProjectOnRect(circle.position,box.leftDownCorner,box.leftUpCorner);
@@ -58,29 +68,44 @@ class Collider{
     return minDist;
   }
 
-  BoxesColision(collider,otherCollider){
+  BoxesCollision(collider,otherCollider){
     let contX=0;
     let contY=0;
+    let penetration= new Vec2();
+    let p;
+    let dir=new Vec2();
     if (collider.downPos.y<=otherCollider.downPos.y && otherCollider.downPos.y<=collider.upPos.y){
-      //Log("lado de abajo dentro");
+      //Log("lado de arriba dentro");
+      penetration.y=collider.upPos.y-otherCollider.downPos.y;
       contY++;
     }
 
     if (collider.downPos.y<=otherCollider.upPos.y && otherCollider.upPos.y<=collider.upPos.y){
-      //Log("lado de arriba dentro");
+      //Log("lado de abajo dentro");
+      penetration.y=otherCollider.upPos.y-collider.downPos.y;
       contY++;
     }
 
     if(collider.leftPos.x<=otherCollider.rightPos.x && otherCollider.rightPos.x<=collider.rightPos.x){
       //Log("lado derecho dentro");
+      penetration.x=otherCollider.rightPos.x-collider.leftPos.x;
       contX++;
     }
 
     if(collider.leftPos.x<=otherCollider.leftPos.x && otherCollider.leftPos.x<=collider.rightPos.x){
       //Log("lado izquierdo dentro");
+      penetration.x=collider.rightPos.x-otherCollider.leftPos.x;
       contX++;
     }
 
-    return contX>=1 && contY>=1;
+    if(penetration.x>penetration.y){
+      dir.Vec2.Set(1,0);
+      p=penetration.x;
+    }else {
+      dir.Vec2.Set(0,1);
+      p=penetration.y;
+    }
+    return [dir,p];
+    //return contX>=1 && contY>=1;
   }
 }

@@ -3,6 +3,7 @@ class ColliderGroup extends Component{
     super();
     this.colliders=[];
     this.type="colliderGroup";
+
   }
 
   AddColliders(_colliders){
@@ -13,6 +14,7 @@ class ColliderGroup extends Component{
 
   SetGameobj(gameobj){
     this.gameobj = gameobj;
+    this.gameobj.scene.colliderGroups.add(this);
     this.gameobj.colliderGroup = this;
   }
 }
