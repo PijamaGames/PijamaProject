@@ -10,15 +10,17 @@ class Uniform{
 }
 
 class UniformTex extends Uniform{
-  constructor(name, program, textureName){
+  constructor(name, program, getFunc){
     super(name, program);
-    this.texture = resources.textures.get(textureName);
+    this.getValue = getFunc;
+    this.texture = true;
+    //this.texture = getFunc();/*resources.textures.get(textureName);*/
     this.program.texUnitOffset+=1;
   }
-  Load(unit){
+  Load(unit, obj = null){
     gl.uniform1i(this.location, unit);
     gl.activeTexture(gl.TEXTURE0+unit);
-    gl.bindTexture(gl.TEXTURE_2D, this.texture);
+    gl.bindTexture(gl.TEXTURE_2D, this.getValue(obj));
   }
 }
 

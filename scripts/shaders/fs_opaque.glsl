@@ -3,7 +3,7 @@ precision mediump float;
 varying vec2 fTexCoords;
 
 //CONST UNIFORMS
-uniform sampler2D tileMap;
+uniform sampler2D colorTex;
 uniform vec2 tileSizeDIVres;
 uniform vec2 tileMapResDIVtileSize;
 
@@ -40,7 +40,7 @@ void main()
     1.0 - (tile.y/tileMapResDIVtileSize.y + (fTexCoords.y/tileMapResDIVtileSize.y)*scale.y)
   );
 
-  vec4 texColor = texture2D(tileMap, finalTexCoords);
+  vec4 texColor = texture2D(colorTex, finalTexCoords);
   if(texColor.w < 0.3) discard;
   gl_FragColor = texColor;
   //gl_FragColor = vec4(xPos, xPos, xPos, 1.0);

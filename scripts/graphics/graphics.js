@@ -48,6 +48,7 @@ class Graphics {
 
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     this.programs.get('opaque').Render();
+    this.programs.get('spriteSheet').Render();
     //this.SetBuffers(program);
 
   }
@@ -57,12 +58,13 @@ class Graphics {
   }
 
   CreatePrograms() {
+    let res = new Vec2(canvas.width, canvas.height);
 
+    //TILE MAP PROGRAM
     let opaqueProgram = new Program('opaque', 'vs_opaque', 'fs_opaque');
     let tileMap = resources.textures.get('tileMap');
-    let res = new Vec2(canvas.width, canvas.height);
     opaqueProgram.SetConstUniforms([
-      new UniformTex('tileMap', opaqueProgram, 'tileMap'),
+      new UniformTex('colorTex', opaqueProgram, ()=>resources.textures.get('tileMap')),
       new Uniform2f('tileSizeDIVres', opaqueProgram, () => new Vec2(tileSize/res.x, tileSize/res.y)),
       new Uniform2f('tileMapResDIVtileSize', opaqueProgram, ()=>new Vec2(tileMap.width / tileSize, tileMap.height / tileSize))
     ]);
@@ -76,26 +78,37 @@ class Graphics {
       new Uniform2f('scale', opaqueProgram, (obj) => obj.transform.scale),
       new Uniform1f('height', opaqueProgram, (obj) => obj.transform.height),
       new Uniform1f('vertical', opaqueProgram, (obj) => obj.renderer.vertical ? 1.0 : 0.0),
-      new Uniform2f('vertDisplacement', opaqueProgram, function(obj){
-        let pos = obj.transform.GetWorldPosPerfect();
-        let scl = obj.transform.scale;
-        let acr = obj.transform.anchor;
-        let h = obj.transform.height;
-        return new Vec2(
-          (pos.x/scl.x-acr.x)*2.0+1.0,
-          ((pos.y+h)/scl.y-acr.y)*2.0+1.0
-        )
-      }),
+      new Uniform2f('vertDisplacement', opaqueProgram, (obj) => obj.renderer.vertDisplacement),
       new Uniform2f('scaleMULtileSizeDIVres',opaqueProgram, function(obj){
         return Vec2.Scale(obj.transform.scale, tileSize).Div(res);
       }),
-      new Uniform1f('floorPos', opaqueProgram, function(obj){
-        let pos = obj.transform.GetWorldPosPerfect().y;
-        let scale = obj.transform.scale.y;
-        let anchor = obj.transform.anchor.y;
-        let camPos = manager.scene.camera.transform.position.y;
-        return (pos-scale*anchor-camPos)/*/res.y*tileSize*/;
-      })
+      new Uniform1f('floorPos', opaqueProgram, (obj)=>obj.transform.floorPos)
+    ]);
+
+
+    //SPRITE SHEET PROGRAM
+    let spriteSheetProgram = new Program('spriteSheet', 'vs_opaque', 'fs_opaque');
+    spriteSheetProgram.SetConstUniforms([
+      new Uniform2f('tileSizeDIVres', spriteSheetProgram, () => new Vec2(tileSize/res.x, tileSize/res.y)),
+    ]);
+    //let camTransform = manager.scene.camera.transform;
+    spriteSheetProgram.SetUniforms([
+      new Uniform2f('camTransformed', spriteSheetProgram, ()=>Vec2.Scale(manager.scene.camera.transform.GetWorldPosPerfect(),2.0).Div(res).Scale(tileSize)),
+      new Uniform2f('camPosition', spriteSheetProgram, ()=>manager.scene.camera.transform.GetWorldPosPerfect())
+    ]);
+    spriteSheetProgram.SetObjUniforms([
+      new UniformTex('colorTex', spriteSheetProgram, (obj)=>obj.renderer.spriteSheet),
+      new Uniform2f('tileMapResDIVtileSize', spriteSheetProgram, (obj)=>
+      new Vec2(obj.renderer.spriteSheet.width / tileSize, obj.renderer.spriteSheet.height / tileSize)),
+      new Uniform2f('tile', spriteSheetProgram, (obj) => obj.renderer.tile),
+      new Uniform2f('scale', spriteSheetProgram, (obj) => obj.transform.scale),
+      new Uniform1f('height', spriteSheetProgram, (obj) => obj.transform.height),
+      new Uniform1f('vertical', spriteSheetProgram, (obj) => obj.renderer.vertical ? 1.0 : 0.0),
+      new Uniform2f('vertDisplacement', spriteSheetProgram, (obj) => obj.renderer.vertDisplacement),
+      new Uniform2f('scaleMULtileSizeDIVres',spriteSheetProgram, function(obj){
+        return Vec2.Scale(obj.transform.scale, tileSize).Div(res);
+      }),
+      new Uniform1f('floorPos', spriteSheetProgram, (obj)=>obj.transform.floorPos)
     ]);
   }
 

@@ -1,6 +1,7 @@
 var textureNames = [
   'tilesTex',
-  'tileMap'
+  'tileMap',
+  'spriteSheet'
 ];
 
 var modelURLs = [

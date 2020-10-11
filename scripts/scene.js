@@ -46,6 +46,7 @@ class Scene{
     var func;
     var pos;
     var height;
+    if(!lines) return;
     for(var line of lines){
       elements = line.split(' ');
       if(elements[0] === '-') continue;

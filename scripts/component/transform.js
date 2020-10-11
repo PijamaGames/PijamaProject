@@ -9,6 +9,11 @@ class Transform extends Component{
     //this.anchor = new Vec2(0.5,0.5);
   }
 
+  get floorPos(){
+    return (this.GetWorldPosPerfect().y-this.scale.y*this.anchor.y-
+    manager.scene.camera.transform.position.y);
+  }
+
   get worldPos(){
     if(!this.gameobj.parent){
       return this.position;

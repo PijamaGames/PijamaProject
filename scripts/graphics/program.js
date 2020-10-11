@@ -71,7 +71,7 @@ class Program{
     let i = texUnitOffset;
     for(var uniform of this.objUniforms){
       if(uniform.texture){
-        uniform.Load(i);
+        uniform.Load(i, obj);
         i+=1;
       } else {
         //Log(obj);

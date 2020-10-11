@@ -11,6 +11,17 @@ class Renderer extends Component{
     this.vertical = vertical;
   }
 
+  get vertDisplacement(){
+    let pos = this.gameobj.transform.GetWorldPosPerfect();
+    let scl = this.gameobj.transform.scale;
+    let acr = this.gameobj.transform.anchor;
+    let h = this.gameobj.transform.height;
+    return new Vec2(
+      (pos.x/scl.x-acr.x)*2.0+1.0,
+      ((pos.y+h)/scl.y-acr.y)*2.0+1.0
+    )
+  }
+
   /*get verticalF(){
     if(this.vertical === true) return 1.0;
     else return 0.0;
