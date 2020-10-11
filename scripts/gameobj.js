@@ -1,11 +1,13 @@
 class Gameobj {
-  constructor(name, parent, scene, components = [], transform = null, isStatic = false) {
+  constructor(name, id, parent, scene, components = [], transform = null, isStatic = false) {
     Object.assign(this, {
       name,
+      id,
       parent,
       scene,
       isStatic
     });
+    this.key = this.name+this.id;
     this.active = true;
     this.components = new Map();
     this.children = new Map();
@@ -15,6 +17,10 @@ class Gameobj {
     else t = new Transform();
     this.SetComponent(t);
     this.AddComponents(components);
+  }
+
+  get bytecode(){
+    return this.name+' '+this.transform.position.x+' '+this.transform.position.y+' '+this.transform.height;
   }
 
   Update() {
@@ -40,7 +46,7 @@ class Gameobj {
   }
 
   AddChild(child) {
-    this.children.set(child.name, child);
+    this.children.set(child.key, child);
   }
   SetParent(parent) {
     this.parent = parent;
@@ -74,7 +80,7 @@ class Gameobj {
     }
 
     //Destroy self
-    this.scene.RemoveGameobj(this.name);
+    this.scene.RemoveGameobj(this);
     this.scene = null;
   }
 }

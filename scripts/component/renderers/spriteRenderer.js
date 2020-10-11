@@ -10,7 +10,7 @@ class SpriteRenderer extends Renderer{
   Update(){
     this.time += manager.delta;
     if(this.time > this.interval){
-      this.time -= this.interval;
+      this.time -= this.interval * Math.trunc(this.time/this.interval);
       this.tile.x = (this.tile.x+1) % this.maxFrames.x;
     }
   }

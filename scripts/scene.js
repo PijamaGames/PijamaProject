@@ -1,14 +1,15 @@
 class Scene{
   constructor(name, bytecode = null){
     Object.assign(this, {name, bytecode});
+    this.CleanByteCode();
     this.gameobjs = new Map();
     this.staticGameobjs = new Map();
     this.colliderGroups= new Set();
     manager.scenes.set(this.name, this);
-    this.camera = /*this.AddGameobj(*/new Gameobj('camera', null, this, [
+    this.camera = /*this.AddGameobj(*/new Gameobj('camera',0, null, this, [
       new Camera(),
       new DebugController(10),
-    ], new Transform(new Vec2(0,0)));
+    ], new Transform(new Vec2(0,0), 0.0, new Vec2(canvas.width/tileSize, canvas.height/tileSize)));
   }
 
   Update(){
@@ -18,17 +19,18 @@ class Scene{
   }
 
   AddGameobj(gameobj) {
-    this.gameobjs.set(gameobj.name, gameobj);
+    this.gameobjs.set(gameobj.key, gameobj);
     return gameobj;
   }
 
   AddStaticGameobj(gameobj){
-    this.staticGameobjs.set(gameobj.name, gameobj);
+    this.staticGameobjs.set(gameobj.key, gameobj);
     return gameobj;
   }
 
-  RemoveGameobj(name){
-    this.gameobjs.delete(name);
+  RemoveGameobj(obj){
+    this.staticGameobjs.delete(obj.key);
+    this.gameobjs.delete(obj.key);
   }
 
   Unload(){
@@ -38,6 +40,21 @@ class Scene{
     for(let [key, gameobj] of this.staticGameobjs){
       gameobj.Destroy();
     }
+  }
+
+  GetObjectsInBoundaries(position){
+    var objList = [];
+    for(var [key,value] of this.gameobjs){
+      if(!value.camera && value.transform.IsInsideBoundaries(position)){
+        objList.push(value);
+      }
+    }
+    for(var [key,value] of this.staticGameobjs){
+      if(!value.camera && value.IsInsideBoundaries(position)){
+        objList.push(value);
+      }
+    }
+    return objList;
   }
 
   LoadByteCode(){
@@ -67,5 +84,26 @@ class Scene{
       }
     }
     Log(this);
+  }
+
+  RemoveObjFromBytecode(obj){
+    var lines = this.bytecode.match(/[^\r\n]+/g);
+    var found = false;
+    let i = 0;
+    while(i < lines.length && !found){
+      if(lines[i] === obj.bytecode){
+        found = true;
+        lines.splice(i, 1);
+      }
+      i+=1;
+    }
+    this.bytecode = lines.join('\n');
+    return found;
+  }
+
+  CleanByteCode(){
+    if(this.bytecode){
+      this.bytecode = this.bytecode.match(/[^\r\n]+/g).join('\n');
+    }
   }
 }

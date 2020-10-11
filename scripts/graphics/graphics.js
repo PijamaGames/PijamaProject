@@ -74,6 +74,7 @@ class Graphics {
       new Uniform2f('camPosition', opaqueProgram, ()=>manager.scene.camera.transform.GetWorldPosPerfect())
     ]);
     opaqueProgram.SetObjUniforms([
+      new Uniform4f('tint', opaqueProgram, (obj) => obj.renderer.tint),
       new Uniform2f('tile', opaqueProgram, (obj) => obj.renderer.tile),
       new Uniform2f('scale', opaqueProgram, (obj) => obj.transform.scale),
       new Uniform1f('height', opaqueProgram, (obj) => obj.transform.height),
@@ -97,6 +98,7 @@ class Graphics {
       new Uniform2f('camPosition', spriteSheetProgram, ()=>manager.scene.camera.transform.GetWorldPosPerfect())
     ]);
     spriteSheetProgram.SetObjUniforms([
+      new Uniform4f('tint', spriteSheetProgram, (obj) => obj.renderer.tint),
       new UniformTex('colorTex', spriteSheetProgram, (obj)=>obj.renderer.spriteSheet),
       new Uniform2f('tileMapResDIVtileSize', spriteSheetProgram, (obj)=>
       new Vec2(obj.renderer.spriteSheet.width / tileSize, obj.renderer.spriteSheet.height / tileSize)),

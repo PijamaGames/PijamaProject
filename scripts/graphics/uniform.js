@@ -44,3 +44,14 @@ class Uniform2f extends Uniform{
     gl.uniform2f(this.location, v.x, v.y);
   }
 }
+
+class Uniform4f extends Uniform{
+  constructor(name, program, getFunc){
+    super(name, program);
+    this.getValue = getFunc;
+  }
+  Load(obj){
+    let v = this.getValue(obj);
+    gl.uniform4f(this.location, v[0], v[1], v[2], v[3]);
+  }
+}

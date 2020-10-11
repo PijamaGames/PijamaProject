@@ -21,6 +21,8 @@ uniform float vertical;
 uniform vec2 scaleMULtileSizeDIVres;
 uniform float floorPos;
 
+varying float depth;
+
 void main()
 {
   fTexCoords = texCoords;
@@ -33,14 +35,10 @@ void main()
   //Depth
   const float maxDepth = sqrt(2.0);
   float width = texCoords.y * scale.y;
-  float xPos = floorPos + width * (1.0-vertical)/*-cam*/;
+  float xPos = floorPos + width * (1.0-vertical);
   xPos = (xPos*tileSizeDIVres.y)+0.5;
   float yPos = (height + width*vertical)*tileSizeDIVres.y;
-  float depth = length(vec2(xPos, 1.0-yPos))/maxDepth;
-  /*float finalHeight = (texCoords.y * scale.y + height) * tileSizeDIVres.y;
-  float depth = length(vec2(floorPos, 1.0-clamp(finalHeight, 0.0,1.0)*vertical))/maxDepth;*/
-
-
+  /*float */depth = length(vec2(xPos, 1.0-yPos))/maxDepth;
 
   gl_Position = vec4(pos-camTransformed,depth,1.0);
 }

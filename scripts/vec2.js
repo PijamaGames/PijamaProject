@@ -3,9 +3,14 @@ class Vec2 {
     this.v = new Float32Array([x, y]); //Vector value
   }
 
+  Copy(){
+    return new Vec2(this.x, this.y);
+  }
+
   Set(x, y){
     this.x = x;
     this.y = y;
+    return this;
   }
 
   Add(v2){
@@ -84,6 +89,9 @@ class Vec2 {
   }
   get mod(){
     return Vec2.Mod(this);
+  }
+  static Distance(v1,v2){
+    return Vec2.Sub(v2,v1).mod;
   }
 
   RotAround(rad, pos = new Vec2()){

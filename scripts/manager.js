@@ -13,11 +13,12 @@ class Manager{
   ManageTime(){
     var newMs = Date.now();
     this.delta = (newMs - this.ms)/1000.0;
+    if(this.delta > 1.0) this.delta = 1.0;
     this.ms = newMs;
   }
 
   GameLoop(that){
-    Log("Gameloop iteration");
+    //Log("Gameloop iteration");
     that.ManageTime();
     input.Update();
 
@@ -75,6 +76,7 @@ class Manager{
     input.AddKey('KeyA');
     input.AddKey('KeyS');
     input.AddKey('KeyD');
+    input.AddKey('KeyR');
     //arrow keys
     input.AddKey('ArrowLeft');
     input.AddKey('ArrowRight');
