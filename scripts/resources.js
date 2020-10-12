@@ -4,16 +4,11 @@ var textureNames = [
   'spriteSheet'
 ];
 
-var modelURLs = [
-  ['testModel','resources/testModel.obj'],
-  ['plane', 'resources/plane.obj'],
-  ['juan','resources/juan.obj'],
-  ['stage','resources/testStage.obj']
-];
-
 var shaderURLs = [ //name, url
   ['vs_opaque', 'scripts/shaders/vs_opaque.glsl'],
-  ['fs_opaque', 'scripts/shaders/fs_opaque.glsl']
+  ['fs_opaque', 'scripts/shaders/fs_opaque.glsl'],
+  ['vs_collider', 'scripts/shaders/vs_collider.glsl'],
+  ['fs_collider', 'scripts/shaders/fs_collider.glsl']
 ];
 
 var resources;

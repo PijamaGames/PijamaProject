@@ -4,11 +4,12 @@ class Scene{
     this.CleanByteCode();
     this.gameobjs = new Map();
     this.staticGameobjs = new Map();
-    this.colliderGroups= new Set();
+    this.colliderGroups= [];
+    this.rigidbodies = new Set();
     manager.scenes.set(this.name, this);
     this.camera = /*this.AddGameobj(*/new Gameobj('camera',0, null, this, [
       new Camera(),
-      new DebugController(10),
+      //new DebugController(10),
     ], new Transform(new Vec2(0,0), 0.0, new Vec2(canvas.width/tileSize, canvas.height/tileSize)));
   }
 

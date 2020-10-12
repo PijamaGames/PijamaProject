@@ -1,5 +1,5 @@
 class Program{
-  constructor(name, _vertexShaderName, _fragmentShaderName)
+  constructor(name, _vertexShaderName, _fragmentShaderName, useTexCoords = true)
   {
     this.name = name;
     manager.graphics.programs.set(this.name, this);
@@ -11,6 +11,7 @@ class Program{
     this.uniforms = [];
     this.texUnitOffset = 0;
     this.renderers = new Map();
+    this.useTexCoords = useTexCoords;
 
     manager.graphics.SetBuffers(this);
   }
@@ -88,7 +89,7 @@ class Program{
     this.Use();
     let texUnitOffset = this.LoadUniforms();
     for(var [name, renderer] of this.renderers){
-      this.LoadObjUniforms(renderer.gameobj, texUnitOffset);
+      this.LoadObjUniforms(renderer, texUnitOffset);
       manager.graphics.Draw();
     }
   }

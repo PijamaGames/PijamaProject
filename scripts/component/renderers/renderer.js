@@ -1,12 +1,12 @@
 class Renderer extends Component{
-  constructor(programs = [], tile = new Vec2(), vertical = true, name = null){
+  constructor(programs = [], tile = new Vec2(), vertical = true){
     super();
     this.type = "renderer";
     this.programs = [];
     for(var program of programs){
       this.programs.push(manager.graphics.programs.get(program));
     }
-    this.name = name;
+    this.name = null;
     this.tile = tile;
     this.vertical = vertical;
     this.tint = new Float32Array([1,1,1,1]);
@@ -39,7 +39,7 @@ class Renderer extends Component{
     this.gameobj = gameobj;
     this.gameobj.renderer = this;
 
-    if(!this.name) this.name = this.gameobj.key;
+    this.name = this.gameobj.key;
     for(var program of this.programs){
       program.renderers.set(this.name, this);
     }

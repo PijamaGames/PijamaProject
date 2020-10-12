@@ -29,7 +29,7 @@ void main()
 
   vec2 pos = vec2(
     (vertPosition.x + vertDisplacement.x) * scaleMULtileSizeDIVres.x,
-    (vertPosition.y+ vertDisplacement.y) * scaleMULtileSizeDIVres.y
+    (vertPosition.y + vertDisplacement.y) * scaleMULtileSizeDIVres.y
   );
 
   //Depth

@@ -7,6 +7,10 @@ class Vec2 {
     return new Vec2(this.x, this.y);
   }
 
+  Opposite(){
+    return new Vec2(-this.x, -this.y);
+  }
+
   Set(x, y){
     this.x = x;
     this.y = y;
@@ -50,7 +54,7 @@ class Vec2 {
 
   Norm(){
     let mod = this.mod;
-    if(mod == 0.0) return;
+    if(mod == 0.0) return this;
     this.x /= mod;
     this.y /= mod;
     return this;
@@ -112,6 +116,32 @@ class Vec2 {
     return v2;
   }
 
+  static Angle(v1,v2 = new Vec2(1,0)){
+    let mod1 = v1.mod;
+    let mod2 = v2.mod;
+    if(mod1 === 0.0 || mod2 === 0.0) return 0.0;
+    let cos = Vec2.Dot(v1,v2) / (mod1 * mod2);
+    let angle = Math.acos(cos);
+    return angle;
+  }
+
+  Angle(v2 = new Vec2(1,0)){
+    return Vec2.Angle(this, v2);
+  }
+
+  GetQuadrant(numQuadrants = 4.0, displacement = 0.5){
+    displacement = (1.0/numQuadrants)*displacement;
+    let angle = this.Angle();
+    let lap = 2.0*Math.PI;
+    if(this.y < 0.0) angle = lap - angle;
+    angle = angle/lap;
+    angle += displacement;
+    if(angle < 0.0){
+      angle+=Math.trunc(-angle);
+    }
+    return Math.trunc(angle * numQuadrants)%numQuadrants;
+  }
+
   toString(name = ''){
     return name+'('+this.x+','+this.y+')';
   }
@@ -120,16 +150,18 @@ class Vec2 {
   * Returns the projection of a point
   * on a rect defined by two points
   */
-  static ProjectOnRect(p, va, vb){
-    //Log(p);
-    //Log(va.toString('va'));
-    //Log(vb.toString('vb'));
+  static ProjectOnRect(p, va, vb, isSegment = false){
     let va_vb = Vec2.Sub(vb,va);
-    //Log(va_vb.toString('va_vb'));
     let va_p = Vec2.Sub(p, va);
-    //Log(va_p.toString('va_p'));
+    let dist = va_vb.mod;
     va_vb.Norm();
     let d = Vec2.Dot(va_p, va_vb);
+
+    if(isSegment){
+      if(d < 0.0) d = 0.0;
+      if(d > dist) d = dist;
+    }
+
     va_vb.Scale(d);
     let projPoint=Vec2.Add(va, va_vb);
     return new Vec2(projPoint.x, projPoint.y);

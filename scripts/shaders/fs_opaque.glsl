@@ -11,10 +11,10 @@ uniform vec2 tileMapResDIVtileSize;
 
 //OBJ UNIFORMS
 uniform vec2 scale;
-uniform float height;
-uniform float vertical;
+//uniform float height;
+//uniform float vertical;
 uniform vec2 tile;
-uniform float floorPos;
+//uniform float floorPos;
 uniform vec4 tint;
 
 varying float depth;

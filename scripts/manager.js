@@ -8,6 +8,7 @@ class Manager{
     this.delta = 0.0;
     this.ms = null;
     mapPlacer = new MapPlacer();
+    physics = new Physics();
   }
 
   ManageTime(){
@@ -24,9 +25,9 @@ class Manager{
 
     if(this.scene){
       this.scene.Update();
-      //Update Physics
+      //this.scene.UpdatePhysics();
+      physics.Update();
       this.graphics.Render();
-
       //Update map placer
       if(mapPlacer) mapPlacer.Update();
     }
