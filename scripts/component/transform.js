@@ -75,8 +75,8 @@ class Transform extends Component {
     let worldPos = this.worldPos;
 
     worldPos.Set(
-      worldPos.x - this.anchor.x * this.scale.x / 2.0,
-      worldPos.y - this.anchor.y * this.scale.y / 2.0
+      worldPos.x - this.anchor.x * this.scale.x,
+      worldPos.y - this.anchor.y * this.scale.y
     );
 
     return position.x > worldPos.x && position.x < worldPos.x + this.scale.x && //inside x

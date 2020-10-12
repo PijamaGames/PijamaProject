@@ -20,7 +20,11 @@ class Gameobj {
   }
 
   get bytecode(){
-    return this.name+' '+this.transform.position.x+' '+this.transform.position.y+' '+this.transform.height;
+    let str = this.name+' '+this.transform.position.x+' '+this.transform.position.y+' '+this.transform.height;
+    if(!this.transform.vertical){
+      str += ' ' + this.transform.scale.x + ' ' + this.transform.scale.y
+    }
+    return str;
   }
 
   Update() {

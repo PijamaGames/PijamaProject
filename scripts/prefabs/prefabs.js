@@ -18,8 +18,8 @@ function PF_Box(position = new Vec2(), height = 0.0) {
   PF_BoxCount += 1;
   return new Gameobj('Box', PF_BoxCount, null, manager.scene, [
     new Rigidbody(0.9, false),
-    new Renderer(['opaque'], new Vec2(), new Vec2(1,1), true),
-    new ColliderGroup([new BoxCollider(new Vec2(1.0,0.3), 2.0, 2.0)]),
+    new Renderer(['opaque'], new Vec2(), new Vec2(2,2), true),
+    new ColliderGroup([new BoxCollider(new Vec2(1.0,0.35), 2.0, 0.5)]),
     //new DebugController(3.0)
   ], new Transform(position, height, new Vec2(2, 2), new Vec2()), false);
 }

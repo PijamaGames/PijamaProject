@@ -72,10 +72,7 @@ class MapPlacer {
   AddGameobj(that) {
     if (that.gameobj) {
       let str = this.scene.bytecode === '' ? '' : '\n';
-      str += that.gameobjType + ' ' +
-        that.gameobj.transform.position.x + ' ' +
-        that.gameobj.transform.position.y + ' ' +
-        that.gameobj.transform.height;
+      str += that.gameobj.bytecode;
       that.scene.bytecode += str;
       that.gameobj = null;
       that.UpdateInfo();
@@ -117,7 +114,7 @@ class MapPlacer {
     }
     if (this.gameobj) {
       //let gridPos = input.mouseGridPosition;
-      this.gameobj.transform.SetWorldCenter(input.mouseGridPosition);
+      this.gameobj.transform.worldPos = (input.mouseGridPosition);
       if (input.mouseLeftDown) {
         this.AddGameobj(this);
       }
