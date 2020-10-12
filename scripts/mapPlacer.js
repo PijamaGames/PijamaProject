@@ -60,6 +60,7 @@ class MapPlacer {
       this.DestroyGameobj();
       this.gameobjType = that.newObjectTypeField.value;
       that.gameobj = createFunc();
+      that.gameobj.transform.SetWorldCenter(input.mouseGridPosition);
     }
   }
 
@@ -131,11 +132,22 @@ class MapPlacer {
           this.overlappedObj.renderer.SetTint(1.0,1.0,1.0,1.0);
           this.overlappedObj = null;
           this.gameobjType = this.gameobj.name;
+          this.newObjectTypeField.value = this.gameobjType;
+          this.game
           this.UpdateInfo();
         }
-      } else if (input.GetKeyDown('Space')){
-        this.CreateGameobj(this);
       }
+    }
+    if (input.GetKeyDown('Space')){
+      if(this.overlappedObj){
+        if(this.overlappedObj.renderer){
+          this.overlappedObj.renderer.SetTint(1.0,1.0,1.0,1.0);
+        }
+        this.overlappedObj = null;
+      }
+      this.CreateGameobj(this);
+
+
     }
     //Log(this.scene.gameobjs);
   }
