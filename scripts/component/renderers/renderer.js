@@ -1,5 +1,5 @@
 class Renderer extends Component{
-  constructor(programs = [], tile = new Vec2(), vertical = true){
+  constructor(programs = [], tile = new Vec2(), numTiles = new Vec2(1,1), vertical = true){
     super();
     this.type = "renderer";
     this.programs = [];
@@ -8,6 +8,7 @@ class Renderer extends Component{
     }
     this.name = null;
     this.tile = tile;
+    this.numTiles = numTiles;
     this.vertical = vertical;
     this.tint = new Float32Array([1,1,1,1]);
   }

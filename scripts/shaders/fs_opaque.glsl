@@ -11,6 +11,7 @@ uniform vec2 tileMapResDIVtileSize;
 
 //OBJ UNIFORMS
 uniform vec2 scale;
+uniform vec2 numTiles;
 //uniform float height;
 //uniform float vertical;
 uniform vec2 tile;

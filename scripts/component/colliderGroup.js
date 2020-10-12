@@ -1,12 +1,8 @@
 class ColliderGroup extends Component{
   constructor(colliders = []){
     super();
-    this.colliders=[];
+    this.colliders=colliders;
     this.type="colliderGroup";
-    for (var c of colliders){
-      this.colliders.push(c);
-      c.colliderGroup = this;
-    }
 
   }
 
@@ -16,15 +12,20 @@ class ColliderGroup extends Component{
   }
 
   SetGameobj(gameobj){
-    this.gameobj = gameobj;
-    this.gameobj.scene.colliderGroups.push(this);
-    this.gameobj.colliderGroup = this;
+    if(!(gameobj.transform.height > 0.0)){
+      for (var c of this.colliders){
+        c.colliderGroup = this;
+      }
 
+      this.gameobj = gameobj;
+      this.gameobj.scene.colliderGroups.push(this);
+      this.gameobj.colliderGroup = this;
 
-    if(DEBUG){
-      let program = manager.graphics.programs.get('collider');
-      for(var i = 0; i < this.colliders.length; i++){
-        program.renderers.set(this.gameobj.key+'_col'+i, this.colliders[i]);
+      if(DEBUG){
+        let program = manager.graphics.programs.get('collider');
+        for(var i = 0; i < this.colliders.length; i++){
+          program.renderers.set(this.gameobj.key+'_col'+i, this.colliders[i]);
+        }
       }
     }
   }

@@ -93,7 +93,14 @@ class Collider {
     if(minDist > circle.radius){
       return new Vec2();
     } else { //They are colliding
-      return dir.Norm().Scale(circle.radius-minDist);
+      dir.Norm().Scale(circle.radius-minDist)
+      if(this == circle){
+        return dir;
+      }
+      else{
+        return dir.Opposite();
+      }
+
     }
   }
 

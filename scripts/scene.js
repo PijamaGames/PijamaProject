@@ -51,7 +51,7 @@ class Scene{
       }
     }
     for(var [key,value] of this.staticGameobjs){
-      if(!value.camera && value.IsInsideBoundaries(position)){
+      if(!value.camera && value.transform.IsInsideBoundaries(position)){
         objList.push(value);
       }
     }

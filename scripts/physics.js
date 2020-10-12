@@ -44,7 +44,9 @@ class Physics {
   ResolveColliderGroups(cg1, cg2){
     let dir;
     for(var c1 of cg1.colliders){
+      //if(c1.gameobj.transform.height > 0.0) continue;
       for(var c2 of cg2.colliders){
+        //if(c2.gameobj.transform.height > 0.0) continue;
         dir = c1.CheckCollision(c2);
         dir.Scale(this.repulsion);
         if(c1.gameobj.rigidbody){

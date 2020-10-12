@@ -1,6 +1,6 @@
 class SpriteRenderer extends Renderer{
-  constructor(spriteSheetName, programs = [], tile = new Vec2(), vertical = true, numDirs = 4, dirIndex = null){
-    super(programs, tile, vertical);
+  constructor(spriteSheetName, programs = [], tile = new Vec2(), numTiles = new Vec2(1,1), vertical = true, numDirs = 4, dirIndex = null){
+    super(programs, tile, numTiles, vertical);
     this.spriteSheet = resources.textures.get(spriteSheetName);
     this.maxFrames = new Vec2(this.spriteSheet.width / tileSize, this.spriteSheet.height / tileSize);
     this.interval = 1.0/12.0;
