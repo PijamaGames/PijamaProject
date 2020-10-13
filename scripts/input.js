@@ -160,7 +160,8 @@ class Input {
   }
 
   AddKey(key) {
-    this.keys.set(key, new Key(key));
+    let k = this.keys.set(key, new Key(key));
+    return k;
   }
 
   GetKeyDown(key) {

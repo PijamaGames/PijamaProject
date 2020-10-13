@@ -16,7 +16,6 @@ uniform vec2 numTiles;
 //uniform float vertical;
 uniform vec2 tile;
 //uniform float floorPos;
-uniform vec4 tint;
 
 varying float depth;
 
@@ -35,13 +34,14 @@ void main()
     1.0 - (tile.y/tileMapResDIVtileSize.y + (repeatedTexCoords.y/tileMapResDIVtileSize.y)*numTiles.y)
   );
 
-  vec4 texColor = texture2D(colorTex, finalTexCoords) * tint;
+  vec4 texColor = texture2D(colorTex, finalTexCoords);
   if(texColor.w < 0.3) discard;
-  gl_FragColor = texColor;
+  //gl_FragColor = texColor;
   //gl_FragColor = vec4(finalTexCoords,0.0, 1.0);
   //gl_FragColor = vec4(fTexCoords,0.0, 1.0);
   //gl_FragColor = vec4(yPos, yPos, yPos, 1.0);
   //gl_FragColor = vec4(1.0-depth, 1.0-depth, 1.0-depth, 1.0);
+  gl_FragColor = vec4(depth, depth, depth, 1.0);
   //gl_FragColor = vec4(fTexCoords.y * scale.y, fTexCoords.y * scale.y, fTexCoords.y * scale.y, 1.0);
   //gl_FragColor = vec4(1.0-fdepth, 1.0-fdepth, 1.0-fdepth, 1.0);
   //gl_FragColor = vec4(texColor.xyz*depth, 1.0);

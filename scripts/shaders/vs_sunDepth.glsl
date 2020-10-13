@@ -20,6 +20,7 @@ uniform float height;
 uniform float vertical;
 uniform vec2 scaleMULtileSizeDIVres;
 uniform float floorPos;
+uniform float anchory;
 
 varying float depth;
 
@@ -29,8 +30,8 @@ void main()
 
   vec2 pos = vec2(
     (vertPosition.x + vertDisplacement.x) * scaleMULtileSizeDIVres.x,
-    (vertPosition.y + vertDisplacement.y) * scaleMULtileSizeDIVres.y
-    //(-vertPosition.y + vertDisplacement.y-scale.y*vertical) * scaleMULtileSizeDIVres.y
+    (vertPosition.y-(2.0*vertPosition.y*vertical) + vertDisplacement.y-(scale.y+anchory*2.0)*vertical) * scaleMULtileSizeDIVres.y
+    //(vertPosition.y + vertDisplacement.y) * scaleMULtileSizeDIVres.y
   );
 
   //Depth
@@ -40,7 +41,7 @@ void main()
   xPos = (xPos*tileSizeDIVres.y)+0.5;
   //float yPos = (height + width*vertical)*tileSizeDIVres.y;
   //depth = 0.99*length(vec2(xPos,0.0 1.0-yPos))/maxDepth;
-  depth = xPos;
+  depth = 1.0-xPos;
 
   gl_Position = vec4(pos-camTransformed,depth,1.0);
 }

@@ -21,7 +21,7 @@ class Gameobj {
 
   get bytecode(){
     let str = this.name+' '+this.transform.position.x+' '+this.transform.position.y+' '+this.transform.height;
-    if(!this.transform.vertical){
+    if(!this.renderer.vertical){
       str += ' ' + this.transform.scale.x + ' ' + this.transform.scale.y
     }
     return str;

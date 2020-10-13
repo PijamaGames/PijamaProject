@@ -34,7 +34,7 @@ class Transform extends Component {
 
   //For callbacks
   GetWorldPos() {
-    return worldPos;
+    return this.worldPos;
   }
 
   GetWorldPosPerfect() {

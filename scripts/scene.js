@@ -75,8 +75,8 @@ class Scene{
       if(func){
         pos = elements[1] && elements[2] ? new Vec2(elements[1], elements[2]) : new Vec2();
         height = elements[3] ? parseFloat(elements[3]) : 0.0;
-        scaleX = elements[4] ? parseFloat(elements[4]) : 1.0;
-        scaleY = elements[5] ? parseFloat(elements[5]) : 1.0;
+        scaleX = elements[4] ? elements[4] : 1.0;
+        scaleY = elements[5] ? elements[5] : 1.0;
 
         func(pos, height, new Vec2(scaleX, scaleY));
       }

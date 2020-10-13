@@ -8,7 +8,11 @@ var shaderURLs = [ //name, url
   ['vs_opaque', 'scripts/shaders/vs_opaque.glsl'],
   ['fs_opaque', 'scripts/shaders/fs_opaque.glsl'],
   ['vs_collider', 'scripts/shaders/vs_collider.glsl'],
-  ['fs_collider', 'scripts/shaders/fs_collider.glsl']
+  ['fs_collider', 'scripts/shaders/fs_collider.glsl'],
+  ['vs_common', 'scripts/shaders/vs_common.glsl'],
+  ['fs_colorFilter', 'scripts/shaders/fs_colorFilter.glsl'],
+  ['vs_sunDepth', 'scripts/shaders/vs_sunDepth.glsl'],
+  ['fs_sunDepth', 'scripts/shaders/fs_sunDepth.glsl'],
 ];
 
 var resources;

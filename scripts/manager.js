@@ -77,6 +77,7 @@ class Manager{
     input.AddKey('KeyA');
     input.AddKey('KeyS');
     input.AddKey('KeyD');
+
     input.AddKey('KeyR');
     //arrow keys
     input.AddKey('ArrowLeft');
@@ -85,6 +86,11 @@ class Manager{
     input.AddKey('ArrowDown');
 
     input.AddKey('Space');
+
+    input.AddKey('KeyT');
+    input.AddKey('KeyG');
+    input.AddKey('KeyY');
+    input.AddKey('KeyH');
   }
 
   AddScene(scene) {

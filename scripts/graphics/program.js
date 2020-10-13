@@ -1,5 +1,5 @@
 class Program{
-  constructor(name, _vertexShaderName, _fragmentShaderName, useTexCoords = true)
+  constructor(name, _vertexShaderName, _fragmentShaderName, useTexCoords = true, postProcess = false)
   {
     this.name = name;
     manager.graphics.programs.set(this.name, this);
@@ -11,6 +11,9 @@ class Program{
     this.uniforms = [];
     this.texUnitOffset = 0;
     this.renderers = new Map();
+    if(postProcess){
+      this.renderers.set('postProcess', 0);
+    }
     this.useTexCoords = useTexCoords;
 
     manager.graphics.SetBuffers(this);
