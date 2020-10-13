@@ -21,16 +21,19 @@ class FSM{
   ChangeCurrentNode() {
     var i=0;
     var edge;
-    while(!this.changed && i<this.currentNode.edges.length){
-      edge=this.currentNode.edges[i];
-      if(edge.CheckConditions()){
-        this.currentNode.Exit();
-        this.currentNode=edge.destNode;
-        this.currentNode.Start();
-        this.changed=true;
+    if(this.currentNode.edges){
+      while(!this.changed && i<this.currentNode.edges.length){
+        edge=this.currentNode.edges[i];
+        if(edge.CheckConditions()){
+          this.currentNode.Exit();
+          this.currentNode=edge.destNode;
+          this.currentNode.Start();
+          this.changed=true;
+        }
+        i++;
       }
-      i++;
     }
+    this.changed=false;
 
   }
 
