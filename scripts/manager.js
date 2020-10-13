@@ -22,7 +22,7 @@ class Manager{
     //Log("Gameloop iteration");
     that.ManageTime();
     input.Update();
-
+    //fsm.Update();
     if(this.scene){
       this.scene.Update();
       //this.scene.UpdatePhysics();
@@ -44,6 +44,7 @@ class Manager{
     resources.Load(function(){
       that.graphics.LoadResources();
       that.LoadScene('testScene');
+
       //comprobacion colision entre dos circulos
       /*let obj = new Gameobj('firstObj', null, testScene, [new ColliderGroup()], new Transform(new Vec2(4.1,0)));
       let obj2 = PF_Tree(new Vec2(0,0));
@@ -71,6 +72,8 @@ class Manager{
       that.GameLoop(that);
     });
   }
+
+
 
   AddInputKeys(){
     input.AddKey('KeyW');
