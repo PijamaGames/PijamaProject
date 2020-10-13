@@ -39,11 +39,27 @@ class Manager{
 
   Start(){
     this.AddInputKeys();
+    var node=new Node('holi',
+      function(){
+        Log("holi");
+      },
+      function(){
+        Log("Aqui estoy");
+      },
+      function(){
+        Log("Adios");
+      }
+    );
+    node.Start();
+    node.Update();
+    node.Exit();
+
 
     var that = this;
     resources.Load(function(){
       that.graphics.LoadResources();
       that.LoadScene('testScene');
+
       //comprobacion colision entre dos circulos
       /*let obj = new Gameobj('firstObj', null, testScene, [new ColliderGroup()], new Transform(new Vec2(4.1,0)));
       let obj2 = PF_Tree(new Vec2(0,0));
@@ -71,6 +87,8 @@ class Manager{
       that.GameLoop(that);
     });
   }
+
+
 
   AddInputKeys(){
     input.AddKey('KeyW');
