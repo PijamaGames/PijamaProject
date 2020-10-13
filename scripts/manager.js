@@ -22,7 +22,7 @@ class Manager{
     //Log("Gameloop iteration");
     that.ManageTime();
     input.Update();
-
+    //fsm.Update();
     if(this.scene){
       this.scene.Update();
       //this.scene.UpdatePhysics();
@@ -39,21 +39,6 @@ class Manager{
 
   Start(){
     this.AddInputKeys();
-    var node=new Node('holi',
-      function(){
-        Log("holi");
-      },
-      function(){
-        Log("Aqui estoy");
-      },
-      function(){
-        Log("Adios");
-      }
-    );
-    node.Start();
-    node.Update();
-    node.Exit();
-
 
     var that = this;
     resources.Load(function(){

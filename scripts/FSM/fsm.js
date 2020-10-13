@@ -7,8 +7,8 @@ class FSM{
 
   }
 
-  Start(node){
-    this.currentNode=node;
+  Start(name){
+    this.currentNode=this.nodes.get(name);
     this.currentNode.Start();
   }
 
@@ -19,26 +19,17 @@ class FSM{
   }
 
   ChangeCurrentNode() {
-    //version con while
     var i=0;
-    while(!this.changed and i<this.currentNode.edges.length){
+    var edge;
+    while(!this.changed && i<this.currentNode.edges.length){
       edge=this.currentNode.edges[i];
       if(edge.CheckConditions()){
         this.currentNode.Exit();
-        this.currentNode=edge.nodeDest;
+        this.currentNode=edge.destNode;
         this.currentNode.Start();
         this.changed=true;
       }
       i++;
-    }
-    //version con foreach
-    for(var edge of this.currentNode.edges){
-      if(edge.CheckConditions()){
-        this.currentNode.Exit();
-        this.currentNode=edge.nodeDest;
-        this.currentNode.Start();
-        continue;
-      }
     }
 
   }
@@ -48,7 +39,7 @@ class FSM{
   }
 
   SetNode(node) {
-    this.nodes.set(nodes.name, node);
+    this.nodes.set(node.name, node);
 
   }
 

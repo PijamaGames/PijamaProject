@@ -5,9 +5,9 @@ class Edge{
 
   CheckConditions(){
     var i=0;
-    var ready;
-    while(ready && i<conditions.length){
-      ready=conditions[i];
+    var ready=true;
+    while(ready && i<this.conditions.length){
+      ready=this.conditions[i]();
       i++;
     }
     return ready;
