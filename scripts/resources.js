@@ -15,12 +15,17 @@ var shaderURLs = [ //name, url
   ['fs_sunDepth', 'scripts/shaders/fs_sunDepth.glsl'],
 ];
 
+var soundsURLs=[
+  ['sound','resources/sound.mp3'],
+  ['sound2','resources/sound2.mp3']
+];
+
 var resources;
 class Resources{
   constructor(){
     this.textures = new Map();
-    this.models = new Map();
     this.shaders = new Map();
+    this.sounds = new Map();
   }
 
   Load(OnLoadFunc = null){
@@ -38,12 +43,17 @@ class Resources{
       gl.bindTexture(gl.TEXTURE_2D, null);
       Log("Textures loaded");
 
+      //LOAD SOUNDS
+      for(var sound of soundsURLs){
+        that.sounds.set(sound[0],sound[1]);
+      }
+
       //Once textures are loaded
-      //LOAD MODELS
-      //that.LoadModels(0,that,OnLoadFunc);
       Log("All resources loaded");
       OnLoadFunc();
     });
+
+
   }
 
   LoadShaders(/*name, url, */id, that, endCallback){

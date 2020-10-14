@@ -8,6 +8,18 @@ function Main(){
   manager = new Manager();
   manager.AddScene(new Scene("testScene", BC_testScene));
 
+  //pruebas sonido, funciona solo si se le hace un primer click a la pantalla
+  /*var s =new Howl({
+    src:["resources/sound.mp3"]
+  });
+  s.play();
+  var s2 =new Howl({
+    src:["resources/sound2.mp3"]
+  });
+  s2.play();*/
+
+
+
   /*var node2=new Node('nodo2',
     function(){
       Log("Nodo2: Hola");
