@@ -5,7 +5,16 @@ function PF_Tree(position = new Vec2(), height = 0.0) {
   PF_TreeCount += 1;
   return new Gameobj('Tree', PF_TreeCount, null, manager.scene, [
     //new ColliderGroup([new BoxCollider(new Vec2(0.75,0), 0.5, 0.5)]),
-    new ColliderGroup([new CircleCollider(new Vec2(1.0,0.2), 0.2)]),
+    new ColliderGroup([new CircleCollider(new Vec2(1.0,0.2), 0.2,true,
+    function(){
+      Log("arbol: holi");
+    },
+    function(){
+      Log("arbol: aqui");
+    },
+    function(){
+      Log("arbol: adios");
+    })]),
     new Renderer(['opaque','sunDepth'], new Vec2(0, 130), new Vec2(2,2), true),
     //new DebugController(5.0)
   ], new Transform(position, height, new Vec2(2, 2), new Vec2(0.0,0.0)), false);
@@ -30,7 +39,16 @@ var PF_NeluCount = -1;
 function PF_Nelu(position = new Vec2(), height = 0.0) {
   PF_NeluCount += 1;
   return new Gameobj('Nelu', PF_NeluCount, null, manager.scene, [
-    new ColliderGroup([new CircleCollider(new Vec2(0,-0.3), 0.2)]),
+    new ColliderGroup([new CircleCollider(new Vec2(0,-0.3), 0.2, true,
+    function(){
+      Log("Nelu: holi");
+    },
+    function(){
+      Log("Nelu: aqui");
+    },
+    function(){
+      Log("Nelu: adios");
+    })]),
     new SpriteRenderer('spriteSheet', ['spriteSheet','sunDepthSprite'], new Vec2(0, 2),new Vec2(1,1), true, 4, [0,3,1,2]),
     new Rigidbody(),
     //new DebugController(3.0)

@@ -1,11 +1,14 @@
 class Collider {
-  constructor(displacement) {
+  constructor(displacement,isTrigger, onTriggerEnterCallback, onTriggerStayCallback,onTriggerExitCallback) {
     this.type = "collider";
     this.tint = new Float32Array([0.0, 1.0, 0.0, 0.5]);
-    Object.assign(this, {
-      displacement
-    });
+    Object.assign(this, {displacement, isTrigger});
+    this.OnTriggerEnterCallback=onTriggerEnterCallback;
+    this.OnTriggerStayCallback=onTriggerStayCallback;
+    this.OnTriggerExitCallback=onTriggerExitCallback;
     this.circular = 0.0;
+    this.isColliding;
+    this.objsInsideTrigger=new Map();
   }
 
   SetTint(r=1.0,g=1.0,b=1.0,a=1.0){
@@ -24,9 +27,6 @@ class Collider {
   get gameobj() {
     return this.colliderGroup.gameobj;
   }
-  /*get position() {
-    return this.gameobj.transform.position;
-  }*/
 
   CheckCollision(c2){
     let dir;
@@ -38,7 +38,22 @@ class Collider {
       dir = this.BoxCircleCollision(c2);
     }
     if(!dir) dir = new Vec2();
+
+    this.isColliding=dir.mod > 0.0;
+
     return dir;
+  }
+
+  OnTriggerEnter(){
+    this.OnTriggerEnterCallback();
+  }
+
+  OnTriggerStay(){
+    this.OnTriggerStayCallback();
+  }
+
+  OnTriggerExit(){
+    this.OnTriggerExitCallback();
   }
 
   CirclesCollision(c2) {
@@ -53,6 +68,7 @@ class Collider {
   BoxCircleCollision(c2) {
     let circle;
     let box;
+    let penetration=0.0;
     if(c2.isCircular){
       circle = c2;
       box = this;
@@ -93,7 +109,8 @@ class Collider {
     if(minDist > circle.radius){
       return new Vec2();
     } else { //They are colliding
-      dir.Norm().Scale(circle.radius-minDist)
+      penetration=circle.radius-minDist
+      dir.Norm().Scale(penetration)
       if(this == circle){
         return dir;
       }

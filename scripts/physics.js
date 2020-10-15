@@ -41,6 +41,39 @@ class Physics {
     }
   }
 
+  CheckTrigger(c1,c2){
+    let c1Key=c1.gameobj.key;
+    let c2Key= c2.gameobj.key;
+    
+    if(c1.isColliding) {
+      if(c1.isTrigger && !c1.objsInsideTrigger.has(c2Key)){
+        c1.objsInsideTrigger.set(c2Key,c2);
+        c1.OnTriggerEnter();
+      }
+      else if(c1.isTrigger && c1.objsInsideTrigger.has(c2Key)){
+        c1.OnTriggerStay();
+      }
+      if(c2.isTrigger && !c2.objsInsideTrigger.has(c1Key)){
+        c2.objsInsideTrigger.set(c1Key);
+        c2.OnTriggerEnter();
+      }
+      else if(c2.isTrigger && c2.objsInsideTrigger.has(c1Key)){
+        c2.OnTriggerStay();
+      }
+    }
+    else{
+      if(c1.isTrigger && c1.objsInsideTrigger.has(c2Key)){
+        c1.OnTriggerExit();
+        c1.objsInsideTrigger.delete(c2Key);
+      }
+      if(c2.isTrigger && c2.objsInsideTrigger.has(c1Key)){
+        c2.OnTriggerExit();
+        c2.objsInsideTrigger.delete(c1Key);
+      }
+    }
+
+  }
+
   ResolveColliderGroups(cg1, cg2){
     let dir;
     for(var c1 of cg1.colliders){
@@ -49,17 +82,28 @@ class Physics {
         //if(c2.gameobj.transform.height > 0.0) continue;
         dir = c1.CheckCollision(c2);
         dir.Scale(this.repulsion);
-        if(c1.gameobj.rigidbody){
-          c1.gameobj.rigidbody.AddForce(dir);
+        if(!c1.isTrigger && !c2.isTrigger){
+          if(c1.gameobj.rigidbody ){
+            c1.gameobj.rigidbody.AddForce(dir);
+          }
+          if(c2.gameobj.rigidbody){
+            c2.gameobj.rigidbody.AddForce(dir.Opposite());
+          }
+          if(DEBUG){
+            if(dir.mod > 0.0){
+              c1.SetTint(1.0,0.0,0.0,c1.tint[3]);
+              c2.SetTint(1.0,0.0,0.0,c2.tint[3]);
+            }
+          }
         }
-        if(c2.gameobj.rigidbody){
-          c2.gameobj.rigidbody.AddForce(dir.Opposite());
-        }
-
-        if(DEBUG){
-          if(dir.mod > 0.0){
-            c1.SetTint(1.0,0.0,0.0,c1.tint[3]);
-            c2.SetTint(1.0,0.0,0.0,c2.tint[3]);
+        else{
+          this.CheckTrigger(c1,c2);
+          if(DEBUG){
+            //c1.isColliding && c2.isColliding
+            if(c1.isColliding){
+              c1.SetTint(0.0,0.0,1.0,c1.tint[3]);
+              c2.SetTint(0.0,0.0,1.0,c2.tint[3]);
+            }
           }
         }
       }

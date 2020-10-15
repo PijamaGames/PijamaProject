@@ -69,6 +69,7 @@ class Graphics {
     this.programs.get('sunDepthSprite').Render();
 
     if(DEBUG){
+      this.BindFBO(null);
       //gl.enable(gl.BLEND);
       gl.disable(gl.DEPTH_TEST);
       this.programs.get('collider').Render();

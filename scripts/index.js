@@ -1,6 +1,6 @@
 "use strict;"
 const DEBUG = true;
-const EDITOR_MODE = false;
+const EDITOR_MODE = true;
 
 var manager;
 function Main(){
