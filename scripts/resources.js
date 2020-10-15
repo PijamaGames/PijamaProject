@@ -12,7 +12,11 @@ var shaderURLs = [ //name, url
   ['vs_common', 'scripts/shaders/vs_common.glsl'],
   ['fs_colorFilter', 'scripts/shaders/fs_colorFilter.glsl'],
   ['vs_sunDepth', 'scripts/shaders/vs_sunDepth.glsl'],
-  ['fs_sunDepth', 'scripts/shaders/fs_sunDepth.glsl'],
+  ['fs_depth', 'scripts/shaders/fs_depth.glsl'],
+  ['fs_sunLight', 'scripts/shaders/fs_sunLight.glsl'],
+  ['fs_lightApply', 'scripts/shaders/fs_lightApply.glsl'],
+  ['fs_common', 'scripts/shaders/fs_common.glsl'],
+  ['vs_depth', 'scripts/shaders/vs_depth.glsl']
 ];
 
 var soundsURLs=[

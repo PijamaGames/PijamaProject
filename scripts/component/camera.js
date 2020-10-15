@@ -5,17 +5,27 @@ class Camera extends Component{
     this.colorFilter = new Float32Array([1,1,1,1]);
     this.brightness = 1.1;
     this.contrast = 1.2;
+    this.ambientLight = new Float32Array([0.8,0.8,1.0,1.0]);
+    this.shadowStrength = 0.92;
+    this.shadowStretch = 0.0;
+    this.minShadowStretch = -1.5;
+  }
+
+  SetShadowStretch(shadowStretch){
+    this.shadowStretch = shadowStretch;
+    if(this.shadowStretch < this.minShadowStretch) this.shadowStretch = this.minShadowStretch;
   }
 
   Update(){
+    return;
     const step =2.0;
     let fStep = step * manager.delta;
-    if(input.GetKeyPressed('KeyT')){
-      this.contrast+=fStep;
-    } else if(input.GetKeyPressed('KeyG')){
-      this.contrast-= fStep;
+    if(input.GetKeyPressed('KeyY')){
+      this.SetShadowStretch(this.shadowStretch-fStep);
+    } else if(input.GetKeyPressed('KeyH')){
+      this.SetShadowStretch(this.shadowStretch+fStep);
     }
-
+    return;
     if(input.GetKeyPressed('KeyY')){
       this.brightness+=fStep;
     } else if(input.GetKeyPressed('KeyH')){

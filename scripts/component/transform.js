@@ -53,6 +53,13 @@ class Transform extends Component {
     )
     return worldPos;
   }
+  GetWorldCenterPerfect(){
+    let wc = this.GetWorldCenter();
+    return new Vec2(
+      Math.round(wc.x * tileSize) / tileSize,
+      Math.round(wc.y * tileSize) / tileSize
+    )
+  }
   SetWorldCenter(position){
     let dif = this.GetWorldCenter().Sub(this.worldPos);
     this.position.Set(
