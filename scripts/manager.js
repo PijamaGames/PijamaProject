@@ -45,6 +45,33 @@ class Manager{
       that.graphics.LoadResources();
       that.LoadScene('testScene');
 
+      //PROBANDO AUDIO
+      /*var go1= new Gameobj('Box', 1, null, that.scene, [ new AudioSource(["sound"]), new Transform()]);
+      var go2= new Gameobj('Box', 2, null, that.scene, [ new AudioSource(["sound"]), new Transform()]);
+
+      go1.audioSource.Play("sound");
+
+      setTimeout(() => {
+        //go2.audioSource.PlayAll();
+        //go1.audioSource.ChangeVol("sound",0.5);
+        //go1.audioSource.Pause("sound");
+        //go1.audioSource.Rate("sound",2);
+        /*go1.audioSource.Mute("sound",true);
+        setTimeout(() => {
+          //go2.audioSource.PlayAll();
+          //go1.audioSource.ChangeVol("sound",0.5);
+          //go1.audioSource.Pause("sound");
+          //go1.audioSource.Rate("sound",2);
+          go1.audioSource.Mute("sound",false);
+
+        }, 10000);
+        //go1.audioSource.Stop("sound");
+        //Log(go1.audioSource.Playing("sound"));
+        go1.audioSource.Fade("sound",1,0,10000);
+      }, 10000);*/
+
+
+
       //comprobacion colision entre dos circulos
       /*let obj = new Gameobj('firstObj', null, testScene, [new ColliderGroup()], new Transform(new Vec2(4.1,0)));
       let obj2 = PF_Tree(new Vec2(0,0));
