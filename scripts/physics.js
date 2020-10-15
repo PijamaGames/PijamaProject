@@ -1,9 +1,9 @@
 var physics;
 class Physics {
   constructor() {
-    this.steps = 10;
+    this.steps = 2;
     this.stepPCT = 1.0 / this.steps;
-    this.repulsion = 4.5;
+    this.repulsion = 45/this.steps;
   }
 
   Update() {

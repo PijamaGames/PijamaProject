@@ -10,7 +10,14 @@ class DebugController extends Component{
   }
 
   Update(){
-
+    const step =2.0;
+    let fStep = step * manager.delta;
+    if(input.GetKeyPressed('KeyT')){
+      this.gameobj.transform.height+=fStep;
+    } else if(input.GetKeyPressed('KeyG')){
+      this.gameobj.transform.height-= fStep;
+    }
+    //return;
     let x = input.GetKeyPressed('KeyA') * -1.0 + input.GetKeyPressed('KeyD');
     let y = input.GetKeyPressed('KeyS') * -1.0 + input.GetKeyPressed('KeyW');
     let v = new Vec2(x,y);
