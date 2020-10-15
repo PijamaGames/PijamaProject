@@ -28,6 +28,28 @@ class Collider {
     return this.colliderGroup.gameobj;
   }
 
+  CheckTrigger(c2){
+    let c1Key=this.gameobj.key;
+    let c2Key=c2.gameobj.key;
+
+    if(this.isColliding) {
+      if(this.isTrigger && !this.objsInsideTrigger.has(c2Key)){
+        this.objsInsideTrigger.set(c2Key,c2);
+        this.OnTriggerEnter();
+      }
+      else if(this.isTrigger && this.objsInsideTrigger.has(c2Key)){
+        this.OnTriggerStay();
+      }
+    }
+    else{
+      if(this.isTrigger && this.objsInsideTrigger.has(c2Key)){
+        this.OnTriggerExit();
+        this.objsInsideTrigger.delete(c2Key);
+      }
+    }
+
+  }
+
   CheckCollision(c2){
     let dir;
     if(this.isCircular && c2.isCircular){           //Circular collision
@@ -40,6 +62,7 @@ class Collider {
     if(!dir) dir = new Vec2();
 
     this.isColliding=dir.mod > 0.0;
+    c2.isColliding=this.isColliding;
 
     return dir;
   }
@@ -152,7 +175,7 @@ class Collider {
       if(c1center.y < c2center.y){ //c2 colliding by up side
         py = c1up-c2down;
       } else {
-        py = c2up - c1down;
+        py = c2up - this.down;
       }
 
       var leftP = Math.abs(px) < Math.abs(py) ? 1.0 : 0.0;

@@ -41,39 +41,6 @@ class Physics {
     }
   }
 
-  CheckTrigger(c1,c2){
-    let c1Key=c1.gameobj.key;
-    let c2Key= c2.gameobj.key;
-    
-    if(c1.isColliding) {
-      if(c1.isTrigger && !c1.objsInsideTrigger.has(c2Key)){
-        c1.objsInsideTrigger.set(c2Key,c2);
-        c1.OnTriggerEnter();
-      }
-      else if(c1.isTrigger && c1.objsInsideTrigger.has(c2Key)){
-        c1.OnTriggerStay();
-      }
-      if(c2.isTrigger && !c2.objsInsideTrigger.has(c1Key)){
-        c2.objsInsideTrigger.set(c1Key);
-        c2.OnTriggerEnter();
-      }
-      else if(c2.isTrigger && c2.objsInsideTrigger.has(c1Key)){
-        c2.OnTriggerStay();
-      }
-    }
-    else{
-      if(c1.isTrigger && c1.objsInsideTrigger.has(c2Key)){
-        c1.OnTriggerExit();
-        c1.objsInsideTrigger.delete(c2Key);
-      }
-      if(c2.isTrigger && c2.objsInsideTrigger.has(c1Key)){
-        c2.OnTriggerExit();
-        c2.objsInsideTrigger.delete(c1Key);
-      }
-    }
-
-  }
-
   ResolveColliderGroups(cg1, cg2){
     let dir;
     for(var c1 of cg1.colliders){
@@ -97,7 +64,8 @@ class Physics {
           }
         }
         else{
-          this.CheckTrigger(c1,c2);
+          c1.CheckTrigger(c2);
+          c2.CheckTrigger(c1);
           if(DEBUG){
             //c1.isColliding && c2.isColliding
             if(c1.isColliding){
