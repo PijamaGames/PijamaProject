@@ -19,14 +19,23 @@ class Program{
     manager.graphics.SetBuffers(this);
   }
 
+  SetUniformPrograms(uArr){
+    for(var u of uArr){
+      u.SetProgram(this);
+    }
+  }
+
   SetUniforms(uniforms = []){
     this.uniforms = uniforms;
+    this.SetUniformPrograms(this.uniforms);
   }
   SetObjUniforms(objUniforms = []){
     this.objUniforms = objUniforms;
+    this.SetUniformPrograms(this.objUniforms);
   }
   SetConstUniforms(constUniforms = []){
     this.constUniforms = constUniforms;
+    this.SetUniformPrograms(this.constUniforms);
     this.LoadConstUniforms();
     //Since this info is constant
     //it can be sent only once

@@ -25,7 +25,7 @@ uniform vec2 center;
 uniform float height;
 uniform float vertical;
 
-varying vec2 depth;
+//varying vec2 depth;
 
 void main() {
   fTexCoords = texCoords;
@@ -48,36 +48,11 @@ void main() {
   depthX=depthX*0.5+0.5;
 
   //DEPTH Y
-  float depthY =
+  /*float depthY =
   (height)*(1.0-vertical) +
   ((height+texCoords.y*scale.y)*tileSizeDIVres.y)*vertical;
-  depthY=1.0-depthY;
-  //depthY=depthY*0.5+0.5;
-  depth = vec2(depthX, depthY);
-  //depth = length(vec2(depthX, /*depthY*/0.0))/*/sqrt(2.0)*/;
-  //depth = sqrt(depthX*depthX);
-  //depth = depthX;
+  depthY=1.0-depthY;*/
+
+  //depth = vec2(depthX, depthY);
   gl_Position = vec4(finalVpos,0.99*depthX,1.0);
 }
-
-/*********void other()
-{
-  fTexCoords = texCoords;
-
-  vec2 pos = vec2(
-    (vertPosition.x + vertDisplacement.x) * scaleMULtileSizeDIVres.x,
-    (vertPosition.y + vertDisplacement.y) * scaleMULtileSizeDIVres.y
-    //(-vertPosition.y + vertDisplacement.y-scale.y*vertical) * scaleMULtileSizeDIVres.y
-  );
-
-  //Depth
-  //const float maxDepth = sqrt(2.0);
-  float width = texCoords.y * scale.y;
-  float xPos = floorPos + (width/*+height*//***) * (1.0-vertical);
-  /**********xPos = (xPos*tileSizeDIVres.y)+0.5;
-  //float yPos = (height + width*vertical)*tileSizeDIVres.y;
-  //depth = 0.99*length(vec2(xPos,0.0 1.0-yPos))/maxDepth;
-  depth = xPos;
-
-  gl_Position = vec4(pos-camTransformed,depth,1.0);
-}*/

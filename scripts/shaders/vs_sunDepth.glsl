@@ -4,65 +4,73 @@ attribute vec2 vertPosition;
 attribute vec2 texCoords;
 
 varying vec2 fTexCoords;
+varying vec2 depth;
 
 
 //CONST UNIFORMS
 uniform vec2 tileSizeDIVres;
 
 //UNIFORMS
-uniform vec2 camTransformed;
-uniform vec2 camPosition;
-
-uniform float stretch;
+//uniform vec2 camTransformed;
+//uniform vec2 camPosition;
+uniform vec2 cam;
 
 //OBJ UNIFORMS
+//uniform vec2 vertDisplacement;
+//uniform vec2 scaleMULtileSizeDIVres;
+//uniform float floorPos;
+
 uniform vec2 scale;
-uniform vec2 vertDisplacement;
+uniform vec2 center;
 uniform float height;
 uniform float vertical;
-uniform vec2 scaleMULtileSizeDIVres;
-uniform float floorPos;
-uniform float anchory;
 
-varying float depth;
+uniform float shadowLength;
 
-void main()
-{
+void main() {
   fTexCoords = texCoords;
+  const float defaultShadowDis = 0.24;
+  float shadowDis = defaultShadowDis + shadowLength*0.07;
+  shadowDis = clamp(shadowDis, -defaultShadowDis, shadowDis);
 
-  //const float shadowDis = 0.5;
+  vec2 vpos = vertPosition*0.5;
+  vpos.y = (-vpos.y)*vertical + vpos.y*(1.0-vertical);
+  vpos*=scale;
+  vpos+=center-cam;
+  vpos.y+=((-scale.y)*vertical);
+  vpos.y-=(texCoords.y*shadowLength*vertical);
+  vpos.y-=((1.0-texCoords.y)*shadowLength*(1.0-vertical));
 
-  //const float shadowDis = 0.3;
+  float floorPos = center.y-scale.y*0.5-cam.y+shadowDis;
 
-  //const float stretch = -1.0;
-  float shadowDis = 0.3+abs(stretch*0.1);
+  vec2 finalVpos = (vpos+vec2(0.0,-height+shadowDis*vertical)) * tileSizeDIVres*2.0;
+  vpos*=tileSizeDIVres*2.0;
+  floorPos*=tileSizeDIVres.y*2.0;
 
-  vec2 pos = vec2(
-    (vertPosition.x + vertDisplacement.x) * scaleMULtileSizeDIVres.x,
-    (vertPosition.y+
-      ((-2.0*vertPosition.y+shadowDis) -(scale.y+anchory*2.0))
-      *vertical
-      +vertDisplacement.y
-      -height*2.0
-      //-height*1.0*(1.0-vertical)
-      -texCoords.y*stretch*vertical //stretch para verticales
-      +(1.0-texCoords.y)*-stretch*(1.0-vertical)*height //stretch para horizontales
-      ) * scaleMULtileSizeDIVres.y
-  );
-  /*vec2 pos = vec2(
-    (vertPosition.x + vertDisplacement.x) * scaleMULtileSizeDIVres.x,
-    ((vertPosition.y + (-2.0*vertPosition.y+shadowDis)+ vertDisplacement.y
-    ) * scaleMULtileSizeDIVres.y
-  );*/
+  //DEPTH X
+  float depthX =
+  (vpos.y)*(1.0-vertical) +
+  (floorPos)*vertical;
 
-  //Depth
-  //const float maxDepth = sqrt(2.0);
-  float width = texCoords.y * scale.y;
-  float xPos = floorPos + (width + height) * (1.0-vertical) + (shadowDis*vertical);
-  xPos = (xPos*tileSizeDIVres.y)+0.5;
-  //float yPos = (height + width*vertical)*tileSizeDIVres.y;
-  //depth = 0.99*length(vec2(xPos,0.0 1.0-yPos))/maxDepth;
-  depth = xPos;
+  depthX=depthX*0.5+0.5;
+  //depthX = clamp(depthX,-0.5,1.0);
+  //depthX = 1.0-depthX;
 
-  gl_Position = vec4(pos-camTransformed,1.0-depth,1.0);
+  //DEPTH Y
+  float h = height;
+  float depthY =
+  (h)*(1.0-vertical) +
+  ((h+texCoords.y*(scale.y+shadowLength)))*vertical;
+  depthY*=tileSizeDIVres.y;
+  depthY=1.0-depthY;
+  depthY = clamp(depthY, 0.0, 1.0);
+  depth = vec2(depthX, depthY);
+  //depth = length(vec2(depthX, /*depthY*/0.0))/*/sqrt(2.0)*/;
+  //depth = sqrt(depthX*depthX);
+  //depth = depthX;
+
+  //float finalDepth = length(vec2(/*shadowDis*/depthX, 1.0-depthY))/sqrt(2.0);
+  depthY*=0.99;
+  gl_Position = vec4(finalVpos,(0.99-depthY)*(vertical)+(depthY)*(1.0-vertical),1.0);
+  //gl_Position = vec4(finalVpos, (0.99-0.99*depthX)*(1.0-vertical)+(0.99*(depthX-1.0))*vertical, 1.0);
 }

@@ -5,8 +5,8 @@ var textureNames = [
 ];
 
 var shaderURLs = [ //name, url
-  ['vs_opaque', 'scripts/shaders/vs_opaque.glsl'],
-  ['fs_opaque', 'scripts/shaders/fs_opaque.glsl'],
+  ['vs_color', 'scripts/shaders/vs_color.glsl'],
+  ['fs_color', 'scripts/shaders/fs_color.glsl'],
   ['vs_collider', 'scripts/shaders/vs_collider.glsl'],
   ['fs_collider', 'scripts/shaders/fs_collider.glsl'],
   ['vs_common', 'scripts/shaders/vs_common.glsl'],
@@ -14,9 +14,11 @@ var shaderURLs = [ //name, url
   ['vs_sunDepth', 'scripts/shaders/vs_sunDepth.glsl'],
   ['fs_depth', 'scripts/shaders/fs_depth.glsl'],
   ['fs_sunLight', 'scripts/shaders/fs_sunLight.glsl'],
-  ['fs_lightApply', 'scripts/shaders/fs_lightApply.glsl'],
+  ['fs_lit', 'scripts/shaders/fs_lit.glsl'],
   ['fs_common', 'scripts/shaders/fs_common.glsl'],
-  ['vs_depth', 'scripts/shaders/vs_depth.glsl']
+  ['vs_depth', 'scripts/shaders/vs_depth.glsl'],
+  ['fs_blurX', 'scripts/shaders/fs_blurX.glsl'],
+  ['fs_blurY', 'scripts/shaders/fs_blurY.glsl'],
 ];
 
 var soundsURLs=[

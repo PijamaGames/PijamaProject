@@ -69,30 +69,47 @@ class Graphics {
     gl.clearColor(0.3, 0.7, 1.0, 1.0); //Blue by default
     this.BindFBO('color');*/
     //gl.enable(gl.DEPTH_TEST);
-    this.BindFBO(null);
+
+    gl.enable(gl.DEPTH_TEST);
+    gl.enable(gl.BLEND);
+    gl.clearColor(1.0,1.0,1.0,1.0);
+
+    this.BindFBO('depth');
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    this.programs.get('opaque').Render();
-    this.programs.get('spriteSheet').Render();
+    this.programs.get('depth').Render();
+    this.programs.get('spriteDepth').Render();
 
+    this.BindFBO('sunDepth');
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    this.programs.get('sunDepth').Render();
+    this.programs.get('spriteSunDepth').Render();
 
+    this.BindFBO('color');
+    gl.clearColor(0.3, 0.7, 1.0, 1.0); //Blue by default
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    this.programs.get('color').Render();
+    this.programs.get('spriteColor').Render();
 
-
-    /*this.BindFBO('light');
+    gl.disable(gl.DEPTH_TEST);
+    gl.clearColor(1.0,1.0,1.0,1.0);
+    this.BindFBO('light');
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     this.programs.get('sunLight').Render();
 
+    this.BindFBO('blurHalf');
+    this.programs.get('blurX').Render();
+    this.BindFBO('light');
+    this.programs.get('blurY').Render();
 
-    this.BindFBO('applyLight');
-    this.programs.get('applyLight').Render();
+    this.BindFBO('litColor');
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    this.programs.get('litColor').Render();
 
-    this.BindFBO(null)
-    this.programs.get('colorFilter').Render();*/
 
-    /*Test*/
-    /*gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    this.auxTexture = this.fbos.get('light').texture;
-    this.programs.get('common').Render();*/
-    /*Test*/
+
+    this.BindFBO(null);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    this.programs.get('colorFilter').Render();
 
     if(DEBUG){
       //gl.enable(gl.BLEND);
@@ -101,6 +118,14 @@ class Graphics {
       this.programs.get('collider').Render();
     }
     //this.SetBuffers(program);
+
+
+    /*Test*/
+    /*this.BindFBO(null);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    this.auxTexture = this.fbos.get('sunDepth').texture;
+    this.programs.get('common').Render();*/
+    /*Test*/
   }
 
   BindFBO(name){
@@ -129,8 +154,11 @@ class Graphics {
     let lightFBO = this.CreateFrameBuffer(false);
     this.fbos.set('light', lightFBO);
 
-    let applyLightFBO = this.CreateFrameBuffer(false);
-    this.fbos.set('applyLight', applyLightFBO);
+    let litColorFBO = this.CreateFrameBuffer(false);
+    this.fbos.set('litColor', litColorFBO);
+
+    let blurHalfFBO = this.CreateFrameBuffer(false);
+    this.fbos.set('blurHalf', blurHalfFBO);
   }
 
   CreatePrograms() {
@@ -140,200 +168,210 @@ class Graphics {
     //COMMON PROGRAM
     let commonProgram = new Program('common', 'vs_common', 'fs_common', true, true);
     commonProgram.SetUniforms([
-      new UniformTex('colorTex', commonProgram, ()=>manager.graphics.auxTexture)
+      new UniformTex('colorTex', ()=>manager.graphics.auxTexture)
     ]);
 
     //TILE MAP PROGRAM
-    let opaqueProgram = new Program('opaque', 'vs_opaque', 'fs_opaque');
-    opaqueProgram.SetConstUniforms([
-      new UniformTex('colorTex', opaqueProgram, ()=>resources.textures.get('tileMap')),
-      new Uniform2f('tileSizeDIVres', opaqueProgram, () => new Vec2(tileSize/res.x, tileSize/res.y)),
-      new Uniform2f('tileMapResDIVtileSize', opaqueProgram, ()=>new Vec2(tileMap.width / tileSize, tileMap.height / tileSize))
+    let colorProgram = new Program('color', 'vs_color', 'fs_color');
+    colorProgram.SetConstUniforms([
+      new UniformTex('colorTex', ()=>resources.textures.get('tileMap')),
+      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize/res.x, tileSize/res.y)),
+      new Uniform2f('tileMapResDIVtileSize', ()=>new Vec2(tileMap.width / tileSize, tileMap.height / tileSize))
     ]);
-    //let camTransform = manager.scene.camera.transform;
-    opaqueProgram.SetUniforms([
-      /*new Uniform2f('camTransformed', opaqueProgram, ()=>Vec2.Scale(manager.scene.camera.transform.GetWorldPosPerfect(),2.0).Div(res).Scale(tileSize)),
-      new Uniform2f('camPosition', opaqueProgram, ()=>manager.scene.camera.transform.GetWorldPosPerfect()),*/
-      new Uniform2f('cam', opaqueProgram, ()=>manager.scene.camera.transform.GetWorldPosPerfect())
+    colorProgram.SetUniforms([
+      new Uniform2f('cam', ()=>manager.scene.camera.transform.GetWorldPosPerfect())
     ]);
-    opaqueProgram.SetObjUniforms([
-      new Uniform2f('numTiles', opaqueProgram, (obj)=>obj.numTiles),
-      new Uniform4f('tint', opaqueProgram, (obj) => obj.tint),
-      new Uniform2f('tile', opaqueProgram, (obj) => obj.tile),
-      new Uniform2f('scale', opaqueProgram, (obj) => obj.gameobj.transform.scale),
-      new Uniform1f('height', opaqueProgram, (obj) => obj.gameobj.transform.height),
-      new Uniform1f('vertical', opaqueProgram, (obj) => obj.vertical ? 1.0 : 0.0),
-      new Uniform2f('center', opaqueProgram, (obj)=>obj.gameobj.transform.GetWorldCenterPerfect()),
-      /*new Uniform2f('vertDisplacement', opaqueProgram, (obj) => obj.vertDisplacement),
-      new Uniform2f('scaleMULtileSizeDIVres',opaqueProgram, function(obj){
-        return Vec2.Scale(obj.gameobj.transform.scale, tileSize).Div(res);
-      }),
-      new Uniform1f('floorPos', opaqueProgram, (obj)=>obj.gameobj.transform.floorPos)*/
+    colorProgram.SetObjUniforms([
+      new Uniform2f('numTiles', (obj)=>obj.numTiles),
+      new Uniform4f('tint', (obj) => obj.tint),
+      new Uniform2f('tile', (obj) => obj.tile),
+      new Uniform2f('scale', (obj) => obj.gameobj.transform.scale),
+      new Uniform1f('height', (obj) => obj.gameobj.transform.height),
+      new Uniform1f('vertical', (obj) => obj.vertical ? 1.0 : 0.0),
+      new Uniform2f('center', (obj)=>obj.gameobj.transform.GetWorldCenterPerfect()),
     ]);
 
 
     //SPRITE SHEET PROGRAM
-    let spriteSheetProgram = new Program('spriteSheet', 'vs_opaque', 'fs_opaque');
-    spriteSheetProgram.SetConstUniforms([
-      new Uniform2f('tileSizeDIVres', spriteSheetProgram, () => new Vec2(tileSize/res.x, tileSize/res.y)),
+    let spriteColorProgram = new Program('spriteColor', 'vs_color', 'fs_color');
+    spriteColorProgram.SetConstUniforms([
+      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize/res.x, tileSize/res.y)),
     ]);
-    spriteSheetProgram.SetUniforms([
-      /*new Uniform2f('camTransformed', spriteSheetProgram, ()=>Vec2.Scale(manager.scene.camera.transform.GetWorldPosPerfect(),2.0).Div(res).Scale(tileSize)),
-      new Uniform2f('camPosition', spriteSheetProgram, ()=>manager.scene.camera.transform.GetWorldPosPerfect()),*/
-      new Uniform2f('cam', spriteSheetProgram, ()=>manager.scene.camera.transform.GetWorldPosPerfect())
+    spriteColorProgram.SetUniforms([
+      new Uniform2f('cam', ()=>manager.scene.camera.transform.GetWorldPosPerfect())
     ]);
-    spriteSheetProgram.SetObjUniforms([
-      new Uniform2f('numTiles', spriteSheetProgram, (obj)=>obj.numTiles),
-      new Uniform4f('tint', spriteSheetProgram, (obj) => obj.tint),
-      new UniformTex('colorTex', spriteSheetProgram, (obj)=>obj.spriteSheet),
-      new Uniform2f('tileMapResDIVtileSize', spriteSheetProgram, (obj)=>
-      new Vec2(obj.spriteSheet.width / tileSize, obj.spriteSheet.height / tileSize)),
-      new Uniform2f('tile', spriteSheetProgram, (obj) => obj.tile),
-      new Uniform2f('scale', spriteSheetProgram, (obj) => obj.gameobj.transform.scale),
-      new Uniform1f('height', spriteSheetProgram, (obj) => obj.gameobj.transform.height),
-      new Uniform1f('vertical', spriteSheetProgram, (obj) => obj.vertical ? 1.0 : 0.0),
-      new Uniform2f('center', spriteSheetProgram, (obj)=>obj.gameobj.transform.GetWorldCenterPerfect()),
-      /*new Uniform2f('vertDisplacement', spriteSheetProgram, (obj) => obj.vertDisplacement),
-      new Uniform2f('scaleMULtileSizeDIVres',spriteSheetProgram, function(obj){
-        return Vec2.Scale(obj.gameobj.transform.scale, tileSize).Div(res);
-      }),
-      new Uniform1f('floorPos', spriteSheetProgram, (obj)=>obj.gameobj.transform.floorPos)*/
+    spriteColorProgram.SetObjUniforms([
+      new Uniform2f('numTiles', (obj)=>obj.numTiles),
+      new Uniform4f('tint', (obj) => obj.tint),
+      new UniformTex('colorTex', (obj)=>obj.spriteSheet),
+      new Uniform2f('tileMapResDIVtileSize', (obj)=>
+        new Vec2(obj.spriteSheet.width / tileSize, obj.spriteSheet.height / tileSize)),
+      new Uniform2f('tile', (obj) => obj.tile),
+      new Uniform2f('scale', (obj) => obj.gameobj.transform.scale),
+      new Uniform1f('height', (obj) => obj.gameobj.transform.height),
+      new Uniform1f('vertical', (obj) => obj.vertical ? 1.0 : 0.0),
+      new Uniform2f('center', (obj)=>obj.gameobj.transform.GetWorldCenterPerfect()),
     ]);
 
     //TILE MAP DEPTH PROGRAM
     let depthProgram = new Program('depth', 'vs_depth', 'fs_depth');
     depthProgram.SetConstUniforms([
-      new UniformTex('colorTex', depthProgram, ()=>resources.textures.get('tileMap')),
-      new Uniform2f('tileSizeDIVres', depthProgram, () => new Vec2(tileSize/res.x, tileSize/res.y)),
-      new Uniform2f('tileMapResDIVtileSize', depthProgram, ()=>new Vec2(tileMap.width / tileSize, tileMap.height / tileSize))
+      new UniformTex('colorTex', ()=>resources.textures.get('tileMap')),
+      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize/res.x, tileSize/res.y)),
+      new Uniform2f('tileMapResDIVtileSize', ()=>new Vec2(tileMap.width / tileSize, tileMap.height / tileSize))
     ]);
     //let camTransform = manager.scene.camera.transform;
     depthProgram.SetUniforms([
-      new Uniform2f('camTransformed', depthProgram, ()=>Vec2.Scale(manager.scene.camera.transform.GetWorldPosPerfect(),2.0).Div(res).Scale(tileSize)),
-      new Uniform2f('camPosition', depthProgram, ()=>manager.scene.camera.transform.GetWorldPosPerfect())
+      new Uniform2f('cam', ()=>manager.scene.camera.transform.GetWorldPosPerfect())
     ]);
     depthProgram.SetObjUniforms([
-      new Uniform2f('numTiles', depthProgram, (obj)=>obj.numTiles),
-      new Uniform4f('tint', depthProgram, (obj) => obj.tint),
-      new Uniform2f('tile', depthProgram, (obj) => obj.tile),
-      new Uniform2f('scale', depthProgram, (obj) => obj.gameobj.transform.scale),
-      new Uniform1f('height', depthProgram, (obj) => obj.gameobj.transform.height),
-      new Uniform1f('vertical', depthProgram, (obj) => obj.vertical ? 1.0 : 0.0),
-      new Uniform2f('vertDisplacement', depthProgram, (obj) => obj.vertDisplacement),
-      new Uniform2f('scaleMULtileSizeDIVres',depthProgram, function(obj){
-        return Vec2.Scale(obj.gameobj.transform.scale, tileSize).Div(res);
-      }),
-      new Uniform1f('floorPos', depthProgram, (obj)=>obj.gameobj.transform.floorPos)
+      new Uniform2f('numTiles', (obj)=>obj.numTiles),
+      new Uniform4f('tint', (obj) => obj.tint),
+      new Uniform2f('tile', (obj) => obj.tile),
+      new Uniform2f('scale', (obj) => obj.gameobj.transform.scale),
+      new Uniform1f('height', (obj) => obj.gameobj.transform.height),
+      new Uniform1f('vertical', (obj) => obj.vertical ? 1.0 : 0.0),
+      new Uniform2f('center', (obj)=>obj.gameobj.transform.GetWorldCenterPerfect()),
     ]);
 
     //SPRITE SHEET DEPTH PROGRAM
-    let spriteSheetDepthProgram = new Program('spriteSheetDepth', 'vs_depth', 'fs_depth');
-    spriteSheetDepthProgram.SetConstUniforms([
-      new Uniform2f('tileSizeDIVres', spriteSheetDepthProgram, () => new Vec2(tileSize/res.x, tileSize/res.y)),
+    let spriteDepthProgram = new Program('spriteDepth', 'vs_depth', 'fs_depth');
+    spriteDepthProgram.SetConstUniforms([
+      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize/res.x, tileSize/res.y)),
     ]);
-    spriteSheetDepthProgram.SetUniforms([
-      new Uniform2f('camTransformed', spriteSheetDepthProgram, ()=>Vec2.Scale(manager.scene.camera.transform.GetWorldPosPerfect(),2.0).Div(res).Scale(tileSize)),
-      new Uniform2f('camPosition', spriteSheetDepthProgram, ()=>manager.scene.camera.transform.GetWorldPosPerfect())
+    spriteDepthProgram.SetUniforms([
+      new Uniform2f('cam', ()=>manager.scene.camera.transform.GetWorldPosPerfect())
     ]);
-    spriteSheetDepthProgram.SetObjUniforms([
-      new Uniform2f('numTiles', spriteSheetDepthProgram, (obj)=>obj.numTiles),
-      new Uniform4f('tint', spriteSheetDepthProgram, (obj) => obj.tint),
-      new UniformTex('colorTex', spriteSheetDepthProgram, (obj)=>obj.spriteSheet),
-      new Uniform2f('tileMapResDIVtileSize', spriteSheetDepthProgram, (obj)=>
+    spriteDepthProgram.SetObjUniforms([
+      new Uniform2f('numTiles', (obj)=>obj.numTiles),
+      new Uniform4f('tint', (obj) => obj.tint),
+      new UniformTex('colorTex', (obj)=>obj.spriteSheet),
+      new Uniform2f('tileMapResDIVtileSize', (obj)=>
       new Vec2(obj.spriteSheet.width / tileSize, obj.spriteSheet.height / tileSize)),
-      new Uniform2f('tile', spriteSheetDepthProgram, (obj) => obj.tile),
-      new Uniform2f('scale', spriteSheetDepthProgram, (obj) => obj.gameobj.transform.scale),
-      new Uniform1f('height', spriteSheetDepthProgram, (obj) => obj.gameobj.transform.height),
-      new Uniform1f('vertical', spriteSheetDepthProgram, (obj) => obj.vertical ? 1.0 : 0.0),
-      new Uniform2f('vertDisplacement', spriteSheetDepthProgram, (obj) => obj.vertDisplacement),
-      new Uniform2f('scaleMULtileSizeDIVres',spriteSheetDepthProgram, function(obj){
-        return Vec2.Scale(obj.gameobj.transform.scale, tileSize).Div(res);
-      }),
-      new Uniform1f('floorPos', spriteSheetDepthProgram, (obj)=>obj.gameobj.transform.floorPos)
+      new Uniform2f('tile', (obj) => obj.tile),
+      new Uniform2f('scale', (obj) => obj.gameobj.transform.scale),
+      new Uniform1f('height', (obj) => obj.gameobj.transform.height),
+      new Uniform1f('vertical', (obj) => obj.vertical ? 1.0 : 0.0),
+      new Uniform2f('center', (obj)=>obj.gameobj.transform.GetWorldCenterPerfect()),
+    ]);
+
+    //TILE MAP SUN DEPTH PROGRAM
+    let sunDepthProgram = new Program('sunDepth', 'vs_sunDepth', 'fs_depth');
+    sunDepthProgram.SetConstUniforms([
+      new UniformTex('colorTex', ()=>resources.textures.get('tileMap')),
+      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize/res.x, tileSize/res.y)),
+      new Uniform2f('tileMapResDIVtileSize', ()=>new Vec2(tileMap.width / tileSize, tileMap.height / tileSize))
+    ]);
+    //let camTransform = manager.scene.camera.transform;
+    sunDepthProgram.SetUniforms([
+      new Uniform2f('cam', ()=>manager.scene.camera.transform.GetWorldPosPerfect()),
+      new Uniform1f('shadowLength', ()=>manager.scene.camera.camera.shadowLength)
+    ]);
+    sunDepthProgram.SetObjUniforms([
+      new Uniform2f('numTiles', (obj)=>obj.numTiles),
+      new Uniform4f('tint', (obj) => obj.tint),
+      new Uniform2f('tile', (obj) => obj.tile),
+      new Uniform2f('scale', (obj) => obj.gameobj.transform.scale),
+      new Uniform1f('height', (obj) => obj.gameobj.transform.height),
+      new Uniform1f('vertical', (obj) => obj.vertical ? 1.0 : 0.0),
+      new Uniform2f('center', (obj)=>obj.gameobj.transform.GetWorldCenterPerfect()),
+    ]);
+
+    //SPRITE SHEET SUN DEPTH PROGRAM
+    let spriteSunDepthProgram = new Program('spriteSunDepth', 'vs_sunDepth', 'fs_depth');
+    spriteSunDepthProgram.SetConstUniforms([
+      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize/res.x, tileSize/res.y)),
+    ]);
+    spriteSunDepthProgram.SetUniforms([
+      new Uniform2f('cam', ()=>manager.scene.camera.transform.GetWorldPosPerfect()),
+      new Uniform1f('shadowLength', ()=>manager.scene.camera.camera.shadowLength)
+    ]);
+    spriteSunDepthProgram.SetObjUniforms([
+      new Uniform2f('numTiles', (obj)=>obj.numTiles),
+      new Uniform4f('tint', (obj) => obj.tint),
+      new UniformTex('colorTex', (obj)=>obj.spriteSheet),
+      new Uniform2f('tileMapResDIVtileSize', (obj)=>
+      new Vec2(obj.spriteSheet.width / tileSize, obj.spriteSheet.height / tileSize)),
+      new Uniform2f('tile', (obj) => obj.tile),
+      new Uniform2f('scale', (obj) => obj.gameobj.transform.scale),
+      new Uniform1f('height', (obj) => obj.gameobj.transform.height),
+      new Uniform1f('vertical', (obj) => obj.vertical ? 1.0 : 0.0),
+      new Uniform2f('center', (obj)=>obj.gameobj.transform.GetWorldCenterPerfect()),
+    ]);
+
+    //SUN LIGHT PROGRAM
+    let sunLightProgram = new Program('sunLight', 'vs_common', 'fs_sunLight', true, true);
+    sunLightProgram.SetUniforms([
+      new UniformTex('depthTex', ()=>this.fbos.get('depth').texture),
+      new UniformTex('sunDepthTex', ()=>this.fbos.get('sunDepth').texture),
+      new Uniform1f('verticalShadowStrength',()=>manager.scene.camera.camera.verticalShadowStrength),
+      new Uniform1f('temperature', ()=>manager.scene.camera.camera.sunTemperature),
+    ]);
+
+    //BLUR PROGRAMS
+    let blurXProgram = new Program('blurX', 'vs_common', 'fs_blurX', true, true);
+    blurXProgram.SetConstUniforms([
+      new Uniform4f('channels', ()=>new Float32Array([0.15,3.0,0.0,0.0])),
+
+    ]);
+    blurXProgram.SetUniforms([
+      new UniformTex('colorTex', ()=>manager.graphics.lastOutput.texture),
+      new UniformTex('depthTex', ()=>manager.graphics.fbos.get('depth').texture),
+      new Uniform1f('invAspect', ()=>canvas.height/canvas.width),
+      new Uniform1f('blurSize', ()=>manager.scene.camera.camera.shadowBlur),
+      new Uniform1f('blurEdge0', ()=>manager.scene.camera.camera.shadowBlurE0),
+      new Uniform1f('blurEdge1', ()=>manager.scene.camera.camera.shadowBlurE1),
+    ]);
+
+    let blurYProgram = new Program('blurY', 'vs_common', 'fs_blurY', true, true);
+    blurYProgram.SetConstUniforms([
+      new Uniform4f('channels', ()=>new Float32Array([0.15,3.0,0.0,0.0])),
+
+    ]);
+    blurYProgram.SetUniforms([
+      new UniformTex('colorTex', ()=>manager.graphics.fbos.get('blurHalf').texture),
+      new UniformTex('depthTex', ()=>manager.graphics.fbos.get('depth').texture),
+      new Uniform1f('blurSize', ()=>manager.scene.camera.camera.shadowBlur),
+      new Uniform1f('blurEdge0', ()=>manager.scene.camera.camera.shadowBlurE0),
+      new Uniform1f('blurEdge1', ()=>manager.scene.camera.camera.shadowBlurE1),
+    ]);
+
+    //LIT COLOR PROGRAM
+    let litColorProgram = new Program('litColor', 'vs_common', 'fs_lit', true, true);
+    litColorProgram.SetUniforms([
+      new UniformTex('lightTex', ()=>manager.graphics.fbos.get('light').texture),
+      new UniformTex('colorTex', ()=>manager.graphics.fbos.get('color').texture),
+      /*TEMPORAL*/
+      new Uniform4f('ambientLight', ()=>manager.scene.camera.camera.ambientLight),
+      new Uniform1f('shadowStrength', ()=>manager.scene.camera.camera.shadowStrength),
     ]);
 
     //COLLIDER PROGRAM
     let colliderProgram = new Program('collider', 'vs_collider', 'fs_collider', false);
     colliderProgram.SetUniforms([
-      new Uniform2f('camTransformed', colliderProgram, ()=>Vec2.Scale(manager.scene.camera.transform.GetWorldPosPerfect(),2.0).Div(res).Scale(tileSize)),
+      new Uniform2f('camTransformed', ()=>Vec2.Scale(manager.scene.camera.transform.GetWorldPosPerfect(),2.0).Div(res).Scale(tileSize)),
     ]);
     colliderProgram.SetObjUniforms([
-      new Uniform4f('tint', colliderProgram, (obj) => obj.tint),
-      new Uniform2f('vertDisplacement', colliderProgram, (obj) => obj.vertDisplacement),
-      new Uniform2f('scaleMULtileSizeDIVres',colliderProgram, function(obj){
+      new Uniform4f('tint', (obj) => obj.tint),
+      new Uniform2f('vertDisplacement', (obj) => obj.vertDisplacement),
+      new Uniform2f('scaleMULtileSizeDIVres', function(obj){
         return Vec2.Scale(obj.scale, tileSize).Div(res);
       }),
-      new Uniform1f('circular', colliderProgram, (obj) => obj.circular)
+      new Uniform1f('circular', (obj) => obj.circular)
     ]);
 
     //COLOR FILTER PROGRAM
     let colorFilterProgram = new Program('colorFilter', 'vs_common', 'fs_colorFilter', true, true);
     colorFilterProgram.SetUniforms([
-      new UniformTex('colorTex', colorFilterProgram, ()=>manager.graphics.lastOutput.texture),
-      new Uniform4f('colorFilter', colorFilterProgram, ()=>manager.scene.camera.camera.colorFilter),
-      new Uniform1f('brightness', colorFilterProgram, ()=>manager.scene.camera.camera.brightness),
-      new Uniform1f('contrast', colorFilterProgram, ()=>manager.scene.camera.camera.contrast),
+      new UniformTex('colorTex', ()=>manager.graphics.lastOutput.texture),
+      new Uniform4f('colorFilter', ()=>manager.scene.camera.camera.colorFilter),
+      new Uniform1f('brightness', ()=>manager.scene.camera.camera.brightness),
+      new Uniform1f('contrast', ()=>manager.scene.camera.camera.contrast),
     ])
 
-    //SUN DEPTH PROGRAM
-    let sunDepthProgram = new Program('sunDepth', 'vs_sunDepth', 'fs_depth', true);
-    sunDepthProgram.SetConstUniforms([
-      new UniformTex('colorTex', sunDepthProgram, ()=>resources.textures.get('tileMap')),
-      new Uniform2f('tileSizeDIVres', sunDepthProgram, () => new Vec2(tileSize/res.x, tileSize/res.y)),
-      new Uniform2f('tileMapResDIVtileSize', sunDepthProgram, ()=>new Vec2(tileMap.width / tileSize, tileMap.height / tileSize))
-    ]);
-    //let camTransform = manager.scene.camera.transform;
-    sunDepthProgram.SetUniforms([
-      new Uniform2f('camTransformed', sunDepthProgram, ()=>Vec2.Scale(manager.scene.camera.transform.GetWorldPosPerfect(),2.0).Div(res).Scale(tileSize)),
-      new Uniform2f('camPosition', sunDepthProgram, ()=>manager.scene.camera.transform.GetWorldPosPerfect()),
-      new Uniform1f('stretch', sunDepthProgram, ()=>manager.scene.camera.camera.shadowStretch),
-    ]);
-    sunDepthProgram.SetObjUniforms([
-      new Uniform2f('numTiles', sunDepthProgram, (obj)=>obj.numTiles),
-      new Uniform2f('tile', sunDepthProgram, (obj) => obj.tile),
-      new Uniform2f('scale', sunDepthProgram, (obj) => obj.gameobj.transform.scale),
-      new Uniform1f('anchory', sunDepthProgram, (obj) => obj.gameobj.transform.anchor.y),
-      new Uniform1f('height', sunDepthProgram, (obj) => obj.gameobj.transform.height),
-      new Uniform1f('vertical', sunDepthProgram, (obj) => obj.vertical ? 1.0 : 0.0),
-      new Uniform2f('vertDisplacement', sunDepthProgram, (obj) => obj.vertDisplacement),
-      new Uniform2f('scaleMULtileSizeDIVres',sunDepthProgram, function(obj){
-        return Vec2.Scale(obj.gameobj.transform.scale, tileSize).Div(res);
-      }),
-      new Uniform1f('floorPos', sunDepthProgram, (obj)=>obj.gameobj.transform.floorPos)
-    ]);
+    /*
 
-    //SUN DEPTH SPRITES PROGRAM
-    let sunDepthSpritesProgram = new Program('sunDepthSprite', 'vs_sunDepth', 'fs_depth', true);
-    sunDepthSpritesProgram.SetConstUniforms([
-      new Uniform2f('tileSizeDIVres', sunDepthSpritesProgram, () => new Vec2(tileSize/res.x, tileSize/res.y)),
-    ]);
-    sunDepthSpritesProgram.SetUniforms([
-      new Uniform2f('camTransformed', sunDepthSpritesProgram, ()=>Vec2.Scale(manager.scene.camera.transform.GetWorldPosPerfect(),2.0).Div(res).Scale(tileSize)),
-      new Uniform2f('camPosition', sunDepthSpritesProgram, ()=>manager.scene.camera.transform.GetWorldPosPerfect()),
-      new Uniform1f('stretch', sunDepthSpritesProgram, ()=>manager.scene.camera.camera.shadowStretch),
-    ]);
-    sunDepthSpritesProgram.SetObjUniforms([
-      new Uniform2f('numTiles', sunDepthSpritesProgram, (obj)=>obj.numTiles),
-      new UniformTex('colorTex', sunDepthSpritesProgram, (obj)=>obj.spriteSheet),
-      new Uniform2f('tileMapResDIVtileSize', sunDepthSpritesProgram, (obj)=>
-      new Vec2(obj.spriteSheet.width / tileSize, obj.spriteSheet.height / tileSize)),
-      new Uniform2f('tile', sunDepthSpritesProgram, (obj) => obj.tile),
-      new Uniform2f('scale', sunDepthSpritesProgram, (obj) => obj.gameobj.transform.scale),
-      new Uniform1f('anchory', sunDepthSpritesProgram, (obj) => obj.gameobj.transform.anchor.y),
-      new Uniform1f('height', sunDepthSpritesProgram, (obj) => obj.gameobj.transform.height),
-      new Uniform1f('vertical', sunDepthSpritesProgram, (obj) => obj.vertical ? 1.0 : 0.0),
-      new Uniform2f('vertDisplacement', sunDepthSpritesProgram, (obj) => obj.vertDisplacement),
-      new Uniform2f('scaleMULtileSizeDIVres',sunDepthSpritesProgram, function(obj){
-        return Vec2.Scale(obj.gameobj.transform.scale, tileSize).Div(res);
-      }),
-      new Uniform1f('floorPos', sunDepthSpritesProgram, (obj)=>obj.gameobj.transform.floorPos)
-    ]);
 
-    let sunLightProgram = new Program('sunLight', 'vs_common', 'fs_sunLight', true, true);
-    sunLightProgram.SetUniforms([
-      new UniformTex('depth', sunLightProgram, ()=>this.fbos.get('depth').texture),
-      new UniformTex('sunDepth', sunLightProgram, ()=>this.fbos.get('sunDepth').texture)
-    ]);
 
     let applyLightProgram = new Program('applyLight', 'vs_common', 'fs_lightApply', true, true);
     applyLightProgram.SetUniforms([
@@ -341,7 +379,7 @@ class Graphics {
       new UniformTex('lightTex', applyLightProgram, ()=>this.fbos.get('light').texture),
       new Uniform4f('ambientLight', applyLightProgram, ()=>manager.scene.camera.camera.ambientLight),
       new Uniform1f('shadowStrength', applyLightProgram, ()=>manager.scene.camera.camera.shadowStrength)
-    ]);
+    ]);*/
   }
 
   CreateBuffers() {

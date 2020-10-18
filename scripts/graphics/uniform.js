@@ -1,6 +1,11 @@
 class Uniform{
   constructor(name, program){
     this.name = name;
+    this.program = null;
+    this.location = -1;
+    if(program) this.SetProgram(program);
+  }
+  SetProgram(program){
     this.program = program;
     this.location = gl.getUniformLocation(this.program.program, this.name);
   }
@@ -10,11 +15,16 @@ class Uniform{
 }
 
 class UniformTex extends Uniform{
-  constructor(name, program, getFunc){
+  constructor(name, getFunc, program){
     super(name, program);
     this.getValue = getFunc;
     this.texture = true;
     //this.texture = getFunc();/*resources.textures.get(textureName);*/
+
+  }
+  SetProgram(program){
+    this.program = program;
+    this.location = gl.getUniformLocation(this.program.program, this.name);
     this.program.texUnitOffset+=1;
   }
   Load(unit, obj = null){
@@ -25,7 +35,7 @@ class UniformTex extends Uniform{
 }
 
 class Uniform1f extends Uniform{
-  constructor(name, program, getFunc){
+  constructor(name, getFunc, program){
     super(name, program);
     this.getValue = getFunc;
   }
@@ -35,7 +45,7 @@ class Uniform1f extends Uniform{
 }
 
 class Uniform2f extends Uniform{
-  constructor(name, program, getFunc){
+  constructor(name, getFunc, program){
     super(name, program);
     this.getValue = getFunc;
   }
@@ -46,7 +56,7 @@ class Uniform2f extends Uniform{
 }
 
 class Uniform4f extends Uniform{
-  constructor(name, program, getFunc){
+  constructor(name, getFunc, program){
     super(name, program);
     this.getValue = getFunc;
   }
