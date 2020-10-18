@@ -112,6 +112,7 @@ class Graphics {
     this.programs.get('colorFilter').Render();
 
     if(DEBUG){
+      this.BindFBO(null);
       //gl.enable(gl.BLEND);
       this.BindFBO(null);
       gl.disable(gl.DEPTH_TEST);

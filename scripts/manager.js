@@ -45,7 +45,7 @@ class Manager{
       that.graphics.LoadResources();
       that.LoadScene('testScene');
 
-      //PROBANDO AUDIO
+
       /*var go1= new Gameobj('Box', 1, null, that.scene, [ new AudioSource(["sound"]), new Transform()]);
       var go2= new Gameobj('Box', 2, null, that.scene, [ new AudioSource(["sound"]), new Transform()]);
 

@@ -1,6 +1,6 @@
 class BoxCollider extends Collider{
-  constructor(displacement = new Vec2(),width = 1.0, height = 1.0){
-    super(displacement);
+  constructor(displacement = new Vec2(),width = 1.0, height = 1.0, isTrigger=false, onTriggerEnterCallback, onTriggerStayCallback,onTriggerExitCallback){
+    super(displacement,isTrigger, onTriggerEnterCallback, onTriggerStayCallback,onTriggerExitCallback);
     Object.assign(this,{height,width});
     this.type="boxCollider";
     this.scale = new Vec2(width, height);

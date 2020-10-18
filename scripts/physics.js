@@ -49,17 +49,29 @@ class Physics {
         //if(c2.gameobj.transform.height > 0.0) continue;
         dir = c1.CheckCollision(c2);
         dir.Scale(this.repulsion);
-        if(c1.gameobj.rigidbody){
-          c1.gameobj.rigidbody.AddForce(dir);
+        if(!c1.isTrigger && !c2.isTrigger){
+          if(c1.gameobj.rigidbody ){
+            c1.gameobj.rigidbody.AddForce(dir);
+          }
+          if(c2.gameobj.rigidbody){
+            c2.gameobj.rigidbody.AddForce(dir.Opposite());
+          }
+          if(DEBUG){
+            if(dir.mod > 0.0){
+              c1.SetTint(1.0,0.0,0.0,c1.tint[3]);
+              c2.SetTint(1.0,0.0,0.0,c2.tint[3]);
+            }
+          }
         }
-        if(c2.gameobj.rigidbody){
-          c2.gameobj.rigidbody.AddForce(dir.Opposite());
-        }
-
-        if(DEBUG){
-          if(dir.mod > 0.0){
-            c1.SetTint(1.0,0.0,0.0,c1.tint[3]);
-            c2.SetTint(1.0,0.0,0.0,c2.tint[3]);
+        else{
+          c1.CheckTrigger(c2);
+          c2.CheckTrigger(c1);
+          if(DEBUG){
+            //c1.isColliding && c2.isColliding
+            if(c1.isColliding){
+              c1.SetTint(0.0,0.0,1.0,c1.tint[3]);
+              c2.SetTint(0.0,0.0,1.0,c2.tint[3]);
+            }
           }
         }
       }
