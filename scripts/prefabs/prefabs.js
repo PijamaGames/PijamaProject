@@ -16,7 +16,7 @@ function PF_Tree(position = new Vec2(), height = 0.0) {
     function(){
       Log("arbol: adios");
     })]),
-    new Renderer(['opaque','sunDepth','depth'], new Vec2(0, 130), new Vec2(2,2), true),
+    new Renderer(['color','sunDepth','depth'], new Vec2(0, 130), new Vec2(2,2), true),
 
     //new DebugController(5.0)
   ], new Transform(position, height, new Vec2(2, 2), new Vec2(0.0,0.0)), false);
@@ -52,7 +52,7 @@ function PF_Nelu(position = new Vec2(), height = 0.0) {
     function(){
       Log("Nelu: adios");
     })]),
-    new SpriteRenderer('spriteSheet', ['spriteSheet','sunDepthSprite','spriteSheetDepth'], new Vec2(0, 2),new Vec2(1,1), true, 4, [0,3,1,2]),
+    new SpriteRenderer('spriteSheet', ['spriteColor','spriteSunDepth','spriteDepth'], new Vec2(0, 2),new Vec2(1,1), true, 4, [0,3,1,2]),
     new Rigidbody(),
     //new DebugController(3.0)
   ], new Transform(position, height, new Vec2(1, 1), new Vec2(0.5, 0.5)), false);
