@@ -42,7 +42,7 @@ function PF_Nelu(position = new Vec2(), height = 0.0) {
   PF_NeluCount += 1;
   return new Gameobj('Nelu', PF_NeluCount, null, manager.scene, [
 
-    new ColliderGroup([new CircleCollider(new Vec2(0,-0.3), 0.2, false,
+    new ColliderGroup([new CircleCollider(new Vec2(0,-0.65), 0.35, false,
     function(){
       Log("Nelu: holi");
     },
@@ -52,10 +52,10 @@ function PF_Nelu(position = new Vec2(), height = 0.0) {
     function(){
       Log("Nelu: adios");
     })]),
-    new SpriteRenderer('spriteSheet', ['spriteColor','spriteSunDepth','spriteDepth'], new Vec2(0, 2),new Vec2(1,1), true, 4, [0,3,1,2]),
+    new SpriteRenderer('nelu_idle', ['spriteColor','spriteSunDepth','spriteDepth'], new Vec2(0, 2),new Vec2(2,2), true, 8, [4,0,6,1,5,3,7,2], 8),
     new Rigidbody(),
     //new DebugController(3.0)
-  ], new Transform(position, height, new Vec2(1, 1), new Vec2(0.5, 0.5)), false);
+  ], new Transform(position, height, new Vec2(2, 2), new Vec2(0.5, 0.5)), false);
 }
 prefabMapper.set('Nelu', PF_Nelu);
 

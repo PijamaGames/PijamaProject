@@ -8,6 +8,7 @@ class Graphics {
     this.lastOutput = null;
     this.output = null;
     this.auxTexture = null;
+    this.lighting = new Lighting();
     this.InitContext();
   }
 
@@ -71,7 +72,7 @@ class Graphics {
     //gl.enable(gl.DEPTH_TEST);
 
     gl.enable(gl.DEPTH_TEST);
-    gl.enable(gl.BLEND);
+    //gl.enable(gl.BLEND);
     gl.clearColor(1.0,1.0,1.0,1.0);
 
     this.BindFBO('depth');
@@ -266,7 +267,7 @@ class Graphics {
     //let camTransform = manager.scene.camera.transform;
     sunDepthProgram.SetUniforms([
       new Uniform2f('cam', ()=>manager.scene.camera.transform.GetWorldPosPerfect()),
-      new Uniform1f('shadowLength', ()=>manager.scene.camera.camera.shadowLength)
+      new Uniform1f('shadowLength', ()=>lighting.shadowLength)
     ]);
     sunDepthProgram.SetObjUniforms([
       new Uniform2f('numTiles', (obj)=>obj.numTiles),
@@ -285,8 +286,9 @@ class Graphics {
     ]);
     spriteSunDepthProgram.SetUniforms([
       new Uniform2f('cam', ()=>manager.scene.camera.transform.GetWorldPosPerfect()),
-      new Uniform1f('shadowLength', ()=>manager.scene.camera.camera.shadowLength)
+      new Uniform1f('shadowLength', ()=>lighting.shadowLength)
     ]);
+
     spriteSunDepthProgram.SetObjUniforms([
       new Uniform2f('numTiles', (obj)=>obj.numTiles),
       new Uniform4f('tint', (obj) => obj.tint),
@@ -305,36 +307,31 @@ class Graphics {
     sunLightProgram.SetUniforms([
       new UniformTex('depthTex', ()=>this.fbos.get('depth').texture),
       new UniformTex('sunDepthTex', ()=>this.fbos.get('sunDepth').texture),
-      new Uniform1f('verticalShadowStrength',()=>manager.scene.camera.camera.verticalShadowStrength),
-      new Uniform1f('temperature', ()=>manager.scene.camera.camera.sunTemperature),
+      new Uniform1f('verticalShadowStrength',()=>lighting.verticalShadowStrength),
+      new Uniform1f('temperature', ()=>lighting.sunTemperature),
+      new Uniform1f('strength', ()=>lighting.sunStrength),
     ]);
 
     //BLUR PROGRAMS
     let blurXProgram = new Program('blurX', 'vs_common', 'fs_blurX', true, true);
-    blurXProgram.SetConstUniforms([
-      new Uniform4f('channels', ()=>new Float32Array([0.15,3.0,0.0,0.0])),
-
-    ]);
     blurXProgram.SetUniforms([
+      new Uniform4f('channels', ()=>lighting.lightBlurChannels),
       new UniformTex('colorTex', ()=>manager.graphics.lastOutput.texture),
       new UniformTex('depthTex', ()=>manager.graphics.fbos.get('depth').texture),
       new Uniform1f('invAspect', ()=>canvas.height/canvas.width),
-      new Uniform1f('blurSize', ()=>manager.scene.camera.camera.shadowBlur),
-      new Uniform1f('blurEdge0', ()=>manager.scene.camera.camera.shadowBlurE0),
-      new Uniform1f('blurEdge1', ()=>manager.scene.camera.camera.shadowBlurE1),
+      new Uniform1f('blurSize', ()=>lighting.shadowBlur),
+      new Uniform1f('blurEdge0', ()=>lighting.shadowBlurE0),
+      new Uniform1f('blurEdge1', ()=>lighting.shadowBlurE1),
     ]);
 
     let blurYProgram = new Program('blurY', 'vs_common', 'fs_blurY', true, true);
-    blurYProgram.SetConstUniforms([
-      new Uniform4f('channels', ()=>new Float32Array([0.15,3.0,0.0,0.0])),
-
-    ]);
     blurYProgram.SetUniforms([
+      new Uniform4f('channels', ()=>lighting.lightBlurChannels),
       new UniformTex('colorTex', ()=>manager.graphics.fbos.get('blurHalf').texture),
       new UniformTex('depthTex', ()=>manager.graphics.fbos.get('depth').texture),
-      new Uniform1f('blurSize', ()=>manager.scene.camera.camera.shadowBlur),
-      new Uniform1f('blurEdge0', ()=>manager.scene.camera.camera.shadowBlurE0),
-      new Uniform1f('blurEdge1', ()=>manager.scene.camera.camera.shadowBlurE1),
+      new Uniform1f('blurSize', ()=>lighting.shadowBlur),
+      new Uniform1f('blurEdge0', ()=>lighting.shadowBlurE0),
+      new Uniform1f('blurEdge1', ()=>lighting.shadowBlurE1),
     ]);
 
     //LIT COLOR PROGRAM
@@ -343,8 +340,8 @@ class Graphics {
       new UniformTex('lightTex', ()=>manager.graphics.fbos.get('light').texture),
       new UniformTex('colorTex', ()=>manager.graphics.fbos.get('color').texture),
       /*TEMPORAL*/
-      new Uniform4f('ambientLight', ()=>manager.scene.camera.camera.ambientLight),
-      new Uniform1f('shadowStrength', ()=>manager.scene.camera.camera.shadowStrength),
+      new Uniform4f('ambientLight', ()=>lighting.ambientLight),
+      new Uniform1f('shadowStrength', ()=>lighting.shadowStrength),
     ]);
 
     //COLLIDER PROGRAM

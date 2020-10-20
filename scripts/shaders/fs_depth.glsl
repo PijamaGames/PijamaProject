@@ -39,7 +39,7 @@ void main()
   );
 
   vec4 texColor = texture2D(colorTex, finalTexCoords) * tint;
-  if(texColor.w < 0.3) discard;
+  if(texColor.w < 0.9) discard;
   //gl_FragColor = texColor;
 
   //float d = length(depth)/sqrt(2.0);

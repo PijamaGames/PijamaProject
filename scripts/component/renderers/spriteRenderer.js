@@ -1,9 +1,9 @@
 class SpriteRenderer extends Renderer{
-  constructor(spriteSheetName, programs = [], tile = new Vec2(), numTiles = new Vec2(1,1), vertical = true, numDirs = 4, dirIndex = null){
+  constructor(spriteSheetName, programs = [], tile = new Vec2(), numTiles = new Vec2(1,1), vertical = true, numDirs = 4, dirIndex = null, fps = 12.0){
     super(programs, tile, numTiles, vertical);
     this.spriteSheet = resources.textures.get(spriteSheetName);
-    this.maxFrames = new Vec2(this.spriteSheet.width / tileSize, this.spriteSheet.height / tileSize);
-    this.interval = 1.0/12.0;
+    this.maxFrames = new Vec2(this.spriteSheet.width/this.numTiles.x / tileSize, this.spriteSheet.height/this.numTiles.y / tileSize);
+    this.interval = 1.0/fps;
     this.time = 0.0;
 
     //Default directions
@@ -20,7 +20,7 @@ class SpriteRenderer extends Renderer{
     this.time += manager.delta;
     if(this.time > this.interval){
       this.time -= this.interval * Math.trunc(this.time/this.interval);
-      this.tile.x = (this.tile.x+1) % this.maxFrames.x;
+      this.tile.x = (this.tile.x+this.numTiles.x) % this.maxFrames.x;
     }
     this.CheckDirection();
   }
@@ -35,7 +35,7 @@ class SpriteRenderer extends Renderer{
     /*if(rb){*/
       if(v.mod > 0.0){
         let quadrant = v.GetQuadrant(this.numDirs, 0.5);
-        this.tile.y = this.dirIndex[quadrant];
+        this.tile.y = this.dirIndex[quadrant]*this.numTiles.y;
       }
     /*}*/
   }

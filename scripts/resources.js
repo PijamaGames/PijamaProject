@@ -1,7 +1,8 @@
 var textureNames = [
   'tilesTex',
   'tileMap',
-  'spriteSheet'
+  'spriteSheet',
+  'nelu_idle'
 ];
 
 var shaderURLs = [ //name, url
