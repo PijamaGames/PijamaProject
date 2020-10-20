@@ -6,7 +6,7 @@ function PF_Tree(position = new Vec2(), height = 0.0) {
   return new Gameobj('Tree', PF_TreeCount, null, manager.scene, [
     //new ColliderGroup([new BoxCollider(new Vec2(0.75,0), 0.5, 0.5)]),
 
-    new ColliderGroup([new CircleCollider(new Vec2(1.0,0.2), 0.2,true,
+    new ColliderGroup([new CircleCollider(new Vec2(1.0,0.2), 0.2,false,
     function(){
       Log("arbol: holi");
     },
@@ -42,7 +42,7 @@ function PF_Nelu(position = new Vec2(), height = 0.0) {
   PF_NeluCount += 1;
   return new Gameobj('Nelu', PF_NeluCount, null, manager.scene, [
 
-    new ColliderGroup([new CircleCollider(new Vec2(0,-0.3), 0.2, true,
+    new ColliderGroup([new CircleCollider(new Vec2(0,-0.3), 0.2, false,
     function(){
       Log("Nelu: holi");
     },

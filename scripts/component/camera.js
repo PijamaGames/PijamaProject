@@ -7,7 +7,7 @@ class Camera extends Component {
     this.contrast = 1.1;
     this.ambientLight = new Float32Array([0.4, 0.4, 1.3, 1.0]);
     this.shadowStrength = 1.5;
-    this.shadowLength = /*-0.5*//*3.0*/0.0;
+    this.shadowLength = /*-0.5*//*3.0*/-0.3;
     this.minShadowLength = -1.5;
     this.verticalShadowStrength = 0.12;
     this.sunTemperature = 1.0;

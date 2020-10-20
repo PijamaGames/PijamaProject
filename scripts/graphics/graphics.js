@@ -124,7 +124,7 @@ class Graphics {
     /*Test*/
     /*this.BindFBO(null);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    this.auxTexture = this.fbos.get('sunDepth').texture;
+    this.auxTexture = this.fbos.get('light').texture;
     this.programs.get('common').Render();*/
     /*Test*/
   }
