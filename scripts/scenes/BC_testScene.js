@@ -10,4 +10,6 @@ Tree -7 -4 0
 Tree 3 3 0
 Tree 5 0 0
 Tree 7 -5 0
+Light 0 0 0.5
+-Light -3 15 0.5
 `

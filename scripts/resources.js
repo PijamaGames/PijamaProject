@@ -2,7 +2,8 @@ var textureNames = [
   'tilesTex',
   'tileMap',
   'spriteSheet',
-  'nelu_idle'
+  'nelu_idle',
+  'nelu_idleE'
 ];
 
 var shaderURLs = [ //name, url
@@ -20,6 +21,7 @@ var shaderURLs = [ //name, url
   ['vs_depth', 'scripts/shaders/vs_depth.glsl'],
   ['fs_blurX', 'scripts/shaders/fs_blurX.glsl'],
   ['fs_blurY', 'scripts/shaders/fs_blurY.glsl'],
+  ['fs_light', 'scripts/shaders/fs_light.glsl'],
 ];
 
 var soundsURLs=[

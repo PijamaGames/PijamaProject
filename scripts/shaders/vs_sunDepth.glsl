@@ -54,19 +54,6 @@ void main() {
   (floorPos)*vertical;
 
   depthX=depthX*0.5+0.5;
-  //depthX = clamp(depthX,-0.5,1.0);
-  //depthX = 1.0-depthX;
-
-  /*
-  //DEPTH Y
-  float depthY =
-  (height)*(1.0-vertical) +
-  ((height+texCoords.y*scale.y))*vertical;
-  depthY*=tileSizeDIVres.y;
-  depthY=1.0-depthY;
-  depthY = clamp(depthY, 0.0, 1.0);
-  depth = vec2(depthX, depthY);
-  */
 
   //DEPTH Y
   float h = height;

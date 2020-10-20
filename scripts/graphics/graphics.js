@@ -85,17 +85,37 @@ class Graphics {
     this.programs.get('sunDepth').Render();
     this.programs.get('spriteSunDepth').Render();
 
+    gl.enable(gl.BLEND);
     this.BindFBO('color');
     gl.clearColor(0.3, 0.7, 1.0, 1.0); //Blue by default
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     this.programs.get('color').Render();
     this.programs.get('spriteColor').Render();
+    gl.disable(gl.BLEND);
 
     gl.disable(gl.DEPTH_TEST);
     gl.clearColor(1.0,1.0,1.0,1.0);
     this.BindFBO('light');
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     this.programs.get('sunLight').Render();
+
+
+    //Render all lights
+    this.BindFBO('light2');
+    let pointLightProgram = this.programs.get('pointLight');
+    let size = lighting.lightSources.size;
+    let i = 0;
+    for(var light of lighting.lightSources){
+      lighting.currentLightSource = light;
+      pointLightProgram.Render();
+      if(i<size-1){
+        this.BindFBO(this.lastOutput.name);
+      }
+      i++;
+    }
+
+    //End render all lights
+
 
     this.BindFBO('blurHalf');
     this.programs.get('blurX').Render();
@@ -114,10 +134,11 @@ class Graphics {
 
     if(DEBUG){
       this.BindFBO(null);
-      //gl.enable(gl.BLEND);
+      gl.enable(gl.BLEND);
       this.BindFBO(null);
       gl.disable(gl.DEPTH_TEST);
       this.programs.get('collider').Render();
+      gl.disable(gl.BLEND);
     }
     //this.SetBuffers(program);
 
@@ -145,22 +166,32 @@ class Graphics {
 
   CreateFrameBuffers(){
     let colorFBO = this.CreateFrameBuffer(true);
-    this.fbos.set('color', colorFBO);
+    colorFBO.name = 'color';
+    this.fbos.set(colorFBO.name, colorFBO);
 
     let sunDepthFBO = this.CreateFrameBuffer(true);
-    this.fbos.set('sunDepth', sunDepthFBO);
+    sunDepthFBO.name = 'sunDepth';
+    this.fbos.set(sunDepthFBO.name, sunDepthFBO);
 
     let depthFBO = this.CreateFrameBuffer(true);
-    this.fbos.set('depth', depthFBO);
+    depthFBO.name = 'depth';
+    this.fbos.set(depthFBO.name, depthFBO);
 
     let lightFBO = this.CreateFrameBuffer(false);
-    this.fbos.set('light', lightFBO);
+    lightFBO.name = 'light';
+    this.fbos.set(lightFBO.name, lightFBO);
+
+    let light2FBO = this.CreateFrameBuffer(false);
+    light2FBO.name = 'light2';
+    this.fbos.set(light2FBO.name, light2FBO);
 
     let litColorFBO = this.CreateFrameBuffer(false);
-    this.fbos.set('litColor', litColorFBO);
+    litColorFBO.name = 'litColor';
+    this.fbos.set(litColorFBO.name, litColorFBO);
 
     let blurHalfFBO = this.CreateFrameBuffer(false);
-    this.fbos.set('blurHalf', blurHalfFBO);
+    blurHalfFBO.name = 'blurHalf';
+    this.fbos.set(blurHalfFBO.name, blurHalfFBO);
   }
 
   CreatePrograms() {
@@ -310,6 +341,23 @@ class Graphics {
       new Uniform1f('verticalShadowStrength',()=>lighting.verticalShadowStrength),
       new Uniform1f('temperature', ()=>lighting.sunTemperature),
       new Uniform1f('strength', ()=>lighting.sunStrength),
+    ]);
+
+    //POINT LIGHT PROGRAM
+    let pointLightProgram = new Program('pointLight', 'vs_common', 'fs_light', true, true);
+    pointLightProgram.SetUniforms([
+      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize/res.x, tileSize/res.y)),
+      new Uniform2f('res', ()=>res),
+      new Uniform1f('ratio', ()=>lighting.currentLightSource.ratio),
+      new Uniform1f('temperature', ()=>lighting.currentLightSource.temperature),
+      new Uniform1f('strength', ()=>lighting.currentLightSource.strength),
+      new Uniform1f('edge0', ()=>lighting.currentLightSource.edge0),
+      new Uniform1f('edge1', ()=>lighting.currentLightSource.edge1),
+      new Uniform2f('center', ()=>lighting.currentLightSource.gameobj.transform.GetWorldCenterPerfect()),
+      new Uniform1f('height', ()=>lighting.currentLightSource.gameobj.transform.height),
+      new Uniform2f('cam', ()=>manager.scene.camera.transform.GetWorldPosPerfect()),
+      new UniformTex('depthTex', ()=>manager.graphics.fbos.get('depth').texture),
+      new UniformTex('lightTex', ()=>manager.graphics.lastOutput.texture),
     ]);
 
     //BLUR PROGRAMS

@@ -19,7 +19,7 @@ function PF_Tree(position = new Vec2(), height = 0.0) {
     new Renderer(['color','sunDepth','depth'], new Vec2(0, 130), new Vec2(2,2), true),
 
     //new DebugController(5.0)
-  ], new Transform(position, height, new Vec2(2, 2), new Vec2(0.0,0.0)), false);
+  ], new Transform(position, height, new Vec2(2, 2), new Vec2(0.0,0.0)), true);
 }
 prefabMapper.set('Tree', PF_Tree);
 
@@ -52,7 +52,7 @@ function PF_Nelu(position = new Vec2(), height = 0.0) {
     function(){
       Log("Nelu: adios");
     })]),
-    new SpriteRenderer('nelu_idle', ['spriteColor','spriteSunDepth','spriteDepth'], new Vec2(0, 2),new Vec2(2,2), true, 8, [4,0,6,1,5,3,7,2], 8),
+    new SpriteRenderer('nelu_idleE', ['spriteColor','spriteSunDepth','spriteDepth'], new Vec2(0, 2),new Vec2(2,2), true, 8, [4,0,6,1,5,3,7,2], 5),
     new Rigidbody(),
     //new DebugController(3.0)
   ], new Transform(position, height, new Vec2(2, 2), new Vec2(0.5, 0.5)), false);
@@ -68,3 +68,14 @@ function PF_Grass(position = new Vec2(), height = 0.0, scale = new Vec2(1,1)){
   ], new Transform(position, height, scale, new Vec2(0,1)), true);
 }
 prefabMapper.set('Grass', PF_Grass);
+
+var PF_LightCount = -1;
+
+function PF_Light(position = new Vec2(), height = 0.0){
+  PF_LightCount+=1;
+  return new Gameobj('Light', PF_LightCount, null, manager.scene, [
+    new LightSource(),
+    //new DebugController(2.0),
+  ], new Transform(position, height), false);
+}
+prefabMapper.set('Light', PF_Light);

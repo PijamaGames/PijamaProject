@@ -14,10 +14,15 @@ class Lighting{
     this.shadowBlurE0 = 0.075;
     this.shadowBlurE1 = 0.85;
     this.shadowStrength = 2.5;
-    this.shadowLength = /*-0.5*//*3.0*/-0.3;
+    this.shadowLength = -0.3;
     this.minShadowLength = -0.5;
     this.verticalShadowStrength = 0.12;
-    this.SetMorning();
+
+    //Point lights
+    this.lightSources = new Set();
+    this.currentLightSource = null;
+    this.SetNight();
+    //this.SetMorning();
   }
 
   SetDefaultSun(){
@@ -75,7 +80,7 @@ class Lighting{
 
   SetNight(){
     this.sunTemperature = 0.0;
-    this.shadowBlur = 0.4;
+    this.shadowBlur = /*0.4*/0.0;
     this.shadowStrength = 1.0;
     this.shadowLength = 0.0;
     this.sunStrength = 0.3;
