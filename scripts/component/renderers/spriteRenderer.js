@@ -14,6 +14,9 @@ class SpriteRenderer extends Renderer{
     }
     this.dirIndex = dirIndex;
     this.numDirs = numDirs;
+
+    //This line makes every sprite spawn looking down
+    this.tile.y = this.dirIndex[Math.trunc(0.75*numDirs)]*numTiles.y;
   }
 
   Update(){

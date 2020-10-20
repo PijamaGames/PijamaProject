@@ -22,6 +22,7 @@ var shaderURLs = [ //name, url
   ['fs_blurX', 'scripts/shaders/fs_blurX.glsl'],
   ['fs_blurY', 'scripts/shaders/fs_blurY.glsl'],
   ['fs_light', 'scripts/shaders/fs_light.glsl'],
+  ['fs_limitColor', 'scripts/shaders/fs_limitColor.glsl'],
 ];
 
 var soundsURLs=[

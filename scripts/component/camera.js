@@ -8,7 +8,7 @@ class Camera extends Component {
   }
 
   Update() {
-    return;
+    //return;
     const step = 2.0;
     if(input.GetKeyDown('KeyT'))
       lighting.SetMorning();

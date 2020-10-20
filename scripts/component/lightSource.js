@@ -10,6 +10,7 @@ class LightSource extends Component{
   }
 
   Update(){
+    return;
     if(input.GetKeyPressed('KeyT')){
       this.ratio+=manager.delta*2.0;
     }

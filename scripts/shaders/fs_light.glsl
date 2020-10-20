@@ -40,7 +40,13 @@ void main()
   intensity = 1.0 - intensity;
   intensity *= strength;
 
-  gl_FragColor = vec4(lightInfo.xyz+vec3(intensity, 0.0, temperature*intensity), 1.0);
+  vec3 finalLight = vec3(
+    lightInfo.x+intensity,
+    lightInfo.y,
+    mix(lightInfo.z, temperature*intensity, intensity)
+  );
+
+  gl_FragColor = vec4(finalLight, 1.0);
 
 
 }

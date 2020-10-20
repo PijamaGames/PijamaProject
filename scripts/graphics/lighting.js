@@ -80,14 +80,14 @@ class Lighting{
 
   SetNight(){
     this.sunTemperature = 0.0;
-    this.shadowBlur = /*0.4*/0.0;
+    this.shadowBlur = 0.4/*0.0*/;
     this.shadowStrength = 1.0;
     this.shadowLength = 0.0;
     this.sunStrength = 0.3;
     this.shadowBlurE0 = 0.0;
     this.shadowBlurE1 = 0.85;
     this.SetAmbientLight(0.3,0.3,0.4);
-    this.SetLightBlurChannels(0.5,3.0);
+    this.SetLightBlurChannels(0.3,3.0);
     Log("Night lighting");
   }
 
