@@ -19,6 +19,7 @@ class Manager{
   }
 
   GameLoop(that){
+    that.CanvasResponsive();
     //Log("Gameloop iteration");
     that.ManageTime();
     input.Update();
@@ -44,63 +45,19 @@ class Manager{
     resources.Load(function(){
       that.graphics.LoadResources();
       that.LoadScene('testScene');
-
-
-      /*var go1= new Gameobj('Box', 1, null, that.scene, [ new AudioSource(["sound"]), new Transform()]);
-      var go2= new Gameobj('Box', 2, null, that.scene, [ new AudioSource(["sound"]), new Transform()]);
-
-      go1.audioSource.Play("sound");
-
-      setTimeout(() => {
-        //go2.audioSource.PlayAll();
-        //go1.audioSource.ChangeVol("sound",0.5);
-        //go1.audioSource.Pause("sound");
-        //go1.audioSource.Rate("sound",2);
-        /*go1.audioSource.Mute("sound",true);
-        setTimeout(() => {
-          //go2.audioSource.PlayAll();
-          //go1.audioSource.ChangeVol("sound",0.5);
-          //go1.audioSource.Pause("sound");
-          //go1.audioSource.Rate("sound",2);
-          go1.audioSource.Mute("sound",false);
-
-        }, 10000);
-        //go1.audioSource.Stop("sound");
-        //Log(go1.audioSource.Playing("sound"));
-        go1.audioSource.Fade("sound",1,0,10000);
-      }, 10000);*/
-
-
-
-      //comprobacion colision entre dos circulos
-      /*let obj = new Gameobj('firstObj', null, testScene, [new ColliderGroup()], new Transform(new Vec2(4.1,0)));
-      let obj2 = PF_Tree(new Vec2(0,0));
-
-      obj.colliderGroup.AddColliders([new CircleCollider(2,new Vec2(),obj.colliderGroup)]);
-      obj2.colliderGroup.AddColliders([new CircleCollider(2,new Vec2(),obj2.colliderGroup)]);
-      Log(obj.colliderGroup.colliders[0].OnColisionEnter(obj2.colliderGroup.colliders[0]));
-      */
-      //comprobacion colision entre dos planos
-      /*let obj = new Gameobj('firstObj', null, testScene, [new ColliderGroup()], new Transform(new Vec2(3,0)));
-      let obj2 = PF_Tree(new Vec2(0,0));
-
-      obj.colliderGroup.AddColliders([new BoxCollider(2,3,obj.colliderGroup)]);
-      obj2.colliderGroup.AddColliders([new BoxCollider(2,3,obj2.colliderGroup)]);
-      Log(obj.colliderGroup.colliders[0].OnColisionEnter(obj2.colliderGroup.colliders[0]));*/
-      //comprobacion colision entre plano-circulo
-      /*let obj = new Gameobj('firstObj', null, testScene, [new ColliderGroup()], new Transform(new Vec2(2.5,0)));
-      let obj2 = PF_Tree(new Vec2(0,0));
-
-      obj.colliderGroup.AddColliders([new CircleCollider(1,new Vec2(),obj.colliderGroup)]);
-      obj2.colliderGroup.AddColliders([new BoxCollider(2,3,obj2.colliderGroup)]);
-      Log(obj.colliderGroup.colliders[0].OnColisionEnter(obj2.colliderGroup.colliders[0]));*/
-
       that.ms = Date.now();
       that.GameLoop(that);
     });
   }
 
-
+CanvasResponsive(){
+  var style=getComputedStyle(canvas);
+  var w=style.width;
+  var h=style.height;
+  canvas.width=w.split('px')[0];
+  canvas.height=h.split('px')[0];
+  
+}
 
   AddInputKeys(){
     input.AddKey('KeyW');
