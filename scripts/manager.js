@@ -19,7 +19,6 @@ class Manager{
   }
 
   GameLoop(that){
-    that.CanvasResponsive();
     //Log("Gameloop iteration");
     that.ManageTime();
     input.Update();
@@ -28,6 +27,7 @@ class Manager{
       this.scene.Update();
       //this.scene.UpdatePhysics();
       physics.Update();
+      this.graphics.CanvasResponsive();
       this.graphics.Render();
       //Update map placer
       if(mapPlacer) mapPlacer.Update();
@@ -49,15 +49,6 @@ class Manager{
       that.GameLoop(that);
     });
   }
-
-CanvasResponsive(){
-  var style=getComputedStyle(canvas);
-  var w=style.width;
-  var h=style.height;
-  canvas.width=w.split('px')[0];
-  canvas.height=h.split('px')[0];
-  
-}
 
   AddInputKeys(){
     input.AddKey('KeyW');

@@ -11,6 +11,10 @@ class Vec2 {
     return new Vec2(-this.x, -this.y);
   }
 
+  Equals(v2){
+    return this.x === v2.x && this.y === v2.y;
+  }
+
   Set(x, y){
     this.x = x;
     this.y = y;
