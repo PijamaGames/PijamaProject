@@ -9,6 +9,10 @@ class Component{
     this.gameobj.baseComponent = this;
   }
 
+  get active(){
+    return this.gameobj.active;
+  }
+
   Update(){
 
   }

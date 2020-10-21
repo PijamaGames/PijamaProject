@@ -13,6 +13,8 @@ class Renderer extends Component{
     this.tint = new Float32Array([1,1,1,alpha]);
   }
 
+
+
   SetTint(r=1.0,g=1.0,b=1.0,a=1.0){
     this.tint[0] = r;
     this.tint[1] = g;

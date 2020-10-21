@@ -5,6 +5,8 @@ var textureNames = [
   'nelu_idle',
   'nelu_idleE',
   'btn_placeHolder',
+  'backJoystick',
+  'frontJoystick',
 ];
 
 var shaderURLs = [ //name, url

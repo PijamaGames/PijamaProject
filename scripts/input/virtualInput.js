@@ -2,6 +2,8 @@ class VirtualInput{
   constructor(name = "unknownInput", img='btn_placeHolder', position = new Vec2(), anchor = new Vec2(0.5,0.5), scale = new Vec2(0.3,0.3), ratio = 0.25){
     Object.assign(this,{name,img,position,anchor,scale,ratio});
 
+    this.originalPosition = this.position.Copy();
+
     this.down = false;
     this.pressed = false;
     this.up = false;
@@ -12,6 +14,8 @@ class VirtualInput{
 
     this.texture = resources.textures.get(img);
 
+    this.active = true;
+
     manager.graphics.programs.get('virtualInput').renderers.set(this.name, this);
 
     this.onButtonDown = [];
@@ -20,13 +24,15 @@ class VirtualInput{
 
     this.action = 0;
     this.maxActions = 0;
+
+    this.dir = new Vec2();
   }
 
   AddAction(down = function(){}, pressed = function(){}, up = function(){}){
     this.onButtonDown.push(down);
     this.onButtonPressed.push(pressed);
     this.onButtonUp.push(up);
-    this.maxActions++;
+    this.maxActions+=1;
   }
 
   SetTint(r=1.0,g=1.0,b=1.0){
@@ -39,12 +45,8 @@ class VirtualInput{
     this.tint[3]=alpha;
   }
 
-  /*GetScale(){
-    return scale.x > scale.y ? scale.x : scale.y;
-  }*/
-
-  GetCenter(){
-    return Vec2.Add(this.anchor, this.position);
+  GetCenter(original = false){
+    return Vec2.Add(this.anchor, original ? this.originalPosition : this.position);
   }
 
   Update(){
@@ -59,6 +61,9 @@ class VirtualInput{
         this.onButtonPressed[this.action]();
     }
 
+    if(this.isJoystick){
+      this.UpdateJoystick();
+    }
   }
 
   LateUpdate(){
@@ -75,13 +80,16 @@ class VirtualInput{
       (window.innerHeight-screenCoordY)/unit
     );
 
-    let center = this.GetCenter();
+    let center = this.GetCenter(this.isJoystick);
     center.x*=(window.innerWidth/unit);
     center.y*=(window.innerHeight/unit);
 
-    Log(center.toString('center:'));
-    Log(canvasCoords.toString('canvasCoords'));
-    return Vec2.Sub(center, canvasCoords).mod < this.ratio;
+
+    this.dir = Vec2.Sub(canvasCoords, center);
+    let condition = this.dir.mod < this.ratio;
+
+
+    return condition;
   }
 
   AddTouch(touch){
@@ -113,14 +121,19 @@ class VirtualInput{
         this.down = false;
         this.pressed = false;
         this.up = true;
-        if(this.maxActions > 0){
-          this.onButtonUp[this.action]();
-          this.action = (this.action+1)%this.maxActions;
-        }
-
+        this.onButtonUp[this.action]();
         this.SetTint(1.0,1.0,1.0);
       }
     }
 
   }
+
+  NextAction(){
+
+    if(this.maxActions > 0){
+      this.action = (this.action+1)%this.maxActions;
+    }
+    Log(this.action);
+  }
+
 }

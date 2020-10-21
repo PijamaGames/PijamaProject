@@ -25,10 +25,10 @@ class Manager {
     //fsm.Update();
     if (this.scene) {
 
-      if(input.GetKeyDown('KeyT')){
+      if (input.GetKeyDown('KeyT')) {
         this.EnterFullScreen();
       }
-      if(input.GetKeyDown('KeyG')){
+      if (input.GetKeyDown('KeyG')) {
         this.ExitFullScreen();
       }
 
@@ -97,9 +97,15 @@ class Manager {
 
   AddVirtualInputs() {
     let fullScreenBtn = input.AddVirtualInput(new VirtualInput('fullScreenBtn', 'btn_placeHolder', new Vec2(-0.07, -0.07), new Vec2(1, 1), new Vec2(0.1, 0.1), 0.1));
-    fullScreenBtn.AddAction(this.EnterFullScreen);
-    fullScreenBtn.AddAction(this.ExitFullscreen);
-  };
+    fullScreenBtn.AddAction(() => {
+      manager.EnterFullScreen(()=>fullScreenBtn.NextAction());
+    });
+    fullScreenBtn.AddAction(() => {
+      manager.ExitFullScreen(()=>fullScreenBtn.NextAction());
+    });
+
+    let leftJoystick = input.AddVirtualInput(new VirtualJoystick('leftJoystick', 'backJoystick', new Vec2(), new Vec2(0.25, 0.5), new Vec2(0.3, 0.3), 0.6, 0.2, 'frontJoystick'));
+  }
 
   AddScene(scene) {
     this.scenes.set(scene.name, scene);
@@ -111,59 +117,94 @@ class Manager {
     this.scene.LoadByteCode();
   }
 
-  EnterFullScreen(){
+  EnterFullScreen(callback = function(){}) {
     let elem = document.documentElement;
-    let success = false;
-    try{
-      if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-        success = true;
-      } else if (elem.mozRequestFullScreen) {
-        /* Firefox */
-        elem.mozRequestFullScreen();
-        success = true;
-      } else if (elem.webkitRequestFullscreen) {
-        /* Chrome, Safari and Opera */
-        elem.webkitRequestFullscreen();
-        success = true;
-      } else if (elem.msRequestFullscreen) {
-        /* IE/Edge */
-        elem.msRequestFullscreen();
-        success = true;
-      }
-    } catch(e){
-      Log('FAILED TO ENABLE FULLSCREEN');
-    }
 
-    if (success)
-      Log('FULLSCREEN ENABLED');
+    if (elem.requestFullscreen) {
+      let promise = elem.requestFullscreen().then(()=>{
+        Log('FULLSCREEN ENABLED');
+        callback();
+        return true;
+      }).catch((e)=>{
+        Log('FAILED TO ENABLE FULLSCREEN'+e);
+        return false;
+      });
+    } else if (elem.mozRequestFullScreen) {
+      /* Firefox */
+      let promise = elem.mozRequestFullScreen().then(()=>{
+        Log('FULLSCREEN ENABLED');
+        callback();
+        return true;
+      }).catch(()=>{
+        Log('FAILED TO ENABLE FULLSCREEN');
+        return false;
+      });
+    } else if (elem.webkitRequestFullscreen) {
+      /* Chrome, Safari and Opera */
+      let promise = elem.webkitRequestFullscreen().then(()=>{
+        Log('FULLSCREEN ENABLED');
+        callback();
+        return true;
+      }).catch(()=>{
+        Log('FAILED TO ENABLE FULLSCREEN');
+        callback();
+        return false;
+      });
+    } else if (elem.msRequestFullscreen) {
+      /* IE/Edge */
+      let promise = elem.msRequestFullscreen().then(()=>{
+        Log('FULLSCREEN ENABLED');
+        callback();
+        return true;
+      }).catch(()=>{
+        Log('FAILED TO ENABLE FULLSCREEN');
+        return false;
+      });
+    }
   }
 
-  ExitFullScreen(){
-    let success = false;
+  ExitFullScreen(callback = function(){}) {
     let elem = document;
-    try{
-      if (elem.exitFullscreen) {
-        elem.exitFullscreen();
-        success = true;
-      } else if (elem.mozCancelFullScreen) {
-        /* Firefox */
-        elem.mozCancelFullScreen();
-        success = true;
-      } else if (elem.webkitExitFullscreen) {
-        /* Chrome, Safari and Opera */
-        elem.webkitExitFullscreen();
-        success = true;
-      } else if (elem.msExitFullscreen) {
-        /* IE/Edge */
-        elem.msExitFullscreen();
-        success = true;
-      }
-    } catch(e){
-      Log('FAILED TO DISABLE FULLSCREEN');
-    }
+    if (elem.exitFullscreen) {
+      let promise = elem.exitFullscreen().then(()=>{
+        Log('FULLSCREEN DISABLED');
+        callback();
+        return true;
+      }).catch(()=>{
+        Log('FAILED TO DISABLE FULLSCREEN');
+        return false;
+      });
 
-    if(success)
-      Log('FULLSCREEN DISABLED');
+    } else if (elem.mozCancelFullScreen) {
+      /* Firefox */
+      let promise = elem.mozCancelFullScreen().then(()=>{
+        Log('FULLSCREEN DISABLED');
+        callback();
+        return true;
+      }).catch(()=>{
+        Log('FAILED TO DISABLE FULLSCREEN');
+        return false;
+      });
+    } else if (elem.webkitExitFullscreen) {
+      /* Chrome, Safari and Opera */
+      let promise = elem.webkitExitFullscreen().then(()=>{
+        Log('FULLSCREEN DISABLED');
+        callback();
+        return true;
+      }).catch(()=>{
+        Log('FAILED TO DISABLE FULLSCREEN');
+        return false;
+      });
+    } else if (elem.msExitFullscreen) {
+      /* IE/Edge */
+      let promise = elem.msExitFullscreen().then(()=>{
+        Log('FULLSCREEN DISABLED');
+        callback();
+        return true;
+      }).catch(()=>{
+        Log('FAILED TO DISABLE FULLSCREEN');
+        return false;
+      });
+    }
   }
 }

@@ -11,6 +11,7 @@ class Program{
     this.uniforms = [];
     this.texUnitOffset = 0;
     this.renderers = new Map();
+    this.isPostProcess = postProcess;
     if(postProcess){
       this.renderers.set('postProcess', 0);
     }
@@ -101,8 +102,10 @@ class Program{
     this.Use();
     let texUnitOffset = this.LoadUniforms();
     for(var [name, renderer] of this.renderers){
-      this.LoadObjUniforms(renderer, texUnitOffset);
-      manager.graphics.Draw();
+      if(renderer.active || this.isPostProcess){
+        this.LoadObjUniforms(renderer, texUnitOffset);
+        manager.graphics.Draw();
+      }
     }
   }
 
