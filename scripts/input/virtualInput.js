@@ -71,11 +71,16 @@ class VirtualInput{
 
 
     let canvasCoords = new Vec2(
-      screenCoordX/window.innerWidth,
+      screenCoordX/unit,
       (window.innerHeight-screenCoordY)/unit
     );
 
     let center = this.GetCenter();
+    center.x*=(window.innerWidth/unit);
+    center.y*=(window.innerHeight/unit);
+
+    Log(center.toString('center:'));
+    Log(canvasCoords.toString('canvasCoords'));
     return Vec2.Sub(center, canvasCoords).mod < this.ratio;
   }
 
@@ -90,7 +95,7 @@ class VirtualInput{
       this.pressed = true;
       this.up = false;
       if(this.maxActions > 0){
-        this.onButtonDown[this.action]();
+        //this.onButtonDown[this.action]();
         Log("down");
       }
 
