@@ -26,8 +26,17 @@ class Vec2 {
     this.y += v2.y;
     return this;
   }
+
+  AddScalar(s){
+    this.x+=s;
+    this.y+=s;
+    return this;
+  }
   static Add(v1,v2){
     return new Vec2(v1.x+v2.x,v1.y+v2.y);
+  }
+  static AddScalar(v,s){
+    return v.Copy().AddScalar(s);
   }
 
   Sub(v2){

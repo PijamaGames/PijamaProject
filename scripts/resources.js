@@ -3,7 +3,8 @@ var textureNames = [
   'tileMap',
   'spriteSheet',
   'nelu_idle',
-  'nelu_idleE'
+  'nelu_idleE',
+  'btn_placeHolder',
 ];
 
 var shaderURLs = [ //name, url
@@ -24,6 +25,8 @@ var shaderURLs = [ //name, url
   ['fs_light', 'scripts/shaders/fs_light.glsl'],
   ['fs_limitColor', 'scripts/shaders/fs_limitColor.glsl'],
   ['vs_surface', 'scripts/shaders/vs_surface.glsl'],
+  ['vs_virtualInput', 'scripts/shaders/vs_virtualInput.glsl'],
+  ['fs_virtualInput', 'scripts/shaders/fs_virtualInput.glsl']
 ];
 
 var soundsURLs=[

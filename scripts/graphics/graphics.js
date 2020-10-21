@@ -9,7 +9,7 @@ class Graphics {
     this.output = null;
     this.auxTexture = null;
     this.lighting = new Lighting();
-    this.colorsPerChannel = 10.0; //10.0 is a good number
+    this.colorsPerChannel = 12.0; //10.0 is a good number
     this.res = new Vec2(640, 480);
     this.aspectRatio = this.res.x / this.res.y;
     this.windowRes = new Vec2(window.innerWidth, window.innerHeight);
@@ -68,18 +68,18 @@ class Graphics {
       if (this.aspectRatio > windowAspectRatio) { //Portrait
         console.log("Portrait");
         let h = this.res.x*this.windowRes.y/this.windowRes.x;
-        canvas.width = this.res.x;
-        canvas.height = h;
+        canvas.width = Math.ceil(this.res.x);
+        canvas.height = Math.ceil(h);
 
       } else if (this.aspectRatio < windowAspectRatio) { //Landscape
         console.log('Landscape');
         let w = this.res.y*this.windowRes.x/this.windowRes.y;
-        canvas.width = w;
-        canvas.height = this.res.y;
+        canvas.width = Math.ceil(w);
+        canvas.height = Math.ceil(this.res.y);
 
       } else {
-        canvas.width = this.res.x;
-        canvas.height = this.res.y;
+        canvas.width = Math.ceil(this.res.x);
+        canvas.height = Math.ceil(this.res.y);
       }
 
 
@@ -158,10 +158,8 @@ class Graphics {
     this.BindFBO('finalColor');
     this.programs.get('limitColor').Render();
 
-    if (DEBUG) {
-      //this.BindFBO(null);
+    if (DEBUG_VISUAL) {
       gl.enable(gl.BLEND);
-      this.BindFBO(null);
       gl.disable(gl.DEPTH_TEST);
       this.programs.get('collider').Render();
       gl.disable(gl.BLEND);
@@ -173,6 +171,8 @@ class Graphics {
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     this.programs.get('surface').Render();
+    gl.enable(gl.BLEND);
+    this.programs.get('virtualInput').Render();
 
     //this.SetBuffers(program);
 
@@ -400,6 +400,7 @@ class Graphics {
       new Uniform2f('cam', () => manager.scene.camera.transform.GetWorldPosPerfect()),
       new UniformTex('depthTex', () => manager.graphics.fbos.get('depth').texture),
       new UniformTex('lightTex', () => manager.graphics.lastOutput.texture),
+      //new Uniform1f('colorsPerChannel', ()=>manager.graphics.colorsPerChannel),
     ]);
 
     //BLUR PROGRAMS
@@ -437,13 +438,13 @@ class Graphics {
     //COLLIDER PROGRAM
     let colliderProgram = new Program('collider', 'vs_collider', 'fs_collider', false);
     colliderProgram.SetUniforms([
-      new Uniform2f('camTransformed', () => Vec2.Scale(manager.scene.camera.transform.GetWorldPosPerfect(), 2.0).Div(res).Scale(tileSize)),
+      new Uniform2f('camTransformed', () => Vec2.Scale(manager.scene.camera.transform.GetWorldPosPerfect(), 2.0).Div(manager.graphics.res).Scale(tileSize)),
     ]);
     colliderProgram.SetObjUniforms([
       new Uniform4f('tint', (obj) => obj.tint),
       new Uniform2f('vertDisplacement', (obj) => obj.vertDisplacement),
       new Uniform2f('scaleMULtileSizeDIVres', function(obj) {
-        return Vec2.Scale(obj.scale, tileSize).Div(res);
+        return Vec2.Scale(obj.scale, tileSize).Div(manager.graphics.res);
       }),
       new Uniform1f('circular', (obj) => obj.circular)
     ]);
@@ -457,6 +458,7 @@ class Graphics {
       new Uniform1f('contrast', () => manager.scene.camera.camera.contrast),
     ]);
 
+    //LIMIT COLOR PROGRAM
     let limitColorProgram = new Program('limitColor', 'vs_common', 'fs_limitColor', true, true);
     limitColorProgram.SetConstUniforms([
       new Uniform1f('colorsPerChannel', () => manager.graphics.colorsPerChannel),
@@ -466,12 +468,27 @@ class Graphics {
     ]);
 
 
+    //SURFACE PROGRAM
     let surfaceProgram = new Program('surface', 'vs_surface', 'fs_common', true, true);
     surfaceProgram.SetUniforms([
       new UniformTex('colorTex', ()=>manager.graphics.fbos.get('finalColor').texture),
       new Uniform2f('gameRes', ()=>manager.graphics.res),
       new Uniform2f('canvasRes', ()=>new Vec2(canvas.width, canvas.height)),
     ]);
+
+    //VIRTUAL INPUT PROGRAM
+    let virtualInputProgram = new Program('virtualInput','vs_virtualInput', 'fs_virtualInput', true, false);
+    virtualInputProgram.SetUniforms([
+      new Uniform2f('canvasRes', ()=>new Vec2(canvas.width, canvas.height)),
+    ]);
+    virtualInputProgram.SetObjUniforms([
+      new Uniform2f('anchor', (obj)=>obj.anchor),
+      new Uniform2f('position', (obj)=>obj.position),
+      new Uniform2f('scale', (obj) => obj.scale),
+      new Uniform4f('tint', (obj)=>obj.tint),
+      new UniformTex('colorTex', (obj)=>obj.texture),
+    ]);
+
 
     /*
 

@@ -16,6 +16,8 @@ uniform float height;
 uniform float edge0;
 uniform float edge1;
 
+//uniform float colorsPerChannel;
+
 varying vec2 fTexCoords;
 
 void main()
@@ -45,6 +47,8 @@ void main()
     lightInfo.y,
     mix(lightInfo.z, temperature*intensity, intensity)
   );
+
+  //finalLight = floor(finalLight*(colorsPerChannel-1.0)+0.5)/(colorsPerChannel-1.0);
 
   gl_FragColor = vec4(finalLight, 1.0);
 

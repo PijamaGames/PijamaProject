@@ -1,5 +1,6 @@
 "use strict;"
-const DEBUG = false;
+const DEBUG = true;
+const DEBUG_VISUAL = false;
 const EDITOR_MODE = false;
 
 var manager;

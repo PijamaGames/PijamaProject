@@ -70,7 +70,7 @@ class Lighting{
     this.shadowBlur = 0.07;
     this.shadowStrength = 2.35;
     this.shadowLength = 2.0;
-    this.sunStrength = 0.99;
+    this.sunStrength = 0.96;
     this.shadowBlurE0 = 0.075;
     this.shadowBlurE1 = 0.85;
     this.SetAmbientLight(0.225,0.2,0.3);
