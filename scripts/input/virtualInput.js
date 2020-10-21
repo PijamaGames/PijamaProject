@@ -5,7 +5,7 @@ class VirtualInput{
     this.down = false;
     this.pressed = false;
     this.up = false;
-    this.tint = new Float32Array([1.0,1.0,1.0,1.0]);
+    this.tint = new Float32Array([1.0,1.0,1.0,0.5]);
 
     this.touches = new Set();
     this.touchesCount = 0;

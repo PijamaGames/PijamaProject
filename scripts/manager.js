@@ -96,7 +96,7 @@ class Manager {
   }
 
   AddVirtualInputs() {
-    let fullScreenBtn = input.AddVirtualInput(new VirtualInput('fullScreenBtn', 'btn_placeHolder', new Vec2(0, 0.13), new Vec2(0.5, 0.0), new Vec2(0.2, 0.2), 0.1));
+    let fullScreenBtn = input.AddVirtualInput(new VirtualInput('fullScreenBtn', 'btn_placeHolder', new Vec2(-0.07, -0.07), new Vec2(1.0, 1.0), new Vec2(0.1, 0.1), 0.1));
     fullScreenBtn.AddAction(this.EnterFullScreen);
     fullScreenBtn.AddAction(this.ExitFullscreen);
   };
