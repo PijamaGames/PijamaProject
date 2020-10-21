@@ -71,7 +71,7 @@ class VirtualInput{
 
 
     let canvasCoords = new Vec2(
-      screenCoordX/unit,
+      screenCoordX/window.innerWidth,
       (window.innerHeight-screenCoordY)/unit
     );
 
