@@ -95,7 +95,7 @@ class VirtualInput{
       this.pressed = true;
       this.up = false;
       if(this.maxActions > 0){
-        //this.onButtonDown[this.action]();
+        this.onButtonDown[this.action]();
         Log("down");
       }
 
