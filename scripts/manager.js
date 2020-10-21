@@ -24,6 +24,14 @@ class Manager {
     input.Update();
     //fsm.Update();
     if (this.scene) {
+
+      if(input.GetKeyDown('KeyT')){
+        this.EnterFullScreen();
+      }
+      if(input.GetKeyDown('KeyG')){
+        this.ExitFullScreen();
+      }
+
       this.scene.Update();
       //this.scene.UpdatePhysics();
       physics.Update();
@@ -89,9 +97,24 @@ class Manager {
 
   AddVirtualInputs() {
     let fullScreenBtn = input.AddVirtualInput(new VirtualInput('fullScreenBtn', 'btn_placeHolder', new Vec2(0, 0.13), new Vec2(0.5, 0.0), new Vec2(0.2, 0.2), 0.1));
-    fullScreenBtn.AddAction(() => {
-      let elem = canvas;
-      let success = false;
+    fullScreenBtn.AddAction(this.EnterFullScreen);
+    fullScreenBtn.AddAction(this.ExitFullscreen);
+  };
+
+  AddScene(scene) {
+    this.scenes.set(scene.name, scene);
+  }
+
+  LoadScene(sceneName) {
+    if (this.scene) this.scene.Unload();
+    this.scene = this.scenes.get(sceneName);
+    this.scene.LoadByteCode();
+  }
+
+  EnterFullScreen(){
+    let elem = document.documentElement;
+    let success = false;
+    try{
       if (elem.requestFullscreen) {
         elem.requestFullscreen();
         success = true;
@@ -108,40 +131,39 @@ class Manager {
         elem.msRequestFullscreen();
         success = true;
       }
-      if (success)
-        Log('FULLSCREEN ENABLED');
-    });
-    fullScreenBtn.AddAction(() => {
-      let success = false;
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-        success = true;
-      } else if (document.mozCancelFullScreen) {
-        /* Firefox */
-        document.mozCancelFullScreen();
-        success = true;
-      } else if (document.webkitExitFullscreen) {
-        /* Chrome, Safari and Opera */
-        document.webkitExitFullscreen();
-        success = true;
-      } else if (document.msExitFullscreen) {
-        /* IE/Edge */
-        document.msExitFullscreen();
-        success = true;
-      }
-      if(success)
-        Log('FULLSCREEN DISABLED');
-    });
+    } catch(e){
+      Log('FAILED TO ENABLE FULLSCREEN');
+    }
 
-  };
-
-  AddScene(scene) {
-    this.scenes.set(scene.name, scene);
+    if (success)
+      Log('FULLSCREEN ENABLED');
   }
 
-  LoadScene(sceneName) {
-    if (this.scene) this.scene.Unload();
-    this.scene = this.scenes.get(sceneName);
-    this.scene.LoadByteCode();
+  ExitFullScreen(){
+    let success = false;
+    let elem = document;
+    try{
+      if (elem.exitFullscreen) {
+        elem.exitFullscreen();
+        success = true;
+      } else if (elem.mozCancelFullScreen) {
+        /* Firefox */
+        elem.mozCancelFullScreen();
+        success = true;
+      } else if (elem.webkitExitFullscreen) {
+        /* Chrome, Safari and Opera */
+        elem.webkitExitFullscreen();
+        success = true;
+      } else if (elem.msExitFullscreen) {
+        /* IE/Edge */
+        elem.msExitFullscreen();
+        success = true;
+      }
+    } catch(e){
+      Log('FAILED TO DISABLE FULLSCREEN');
+    }
+
+    if(success)
+      Log('FULLSCREEN DISABLED');
   }
 }

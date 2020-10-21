@@ -91,6 +91,7 @@ class VirtualInput{
       this.up = false;
       if(this.maxActions > 0){
         this.onButtonDown[this.action]();
+        Log("down");
       }
 
       this.SetTint(0.0,0.0,1.0);
@@ -100,20 +101,21 @@ class VirtualInput{
   RemoveTouch(touch){
     if(this.touches.has(touch.identifier)){
       this.touchesCount--;
-    }
-    this.touches.delete(touch.identifier);
+      this.touches.delete(touch.identifier);
 
-    if(this.touches.size == 0){
-      //up
-      this.down = false;
-      this.pressed = false;
-      this.up = true;
-      if(this.maxActions > 0){
-        this.onButtonUp[this.action]();
-        this.action = (this.action+1)%this.maxActions;
+      if(this.touches.size == 0){
+        //up
+        this.down = false;
+        this.pressed = false;
+        this.up = true;
+        if(this.maxActions > 0){
+          this.onButtonUp[this.action]();
+          this.action = (this.action+1)%this.maxActions;
+        }
+
+        this.SetTint(1.0,1.0,1.0);
       }
-
-      this.SetTint(1.0,1.0,1.0);
     }
+
   }
 }
