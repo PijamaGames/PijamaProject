@@ -93,6 +93,7 @@ class VirtualInput{
   }
 
   AddTouch(touch){
+    if(this.touchesCount > 0 && this.isJoystick) return;
     if(!this.touches.has(touch.identifier)){
       this.touchesCount++;
     }
