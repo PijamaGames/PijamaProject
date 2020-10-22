@@ -25,13 +25,6 @@ class Manager {
     //fsm.Update();
     if (this.scene) {
 
-      if (input.GetKeyDown('KeyT')) {
-        this.EnterFullScreen();
-      }
-      if (input.GetKeyDown('KeyG')) {
-        this.ExitFullScreen();
-      }
-
       this.scene.Update();
       //this.scene.UpdatePhysics();
       physics.Update();

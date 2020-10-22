@@ -10,7 +10,11 @@ class Graphics {
     this.auxTexture = null;
     this.lighting = new Lighting();
     this.colorsPerChannel = 12.0; //10.0 is a good number
+    this.defaultRes = new Vec2(640, 480);
     this.res = new Vec2(640, 480);
+    this.lastRes = this.res.Copy();
+    this.portraitRes = new Vec2(480,480);
+    this.landscapeRes = this.res.Copy();
     this.aspectRatio = this.res.x / this.res.y;
     this.windowRes = new Vec2(window.innerWidth, window.innerHeight);
     this.InitContext();
@@ -65,14 +69,16 @@ class Graphics {
       this.windowRes = newWindowRes;
       let windowAspectRatio = newWindowRes.x / newWindowRes.y;
 
-      if (this.aspectRatio > windowAspectRatio) { //Portrait
+      if (/*this.aspectRatio*/1.0 > windowAspectRatio) { //Portrait
         console.log("Portrait");
+        this.res = this.portraitRes.Copy();
         let h = this.res.x*this.windowRes.y/this.windowRes.x;
         canvas.width = Math.ceil(this.res.x);
         canvas.height = Math.ceil(h);
 
-      } else if (this.aspectRatio < windowAspectRatio) { //Landscape
+      } else if (/*this.aspectRatio*/1.0 < windowAspectRatio) { //Landscape
         console.log('Landscape');
+        this.res = this.landscapeRes.Copy();
         let w = this.res.y*this.windowRes.x/this.windowRes.y;
         canvas.width = Math.ceil(w);
         canvas.height = Math.ceil(this.res.y);
@@ -81,8 +87,14 @@ class Graphics {
         canvas.width = Math.ceil(this.res.x);
         canvas.height = Math.ceil(this.res.y);
       }
-
-
+    }
+    if(!this.lastRes.Equals(this.res)){
+      this.lastRes = this.res.Copy();
+      Log(this.res.toString("res: "));
+      for(var [key,value] of this.fbos){
+        this.UpdateFramebufferDimensions(value);
+        //value.texture.UpdateDimensions();
+      }
     }
   }
 
@@ -250,10 +262,11 @@ class Graphics {
     let colorProgram = new Program('color', 'vs_color', 'fs_color');
     colorProgram.SetConstUniforms([
       new UniformTex('colorTex', () => resources.textures.get('tileMap')),
-      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
+
       new Uniform2f('tileMapResDIVtileSize', () => new Vec2(tileMap.width / tileSize, tileMap.height / tileSize))
     ]);
     colorProgram.SetUniforms([
+      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
       new Uniform2f('cam', () => manager.scene.camera.transform.GetWorldPosPerfect())
     ]);
     colorProgram.SetObjUniforms([
@@ -269,10 +282,8 @@ class Graphics {
 
     //SPRITE SHEET PROGRAM
     let spriteColorProgram = new Program('spriteColor', 'vs_color', 'fs_color');
-    spriteColorProgram.SetConstUniforms([
-      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
-    ]);
     spriteColorProgram.SetUniforms([
+      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
       new Uniform2f('cam', () => manager.scene.camera.transform.GetWorldPosPerfect())
     ]);
     spriteColorProgram.SetObjUniforms([
@@ -292,11 +303,11 @@ class Graphics {
     let depthProgram = new Program('depth', 'vs_depth', 'fs_depth');
     depthProgram.SetConstUniforms([
       new UniformTex('colorTex', () => resources.textures.get('tileMap')),
-      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
       new Uniform2f('tileMapResDIVtileSize', () => new Vec2(tileMap.width / tileSize, tileMap.height / tileSize))
     ]);
     //let camTransform = manager.scene.camera.transform;
     depthProgram.SetUniforms([
+      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
       new Uniform2f('cam', () => manager.scene.camera.transform.GetWorldPosPerfect())
     ]);
     depthProgram.SetObjUniforms([
@@ -311,10 +322,8 @@ class Graphics {
 
     //SPRITE SHEET DEPTH PROGRAM
     let spriteDepthProgram = new Program('spriteDepth', 'vs_depth', 'fs_depth');
-    spriteDepthProgram.SetConstUniforms([
-      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
-    ]);
     spriteDepthProgram.SetUniforms([
+      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
       new Uniform2f('cam', () => manager.scene.camera.transform.GetWorldPosPerfect())
     ]);
     spriteDepthProgram.SetObjUniforms([
@@ -334,11 +343,11 @@ class Graphics {
     let sunDepthProgram = new Program('sunDepth', 'vs_sunDepth', 'fs_depth');
     sunDepthProgram.SetConstUniforms([
       new UniformTex('colorTex', () => resources.textures.get('tileMap')),
-      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
       new Uniform2f('tileMapResDIVtileSize', () => new Vec2(tileMap.width / tileSize, tileMap.height / tileSize))
     ]);
     //let camTransform = manager.scene.camera.transform;
     sunDepthProgram.SetUniforms([
+      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
       new Uniform2f('cam', () => manager.scene.camera.transform.GetWorldPosPerfect()),
       new Uniform1f('shadowLength', () => lighting.shadowLength)
     ]);
@@ -354,10 +363,8 @@ class Graphics {
 
     //SPRITE SHEET SUN DEPTH PROGRAM
     let spriteSunDepthProgram = new Program('spriteSunDepth', 'vs_sunDepth', 'fs_depth');
-    spriteSunDepthProgram.SetConstUniforms([
-      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
-    ]);
     spriteSunDepthProgram.SetUniforms([
+      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
       new Uniform2f('cam', () => manager.scene.camera.transform.GetWorldPosPerfect()),
       new Uniform1f('shadowLength', () => lighting.shadowLength)
     ]);
@@ -586,26 +593,7 @@ class Graphics {
     var fb = gl.createFramebuffer();
     fb.texture = gl.createTexture();
 
-    fb.texture.UpdateDimensions = function() {
-      if (this.width != manager.graphics.res.x || this.height != manager.graphics.res.y) {
-        gl.bindTexture(gl.TEXTURE_2D, fb.texture);
-        this.width = manager.graphics.res.x;
-        this.height = manager.graphics.res.y;
-
-        const level = 0;
-        const internalFormat = gl.RGBA;
-        const border = 0;
-        const format = gl.RGBA;
-        const type = gl.UNSIGNED_BYTE;
-        const data = null;
-
-        gl.texImage2D(gl.TEXTURE_2D, level, internalFormat,
-          manager.graphics.res.x, manager.graphics.res.y, border,
-          format, type, data);
-        gl.bindTexture(gl.TEXTURE_2D, null);
-      }
-    }
-    fb.texture.UpdateDimensions();
+    this.UpdateFBOTexture(fb);
 
     gl.bindTexture(gl.TEXTURE_2D, fb.texture);
     // set the filtering so we don't need mips
@@ -628,18 +616,9 @@ class Graphics {
 
     if (hasDepthBuffer) {
       fb.depthBuffer = gl.createRenderbuffer();
+      fb.hasDepthBuffer = true;
 
-      fb.depthBuffer.UpdateDimensions = function() {
-        gl.bindRenderbuffer(gl.RENDERBUFFER, fb.depthBuffer);
-        gl.renderbufferStorage(
-          gl.RENDERBUFFER,
-          gl.DEPTH_COMPONENT16,
-          manager.graphics.res.x,
-          manager.graphics.res.y
-        );
-        gl.bindRenderbuffer(gl.RENDERBUFFER, null);
-      };
-      fb.depthBuffer.UpdateDimensions();
+      this.UpdateDepthBuffer(fb);
 
       gl.bindRenderbuffer(gl.RENDERBUFFER, fb.depthBuffer);
       gl.framebufferRenderbuffer(
@@ -658,5 +637,44 @@ class Graphics {
     }
     //Graphics.FBOs.push(fb);
     return fb;
+  }
+
+  UpdateFramebufferDimensions(fb){
+    this.UpdateFBOTexture(fb);
+    if(fb.hasDepthBuffer){
+      this.UpdateDepthBuffer(fb);
+    }
+  }
+
+  UpdateFBOTexture(fb){
+    let tex = fb.texture;
+    if (tex.width != manager.graphics.res.x || tex.height != manager.graphics.res.y) {
+      gl.bindTexture(gl.TEXTURE_2D, fb.texture);
+      tex.width = manager.graphics.res.x;
+      tex.height = manager.graphics.res.y;
+
+      const level = 0;
+      const internalFormat = gl.RGBA;
+      const border = 0;
+      const format = gl.RGBA;
+      const type = gl.UNSIGNED_BYTE;
+      const data = null;
+
+      gl.texImage2D(gl.TEXTURE_2D, level, internalFormat,
+        manager.graphics.res.x, manager.graphics.res.y, border,
+        format, type, data);
+      gl.bindTexture(gl.TEXTURE_2D, null);
+    }
+  }
+
+  UpdateDepthBuffer(fb){
+    gl.bindRenderbuffer(gl.RENDERBUFFER, fb.depthBuffer);
+    gl.renderbufferStorage(
+      gl.RENDERBUFFER,
+      gl.DEPTH_COMPONENT16,
+      manager.graphics.res.x,
+      manager.graphics.res.y
+    );
+    gl.bindRenderbuffer(gl.RENDERBUFFER, null);
   }
 }
