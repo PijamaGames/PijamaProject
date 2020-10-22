@@ -27,10 +27,14 @@ class SpriteRenderer extends Renderer{
     if(this.time > this.interval){
       this.time -= this.interval * Math.trunc(this.time/this.interval);
       this.tile.x = (this.tile.x+this.numTiles.x*this.way);
-      if(this.tile.x > this.maxFrames.x || this.tile.x < 0){
-        if(this.loopBack && this.way === 1){
-          this.way = -1;
-          this.tile.x = this.tile.x-this.numTiles.x*2;
+      if(this.tile.x/this.numTiles.x >= this.maxFrames.x || this.tile.x < 0){
+        if(this.loopBack){
+          if(this.way === 1){
+            this.tile.x = this.tile.x-this.numTiles.x*2;
+          } else {
+            this.tile.x = this.numTiles.x*2;
+          }
+          this.way *= -1;
         } else {
           this.tile.x = 0;
           this.way = 1;
