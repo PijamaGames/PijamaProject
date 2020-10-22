@@ -2,6 +2,9 @@ var lighting;
 class Lighting{
   constructor(){
     lighting = this;
+
+
+
     this.ambientLight = new Float32Array([0.2, 0.2, 0.6, 1.0]);
 
     //Sun
@@ -20,6 +23,9 @@ class Lighting{
 
     //Point lights
     this.lightSources = new Set();
+    this.shadowCastersPerLight = 1;
+    this.shadowCasters = [];
+    this.shadowCastersArr = new Float32Array(this.shadowCastersPerLight*4);
     this.currentLightSource = null;
     this.SetNight();
     //this.SetMorning();

@@ -16,18 +16,73 @@ uniform float height;
 uniform float edge0;
 uniform float edge1;
 
+#define MAX_CASTERS 1
+uniform float casters[4*MAX_CASTERS];
+
 //uniform float colorsPerChannel;
 
 varying vec2 fTexCoords;
 
+vec2 ProcessCasters(vec3 lightPos, vec3 fragmentPos, float vertical){
+
+  vec3 casterPos;
+  float casterRatio;
+
+  float intensity = 1.0;
+  float minDiff = 1.0;
+
+  vec3 lightToFragment = fragmentPos-lightPos;
+  vec3 lightToFragmentNorm = normalize(lightToFragment);
+  float lightToFragmentDist = length(lightToFragment);
+  vec3 lightToCaster;
+  vec3 lightToCasterNorm;
+  float lightToCasterDist;
+
+  float casterToFragmentDist;
+
+  float dotValue;
+
+  float casterDotValue;
+  vec3 crossProd;
+  float diff;
+
+  const float shadowDiffusion = 10.0;
+
+  for(int i = 0; i < MAX_CASTERS; i++){
+    casterPos = vec3(casters[i*4]*2.0, casters[i*4+2], casters[i*4+1]*2.0);
+    casterRatio = casters[i*4+3];
+
+    lightToCaster = casterPos-lightPos;
+    lightToCasterNorm = normalize(lightToCaster);
+    lightToCasterDist = length(lightToCaster);
+    dotValue = dot(lightToFragmentNorm, lightToCasterNorm);
+
+    casterToFragmentDist = length(fragmentPos-casterPos);
+
+
+
+    crossProd = cross(-lightToCaster, vec3(0,1,0));
+    crossProd = normalize(crossProd)*casterRatio;
+    casterDotValue = dot(lightToCasterNorm, normalize((casterPos+crossProd)-lightPos));
+
+    //casterDotValue = (hypotenuse*lightToCasterDist*cosAlpha)/(lightToCasterDist*lightToFragmentDist);
+
+    float diff = length(casterToFragmentDist)/shadowDiffusion;
+
+    minDiff = min(minDiff, diff);
+
+    float behind = float(dotValue > casterDotValue && (lightToCasterDist < lightToFragmentDist || casterToFragmentDist <= casterRatio));
+    intensity = intensity * (1.0-behind);
+  }
+
+  intensity = intensity *(1.0-vertical) + 1.0*vertical;
+
+  return vec2(intensity, minDiff);
+}
+
 void main()
 {
   vec4 depthSample = texture2D(depthTex, fTexCoords);
-  //vec2 finalCenter = center*2.0;
-
-
-  /*vec2 worldPos = (gl_FragCoord.xy/res*2.0-1.0)/tileSizeDIVres;
-  worldPos+=cam*2.0;*/
 
   vec3 lightPos = vec3(center.x*2.0, height, center.y*2.0);
   vec3 fragmentPos = (vec3(fTexCoords.x, depthSample.y-0.5, depthSample.x)*2.0-1.0)/vec3(tileSizeDIVres.x, tileSizeDIVres.y, tileSizeDIVres.y);
@@ -42,15 +97,14 @@ void main()
   intensity = 1.0 - intensity;
   intensity *= strength;
 
+  vec2 intensityDiff = ProcessCasters(lightPos, fragmentPos, depthSample.z);
+  intensity *= intensityDiff.x;
+
   vec3 finalLight = vec3(
     lightInfo.x+intensity,
-    lightInfo.y,
+    min(lightInfo.y, intensityDiff.y),
     mix(lightInfo.z, temperature*intensity, intensity)
   );
 
-  //finalLight = floor(finalLight*(colorsPerChannel-1.0)+0.5)/(colorsPerChannel-1.0);
-
   gl_FragColor = vec4(finalLight, 1.0);
-
-
 }

@@ -407,6 +407,7 @@ class Graphics {
       new Uniform2f('cam', () => manager.scene.camera.transform.GetWorldPosPerfect()),
       new UniformTex('depthTex', () => manager.graphics.fbos.get('depth').texture),
       new UniformTex('lightTex', () => manager.graphics.lastOutput.texture),
+      new Uniform1fv('casters', ()=>lighting.currentLightSource.GetClosestShadowCasters()),
       //new Uniform1f('colorsPerChannel', ()=>manager.graphics.colorsPerChannel),
     ]);
 
