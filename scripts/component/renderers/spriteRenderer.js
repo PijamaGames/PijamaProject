@@ -22,6 +22,14 @@ class SpriteRenderer extends Renderer{
     this.tile.y = this.dirIndex[Math.trunc(0.75*numDirs)]*numTiles.y;
   }
 
+  SetTextureByName(name){
+    this.spriteSheet = resources.textures.get(name);
+  }
+
+  SetTexture(tex){
+    this.spriteSheet = tex;
+  }
+
   Update(){
     this.time += manager.delta;
     if(this.time > this.interval){

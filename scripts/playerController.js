@@ -1,8 +1,11 @@
-class PlayerController {
-  constructor(player, idleAnimation, runAnimation, dashAnimation, attackAnimation) {
+class PlayerController extends Component {
+  constructor(/*player,*/ idleAnimation, runAnimation, dashAnimation, attackAnimation) {
+
+    super();
+    this.type = "playerController";
 
     Object.assign(this, {
-      player,
+      /*player,*/
       idleAnimation,
       runAnimation,
       dashAnimation,
@@ -17,7 +20,8 @@ class PlayerController {
   }
 
   SetAnimation(animation) {
-    player.renderer.spriteRenderer.spriteSheetName = animation;
+    player.renderer.SetTextureByName(animation);
+    //NOPE player.renderer.spriteRenderer.spriteSheetName = animation;
   }
 
   PlayerMove() {
@@ -26,7 +30,7 @@ class PlayerController {
     let v = new Vec2(x, y);
     v.Norm();
     v.Scale(2.0);
-    this.player.rigidbody.force.Add(v);
+    this.gameobj.rigidbody.force.Add(v);
   }
 
   PlayerDash() {
@@ -88,6 +92,11 @@ class PlayerController {
     this.run.SetEdges([this.edgeToIdle, this.edgeToDash, this.edgeToAttack]);
     this.dash.SetEdges([this.edgeToIdle, this.edgeToRun]);
     this.attack.SetEdges([this.edgeToIdle, this.edgeToRun]);
+  }
+
+  SetGameobj(gameobj){
+    this.gameobj = gameobj;
+    this.gameobj.playerController = this;
   }
 
 }
