@@ -11,6 +11,10 @@ class Collider {
     this.objsInsideTrigger=new Map();
   }
 
+  get active(){
+    return this.colliderGroup.active;
+  }
+
   SetTint(r=1.0,g=1.0,b=1.0,a=1.0){
     this.tint[0] = r;
     this.tint[1] = g;
@@ -22,7 +26,7 @@ class Collider {
     return this.circular === 1.0;
   }
   get worldCenter() {
-    return this.colliderGroup.gameobj.transform.GetWorldPosPerfect().Add(this.displacement);
+    return this.colliderGroup.gameobj.transform.GetWorldCenterPerfect().Add(this.displacement);
   }
   get gameobj() {
     return this.colliderGroup.gameobj;

@@ -6,7 +6,7 @@ function PF_Tree(position = new Vec2(), height = 0.0) {
   return new Gameobj('Tree', PF_TreeCount, null, manager.scene, [
     //new ColliderGroup([new BoxCollider(new Vec2(0.75,0), 0.5, 0.5)]),
 
-    new ColliderGroup([new CircleCollider(new Vec2(1.0,0.2), 0.2,false,
+    new ColliderGroup([new CircleCollider(new Vec2(0.0,-0.8), 0.2,false,
     function(){
       Log("arbol: holi");
     },
@@ -17,7 +17,7 @@ function PF_Tree(position = new Vec2(), height = 0.0) {
       Log("arbol: adios");
     })]),
     new Renderer(['color','sunDepth','depth'], new Vec2(0, 130), new Vec2(2,2), true),
-
+    new ShadowCaster(new Vec2(0.0,-0.8), 0.5),
     //new DebugController(5.0)
   ], new Transform(position, height, new Vec2(2, 2), new Vec2(0.0,0.0)), true);
 }
@@ -30,7 +30,7 @@ function PF_Box(position = new Vec2(), height = 0.0) {
   return new Gameobj('Box', PF_BoxCount, null, manager.scene, [
     new Rigidbody(0.9, false),
     new Renderer(['color','sunDepth','depth'], new Vec2(), new Vec2(2,2), true),
-    new ColliderGroup([new BoxCollider(new Vec2(1.0,0.35), 2.0, 0.5)]),
+    new ColliderGroup([new BoxCollider(new Vec2(0.0,-0.65), 2.0, 0.5)]),
     //new DebugController(3.0)
   ], new Transform(position, height, new Vec2(2, 2), new Vec2(0,0)), false);
 }
@@ -75,7 +75,7 @@ var PF_LightCount = -1;
 function PF_Light(position = new Vec2(), height = 0.0){
   PF_LightCount+=1;
   return new Gameobj('Light', PF_LightCount, null, manager.scene, [
-    new LightSource(),
+    new LightSource(8.0),
     //new DebugController(2.0),
   ], new Transform(position, height), false);
 }

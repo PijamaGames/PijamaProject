@@ -2,6 +2,7 @@ class LightSource extends Component{
   constructor(ratio = 6.0, temperature = 1.0, strength = 0.7, edge0=0.5, edge1=1.0){
     super();
     Object.assign(this, {ratio, temperature, strength, edge0, edge1});
+    this.type = "lightSource";
   }
 
   Destroy(){
@@ -31,13 +32,19 @@ class LightSource extends Component{
   GetClosestShadowCasters(){
     let casters = lighting.shadowCasters;
     let lightPos = this.gameobj.transform.position;
-    casters.sort((c1,c2)=>{
+    casters = casters.sort((c1,c2)=>{
       let d1 = Vec2.Distance(c1.worldPos, lightPos);
       let d2 = Vec2.Distance(c2.worldPos, lightPos);
-      return d1 < d2;
+      if (d1 < d2){
+        return -1;
+      }
+      else if (d1 > d2){
+        return 1;
+      }
+      return 0;
     });
-    let size = casters.length;
 
+    let size = casters.length;
     for(var i = 0; i < lighting.shadowCastersPerLight; i++){
       if(i <size){
         let pos = casters[i].worldPos;

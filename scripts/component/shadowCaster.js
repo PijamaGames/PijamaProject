@@ -2,6 +2,7 @@ class ShadowCaster extends Component{
   constructor(displacement = new Vec2(), ratio = 0.5){
     super();
     Object.assign(this, {displacement, ratio});
+    this.type = "shadowCaster";
   }
 
   Destroy(){

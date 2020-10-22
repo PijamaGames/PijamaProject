@@ -101,10 +101,12 @@ class Program{
   Render(){
     this.Use();
     let texUnitOffset = this.LoadUniforms();
+
     for(var [name, renderer] of this.renderers){
       if(renderer.active || this.isPostProcess){
         this.LoadObjUniforms(renderer, texUnitOffset);
         manager.graphics.Draw();
+
       }
     }
   }

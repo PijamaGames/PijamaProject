@@ -16,7 +16,7 @@ uniform float height;
 uniform float edge0;
 uniform float edge1;
 
-#define MAX_CASTERS 1
+#define MAX_CASTERS 10
 uniform float casters[4*MAX_CASTERS];
 
 //uniform float colorsPerChannel;
@@ -46,7 +46,7 @@ vec2 ProcessCasters(vec3 lightPos, vec3 fragmentPos, float vertical){
   vec3 crossProd;
   float diff;
 
-  const float shadowDiffusion = 10.0;
+  const float shadowDiffusion = 5.0;
 
   for(int i = 0; i < MAX_CASTERS; i++){
     casterPos = vec3(casters[i*4]*2.0, casters[i*4+2], casters[i*4+1]*2.0);

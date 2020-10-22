@@ -11,9 +11,9 @@ void main()
   float realColorsPerChannel = colorsPerChannel-1.0;
 
   vec3 limitedColor = vec3(
-    floor(originalColor.x*realColorsPerChannel+0.5)/realColorsPerChannel,
-    floor(originalColor.y*realColorsPerChannel+0.5)/realColorsPerChannel,
-    floor(originalColor.z*realColorsPerChannel+0.5)/realColorsPerChannel
+    floor(originalColor.x*realColorsPerChannel+0.5)/colorsPerChannel,
+    floor(originalColor.y*realColorsPerChannel+0.5)/colorsPerChannel,
+    floor(originalColor.z*realColorsPerChannel+0.5)/colorsPerChannel
   );
 
   gl_FragColor = vec4(limitedColor, originalColor.w);

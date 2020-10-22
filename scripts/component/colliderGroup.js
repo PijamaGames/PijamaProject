@@ -21,7 +21,7 @@ class ColliderGroup extends Component{
       this.gameobj.scene.colliderGroups.push(this);
       this.gameobj.colliderGroup = this;
 
-      if(DEBUG){
+      if(DEBUG_VISUAL){
         let program = manager.graphics.programs.get('collider');
         for(var i = 0; i < this.colliders.length; i++){
           program.renderers.set(this.gameobj.key+'_col'+i, this.colliders[i]);
