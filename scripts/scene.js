@@ -9,7 +9,7 @@ class Scene{
     manager.scenes.set(this.name, this);
     this.camera = /*this.AddGameobj(*/new Gameobj('camera',0, null, this, [
       new Camera(),
-      new DebugController(2.0),
+      new DebugController(3.0),
     ], new Transform(new Vec2(0,0), 0.0, new Vec2(canvas.width/tileSize, canvas.height/tileSize)));
   }
 
@@ -72,7 +72,7 @@ class Scene{
       elements = line.split(' ');
       if(elements[0] === '-') continue;
       func = prefabMapper.get(elements[0]);
-      if(func){
+      if(func && func != -1){
         pos = elements[1] && elements[2] ? new Vec2(elements[1], elements[2]) : new Vec2();
         height = elements[3] ? parseFloat(elements[3]) : 0.0;
         scaleX = elements[4] ? elements[4] : 1.0;

@@ -7,6 +7,7 @@ var textureNames = [
   'btn_placeHolder',
   'backJoystick',
   'frontJoystick',
+  'tree1'
 ];
 
 var shaderURLs = [ //name, url

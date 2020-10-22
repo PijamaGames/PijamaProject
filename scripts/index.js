@@ -8,7 +8,8 @@ function Main(){
   Log("Main")
   manager = new Manager();
   manager.AddScene(new Scene("testScene", BC_testScene));
-  manager.Start();
+  manager.AddScene(new Scene("tileTestScene", BC_tileTestScene));
+  manager.Start('tileTestScene');
 }
 
 function Log(text){

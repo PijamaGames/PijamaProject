@@ -9,7 +9,7 @@ class Graphics {
     this.output = null;
     this.auxTexture = null;
     this.lighting = new Lighting();
-    this.colorsPerChannel = 12.0; //10.0 is a good number
+    this.colorsPerChannel = 12.0; //12.0 is a good number
     this.defaultRes = new Vec2(640, 480);
     this.res = new Vec2(640, 480);
     this.lastRes = this.res.Copy();

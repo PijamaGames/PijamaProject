@@ -41,12 +41,12 @@ class Manager {
     });
   }
 
-  Start() {
+  Start(initScene = 'testScene') {
     var that = this;
     resources.Load(function() {
       that.graphics.LoadResources();
       that.AddInputs();
-      that.LoadScene('testScene');
+      that.LoadScene(initScene);
       that.ms = Date.now();
       that.GameLoop(that);
     });
