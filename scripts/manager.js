@@ -24,7 +24,6 @@ class Manager {
     input.Update();
     //fsm.Update();
     if (this.scene) {
-
       this.scene.Update();
       //this.scene.UpdatePhysics();
       physics.Update();
