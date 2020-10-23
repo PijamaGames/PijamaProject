@@ -48,6 +48,7 @@ class Lighting{
 
     this.SetMorning();
     this.SetNoon();
+    this.SetAfterNoon();
   }
 
   Update(){
@@ -138,7 +139,7 @@ class Lighting{
     this.SetLightBlurChannels(0.2,3.0);
     this.SetClouds(new Vec2(0.05,-1), 0.15, -0.2, 0.3);
     this.SetFog(0.9,0.8,0.8,0.9,1.0, 0.0, 0.05);
-    this.SetBloom(3.0,0.007,0.5);
+    this.SetBloom(3.1,0.007,0.45);
     Log("Afternoon lighting");
   }
 

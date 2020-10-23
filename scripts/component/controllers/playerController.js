@@ -122,6 +122,7 @@ class PlayerController extends Component {
   }
 
   CreateEdges() {
+    //this.edgeToIdle = new Edge(this.idle,[this.IdleConditions()]);
     this.edgeToIdle = new Edge(this.idle,[this.IdleConditions()]);
     this.edgeToDash = new Edge(this.dash,[this.DashConditions()]);
     this.edgeToRun = new Edge(this.run, [this.RunConditions()]);
