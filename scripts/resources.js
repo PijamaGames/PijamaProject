@@ -1,4 +1,6 @@
-var textureNames = [
+
+//From now on this is done automatically
+/*var textureNames = [
   'tilesTex',
   'tileMap',
   'spriteSheet',
@@ -9,7 +11,7 @@ var textureNames = [
   'frontJoystick',
   'tree1',
   'noise',
-];
+];*/
 
 var shaderURLs = [ //name, url
   ['vs_color', 'scripts/shaders/vs_color.glsl'],
@@ -60,9 +62,12 @@ class Resources{
       Log("Shaders loaded");
 
       //LOAD TEXTURES
-      for(var name of textureNames){
-        that.LoadTexture(name);
+      let allTextures = document.getElementsByClassName('tex');
+
+      for(let t of allTextures){
+        that.LoadTexture(t.id);
       }
+
       gl.bindTexture(gl.TEXTURE_2D, null);
       Log("Textures loaded");
 

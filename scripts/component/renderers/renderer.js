@@ -1,7 +1,10 @@
 class Renderer extends Component{
-  constructor(programs = [], tile = new Vec2(), numTiles = new Vec2(1,1), vertical = true, alpha = 1.0){
+  constructor(tile = new Vec2(), numTiles = new Vec2(1,1), vertical = true, alpha = 1.0, programs = null){
     super();
     this.type = "renderer";
+    if(programs == null){
+      programs = ['color', 'depth', 'sunDepth'];
+    }
     this.programs = [];
     for(var program of programs){
       this.programs.push(manager.graphics.programs.get(program));

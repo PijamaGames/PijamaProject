@@ -1,11 +1,5 @@
-var PF_TreeCount = -1;
-var prefabMapper = new Map();
-
-function PF_Tree(position = new Vec2(), height = 0.0) {
-  PF_TreeCount += 1;
-  return new Gameobj('Tree', PF_TreeCount, null, manager.scene, [
-    //new ColliderGroup([new BoxCollider(new Vec2(0.75,0), 0.5, 0.5)]),
-
+prefabFactory.AddPrototype("Tree", new Vec2(2, 2), new Vec2(0.0,0.0), true, ()=>{
+  return [
     new ColliderGroup([new CircleCollider(new Vec2(0.0,-0.8), 0.2,false,
     function(){
       Log("arbol: holi");
@@ -16,31 +10,21 @@ function PF_Tree(position = new Vec2(), height = 0.0) {
     function(){
       Log("arbol: adios");
     })]),
-    new Renderer(['color','sunDepth','depth'], new Vec2(0, 130), new Vec2(2,2), true),
+    new Renderer(new Vec2(0, 130), new Vec2(2,2), true),
     new ShadowCaster(new Vec2(0.0,-0.8), 0.5),
-    //new DebugController(5.0)
-  ], new Transform(position, height, new Vec2(2, 2), new Vec2(0.0,0.0)), true);
-}
-prefabMapper.set('Tree', PF_Tree);
+  ]
+});
 
-var PF_BoxCount = -1;
-
-function PF_Box(position = new Vec2(), height = 0.0) {
-  PF_BoxCount += 1;
-  return new Gameobj('Box', PF_BoxCount, null, manager.scene, [
+prefabFactory.AddPrototype("Box", new Vec2(2, 2), new Vec2(0,0), false, ()=>{
+  return [
     new Rigidbody(0.9, false),
-    new Renderer(['color','sunDepth','depth'], new Vec2(), new Vec2(2,2), true),
+    new Renderer(new Vec2(), new Vec2(2,2), true),
     new ColliderGroup([new BoxCollider(new Vec2(0.0,-0.65), 2.0, 0.5)]),
-    //new DebugController(3.0)
-  ], new Transform(position, height, new Vec2(2, 2), new Vec2(0,0)), false);
-}
-prefabMapper.set('Box', PF_Box);
+  ]
+});
 
-var PF_NeluCount = -1;
-
-function PF_Nelu(position = new Vec2(), height = 0.0) {
-  PF_NeluCount += 1;
-  return new Gameobj('Nelu', PF_NeluCount, null, manager.scene, [
+prefabFactory.AddPrototype("Nelu", new Vec2(2, 2), new Vec2(0.5, 0.5), false, ()=>{
+  return [
     new ColliderGroup([new CircleCollider(new Vec2(0,-0.65), 0.35, false,
     function(){
       Log("Nelu: holi");
@@ -51,32 +35,20 @@ function PF_Nelu(position = new Vec2(), height = 0.0) {
     function(){
       Log("Nelu: adios");
     })]),
-    new SpriteRenderer('nelu_idleE', ['spriteColor','spriteSunDepth','spriteDepth'], new Vec2(0, 2),new Vec2(2,2), true, 8, [4,0,6,1,5,3,7,2], 5),
+    new SpriteRenderer('nelu_idleE', new Vec2(0, 2),new Vec2(2,2), true, 8, [4,0,6,1,5,3,7,2], 5),
     new Rigidbody(),
     new ShadowCaster(new Vec2(0,-0.75), 0.75),
-    //new PlayerController('nelu_idleE','nelu_idleE','nelu_idleE','nelu_idleE')
-    //new DebugController(3.0)
-  ], new Transform(position, height, new Vec2(2, 2), new Vec2(0.5, 0.5)), false);
-}
-prefabMapper.set('Nelu', PF_Nelu);
+  ]
+});
 
-var PF_GrassCount = -1;
+prefabFactory.AddPrototype("Grass", new Vec2(1,1), new Vec2(0,1), true, ()=>{
+  return [
+    new Renderer(new Vec2(0,132), new Vec2(1,1), false),
+  ]
+});
 
-function PF_Grass(position = new Vec2(), height = 0.0, scale = new Vec2(1,1)){
-  PF_GrassCount+=1;
-  return new Gameobj('Grass', PF_GrassCount, null, manager.scene, [
-    new Renderer(['color','sunDepth','depth'], new Vec2(0,132), new Vec2(1,1), false)
-  ], new Transform(position, height, scale, new Vec2(0,1)), true);
-}
-prefabMapper.set('Grass', PF_Grass);
-
-var PF_LightCount = -1;
-
-function PF_Light(position = new Vec2(), height = 0.0){
-  PF_LightCount+=1;
-  return new Gameobj('Light', PF_LightCount, null, manager.scene, [
+prefabFactory.AddPrototype("Light", null, null, true, ()=>{
+  return [
     new LightSource(8.0),
-    //new DebugController(2.0),
-  ], new Transform(position, height), false);
-}
-prefabMapper.set('Light', PF_Light);
+  ]
+});

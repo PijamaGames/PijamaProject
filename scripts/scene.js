@@ -67,18 +67,24 @@ class Scene{
     var height;
     var scaleX;
     var scaleY;
+    var scale;
+    var type;
     if(!lines) return;
     for(var line of lines){
       elements = line.split(' ');
       if(elements[0] === '-') continue;
-      func = prefabMapper.get(elements[0]);
-      if(func && func != -1){
+      //func = prefabMapper.get(elements[0]);
+      type = elements[0];
+      if(prefabFactory.HasPrototype(elements[0])){
         pos = elements[1] && elements[2] ? new Vec2(elements[1], elements[2]) : new Vec2();
         height = elements[3] ? parseFloat(elements[3]) : 0.0;
-        scaleX = elements[4] ? elements[4] : 1.0;
-        scaleY = elements[5] ? elements[5] : 1.0;
+        scaleX = elements[4] ? elements[4] : null;
+        scaleY = elements[5] ? elements[5] : null;
 
-        func(pos, height, new Vec2(scaleX, scaleY));
+        scale = scaleX == null || scaleY == null ? null : new Vec2(scaleX, scaleY);
+
+        prefabFactory.CreateObj(type, pos, height, scale);
+        //func(pos, height, new Vec2(scaleX, scaleY));
       }
     }
     Log(this);

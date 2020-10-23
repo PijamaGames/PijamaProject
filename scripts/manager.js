@@ -7,7 +7,7 @@ class Manager {
     this.scenes = new Map();
     this.delta = 0.0;
     this.ms = null;
-    mapPlacer = new MapPlacer();
+    //mapPlacer = new MapPlacer();
     physics = new Physics();
   }
 
