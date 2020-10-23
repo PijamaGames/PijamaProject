@@ -4,7 +4,6 @@ class FSM{
     this.AddNodes(nodes);
     this.currentNode;
     this.changed=false;
-
   }
 
   Start(name){
@@ -15,7 +14,6 @@ class FSM{
   Update(){
     this.currentNode.Update();
     this.ChangeCurrentNode();
-
   }
 
   ChangeCurrentNode() {
@@ -26,7 +24,9 @@ class FSM{
         edge=this.currentNode.edges[i];
         if(edge.CheckConditions()){
           this.currentNode.Exit();
+          console.log('Cambia de: '+this.currentNode.name);
           this.currentNode=edge.destNode;
+          console.log('A: '+this.currentNode.name);
           this.currentNode.Start();
           this.changed=true;
         }

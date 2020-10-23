@@ -1,32 +1,53 @@
 class PlayerController extends Component {
-  constructor(/*player,*/ idleAnimation, runAnimation, dashAnimation, attackAnimation) {
+  constructor(idleAnimation, runAnimation, dashAnimation, attackAnimationIdle, attackAnimationRun) {
 
     super();
     this.type = "playerController";
 
     Object.assign(this, {
-      /*player,*/
       idleAnimation,
       runAnimation,
       dashAnimation,
-      attackAnimation
+      attackAnimationIdle,
+      attackAnimationRun
     });
-
-    this.CreateNodes();
-    this.CreateEdges();
-    this.SetEdges();
-
-    this.playerFSM = new FSM([this.idle, this.run, this.dash, this.attack]);
   }
 
+  Update(){
+    this.playerFSM.Update();
+  }
+
+  //Start functions nodes
   SetAnimation(animation) {
-    player.renderer.SetTextureByName(animation);
-    //NOPE player.renderer.spriteRenderer.spriteSheetName = animation;
+    this.gameobj.renderer.SetTextureByName(animation);
   }
 
+  SetAnimationAttack(animationRun,animationIdle) {
+    if(this.WASDPressed()){
+      this.gameobj.renderer.SetTextureByName(animationRun);
+    }
+    else{
+      this.gameobj.renderer.SetTextureByName(animationIdle);
+    }
+  }
+
+  WASDPressed(){
+    return input.GetKeyPressed('KeyW') && input.GetKeyPressed('KeyA') && input.GetKeyPressed('KeyS') && input.GetKeyPressed('KeyD');
+  }
+
+  //Update functions nodes
   PlayerMove() {
-    let x = input.GetKeyPressed('KeyA') * -1.0 + input.GetKeyPressed('KeyD');
-    let y = input.GetKeyPressed('KeyS') * -1.0 + input.GetKeyPressed('KeyW');
+    let x;
+    let y;
+    if(this.WASDPressed()){
+      x = input.GetKeyPressed('KeyA') * -1.0 + input.GetKeyPressed('KeyD');
+      y = input.GetKeyPressed('KeyS') * -1.0 + input.GetKeyPressed('KeyW');
+    }
+    else if(input.GetKeyPressed('ArrowLeft') && input.GetKeyPressed('ArrowRight') && input.GetKeyPressed('ArrowDown') && input.GetKeyPressed('ArrowUp')){
+      x = input.GetKeyPressed('ArrowLeft') * -1.0 + input.GetKeyPressed('ArrowRight');
+      y = input.GetKeyPressed('ArrowDown') * -1.0 + input.GetKeyPressed('ArrowUp');
+    }
+
     let v = new Vec2(x, y);
     v.Norm();
     v.Scale(2.0);
@@ -34,57 +55,77 @@ class PlayerController extends Component {
   }
 
   PlayerDash() {
+
     //hay que restringir el movimiento en una direccion
   }
 
   PlayerAttack() {
-    //lo q pasa cuando ataca
+
+    //lo q pasa cuando ataca, rellenar cuando tengamos enemigos
   }
 
-  CreateEdges() {
-    //meter de segundo parámetro lista de condiciones para ir a cada estado
-    this.edgeToIdle = new Edge(this.idle,[this.IdleConditions()]);
-    this.edgeToDash = new Edge(this.dash,[this.DashConditions()]);
-    this.edgeToRun = new Edge(this.run, [this.RunConditions()]);
-    this.edgeToAttack = new Edge(this.attack, [this.AttackConditions()]);
+  CoolDownDash(){
+
   }
 
+  //Edges conditions
   DashConditions(){
-    //pulsar x tecla?
+    if (input.GetKeyPressed('Space'))
+      return true;
+    else
+      return false;
   }
 
   IdleConditions(){
-    //no pulsar tecla?
+    for(var [key, value] of input.keys){
+      if (input.GetKeyPressed(key))
+        return false;
+    }
+    return true;
   }
 
   RunConditions(){
-    //pulsar wasd?
+    if (input.GetKeyPressed('W') || input.GetKeyPressed('A') || input.GetKeyPressed('S') || input.GetKeyPressed('D'))
+      return true;
+    else
+      return false;
   }
 
   AttackConditions(){
-    //pulsar x tecla?
+    if (input.mouseLeftDown)
+      return true;
+    else
+      return false;
   }
 
   CreateNodes() {
     this.idle = new Node(
-      "idle", //necesito
-      () => this.SetAnimation(idleAnimation)
+      "idle",
+      ()=>{this.SetAnimation(this.idleAnimation);}
     );
     this.run = new Node(
-      "run", //necesito
-      () => this.SetAnimation(runAnimation),
-      () => this.PlayerMove()
+      "run",
+      ()=>{this.SetAnimation(this.runAnimation);},
+      //()=>{this.PlayerMove()}
     );
     this.dash = new Node(
-      "dash", //necesito
-      () => this.SetAnimation(runAnimation),
-      () => this.PlayerDash()
+      "dash",
+      ()=>{this.SetAnimation(this.dashAnimation);},
+      ()=>{this.PlayerDash();},
+      ()=>{this.CoolDownDash();}
     );
     this.attack = new Node(
-      "attack", //necesito
-      () => this.SetAnimation(attackAnimation),
-      () => this.PlayerAttack()
+      "attack",
+      ()=>{this.SetAnimationAttack(this.attackAnimationIdle,this.attackAnimationRun);},
+      ()=>{this.PlayerAttack();}
     );
+  }
+
+  CreateEdges() {
+    this.edgeToIdle = new Edge(this.idle,[this.IdleConditions()]);
+    this.edgeToDash = new Edge(this.dash,[this.DashConditions()]);
+    this.edgeToRun = new Edge(this.run, [this.RunConditions()]);
+    this.edgeToAttack = new Edge(this.attack, [this.AttackConditions()]);
   }
 
   SetEdges() {
@@ -94,9 +135,19 @@ class PlayerController extends Component {
     this.attack.SetEdges([this.edgeToIdle, this.edgeToRun]);
   }
 
+  CreateFSM(){
+    this.CreateNodes();
+    this.CreateEdges();
+    this.SetEdges();
+
+    this.playerFSM = new FSM([this.idle, this.run, this.dash, this.attack]);
+    this.playerFSM.Start('idle');
+  }
+
   SetGameobj(gameobj){
     this.gameobj = gameobj;
     this.gameobj.playerController = this;
+    this.CreateFSM();
   }
 
 }

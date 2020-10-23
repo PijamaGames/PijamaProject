@@ -1,11 +1,11 @@
 class Node{
-  constructor(name, edges, startCallback, updateCallback, exitCallback){
-    Object.assign(this,{name, startCallback, updateCallback, exitCallback, edges});
+  constructor(name, startCallback, updateCallback, exitCallback){
+    Object.assign(this,{name, startCallback, updateCallback, exitCallback});
 
   }
 
   SetEdges(_edges){
-    this.edges=edges;
+    this.edges=_edges;
   }
 
   Start(){
