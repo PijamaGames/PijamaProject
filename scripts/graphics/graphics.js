@@ -9,7 +9,7 @@ class Graphics {
     this.output = null;
     this.auxTexture = null;
     this.lighting = new Lighting();
-    this.colorsPerChannel = 1200.0; //12.0 is a good number
+    this.colorsPerChannel = 12.0; //12.0 is a good number
     this.defaultRes = new Vec2(640, 480);
     this.res = new Vec2(640, 480);
     this.lastRes = this.res.Copy();
@@ -17,6 +17,9 @@ class Graphics {
     this.landscapeRes = this.res.Copy();
     this.aspectRatio = this.res.x / this.res.y;
     this.windowRes = new Vec2(window.innerWidth, window.innerHeight);
+
+    this.finalColorFBO = '';
+
     this.InitContext();
     this.CanvasResponsive(true);
   }
@@ -168,12 +171,26 @@ class Graphics {
     this.BindFBO('fog');
     this.programs.get('fog').Render();
 
+    //Apply bloom
+    this.BindFBO('bloomExtract');
+    this.programs.get('bloomExtract').Render();
+    this.BindFBO('blurHalf');
+    this.programs.get('bloomBlurX').Render();
+    this.BindFBO('bloomExtract');
+    this.programs.get('bloomBlurY').Render();
+
+    this.BindFBO('color');
+    this.programs.get('applyBloom').Render();
+
     this.BindFBO('colorFilter');
     //gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     this.programs.get('colorFilter').Render();
 
-    this.BindFBO('finalColor');
+
+    this.BindFBO(this.finalColorFBO.name);
+    this.SwapBuffers();
     this.programs.get('limitColor').Render();
+    //this.SwapBuffers();
 
     if (DEBUG_VISUAL) {
       gl.enable(gl.BLEND);
@@ -184,7 +201,7 @@ class Graphics {
 
     /*Test*/
     /*gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    this.auxTexture = this.fbos.get('fog').texture;
+    this.auxTexture = this.fbos.get('bloomExtract').texture;
     this.programs.get('common').Render();*/
     /*Test*/
 
@@ -256,7 +273,19 @@ class Graphics {
     let finalColorFBO = this.CreateFrameBuffer(false);
     finalColorFBO.name = 'finalColor';
     this.fbos.set(finalColorFBO.name, finalColorFBO);
+    this.finalColorFBO = finalColorFBO;
 
+    let finalColorFBO2 = this.CreateFrameBuffer(false);
+    finalColorFBO2.name = 'finalColor2';
+    this.fbos.set(finalColorFBO2.name, finalColorFBO2);
+
+    let bloomExtractFBO = this.CreateFrameBuffer(false);
+    bloomExtractFBO.name = 'bloomExtract';
+    this.fbos.set(bloomExtractFBO.name, bloomExtractFBO);
+  }
+
+  SwapBuffers(){
+      this.finalColorFBO = this.finalColorFBO.name == 'finalColor' ? this.fbos.get('finalColor2') : this.fbos.get('finalColor');
   }
 
   CreatePrograms() {
@@ -471,6 +500,34 @@ class Graphics {
       new Uniform2f('fogClamp', ()=>lighting.fogClamp),
     ]);
 
+    //BLOOM PROGRAMS
+    let bloomExtractProgram = new Program('bloomExtract', 'vs_common', 'fs_bloomExtract', true, true);
+    bloomExtractProgram.SetUniforms([
+      new Uniform1f('threshold', ()=>lighting.bloomThreshold),
+      new UniformTex('colorTex', ()=>manager.graphics.lastOutput.texture),
+    ]);
+
+    let bloomBlurXProgram = new Program('bloomBlurX', 'vs_common', 'fs_bloomBlurX', true, true);
+    bloomBlurXProgram.SetUniforms([
+      new UniformTex('colorTex', () => manager.graphics.lastOutput.texture),
+      new Uniform1f('invAspect', () => manager.graphics.res.y / manager.graphics.res.x),
+      new Uniform1f('blurSize', ()=>lighting.bloomBlur),
+    ]);
+
+    let bloomBlurYProgram = new Program('bloomBlurY', 'vs_common', 'fs_bloomBlurY', true, true);
+    bloomBlurYProgram.SetUniforms([
+      new UniformTex('colorTex', () => manager.graphics.fbos.get('blurHalf').texture),
+      new Uniform1f('blurSize', ()=>lighting.bloomBlur),
+    ]);
+
+    let applyBloomProgram = new Program('applyBloom', 'vs_common', 'fs_applyBloom', true, true);
+    applyBloomProgram.SetUniforms([
+      new UniformTex('colorTex', ()=>manager.graphics.fbos.get('fog').texture),
+      new UniformTex('bloomTex', ()=>manager.graphics.fbos.get('bloomExtract').texture),
+      new Uniform1f('bloomStrength', ()=>lighting.bloomStrength),
+    ]);
+
+
     //COLLIDER PROGRAM
     let colliderProgram = new Program('collider', 'vs_collider', 'fs_collider', false);
     colliderProgram.SetUniforms([
@@ -501,13 +558,15 @@ class Graphics {
     ]);
     limitColorProgram.SetUniforms([
       new UniformTex('colorTex', () => manager.graphics.lastOutput.texture),
+      new UniformTex('lastColorTex', ()=>manager.graphics.finalColorFBO.texture),
+      new Uniform1f('motionBlur', ()=>lighting.motionBlur),
     ]);
 
 
     //SURFACE PROGRAM
     let surfaceProgram = new Program('surface', 'vs_surface', 'fs_common', true, true);
     surfaceProgram.SetUniforms([
-      new UniformTex('colorTex', ()=>manager.graphics.fbos.get('finalColor').texture),
+      new UniformTex('colorTex', ()=>manager.graphics.finalColorFBO.texture),
       new Uniform2f('gameRes', ()=>manager.graphics.res),
       new Uniform2f('canvasRes', ()=>new Vec2(canvas.width, canvas.height)),
     ]);

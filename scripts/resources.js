@@ -32,6 +32,10 @@ var shaderURLs = [ //name, url
   ['vs_virtualInput', 'scripts/shaders/vs_virtualInput.glsl'],
   ['fs_virtualInput', 'scripts/shaders/fs_virtualInput.glsl'],
   ['fs_fog', 'scripts/shaders/fs_fog.glsl'],
+  ['fs_bloomExtract', 'scripts/shaders/fs_bloomExtract.glsl'],
+  ['fs_bloomBlurX', 'scripts/shaders/fs_bloomBlurX.glsl'],
+  ['fs_bloomBlurY', 'scripts/shaders/fs_bloomBlurY.glsl'],
+  ['fs_applyBloom', 'scripts/shaders/fs_applyBloom.glsl'],
 ];
 
 var soundsURLs=[

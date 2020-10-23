@@ -5,10 +5,12 @@ class Lighting{
 
     this.ambientLight = new Float32Array([0.2, 0.2, 0.6, 1.0]);
 
+    //Motion blur
+    this.motionBlur = 0.0;
+
     //Sun
     this.sunTemperature = 0.5;
     this.sunStrength = 1.0;
-    this.lightBlurChannels = new Float32Array([0.2,3.0,0.0,0.0]);
 
     //Fog
     this.fogColor = new Float32Array([0.5,0.5,0.8,1.0]);
@@ -23,6 +25,7 @@ class Lighting{
     this.shadowLength = -0.3;
     this.minShadowLength = -0.5;
     this.verticalShadowStrength = 0.12;
+    this.lightBlurChannels = new Float32Array([0.2,3.0,0.0,0.0]);
 
     //Point lights
     this.lightSources = new Set();
@@ -37,7 +40,14 @@ class Lighting{
     this.cloudMinIntensity = 0.3;
     this.cloudSize = 0.3;
     //this.SetNight();
+
+    //Bloom
+    this.bloomThreshold = 4.0;
+    this.bloomBlur = 0.01;
+    this.bloomStrength = 0.5;
+
     this.SetMorning();
+    this.SetNoon();
   }
 
   Update(){
@@ -45,6 +55,12 @@ class Lighting{
       this.cloudDisplacement.x+this.cloudDir.x*manager.delta,
       this.cloudDisplacement.y+this.cloudDir.y*manager.delta
     )
+  }
+
+  SetBloom(threshold = 4.0, blur = 0.01, strength = 0.5){
+    this.bloomStrength = strength;
+    this.bloomThreshold = threshold;
+    this.bloomBlur = blur;
   }
 
   SetClouds(dir = new Vec2(-0.1,-0.1),speed = Math.sqrt(0.1*0.1+0.1*0.1), intensity = 0.3, cloudSize = 0.3){
@@ -71,6 +87,7 @@ class Lighting{
     this.SetAmbientLight(0.2, 0.2, 0.6);
     this.SetLightBlurChannels(0.2,3.0);
     this.SetClouds();
+    this.SetBloom();
   }
 
   SetMorning(){
@@ -87,6 +104,7 @@ class Lighting{
     this.SetLightBlurChannels(0.25,3.0);
     this.SetClouds(new Vec2(-0.5,-1), 0.1, 0.85,0.1);
     this.SetFog(0.8,0.8,1.0,0.85,0.95, 0.0, 0.08);
+    this.SetBloom();
     Log("Morning lighting")
   }
 
@@ -103,6 +121,7 @@ class Lighting{
     this.SetLightBlurChannels(0.2,3.0);
     this.SetClouds(new Vec2(-0.2,-1), 0.05, 1.0, 0.5);
     this.SetFog(1.0,1.0,1.0,0.9,0.95, 0.0, 0.1);
+    this.SetBloom(5.0,0.01,0.3);
     Log("Noon lighting");
   }
 
@@ -119,6 +138,7 @@ class Lighting{
     this.SetLightBlurChannels(0.2,3.0);
     this.SetClouds(new Vec2(0.05,-1), 0.15, -0.2, 0.3);
     this.SetFog(0.9,0.8,0.8,0.9,1.0, 0.0, 0.05);
+    this.SetBloom(3.0,0.007,0.5);
     Log("Afternoon lighting");
   }
 
@@ -135,6 +155,7 @@ class Lighting{
     this.SetLightBlurChannels(0.3,3.0);
     this.SetClouds(new Vec2(-0.2,1), 0.05, 1.0, 0.2);
     this.SetFog(0.5,0.5,0.8,0.9,0.95, 0.0, 0.35);
+    this.SetBloom(3.0,0.007,0.6);
     Log("Night lighting");
   }
 
