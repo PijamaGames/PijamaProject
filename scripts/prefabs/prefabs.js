@@ -54,7 +54,7 @@ function PF_Nelu(position = new Vec2(), height = 0.0) {
     new SpriteRenderer('nelu_idleE', ['spriteColor','spriteSunDepth','spriteDepth'], new Vec2(0, 2),new Vec2(2,2), true, 8, [4,0,6,1,5,3,7,2], 5),
     new Rigidbody(),
     new ShadowCaster(new Vec2(0,-0.75), 0.75),
-    new PlayerController('nelu_idleE','nelu_idleE','nelu_idleE','nelu_idleE')
+    //new PlayerController('nelu_idleE','nelu_idleE','nelu_idleE','nelu_idleE')
     //new DebugController(3.0)
   ], new Transform(position, height, new Vec2(2, 2), new Vec2(0.5, 0.5)), false);
 }
