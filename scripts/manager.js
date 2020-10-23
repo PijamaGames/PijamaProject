@@ -28,6 +28,7 @@ class Manager {
       this.scene.Update();
       //this.scene.UpdatePhysics();
       physics.Update();
+      lighting.Update();
       this.graphics.CanvasResponsive();
       this.graphics.Render();
       //Update map placer

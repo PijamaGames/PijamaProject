@@ -1,4 +1,4 @@
-precision mediump float;
+precision highp float;
 
 varying vec2 fTexCoords;
 
@@ -8,19 +8,71 @@ uniform sampler2D sunDepthTex;
 uniform float verticalShadowStrength;
 uniform float temperature;
 uniform float strength;
+uniform vec2 tileSizeDIVres;
+uniform vec2 cam;
+uniform sampler2D noiseTex;
+uniform vec2 cloudDisplacement;
+uniform float cloudMinIntensity;
+uniform float cloudSize;
 
-/*float Project(vec2 p){
-  const vec2 va = vec2(0.0,0.0);
-  const vec2 vb = vec2(1.0,0.0);
+float rand(float v){
+  return fract(v);
+}
 
-  vec2 va_vb = vb-va;
-  vec2 va_p = p-va;
-  float dist = length(va_vb);
-  va_vb = normalize(va_vb);
-  float d = dot(va_p, va_vb);
-  d = clamp(d, 0.0, dist);
-  return d;
-}*/
+float rand(vec2 st) {
+  //return rand(sin(dot(st.xy*0.05, vec2(12.9898,78.233))) * 43758.5453123);
+  float downX = float(st.x<0.0);
+  float overX = float(st.x>1.0);
+  float fixX = floor(abs(st.x-1.0*overX)+1.0);
+  st.x = st.x + fixX * downX -fixX * overX;
+
+  float downY = float(st.y<0.0);
+  float overY = float(st.y>1.0);
+  float fixY = floor(abs(st.y-1.0*overY)+1.0);
+  st.y = st.y + fixY * downY -fixY * overY;
+
+  return texture2D(noiseTex, st).x;
+}
+
+float Perlin(vec2 fragCoord){
+  vec2 floorFragCoord = vec2(floor(fragCoord.x), floor(fragCoord.y));
+  vec2 c1 = floorFragCoord;
+  vec2 c2 = floorFragCoord+vec2(1,0);
+  vec2 c3 = floorFragCoord+vec2(0,1);
+  vec2 c4 = floorFragCoord+vec2(1,1);
+
+
+  float r1 = rand(c1*tileSizeDIVres);
+  float r2 = rand(c2*tileSizeDIVres);
+  float r3 = rand(c3*tileSizeDIVres);
+  float r4 = rand(c4*tileSizeDIVres);
+
+  //return mix(r1,r2,smoothstep(0.0,1.0,fract(fragCoord.x)));
+
+  vec2 pct = vec2(fract(fragCoord.x), fract(fragCoord.y));
+  //pct = vec2(fract(fragCoord.x), fract(fragCoord.y));
+
+  float r12 = mix(r1,r2,pct.x);
+  float r34 = mix(r3,r4,pct.x);
+
+  float value = mix(r12,r34,pct.y);
+
+  return value;
+}
+
+float CloudsIntensity(vec2 fragCoord, vec2 displacement){
+  fragCoord*= cloudSize;
+  fragCoord+= displacement;
+
+  float value = Perlin(fragCoord)*0.4 + Perlin(fragCoord+vec2(100.5,50.5))*0.2 + Perlin(fragCoord+vec2(-253.4561,546.465))*0.1 + Perlin(fragCoord*0.5)*0.3;
+  value = 1.0-clamp(pow(value, 1.5),0.0,1.0);
+  value += Perlin(fragCoord+vec2(-50,-30))*0.5;
+
+
+  value = cloudMinIntensity + value*(1.0-cloudMinIntensity);
+
+  return value;
+}
 
 void main()
 {
@@ -45,7 +97,23 @@ void main()
   //float occlusion = float(depthSample.z != sunDepthSample.z);
   occlusion = 1.0-occlusion;
   float diff = (abs(depthSample.y-sunDepthSample.y)*(1.0-depthVertical));
-  gl_FragColor = vec4(occlusion*strength,abs(diff),temperature,1.0);
+
+  float intensity = occlusion*strength;
+
+
+  vec3 fragmentPos = (vec3(fTexCoords.x, depthSample.y-0.5, depthSample.x)*2.0-1.0)/
+    vec3(tileSizeDIVres.x, tileSizeDIVres.y, tileSizeDIVres.y);
+  fragmentPos.x+=cam.x*2.0;
+  fragmentPos.z+=cam.y*2.0;
+
+  float cloudIntensity = CloudsIntensity(vec2(fragmentPos.x, fragmentPos.z-fragmentPos.y*2.0), -cloudDisplacement);
+
+  intensity *= cloudIntensity;
+
+  gl_FragColor = vec4(intensity,abs(diff),temperature,1.0);
+
+
+  //gl_FragColor = vec4(fragmentPos.xz, 0.0,1.0);
 
   /*float aux = float(depth > sunDepth+0.001);
   gl_FragColor = vec4(aux,aux,aux,1.0);*/

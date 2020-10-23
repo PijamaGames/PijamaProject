@@ -4,6 +4,7 @@ varying vec2 fTexCoords;
 uniform sampler2D colorTex;
 uniform sampler2D depthTex;
 uniform float blurSize;
+uniform float extraBlur;
 uniform float blurEdge0;
 uniform float blurEdge1;
 uniform vec4 channels;
@@ -27,7 +28,7 @@ void main()
   float influence = 0.0;
   vec4 lastColor = color;
   for(int index = 0; index < samples; index++){
-    vec2 uv = fTexCoords + vec2(0,(float(index)/(fSamples-1.0)-0.5) * blurSize*diff); /** invAspect)*/
+    vec2 uv = fTexCoords + vec2(0,(float(index)/(fSamples-1.0)-0.5) * (blurSize*diff+extraBlur)); /** invAspect)*/
     vec4 otherDepth = texture2D(depthTex, uv);
     influence = float(otherDepth.y <= depth && depthSample.z == otherDepth.z);
     lastColor = texture2D(colorTex, uv)*influence + colorSample*(1.0-influence);

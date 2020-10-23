@@ -9,7 +9,7 @@ class Graphics {
     this.output = null;
     this.auxTexture = null;
     this.lighting = new Lighting();
-    this.colorsPerChannel = 12.0; //12.0 is a good number
+    this.colorsPerChannel = 1200.0; //12.0 is a good number
     this.defaultRes = new Vec2(640, 480);
     this.res = new Vec2(640, 480);
     this.lastRes = this.res.Copy();
@@ -81,7 +81,7 @@ class Graphics {
         this.res = this.landscapeRes.Copy();
         let w = this.res.y*this.windowRes.x/this.windowRes.y;
         canvas.width = Math.ceil(w);
-        canvas.height = Math.ceil(this.res.y);
+        canvas.height = Math.ceil(this.res.y)+1;
 
       } else {
         canvas.width = Math.ceil(this.res.x);
@@ -124,7 +124,11 @@ class Graphics {
     this.programs.get('spriteColor').Render();
     gl.disable(gl.BLEND);
 
+
     gl.disable(gl.DEPTH_TEST);
+
+
+
     gl.clearColor(1.0, 1.0, 1.0, 1.0);
     this.BindFBO('light');
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -134,7 +138,7 @@ class Graphics {
     //Render all lights
     let size = lighting.lightSources.size;
     //MÁS TARDE SE DEBERÁ COMPROBAR SI EL NÚMERO DE LUCES DENTRO DE LA VISTA ES >0
-    if (size > 0) {
+    if (size > 0 && lighting.renderPointLights) {
       this.BindFBO('light2');
       let pointLightProgram = this.programs.get('pointLight');
       let i = 0;
@@ -161,7 +165,8 @@ class Graphics {
     //gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     this.programs.get('litColor').Render();
 
-
+    this.BindFBO('fog');
+    this.programs.get('fog').Render();
 
     this.BindFBO('colorFilter');
     //gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -177,6 +182,12 @@ class Graphics {
       gl.disable(gl.BLEND);
     }
 
+    /*Test*/
+    /*gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    this.auxTexture = this.fbos.get('fog').texture;
+    this.programs.get('common').Render();*/
+    /*Test*/
+
     gl.viewport(0, 0, canvas.width, canvas.height);
 
     this.BindFBO(null);
@@ -189,12 +200,7 @@ class Graphics {
     //this.SetBuffers(program);
 
 
-    /*Test*/
-    /*this.BindFBO(null);
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    this.auxTexture = this.fbos.get('light').texture;
-    this.programs.get('common').Render();*/
-    /*Test*/
+
   }
 
   BindFBO(name) {
@@ -234,6 +240,10 @@ class Graphics {
     let litColorFBO = this.CreateFrameBuffer(false);
     litColorFBO.name = 'litColor';
     this.fbos.set(litColorFBO.name, litColorFBO);
+
+    let fogFBO = this.CreateFrameBuffer(false);
+    fogFBO.name = 'fog';
+    this.fbos.set(fogFBO.name, fogFBO);
 
     let blurHalfFBO = this.CreateFrameBuffer(false);
     blurHalfFBO.name = 'blurHalf';
@@ -385,11 +395,17 @@ class Graphics {
     //SUN LIGHT PROGRAM
     let sunLightProgram = new Program('sunLight', 'vs_common', 'fs_sunLight', true, true);
     sunLightProgram.SetUniforms([
+      new UniformTex('noiseTex', ()=>resources.textures.get('noise')),
       new UniformTex('depthTex', () => this.fbos.get('depth').texture),
       new UniformTex('sunDepthTex', () => this.fbos.get('sunDepth').texture),
       new Uniform1f('verticalShadowStrength', () => lighting.verticalShadowStrength),
       new Uniform1f('temperature', () => lighting.sunTemperature),
       new Uniform1f('strength', () => lighting.sunStrength),
+      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
+      new Uniform2f('cam', () => manager.scene.camera.transform.GetWorldPosPerfect()),
+      new Uniform1f('cloudMinIntensity', ()=>lighting.cloudMinIntensity),
+      new Uniform2f('cloudDisplacement', ()=>lighting.cloudDisplacement),
+      new Uniform1f('cloudSize', ()=>lighting.cloudSize),
     ]);
 
     //POINT LIGHT PROGRAM
@@ -419,6 +435,7 @@ class Graphics {
       new UniformTex('depthTex', () => manager.graphics.fbos.get('depth').texture),
       new Uniform1f('invAspect', () => manager.graphics.res.y / manager.graphics.res.x),
       new Uniform1f('blurSize', () => lighting.shadowBlur),
+      new Uniform1f('extraBlur', () => lighting.shadowExtraBlur),
       new Uniform1f('blurEdge0', () => lighting.shadowBlurE0),
       new Uniform1f('blurEdge1', () => lighting.shadowBlurE1),
     ]);
@@ -429,6 +446,7 @@ class Graphics {
       new UniformTex('colorTex', () => manager.graphics.fbos.get('blurHalf').texture),
       new UniformTex('depthTex', () => manager.graphics.fbos.get('depth').texture),
       new Uniform1f('blurSize', () => lighting.shadowBlur),
+      new Uniform1f('extraBlur', () => lighting.shadowExtraBlur),
       new Uniform1f('blurEdge0', () => lighting.shadowBlurE0),
       new Uniform1f('blurEdge1', () => lighting.shadowBlurE1),
     ]);
@@ -441,6 +459,16 @@ class Graphics {
       /*TEMPORAL*/
       new Uniform4f('ambientLight', () => lighting.ambientLight),
       new Uniform1f('shadowStrength', () => lighting.shadowStrength),
+    ]);
+
+    //FOG PROGRAM
+    let fogProgram = new Program('fog', 'vs_common', 'fs_fog', true, true);
+    fogProgram.SetUniforms([
+      new UniformTex('colorTex', ()=>manager.graphics.lastOutput.texture),
+      new UniformTex('depthTex', ()=>manager.graphics.fbos.get('depth').texture),
+      new Uniform2f('fogEdges',()=>lighting.fogEdges),
+      new Uniform4f('fogColor', ()=>lighting.fogColor),
+      new Uniform2f('fogClamp', ()=>lighting.fogClamp),
     ]);
 
     //COLLIDER PROGRAM

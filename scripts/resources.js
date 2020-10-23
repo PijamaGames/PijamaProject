@@ -7,7 +7,8 @@ var textureNames = [
   'btn_placeHolder',
   'backJoystick',
   'frontJoystick',
-  'tree1'
+  'tree1',
+  'noise',
 ];
 
 var shaderURLs = [ //name, url
@@ -29,7 +30,8 @@ var shaderURLs = [ //name, url
   ['fs_limitColor', 'scripts/shaders/fs_limitColor.glsl'],
   ['vs_surface', 'scripts/shaders/vs_surface.glsl'],
   ['vs_virtualInput', 'scripts/shaders/vs_virtualInput.glsl'],
-  ['fs_virtualInput', 'scripts/shaders/fs_virtualInput.glsl']
+  ['fs_virtualInput', 'scripts/shaders/fs_virtualInput.glsl'],
+  ['fs_fog', 'scripts/shaders/fs_fog.glsl'],
 ];
 
 var soundsURLs=[
