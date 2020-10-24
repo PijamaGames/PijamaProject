@@ -14,7 +14,7 @@ class Manager {
   ManageTime() {
     var newMs = Date.now();
     this.delta = (newMs - this.ms) / 1000.0;
-    if (this.delta > 1.0) this.delta = 1.0;
+    if (this.delta > 0.1) this.delta = 0.1;
     this.ms = newMs;
   }
 
