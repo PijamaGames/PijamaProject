@@ -38,7 +38,7 @@ prefabFactory.AddPrototype("Nelu", new Vec2(2, 2), new Vec2(0.5, 0.5), false, ()
     new SpriteRenderer('nelu_idleE', new Vec2(0, 2),new Vec2(2,2), true, 8, [4,0,6,1,5,3,7,2], 5),
     new Rigidbody(),
     new ShadowCaster(new Vec2(0,-0.75), 0.75),
-    //new PlayerController('nelu_idleE', 'nelu_idleE','nelu_idleE','nelu_idleE','nelu_idleE'),
+    new PlayerController('nelu_idleE', 'nelu_idleE','nelu_idleE','nelu_idleE','nelu_idleE'),
   ]
 });
 
