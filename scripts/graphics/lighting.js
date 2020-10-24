@@ -4,6 +4,7 @@ class Lighting{
     lighting = this;
 
     this.ambientLight = new Float32Array([0.2, 0.2, 0.6, 1.0]);
+    this.backgroundColor = new Float32Array([1.0,0.0,0.0,1.0]);
 
     //Motion blur
     this.motionBlur = 0.0;

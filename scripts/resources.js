@@ -38,6 +38,10 @@ var shaderURLs = [ //name, url
   ['fs_bloomBlurX', 'scripts/shaders/fs_bloomBlurX.glsl'],
   ['fs_bloomBlurY', 'scripts/shaders/fs_bloomBlurY.glsl'],
   ['fs_applyBloom', 'scripts/shaders/fs_applyBloom.glsl'],
+  ['vs_parallax', 'scripts/shaders/vs_parallax.glsl'],
+  ['fs_parallax', 'scripts/shaders/fs_parallax.glsl'],
+  ['fs_mask', 'scripts/shaders/fs_mask.glsl'],
+  ['fs_applyParallax', 'scripts/shaders/fs_applyParallax.glsl'],
 ];
 
 var soundsURLs=[

@@ -3,7 +3,7 @@ class Renderer extends Component{
     super();
     this.type = "renderer";
     if(programs == null){
-      programs = ['color', 'depth', 'sunDepth'];
+      programs = ['color', 'depth', 'sunDepth', 'mask'];
     }
     this.programs = [];
     for(var program of programs){

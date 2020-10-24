@@ -4,6 +4,7 @@ const tileSize = 32.0;
 class Graphics {
   constructor() {
     this.programs = new Map();
+    this.parallax = new Parallax();
     this.fbos = new Map();
     this.lastOutput = null;
     this.output = null;
@@ -64,6 +65,7 @@ class Graphics {
     this.CreateBuffers();
     this.CreateFrameBuffers();
     this.CreatePrograms();
+    this.CreateParallaxLayers();
   }
 
   CanvasResponsive(forced = false) {
@@ -105,6 +107,16 @@ class Graphics {
 
     gl.viewport(0, 0, this.res.x, this.res.y);
 
+    //Parallax
+    gl.disable(gl.DEPTH_TEST);
+    gl.disable(gl.BLEND);
+    gl.clearColor(lighting.backgroundColor[0], lighting.backgroundColor[1], /*lighting.backgroundColor[2]*/0.5, 1.0);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    this.BindFBO('parallax');
+    this.programs.get('parallax').Render();
+
+
+    //Color
     gl.enable(gl.DEPTH_TEST);
     //gl.enable(gl.BLEND);
     gl.clearColor(1.0, 1.0, 1.0, 1.0);
@@ -125,13 +137,17 @@ class Graphics {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     this.programs.get('color').Render();
     this.programs.get('spriteColor').Render();
+
+    this.BindFBO('mask');
+    gl.clearColor(1.0, 1.0, 1.0, 1.0); //Blue by default
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    this.programs.get('mask').Render();
+    this.programs.get('spriteMask').Render();
+
     gl.disable(gl.BLEND);
 
 
     gl.disable(gl.DEPTH_TEST);
-
-
-
     gl.clearColor(1.0, 1.0, 1.0, 1.0);
     this.BindFBO('light');
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -154,8 +170,6 @@ class Graphics {
         i++;
       }
     }
-
-
     //End render all lights
 
 
@@ -167,6 +181,10 @@ class Graphics {
     this.BindFBO('litColor');
     //gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     this.programs.get('litColor').Render();
+
+    //APPLY PARALLAX
+    this.BindFBO('color');
+    this.programs.get('applyParallax').Render();
 
     this.BindFBO('fog');
     this.programs.get('fog').Render();
@@ -201,7 +219,7 @@ class Graphics {
 
     /*Test*/
     /*gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    this.auxTexture = this.fbos.get('bloomExtract').texture;
+    this.auxTexture = this.fbos.get('parallax').texture;
     this.programs.get('common').Render();*/
     /*Test*/
 
@@ -231,6 +249,10 @@ class Graphics {
 
   Draw() {
     gl.drawElements(gl.TRIANGLES, this.mesh.indices.length, gl.UNSIGNED_SHORT, 0);
+  }
+
+  CreateParallaxLayers(){
+    this.parallax.AddLayer(new Vec2(0.0,0.0), -5, new Vec2(1.5,1.5), 'parallax1');
   }
 
   CreateFrameBuffers() {
@@ -282,6 +304,17 @@ class Graphics {
     let bloomExtractFBO = this.CreateFrameBuffer(false);
     bloomExtractFBO.name = 'bloomExtract';
     this.fbos.set(bloomExtractFBO.name, bloomExtractFBO);
+
+    let parallaxFBO = this.CreateFrameBuffer(false);
+    parallaxFBO.name = "parallax";
+    this.fbos.set(parallaxFBO.name, parallaxFBO);
+
+    let maskFBO = this.CreateFrameBuffer(true);
+    maskFBO.name = 'mask';
+    this.fbos.set(maskFBO.name, maskFBO);
+
+    Log(this.fbos);
+
   }
 
   SwapBuffers(){
@@ -290,6 +323,70 @@ class Graphics {
 
   CreatePrograms() {
     let tileMap = resources.textures.get('tileMap');
+
+    //PARALLAX PROGRAM
+    let parallaxProgram = new Program('parallax', 'vs_parallax', 'fs_parallax');
+    parallaxProgram.SetUniforms([
+      new Uniform2f('cam', ()=>manager.scene.camera.transform.GetWorldPosPerfect()),
+      new Uniform2f('res', ()=>manager.graphics.res),
+      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
+      new Uniform1f('sunTemperature', () => lighting.sunTemperature),
+      new Uniform1f('sunStrength', () => lighting.sunStrength),
+      new Uniform4f('ambientLight', () => lighting.ambientLight),
+      new Uniform1f('sunShadowStrength', () => lighting.shadowStrength),
+    ]);
+    parallaxProgram.SetObjUniforms([
+      new UniformTex('colorTex', (obj)=>obj.texture),
+      new Uniform2f('scale', (obj)=>obj.scale),
+      new Uniform2f('position', (obj)=>obj.position),
+      new Uniform1f('height', (obj)=>obj.height),
+      new Uniform2f('texSize', (obj)=>new Vec2(obj.texture.width, obj.texture.height)),
+    ]);
+
+    let applyParallaxProgram = new Program('applyParallax', 'vs_common', 'fs_applyParallax', true, true);
+    applyParallaxProgram.SetUniforms([
+      new UniformTex('colorTex', ()=>manager.graphics.fbos.get('litColor').texture),
+      new UniformTex('parallaxTex', ()=>manager.graphics.fbos.get('parallax').texture),
+      new UniformTex('maskTex', ()=>manager.graphics.fbos.get('mask').texture),
+    ]);
+
+    //MASK PROGRAMS
+    let maskProgram = new Program('mask', 'vs_color', 'fs_mask');
+    maskProgram.SetConstUniforms([
+      new UniformTex('colorTex', () => resources.textures.get('tileMap')),
+      new Uniform2f('tileMapResDIVtileSize', () => new Vec2(tileMap.width / tileSize, tileMap.height / tileSize))
+    ]);
+    maskProgram.SetUniforms([
+      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
+      new Uniform2f('cam', () => manager.scene.camera.transform.GetWorldPosPerfect())
+    ]);
+    maskProgram.SetObjUniforms([
+      new Uniform2f('numTiles', (obj) => obj.numTiles),
+      new Uniform4f('tint', (obj) => obj.tint),
+      new Uniform2f('tile', (obj) => obj.tile),
+      new Uniform2f('scale', (obj) => obj.gameobj.transform.scale),
+      new Uniform1f('height', (obj) => obj.gameobj.transform.height),
+      new Uniform1f('vertical', (obj) => obj.vertical ? 1.0 : 0.0),
+      new Uniform2f('center', (obj) => obj.gameobj.transform.GetWorldCenterPerfect()),
+    ]);
+
+    let spriteMaskProgram = new Program('spriteMask', 'vs_color', 'fs_mask');
+    spriteMaskProgram.SetUniforms([
+      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
+      new Uniform2f('cam', () => manager.scene.camera.transform.GetWorldPosPerfect())
+    ]);
+    spriteMaskProgram.SetObjUniforms([
+      new Uniform2f('numTiles', (obj) => obj.numTiles),
+      new Uniform4f('tint', (obj) => obj.tint),
+      new UniformTex('colorTex', (obj) => obj.spriteSheet),
+      new Uniform2f('tileMapResDIVtileSize', (obj) =>
+        new Vec2(obj.spriteSheet.width / tileSize, obj.spriteSheet.height / tileSize)),
+      new Uniform2f('tile', (obj) => obj.tile),
+      new Uniform2f('scale', (obj) => obj.gameobj.transform.scale),
+      new Uniform1f('height', (obj) => obj.gameobj.transform.height),
+      new Uniform1f('vertical', (obj) => obj.vertical ? 1.0 : 0.0),
+      new Uniform2f('center', (obj) => obj.gameobj.transform.GetWorldCenterPerfect()),
+    ]);
 
     //COMMON PROGRAM
     let commonProgram = new Program('common', 'vs_common', 'fs_common', true, true);
@@ -301,7 +398,6 @@ class Graphics {
     let colorProgram = new Program('color', 'vs_color', 'fs_color');
     colorProgram.SetConstUniforms([
       new UniformTex('colorTex', () => resources.textures.get('tileMap')),
-
       new Uniform2f('tileMapResDIVtileSize', () => new Vec2(tileMap.width / tileSize, tileMap.height / tileSize))
     ]);
     colorProgram.SetUniforms([
