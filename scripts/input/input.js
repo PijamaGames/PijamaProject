@@ -226,4 +226,18 @@ class Input {
   GetKeyPressedF(key) {
     return this.GetKeyPressed(key) ? 1.0 : 0.0;
   }
+
+  GetVirtualButtonDown(name){
+    return this.virtualInputs.get(name).down;
+  }
+  GetVirtualButtonPressed(name){
+    return this.virtualInputs.get(name).pressed;
+  }
+  GetVirtualButtonUp(name){
+    return this.virtualInputs.get(name).up;
+  }
+  GetVirtualJoystick(name){
+    return this.virtualInputs.get(name).dir;
+  }
+
 }

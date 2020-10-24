@@ -4,11 +4,9 @@ class SpriteRenderer extends Renderer{
       programs = ['spriteColor','spriteSunDepth','spriteDepth', 'spriteMask'];
     }
     super(tile, numTiles, vertical, alpha, programs);
-    this.spriteSheet = resources.textures.get(spriteSheetName);
-    this.maxFrames = new Vec2(Math.round(this.spriteSheet.width/this.numTiles.x / tileSize), Math.round(this.spriteSheet.height/this.numTiles.y / tileSize));
-    this.interval = 1.0/fps;
+    this.spriteSheet = null;
+    this.interval = null;
     this.time = 0.0;
-
     this.loopBack = loopBack;
     this.way = 1;
 
@@ -21,24 +19,52 @@ class SpriteRenderer extends Renderer{
     this.dirIndex = dirIndex;
     this.numDirs = numDirs;
 
+    this.animations = new Map();
+    this.AddAnimation('default', spriteSheetName, fps);
+    this.SetAnimation('default');
+    this.endAnimEvent = new EventDispatcher();
+    //this.animationEndEvent = new Event('onAnimationEnd');
+
     //This line makes every sprite spawn looking down
     this.tile.y = this.dirIndex[Math.trunc(0.75*numDirs)]*numTiles.y;
   }
 
+  AddAnimation(name,textureName, speed){
+    this.animations.set(name, {
+      texture:resources.textures.get(textureName),
+      fps:speed
+    });
+  }
+
+  SetAnimation(anim){
+    let a = this.animations.get(anim);
+    this.SetTexture(a.texture);
+    this.interval = 1.0/a.fps;
+    this.maxFrames = new Vec2(Math.round(this.spriteSheet.width/this.numTiles.x / tileSize), Math.round(this.spriteSheet.height/this.numTiles.y / tileSize));
+  }
+
   SetTextureByName(name){
+    this.tile.x = 0;
     this.spriteSheet = resources.textures.get(name);
   }
 
   SetTexture(tex){
+    this.tile.x = 0;
     this.spriteSheet = tex;
   }
 
   Update(){
     this.time += manager.delta;
+
+    //if must change frame
     if(this.time > this.interval){
       this.time -= this.interval * Math.trunc(this.time/this.interval);
       this.tile.x = (this.tile.x+this.numTiles.x*this.way);
+
+      //if last frame
       if(this.tile.x/this.numTiles.x >= this.maxFrames.x || this.tile.x < 0){
+        this.endAnimEvent.Dispatch();
+        //if loopback, invert animation
         if(this.loopBack){
           if(this.way === 1){
             this.tile.x = this.tile.x-this.numTiles.x*2;
@@ -46,17 +72,28 @@ class SpriteRenderer extends Renderer{
             this.tile.x = this.numTiles.x*2;
           }
           this.way *= -1;
+
+        //if not loopback, restart animation
         } else {
           this.tile.x = 0;
           this.way = 1;
         }
       }
+
       if(this.tile.x < 0){
         this.tile.x = 0;
         this.way = 1;
       }
     }
-    this.CheckDirection();
+    //this.CheckDirection();
+  }
+
+  SetDirection(v){
+    v = Vec2.Norm(v);
+    if(v.mod > 0.0){
+      let quadrant = v.GetQuadrant(this.numDirs, 0.5);
+      this.tile.y = this.dirIndex[quadrant]*this.numTiles.y;
+    }
   }
 
   CheckDirection(){

@@ -1,8 +1,7 @@
 class Rigidbody extends Component{
 
-  constructor(drag = 0.4, testMove = true){
+  constructor(drag = 0.4){
     super();
-    this.testMove = testMove;
     this.drag = drag;
     this.originalDrag = this.drag;
     this.type="rigidbody";
@@ -17,14 +16,14 @@ class Rigidbody extends Component{
   }
 
   Update(){
-    if(this.testMove){
+    /*if(this.testMove){
       let x = input.GetKeyPressed('KeyA') * -1.0 + input.GetKeyPressed('KeyD');
       let y = input.GetKeyPressed('KeyS') * -1.0 + input.GetKeyPressed('KeyW');
       let v = new Vec2(x,y);
       v.Norm();
       v.Scale(2.0);
       this.force.Add(v);
-    }
+    }*/
 
     //v.Scale(this.speed*manager.delta);
   }

@@ -67,15 +67,18 @@ class Vec2 {
 
   Norm(){
     let mod = this.mod;
-    if(mod == 0.0) return this;
-    this.x /= mod;
-    this.y /= mod;
+    if(mod == 0.0){
+      this.Set(0,0);
+    } else {
+      this.x /= mod;
+      this.y /= mod;
+    }
     return this;
   }
 
   static Norm(v){
     let mod = v.mod;
-    if(mod == 0.0) return;
+    if(mod == 0.0) return new Vec2();
     return new Vec2(v.x/mod,v.y/mod);
   }
 

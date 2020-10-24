@@ -1,6 +1,12 @@
 class Edge{
-  constructor(destNode, conditions){
-    Object.assign(this, {destNode, conditions});
+  constructor(destNode){
+    Object.assign(this, {destNode});
+    this.conditions = [];
+  }
+
+  AddCondition(callback){
+    this.conditions.push(callback);
+    return this;
   }
 
   CheckConditions(){

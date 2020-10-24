@@ -1,139 +1,78 @@
 class PlayerController extends Component {
-  constructor(idleAnimation, runAnimation, dashAnimation, attackAnimationIdle, attackAnimationRun) {
+  constructor(speed = 3.0) {
 
     super();
     this.type = "playerController";
-
-    Object.assign(this, {
-      idleAnimation,
-      runAnimation,
-      dashAnimation,
-      attackAnimationIdle,
-      attackAnimationRun
-    });
+    this.speed = speed;
+    this.leftAxis = new Vec2();
   }
 
   Update(){
+    this.leftAxis = this.GetLeftAxis();
     this.playerFSM.Update();
   }
 
-  //Start functions nodes
-  SetAnimation(animation) {
-    this.gameobj.renderer.SetTextureByName(animation);
+  GetLeftAxis(){
+    let axis;
+
+    if(input.isDesktop){
+      axis = new Vec2();
+      axis.x -= input.GetKeyPressed('KeyA') || input.GetKeyPressed('ArrowLeft') ? 1.0 : 0.0;
+      axis.x += input.GetKeyPressed('KeyD') || input.GetKeyPressed('ArrowRight') ? 1.0 : 0.0;
+
+      axis.y -= input.GetKeyPressed('KeyS') || input.GetKeyPressed('ArrowDown') ? 1.0 : 0.0;
+      axis.y += input.GetKeyPressed('KeyW') || input.GetKeyPressed('ArrowUp') ? 1.0 : 0.0;
+      axis.Norm();
+    } else {
+      let virtualDir = input.GetVirtualJoystick('leftJoystick');
+      let joystickDown = input.GetVirtualButtonPressed('leftJoystick')
+      axis = virtualDir.mod > 0.1 && joystickDown ? Vec2.Norm(virtualDir) : new Vec2();
+    }
+    return axis;
   }
 
-  SetAnimationAttack(animationRun,animationIdle) {
-    if(input.GetKeyPressed('KeyW') || input.GetKeyPressed('KeyA') || input.GetKeyPressed('KeyS') || input.GetKeyPressed('KeyD')){
-      this.gameobj.renderer.SetTextureByName(animationRun);
-    }
-    else{
-      this.gameobj.renderer.SetTextureByName(animationIdle);
-    }
-  }
-
-  //Update functions nodes
   PlayerMove() {
-    let x;
-    let y;
-    if(input.GetKeyPressed('KeyW') || input.GetKeyPressed('KeyA') || input.GetKeyPressed('KeyS') || input.GetKeyPressed('KeyD')){
-      x = input.GetKeyPressed('KeyA') * -1.0 + input.GetKeyPressed('KeyD');
-      y = input.GetKeyPressed('KeyS') * -1.0 + input.GetKeyPressed('KeyW');
-    }
-    else if(input.GetKeyPressed('ArrowLeft') || input.GetKeyPressed('ArrowRight') || input.GetKeyPressed('ArrowDown') || input.GetKeyPressed('ArrowUp')){
-      x = input.GetKeyPressed('ArrowLeft') * -1.0 + input.GetKeyPressed('ArrowRight');
-      y = input.GetKeyPressed('ArrowDown') * -1.0 + input.GetKeyPressed('ArrowUp');
-    }
+    let axis = this.leftAxis.Copy();
 
-    let v = new Vec2(x, y);
-    v.Norm();
-    v.Scale(2.0);
-    this.gameobj.rigidbody.force.Add(v);
-  }
+    this.gameobj.renderer.SetDirection(axis);
 
-  PlayerDash() {
-
-    //hay que restringir el movimiento en una direccion
-  }
-
-  PlayerAttack() {
-
-    //lo q pasa cuando ataca, rellenar cuando tengamos enemigos
-  }
-
-  CoolDownDash(){
-
-  }
-
-  //Edges conditions
-  DashConditions(){
-    if (input.GetKeyPressed('Space'))
-      return true;
-    else
-      return false;
-  }
-
-  IdleConditions(){
-    for(var [key, value] of input.keys){
-      if (input.GetKeyPressed(key))
-        return false;
-    }
-    return true;
-  }
-
-  RunConditions(){
-    return input.GetKeyPressed('KeyW') || input.GetKeyPressed('KeyA') || input.GetKeyPressed('KeyS') || input.GetKeyPressed('KeyD');
-  }
-
-  AttackConditions(){
-    if (input.mouseLeftDown)
-      return true;
-    else
-      return false;
-  }
-
-  CreateNodes() {
-    this.idle = new Node(
-      "idle",
-      ()=>this.SetAnimation(this.idleAnimation)
-    );
-    this.run = new Node(
-      "run",
-      ()=>this.SetAnimation(this.runAnimation),
-      ()=>this.PlayerMove()
-    );
-    this.dash = new Node(
-      "dash",
-      ()=>this.SetAnimation(this.dashAnimation),
-      ()=>this.PlayerDash(),
-      ()=>this.CoolDownDash()
-    );
-    this.attack = new Node(
-      "attack",
-      ()=>this.SetAnimationAttack(this.attackAnimationIdle,this.attackAnimationRun),
-      ()=>this.PlayerAttack()
-    );
-  }
-
-  CreateEdges() {
-    this.edgeToIdle = new Edge(this.idle,[this.IdleConditions]);
-    this.edgeToDash = new Edge(this.dash,[this.DashConditions]);
-    this.edgeToRun = new Edge(this.run, [this.RunConditions]);
-    this.edgeToAttack = new Edge(this.attack, [this.AttackConditions]);
-  }
-
-  SetEdges() {
-    this.idle.SetEdges([this.edgeToRun, this.edgeToAttack]);
-    this.run.SetEdges([this.edgeToIdle, this.edgeToDash, this.edgeToAttack]);
-    this.dash.SetEdges([this.edgeToIdle, this.edgeToRun]);
-    this.attack.SetEdges([this.edgeToIdle, this.edgeToRun]);
+    let movement = axis.Scale(this.speed);
+    this.gameobj.rigidbody.force.Add(movement);
   }
 
   CreateFSM(){
-    this.CreateNodes();
-    this.CreateEdges();
-    this.SetEdges();
+    var that = this;
 
-    this.playerFSM = new FSM([this.idle, this.run, this.dash, this.attack],'idle');
+    let idleNode = new Node('idle').SetOnCreate(()=>{
+      that.gameobj.renderer.AddAnimation('idle', 'nelu_idle', 5);
+
+    }).SetStartFunc(()=>{
+      that.gameobj.renderer.SetAnimation('idle');
+
+    }).SetEdges([
+      new Edge('run').AddCondition(()=>{
+        return that.leftAxis.mod > 0.05;
+        //Left axis used
+      }),
+    ]);
+
+    let runNode = new Node('run').SetOnCreate(()=>{
+      that.gameobj.renderer.AddAnimation('run', 'nelu_run', 14);
+
+    }).SetStartFunc(()=>{
+      that.gameobj.renderer.SetAnimation('run');
+
+    }).SetUpdateFunc(()=>{
+      that.PlayerMove();
+
+    }).SetEdges([
+      new Edge('idle').AddCondition(()=>{
+        //Left axis not used
+        return that.leftAxis.mod < 0.05;
+      }),
+    ]);
+
+    this.playerFSM = new FSM([idleNode, runNode/*, this.dash, this.attack*/]).Start('idle');
   }
 
   SetGameobj(gameobj){

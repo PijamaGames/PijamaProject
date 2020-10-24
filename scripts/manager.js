@@ -97,7 +97,7 @@ class Manager {
       manager.ExitFullScreen(()=>fullScreenBtn.NextAction());
     });
 
-    let leftJoystick = input.AddVirtualInput(new VirtualJoystick('leftJoystick', 'backJoystick', new Vec2(), new Vec2(0.25, 0.5), new Vec2(0.3, 0.3), 0.6, 0.2, 'frontJoystick'));
+    let leftJoystick = input.AddVirtualInput(new VirtualJoystick('leftJoystick', 'backJoystick', new Vec2(), new Vec2(0.25, 0.3), new Vec2(0.3, 0.3), 0.55, 0.1, 'frontJoystick'));
   }
 
   AddScene(scene) {
