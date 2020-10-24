@@ -25,8 +25,9 @@ class PlayerController extends Component {
       axis.Norm();
     } else {
       let virtualDir = input.GetVirtualJoystick('leftJoystick');
+      //Log(virtualDir.mod);
       let joystickDown = input.GetVirtualButtonPressed('leftJoystick')
-      axis = virtualDir.mod > 0.1 && joystickDown ? Vec2.Norm(virtualDir) : new Vec2();
+      axis = joystickDown ? Vec2.Norm(virtualDir) : new Vec2();
     }
     return axis;
   }

@@ -237,7 +237,7 @@ class Input {
     return this.virtualInputs.get(name).up;
   }
   GetVirtualJoystick(name){
-    return this.virtualInputs.get(name).dir;
+    return this.virtualInputs.get(name).GetDirection();
   }
 
 }

@@ -19,10 +19,12 @@ class VirtualJoystickContainer{
 }
 
 class VirtualJoystick extends VirtualInput {
-  constructor(name, img, position, anchor, scale, ratio, renderRatio, img2) {
+  constructor(name, img, position, dynamicPosition, deadZone, anchor, scale, ratio, renderRatio, img2) {
     super(name, img, position, anchor, scale, ratio);
     Object.assign(this, {
-      renderRatio
+      renderRatio,
+      dynamicPosition,
+      deadZone
     });
 
     this.isJoystick = true;
@@ -38,9 +40,12 @@ class VirtualJoystick extends VirtualInput {
     var that = this;
     this.AddAction(()=>{
       let v = that.dir.Copy();
-      let maxDist = that.ratio-that.renderRatio;
+      let maxDist = that.ratio-that.renderRatio-0.1;
       if(v.mod > maxDist){
         v.Norm().Scale(maxDist);
+      }
+      if(!that.dynamicPosition){
+        v.Set(0,0);
       }
       that.position = Vec2.Add(that.originalPosition, v);
     }, function(){},
@@ -65,6 +70,10 @@ class VirtualJoystick extends VirtualInput {
       this.stickPosition.x * step + this.target.x * (1.0-step),
       this.stickPosition.y * step + this.target.y * (1.0-step)
     );
+  }
 
+  GetDirection(){
+    let dir = Vec2.Sub(this.dir, this.position);
+    return dir.mod > this.deadZone*this.renderRatio ? dir : new Vec2();
   }
 }

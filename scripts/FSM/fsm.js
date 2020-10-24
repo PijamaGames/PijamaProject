@@ -30,9 +30,9 @@ class FSM {
       edge = this.currentNode.edges[i];
       if (edge.CheckConditions()) {
         this.currentNode.Exit();
-        console.log('Cambia de: ' + this.currentNode.name);
+        //console.log('Cambia de: ' + this.currentNode.name);
         this.currentNode = this.nodes.get(edge.destNode);
-        console.log('A: ' + this.currentNode.name);
+        //console.log('A: ' + this.currentNode.name);
         this.currentNode.Start();
         changed = true;
       }
