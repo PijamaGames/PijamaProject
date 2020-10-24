@@ -1,9 +1,10 @@
 class FSM{
-  constructor(nodes){
+  constructor(nodes,startNodeName){
     this.nodes=new Map();
     this.AddNodes(nodes);
     this.currentNode;
     this.changed=false;
+    this.Start(startNodeName);
   }
 
   Start(name){

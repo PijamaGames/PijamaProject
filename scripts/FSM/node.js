@@ -1,5 +1,5 @@
 class Node{
-  constructor(name, startCallback, updateCallback, exitCallback){
+  constructor(name, startCallback, updateCallback=null, exitCallback=null){
     Object.assign(this,{name, startCallback, updateCallback, exitCallback});
 
   }
@@ -13,11 +13,13 @@ class Node{
   }
 
   Update(){
-    this.updateCallback();
+    if(this.updateCallback)
+      this.updateCallback();
   }
 
   Exit(){
-    this.exitCallback();
+    if (this.exitCallback)
+      this.exitCallback();
   }
 
 }
