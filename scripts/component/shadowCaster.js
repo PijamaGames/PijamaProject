@@ -11,7 +11,7 @@ class ShadowCaster extends Component{
   }
 
   get worldPos(){
-    return this.gameobj.transform.GetWorldCenter().Add(this.displacement);
+    return this.gameobj.transform.GetWorldCenter().Copy().Add(this.displacement);
   }
 
   SetGameobj(gameobj){

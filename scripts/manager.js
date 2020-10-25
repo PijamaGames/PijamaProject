@@ -18,7 +18,33 @@ class Manager {
     this.ms = newMs;
   }
 
+  DebugIteration(){
+    if(input.GetKeyDown('KeyT'))
+      lighting.SetMorning();
+    if(input.GetKeyDown('KeyG'))
+      lighting.SetAfterNoon();
+    if(input.GetKeyDown('KeyY'))
+      lighting.SetNoon();
+    if(input.GetKeyDown('KeyH'))
+      lighting.SetNight();
+
+    if(input.GetKeyDown('Digit1'))
+      this.graphics.SetMinimumSettings();
+    if(input.GetKeyDown('Digit2'))
+      this.graphics.SetLowSettings();
+    if(input.GetKeyDown('Digit3'))
+      this.graphics.SetMediumSettings();
+    if(input.GetKeyDown('Digit4'))
+      this.graphics.SetHighSettings();
+    if(input.GetKeyDown('Digit5'))
+      this.graphics.SetMaxSettings();
+  }
+
   GameLoop(that) {
+    if(DEBUG){
+      this.DebugIteration();
+    }
+    //Log(timesComputed/timesCalled*100.0+"%");
     //Log("Gameloop iteration");
     that.ManageTime();
     input.Update();
@@ -46,6 +72,13 @@ class Manager {
     resources.Load(function() {
       that.graphics.LoadResources();
       that.AddInputs();
+
+      if(input.isDesktop){
+        that.graphics.SetMaxSettings();
+      } else {
+        that.graphics.SetLowSettings();
+      }
+
       that.LoadScene(initScene);
       that.ms = Date.now();
       that.GameLoop(that);
@@ -82,10 +115,17 @@ class Manager {
 
     input.AddKey('Space');
 
-    input.AddKey('KeyT');
-    input.AddKey('KeyG');
-    input.AddKey('KeyY');
-    input.AddKey('KeyH');
+    if(DEBUG){
+      input.AddKey('KeyT');
+      input.AddKey('KeyG');
+      input.AddKey('KeyY');
+      input.AddKey('KeyH');
+      input.AddKey('Digit1');
+      input.AddKey('Digit2');
+      input.AddKey('Digit3');
+      input.AddKey('Digit4');
+      input.AddKey('Digit5');
+    }
   }
 
   AddVirtualInputs() {
@@ -97,7 +137,7 @@ class Manager {
       manager.ExitFullScreen(()=>fullScreenBtn.NextAction());
     });
 
-    let leftJoystick = input.AddVirtualInput(new VirtualJoystick('leftJoystick', 'backJoystick', new Vec2(), true, 0.3, new Vec2(0.25, 0.3), new Vec2(0.3, 0.3), 0.55, 0.1, 'frontJoystick'));
+    input.AddVirtualInput(new VirtualJoystick('leftJoystick', 'backJoystick', new Vec2(), true, 0.3, new Vec2(0.25, 0.3), new Vec2(0.3, 0.3), 0.55, 0.1, 'frontJoystick'));
   }
 
   AddScene(scene) {

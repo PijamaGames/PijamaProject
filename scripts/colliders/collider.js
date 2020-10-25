@@ -26,7 +26,7 @@ class Collider {
     return this.circular === 1.0;
   }
   get worldCenter() {
-    return this.colliderGroup.gameobj.transform.GetWorldCenterPerfect().Add(this.displacement);
+    return this.colliderGroup.gameobj.transform.GetWorldCenterPerfect().Copy().Add(this.displacement);
   }
   get gameobj() {
     return this.colliderGroup.gameobj;
@@ -105,20 +105,21 @@ class Collider {
     }
 
     let circleCenter = circle.worldCenter;
+    let corners = [box.leftUpCorner, box.rightUpCorner, box.leftDownCorner, box.rightDownCorner];
     let projections = [ //up, down, left, right
-      Vec2.ProjectOnRect(circleCenter, box.leftUpCorner, box.rightUpCorner, true),
-      Vec2.ProjectOnRect(circleCenter, box.leftDownCorner, box.rightDownCorner, true),
-      Vec2.ProjectOnRect(circleCenter, box.leftDownCorner, box.leftUpCorner, true),
-      Vec2.ProjectOnRect(circleCenter, box.rightDownCorner, box.rightUpCorner, true)
+      Vec2.ProjectOnRect(circleCenter, corners[0], corners[1], true),
+      Vec2.ProjectOnRect(circleCenter, corners[2], corners[3], true),
+      Vec2.ProjectOnRect(circleCenter, corners[2], corners[0], true),
+      Vec2.ProjectOnRect(circleCenter, corners[3], corners[1], true)
     ];
 
     //nearestPoint is the projection point that has the minimum distance to the center of the circle
 
     let distances = [
-      Vec2.Mod(Vec2.Sub(circleCenter, projections[0])),
-      Vec2.Mod(Vec2.Sub(circleCenter, projections[1])),
-      Vec2.Mod(Vec2.Sub(circleCenter, projections[2])),
-      Vec2.Mod(Vec2.Sub(circleCenter, projections[3]))
+      Vec2.Sub(circleCenter, projections[0]).mod,
+      Vec2.Sub(circleCenter, projections[1]).mod,
+      Vec2.Sub(circleCenter, projections[2]).mod,
+      Vec2.Sub(circleCenter, projections[3]).mod
     ];
 
 
@@ -152,15 +153,17 @@ class Collider {
     let c1center = this.worldCenter;
     let c2center = c2.worldCenter;
 
-    let c1up = this.upPos.y;
-    let c1down = this.downPos.y;
-    let c1right = this.rightPos.x;
-    let c1left = this.leftPos.x;
+    let sides = this.GetSides();
+    let c1left = sides[0];
+    let c1right = sides[1];
+    let c1up = sides[2];
+    let c1down = sides[3];
 
-    let c2up = c2.upPos.y;
-    let c2down = c2.downPos.y;
-    let c2right = c2.rightPos.x;
-    let c2left = c2.leftPos.x;
+    sides = c2.GetSides();
+    let c2left = sides[0];
+    let c2right = sides[1];
+    let c2up = sides[2];
+    let c2down = sides[3];
 
     if(!(c1down > c2up || c1up < c2down || c1right < c2left || c1left > c2right)){
       let px = 0.0;
@@ -179,7 +182,7 @@ class Collider {
       if(c1center.y < c2center.y){ //c2 colliding by up side
         py = c1up-c2down;
       } else {
-        py = c2up - this.down;
+        py = c2up - c1down;
       }
 
       var leftP = Math.abs(px) < Math.abs(py) ? 1.0 : 0.0;

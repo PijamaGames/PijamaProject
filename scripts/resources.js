@@ -29,6 +29,7 @@ var shaderURLs = [ //name, url
   ['fs_blurX', 'scripts/shaders/fs_blurX.glsl'],
   ['fs_blurY', 'scripts/shaders/fs_blurY.glsl'],
   ['fs_light', 'scripts/shaders/fs_light.glsl'],
+  ['fs_lightLite', 'scripts/shaders/fs_lightLite.glsl'],
   ['fs_limitColor', 'scripts/shaders/fs_limitColor.glsl'],
   ['vs_surface', 'scripts/shaders/vs_surface.glsl'],
   ['vs_virtualInput', 'scripts/shaders/vs_virtualInput.glsl'],

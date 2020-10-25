@@ -8,8 +8,8 @@ class Scene{
     this.rigidbodies = new Set();
     manager.scenes.set(this.name, this);
     this.camera = /*this.AddGameobj(*/new Gameobj('camera',0, null, this, [
-      new Camera(),
-      new DebugController(3.0),
+      new Camera(2.5),
+      //new DebugController(3.0),
     ], new Transform(new Vec2(0,0), 0.0, new Vec2(canvas.width/tileSize, canvas.height/tileSize)));
   }
 

@@ -28,6 +28,15 @@ class BoxCollider extends Collider{
     )
   }
 
+  GetSides(){
+    let wp = this.worldCenter;
+    let left = wp.x-(this.width/2.0);
+    let right = wp.x+(this.width/2.0);
+    let up = wp.y+(this.height/2.0);
+    let down = wp.y-(this.height/2.0);
+    return [left, right, up, down]
+  }
+
   get leftPos(){
     let wp = this.worldCenter;
     return new Vec2(wp.x-(this.width/2.0),wp.y);

@@ -1,14 +1,22 @@
 class PlayerController extends Component {
-  constructor(speed = 3.0) {
+  constructor(speed = 3.0, camOffset = 3.0) {
 
     super();
     this.type = "playerController";
     this.speed = speed;
+    this.camOffset = camOffset;
     this.leftAxis = new Vec2();
+    this.rawLeftAxis = new Vec2();
+    this.lerpLeftAxis = 10.0;
   }
 
   Update(){
-    this.leftAxis = this.GetLeftAxis();
+    let leftAxis = this.GetLeftAxis();
+    this.rawLeftAxis.Set(leftAxis.x, leftAxis.y);
+    let axisDir = Vec2.Sub(leftAxis, this.leftAxis);
+    this.leftAxis.Add(axisDir.Scale(this.lerpLeftAxis*manager.delta));
+
+
     this.playerFSM.Update();
   }
 
@@ -46,13 +54,13 @@ class PlayerController extends Component {
 
     let idleNode = new Node('idle').SetOnCreate(()=>{
       that.gameobj.renderer.AddAnimation('idle', 'nelu_idle', 5);
-
+      manager.scene.camera.transform.SetWorldPosition(that.gameobj.transform.GetWorldCenter().Copy());
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('idle');
-
+      manager.scene.camera.camera.target = that.gameobj.transform.GetWorldCenter().Copy();
     }).SetEdges([
       new Edge('run').AddCondition(()=>{
-        return that.leftAxis.mod > 0.05;
+        return that.rawLeftAxis.mod > 0.05;
         //Left axis used
       }),
     ]);
@@ -65,11 +73,13 @@ class PlayerController extends Component {
 
     }).SetUpdateFunc(()=>{
       that.PlayerMove();
+      let camTarget = that.gameobj.transform.GetWorldCenter().Copy().Add(Vec2.Scale(that.leftAxis, that.camOffset));
+      manager.scene.camera.camera.target = camTarget;
 
     }).SetEdges([
       new Edge('idle').AddCondition(()=>{
         //Left axis not used
-        return that.leftAxis.mod < 0.05;
+        return that.rawLeftAxis.mod < 0.05;
       }),
     ]);
 

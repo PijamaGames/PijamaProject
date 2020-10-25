@@ -11,13 +11,7 @@ class LightSource extends Component{
   }
 
   Update(){
-    return;
-    if(input.GetKeyPressed('KeyT')){
-      this.ratio+=manager.delta*2.0;
-    }
-    if(input.GetKeyPressed('KeyG')){
-      this.ratio-=manager.delta*2.0;
-    }
+
   }
 
   SetGameobj(gameobj){

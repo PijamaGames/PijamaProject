@@ -8,6 +8,7 @@ class Graphics {
     this.fbos = new Map();
     this.lastOutput = null;
     this.output = null;
+    this.lastColorOutput = null;
     this.auxTexture = null;
     this.lighting = new Lighting();
     this.colorsPerChannel = 12.0; //12.0 is a good number
@@ -23,6 +24,77 @@ class Graphics {
 
     this.InitContext();
     this.CanvasResponsive(true);
+
+    this.config = {
+      bloom : false,
+      fog : false,
+      softShadows : false,
+      dynamicShadows : false,
+      lighting : false,
+      colorFiltering: true,
+    }
+
+    //this.SetLowSettings();
+  }
+
+  SetMinimumSettings(){
+    this.config = {
+      bloom : false,
+      fog : false,
+      softShadows : false,
+      dynamicShadows : false,
+      lighting : false,
+      colorFiltering: false,
+    }
+    Log("Minimum graphics quality");
+  }
+
+  SetLowSettings(){
+    this.config = {
+      bloom : false,
+      fog : false,
+      softShadows : false,
+      dynamicShadows : false,
+      lighting : true,
+      colorFiltering: true,
+    }
+    Log("Low graphics quality");
+  }
+
+  SetMediumSettings(){
+    this.config = {
+      bloom : true,
+      fog : true,
+      softShadows : false,
+      dynamicShadows : false,
+      lighting : true,
+      colorFiltering: true,
+    };
+    Log("Medium graphics quality");
+  }
+
+  SetHighSettings(){
+    this.config = {
+      bloom : true,
+      fog : true,
+      softShadows : true,
+      dynamicShadows : false,
+      lighting : true,
+      colorFiltering: true,
+    };
+    Log("High graphics quality");
+  }
+
+  SetMaxSettings(){
+    this.config = {
+      bloom : true,
+      fog : true,
+      softShadows : true,
+      dynamicShadows : true,
+      lighting : true,
+      colorFiltering: true,
+    };
+    Log("Max graphics quality");
   }
 
   InitContext() {
@@ -126,10 +198,13 @@ class Graphics {
     this.programs.get('depth').Render();
     this.programs.get('spriteDepth').Render();
 
-    this.BindFBO('sunDepth');
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    this.programs.get('sunDepth').Render();
-    this.programs.get('spriteSunDepth').Render();
+    if(this.config.lighting){
+      this.BindFBO('sunDepth');
+      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      this.programs.get('sunDepth').Render();
+      this.programs.get('spriteSunDepth').Render();
+    }
+
 
     gl.enable(gl.BLEND);
     this.BindFBO('color');
@@ -146,64 +221,77 @@ class Graphics {
 
     gl.disable(gl.BLEND);
 
+    if(this.config.lighting){
+      gl.disable(gl.DEPTH_TEST);
+      gl.clearColor(1.0, 1.0, 1.0, 1.0);
+      this.BindFBO('light');
+      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      this.programs.get('sunLight').Render();
 
-    gl.disable(gl.DEPTH_TEST);
-    gl.clearColor(1.0, 1.0, 1.0, 1.0);
-    this.BindFBO('light');
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    this.programs.get('sunLight').Render();
 
-
-    //Render all lights
-    let size = lighting.lightSources.size;
-    //MÁS TARDE SE DEBERÁ COMPROBAR SI EL NÚMERO DE LUCES DENTRO DE LA VISTA ES >0
-    if (size > 0 && lighting.renderPointLights) {
-      this.BindFBO('light2');
-      let pointLightProgram = this.programs.get('pointLight');
-      let i = 0;
-      for (var light of lighting.lightSources) {
-        lighting.currentLightSource = light;
-        pointLightProgram.Render();
-        if (i < size - 1) {
-          this.BindFBO(this.lastOutput.name);
+      //Render all lights
+      let size = lighting.lightSources.size;
+      //MÁS TARDE SE DEBERÁ COMPROBAR SI EL NÚMERO DE LUCES DENTRO DE LA VISTA ES >0
+      if (size > 0 && lighting.renderPointLights) {
+        this.BindFBO('light2');
+        let pointLightProgram = this.config.dynamicShadows ? this.programs.get('pointLight') : this.programs.get('pointLightLite');
+        let i = 0;
+        for (var light of lighting.lightSources) {
+          lighting.currentLightSource = light;
+          pointLightProgram.Render();
+          if (i < size - 1) {
+            this.BindFBO(this.lastOutput.name);
+          }
+          i++;
         }
-        i++;
       }
+      //End render all lights
+
+      if(this.config.softShadows){
+        this.BindFBO('blurHalf');
+        this.programs.get('blurX').Render();
+        this.BindFBO('light');
+        this.programs.get('blurY').Render();
+      }
+
+
+      this.BindFBO('litColor');
+      //gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      this.programs.get('litColor').Render();
+      this.lastColorOutput = this.fbos.get('litColor');
+    } else {
+      this.lastColorOutput = this.fbos.get('color');
     }
-    //End render all lights
 
-
-    this.BindFBO('blurHalf');
-    this.programs.get('blurX').Render();
-    this.BindFBO('light');
-    this.programs.get('blurY').Render();
-
-    this.BindFBO('litColor');
-    //gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    this.programs.get('litColor').Render();
 
     //APPLY PARALLAX
-    this.BindFBO('color');
+    this.BindFBO('applyParallax');
     this.programs.get('applyParallax').Render();
+    this.lastColorOutput = this.fbos.get('applyParallax');
 
-    this.BindFBO('fog');
-    this.programs.get('fog').Render();
+    if(this.config.fog){
+      this.BindFBO('fog');
+      this.programs.get('fog').Render();
+      this.lastColorOutput = this.fbos.get('fog');
+    }
 
     //Apply bloom
-    this.BindFBO('bloomExtract');
-    this.programs.get('bloomExtract').Render();
-    this.BindFBO('blurHalf');
-    this.programs.get('bloomBlurX').Render();
-    this.BindFBO('bloomExtract');
-    this.programs.get('bloomBlurY').Render();
+    if(this.config.bloom){
+      this.BindFBO('bloomExtract');
+      this.programs.get('bloomExtract').Render();
+      this.BindFBO('blurHalf');
+      this.programs.get('bloomBlurX').Render();
+      this.BindFBO('bloomExtract');
+      this.programs.get('bloomBlurY').Render();
+      this.BindFBO('color');
+      this.programs.get('applyBloom').Render();
+    }
 
-    this.BindFBO('color');
-    this.programs.get('applyBloom').Render();
-
-    this.BindFBO('colorFilter');
-    //gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    this.programs.get('colorFilter').Render();
-
+    if(this.config.colorFiltering){
+      this.BindFBO('colorFilter');
+      //gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      this.programs.get('colorFilter').Render();
+    }
 
     this.BindFBO(this.finalColorFBO.name);
     this.SwapBuffers();
@@ -309,6 +397,10 @@ class Graphics {
     parallaxFBO.name = "parallax";
     this.fbos.set(parallaxFBO.name, parallaxFBO);
 
+    let applyParallaxFBO = this.CreateFrameBuffer(false);
+    applyParallaxFBO.name = "applyParallax";
+    this.fbos.set(applyParallaxFBO.name, applyParallaxFBO);
+
     let maskFBO = this.CreateFrameBuffer(true);
     maskFBO.name = 'mask';
     this.fbos.set(maskFBO.name, maskFBO);
@@ -345,7 +437,7 @@ class Graphics {
 
     let applyParallaxProgram = new Program('applyParallax', 'vs_common', 'fs_applyParallax', true, true);
     applyParallaxProgram.SetUniforms([
-      new UniformTex('colorTex', ()=>manager.graphics.fbos.get('litColor').texture),
+      new UniformTex('colorTex', ()=>manager.graphics.lastColorOutput.texture),
       new UniformTex('parallaxTex', ()=>manager.graphics.fbos.get('parallax').texture),
       new UniformTex('maskTex', ()=>manager.graphics.fbos.get('mask').texture),
     ]);
@@ -552,6 +644,22 @@ class Graphics {
       //new Uniform1f('colorsPerChannel', ()=>manager.graphics.colorsPerChannel),
     ]);
 
+    let pointLightLiteProgram = new Program('pointLightLite', 'vs_common', 'fs_lightLite', true, true);
+    pointLightLiteProgram.SetUniforms([
+      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
+      new Uniform2f('res', () => manager.graphics.res),
+      new Uniform1f('ratio', () => lighting.currentLightSource.ratio),
+      new Uniform1f('temperature', () => lighting.currentLightSource.temperature),
+      new Uniform1f('strength', () => lighting.currentLightSource.strength),
+      new Uniform1f('edge0', () => lighting.currentLightSource.edge0),
+      new Uniform1f('edge1', () => lighting.currentLightSource.edge1),
+      new Uniform2f('center', () => lighting.currentLightSource.gameobj.transform.GetWorldCenterPerfect()),
+      new Uniform1f('height', () => lighting.currentLightSource.gameobj.transform.height),
+      new Uniform2f('cam', () => manager.scene.camera.transform.GetWorldPosPerfect()),
+      new UniformTex('depthTex', () => manager.graphics.fbos.get('depth').texture),
+      new UniformTex('lightTex', () => manager.graphics.lastOutput.texture),
+    ]);
+
     //BLUR PROGRAMS
     let blurXProgram = new Program('blurX', 'vs_common', 'fs_blurX', true, true);
     blurXProgram.SetUniforms([
@@ -579,7 +687,7 @@ class Graphics {
     //LIT COLOR PROGRAM
     let litColorProgram = new Program('litColor', 'vs_common', 'fs_lit', true, true);
     litColorProgram.SetUniforms([
-      new UniformTex('lightTex', () => manager.graphics.fbos.get('light').texture),
+      new UniformTex('lightTex', () => manager.graphics.lastOutput.texture),
       new UniformTex('colorTex', () => manager.graphics.fbos.get('color').texture),
       /*TEMPORAL*/
       new Uniform4f('ambientLight', () => lighting.ambientLight),
@@ -618,7 +726,7 @@ class Graphics {
 
     let applyBloomProgram = new Program('applyBloom', 'vs_common', 'fs_applyBloom', true, true);
     applyBloomProgram.SetUniforms([
-      new UniformTex('colorTex', ()=>manager.graphics.fbos.get('fog').texture),
+      new UniformTex('colorTex', ()=>manager.graphics.lastColorOutput.texture),
       new UniformTex('bloomTex', ()=>manager.graphics.fbos.get('bloomExtract').texture),
       new Uniform1f('bloomStrength', ()=>lighting.bloomStrength),
     ]);

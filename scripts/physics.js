@@ -1,9 +1,15 @@
 var physics;
 class Physics {
   constructor() {
-    this.steps = 3;
+    this.steps = 2;
     this.stepPCT = 1.0 / this.steps;
-    this.repulsion = 45/this.steps;
+    this.repulsion = 45.0/this.steps;
+  }
+
+  SetSteps(steps){
+    this.steps = steps;
+    this.stepPCT = 1.0 / this.steps;
+    this.repulsion = 45.0/this.steps;
   }
 
   Update() {
@@ -20,7 +26,7 @@ class Physics {
     let cg2;
     let groups = manager.scene.colliderGroups;
 
-    if(DEBUG){
+    if(DEBUG_VISUAL){
       for(var cg of groups){
         for(var c of cg.colliders){
           c.SetTint(0.0,1.0,0.0,c.tint[3]);
@@ -56,7 +62,7 @@ class Physics {
           if(c2.gameobj.rigidbody){
             c2.gameobj.rigidbody.AddForce(dir.Opposite());
           }
-          if(DEBUG){
+          if(DEBUG_VISUAL){
             if(dir.mod > 0.0){
               c1.SetTint(1.0,0.0,0.0,c1.tint[3]);
               c2.SetTint(1.0,0.0,0.0,c2.tint[3]);
@@ -66,7 +72,7 @@ class Physics {
         else{
           c1.CheckTrigger(c2);
           c2.CheckTrigger(c1);
-          if(DEBUG){
+          if(DEBUG_VISUAL){
             //c1.isColliding && c2.isColliding
             if(c1.isColliding){
               c1.SetTint(0.0,0.0,1.0,c1.tint[3]);

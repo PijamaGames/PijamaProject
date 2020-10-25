@@ -41,7 +41,10 @@ class Rigidbody extends Component{
     this.velocity.Add(this.force);
     this.force.Set(0,0);
 
-    this.gameobj.transform.position.Add(Vec2.Scale(this.velocity, manager.delta*pct));
+    //this.gameobj.transform.GetWorldPos().Add(Vec2.Scale(this.velocity, manager.delta*pct));
+    let newPos = this.gameobj.transform.GetWorldPos().Copy().Add(Vec2.Scale(this.velocity, manager.delta*pct));
+    this.gameobj.transform.SetWorldPosition(newPos);
+    //this.gameobj.transform.position.Add(Vec2.Scale(this.velocity, manager.delta*pct));
   }
 
 
