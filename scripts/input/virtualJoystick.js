@@ -35,7 +35,7 @@ class VirtualJoystick extends VirtualInput {
     this.stickTexture = resources.textures.get(img2);
 
     let container = new VirtualJoystickContainer(this);
-    manager.graphics.programs.get('virtualInput').renderers.set(this.name+"_stick", container);
+    manager.graphics.programs.get('virtualInput').renderers.add(container);
 
     var that = this;
     this.AddAction(()=>{

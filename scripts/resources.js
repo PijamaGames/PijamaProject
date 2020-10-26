@@ -14,6 +14,7 @@
 ];*/
 
 var shaderURLs = [ //name, url
+  ['vs_UI', 'scripts/shaders/vs_UI.glsl'],
   ['vs_color', 'scripts/shaders/vs_color.glsl'],
   ['fs_color', 'scripts/shaders/fs_color.glsl'],
   ['vs_collider', 'scripts/shaders/vs_collider.glsl'],

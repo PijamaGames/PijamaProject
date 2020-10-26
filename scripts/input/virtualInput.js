@@ -16,7 +16,7 @@ class VirtualInput{
 
     this.active = true;
 
-    manager.graphics.programs.get('virtualInput').renderers.set(this.name, this);
+    manager.graphics.programs.get('virtualInput').renderers.add(this);
 
     this.onButtonDown = [];
     this.onButtonPressed = [];

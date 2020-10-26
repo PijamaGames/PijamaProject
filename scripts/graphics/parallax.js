@@ -25,6 +25,6 @@ class Parallax{
     });
 
     //Add layer to parallax program
-    manager.graphics.programs.get('parallax').renderers.set(_height, layer);
+    manager.graphics.programs.get('parallax').renderers.add(layer);
   }
 }

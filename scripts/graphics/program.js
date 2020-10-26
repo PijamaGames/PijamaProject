@@ -1,5 +1,5 @@
 class Program{
-  constructor(name, _vertexShaderName, _fragmentShaderName, useTexCoords = true, postProcess = false)
+  constructor(name, _vertexShaderName, _fragmentShaderName, useTexCoords = true, postProcess = false, isUI = false)
   {
     this.name = name;
     manager.graphics.programs.set(this.name, this);
@@ -10,10 +10,15 @@ class Program{
     this.objUniforms = [];
     this.uniforms = [];
     this.texUnitOffset = 0;
-    this.renderers = new Map();
+    this.renderers = new Set();
     this.isPostProcess = postProcess;
+    this.isUI = isUI;
     if(postProcess){
-      this.renderers.set('postProcess', 0);
+      this.renderers.add('postProcess');
+    }
+    if(isUI){
+      this.uiTileMap = resources.textures.get('uiTileMap');
+      this.fontTileMap = resources.textures.get('fontTileMap');
     }
     this.useTexCoords = useTexCoords;
 
@@ -29,6 +34,27 @@ class Program{
   SetUniforms(uniforms = []){
     this.uniforms = uniforms;
     this.SetUniformPrograms(this.uniforms);
+
+    if(this.isUI){
+      this.colorTex;
+      //new Uniform2f('tileMapResDIVtileSize', () => new Vec2(uiTileMap.width / tileSize, uiTileMap.height / tileSize)),
+      let foundColorTex = false;
+      let foundTileMapResDIVtileSize = false;
+      let i = 0;
+      let size = this.uniforms.length;
+      let uniform;
+      while((!foundColorTex || !foundTileMapResDIVtileSize) && i < size){
+        uniform = this.uniforms[i];
+        if(uniform.name === 'colorTex'){
+          this.colorTex = uniform;
+          foundColorTex = true;
+        } else if(uniform.name === 'tileMapResDIVtileSize'){
+          this.tileMapResDIVtileSize = uniform;
+          foundTileMapResDIVtileSize = true;
+        }
+        i++;
+      }
+    }
   }
   SetObjUniforms(objUniforms = []){
     this.objUniforms = objUniforms;
@@ -101,12 +127,58 @@ class Program{
   Render(){
     this.Use();
     let texUnitOffset = this.LoadUniforms();
-
-    for(var [name, renderer] of this.renderers){
+    for(var renderer of this.renderers){
       if(renderer.active || this.isPostProcess){
         this.LoadObjUniforms(renderer, texUnitOffset);
         manager.graphics.Draw();
+      }
+    }
+  }
 
+  RenderUI(){
+    this.Use();
+    let texUnitOffset = this.LoadUniforms();
+    let notTexts = [];
+    for(var renderer of this.renderers){
+      if(!renderer.isText){
+        notTexts.push(renderer);
+      }
+    }
+    notTexts.sort((e1,e2)=>{
+      if(e1.gameobj.transform.height < e2.gameobj.transform.height){
+        return -1;
+      } else if (e1.gameobj.transform.height > e2.gameobj.transform.height){
+        return 1;
+      }
+      return 0;
+    });
+
+    var that = this;
+    this.colorTex.getValue = function(){
+      return that.uiTileMap;
+    };
+
+    this.tileMapResDIVtileSize.getValue = function(){
+      return new Vec2(that.uiTileMap.width / tileSize, that.uiTileMap.height / tileSize);
+    };
+    this.LoadUniforms();
+    for(let renderer of notTexts){
+      if(renderer.active || this.isPostProcess){
+        this.LoadObjUniforms(renderer, texUnitOffset);
+        manager.graphics.Draw();
+      }
+    }
+
+    //CHANGE TILE MAP FOR CHARACTERS
+    this.colorTex.getValue = function(){return that.fontTileMap;};
+    this.tileMapResDIVtileSize.getValue = function(){
+      return new Vec2(that.fontTileMap.width / tileSize, that.fontTileMap.height / tileSize);
+    };
+    this.LoadUniforms();
+    for(var renderer of this.renderers){
+      if(renderer.isText && (renderer.active || this.isPostProcess)){
+        this.LoadObjUniforms(renderer, texUnitOffset);
+        manager.graphics.Draw();
       }
     }
   }

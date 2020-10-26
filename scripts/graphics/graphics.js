@@ -220,9 +220,9 @@ class Graphics {
     this.programs.get('spriteMask').Render();
 
     gl.disable(gl.BLEND);
+    gl.disable(gl.DEPTH_TEST);
 
     if(this.config.lighting){
-      gl.disable(gl.DEPTH_TEST);
       gl.clearColor(1.0, 1.0, 1.0, 1.0);
       this.BindFBO('light');
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -286,6 +286,10 @@ class Graphics {
       this.BindFBO('color');
       this.programs.get('applyBloom').Render();
     }
+
+    //RENDERIZAR INTERFAZ
+    gl.enable(gl.BLEND);
+    this.programs.get('UI').RenderUI();
 
     if(this.config.colorFiltering){
       this.BindFBO('colorFilter');
@@ -764,6 +768,24 @@ class Graphics {
       new UniformTex('colorTex', () => manager.graphics.lastOutput.texture),
       new UniformTex('lastColorTex', ()=>manager.graphics.finalColorFBO.texture),
       new Uniform1f('motionBlur', ()=>lighting.motionBlur),
+    ]);
+
+    //UI PROGRAM
+    var uiTileMap = resources.textures.get('uiTileMap');
+    let uiProgram = new Program('UI', 'vs_UI', 'fs_color', true, false, true);
+    uiProgram.SetUniforms([
+      new UniformTex('colorTex', ()=>uiTileMap),
+      new Uniform2f('tileMapResDIVtileSize', () => new Vec2(uiTileMap.width / tileSize, uiTileMap.height / tileSize)),
+      new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
+      new Uniform1f('anchorXScale', ()=>canvas.width / manager.graphics.res.x),
+    ]);
+    uiProgram.SetObjUniforms([
+      new Uniform2f('numTiles', (obj) => obj.numTiles),
+      new Uniform4f('tint', (obj) => obj.tint),
+      new Uniform2f('tile', (obj) => obj.tile),
+      new Uniform2f('scale', (obj) => obj.gameobj.transform.scale),
+      new Uniform2f('anchor', (obj) => obj.gameobj.transform.anchor),
+      new Uniform2f('position', (obj) => obj.gameobj.transform.GetWorldPosPerfect()),
     ]);
 
 
