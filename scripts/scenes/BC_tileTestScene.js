@@ -1,6 +1,6 @@
 var BC_tileTestScene = `
-uiImageTest -0.2 0.2 0
-uiTextTest 0 0 0
+uiImageTest -0.1 0.1 0
+uiTextBox 0.0 0.2 0
 Nelu 1 1 0
 Box -1 -4 0
 Tree -8 6 0
@@ -11,6 +11,7 @@ Tree -2 0 0
 Tree -8 -6 0
 Tree -2 -6 0
 Tree 2 -1 0
+Tree2 1 1 0
 Light -4 1 1.0
 Light 2 1 1.0
 Light -4 -5 1.0

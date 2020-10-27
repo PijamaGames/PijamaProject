@@ -145,12 +145,8 @@ class Program{
       }
     }
     notTexts.sort((e1,e2)=>{
-      if(e1.gameobj.transform.height < e2.gameobj.transform.height){
-        return -1;
-      } else if (e1.gameobj.transform.height > e2.gameobj.transform.height){
-        return 1;
-      }
-      return 0;
+      return Math.floor(e1.gameobj.transform.height) - Math.floor(e2.gameobj.transform.height);
+
     });
 
     var that = this;

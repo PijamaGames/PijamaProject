@@ -34,6 +34,9 @@ class Input {
     this.keys = new Map();
     this.virtualInputs = new Map();
     this.ongoingTouches = new Map();
+    this.lastTouch = null;
+    this.touchStartEvent = new EventDispatcher();
+    this.touchEndEvent = new EventDispatcher();
     var that = this;
 
   }
@@ -104,6 +107,8 @@ class Input {
         //Log(touches);
         for(let t of touches){
           input.ongoingTouches.set(t.identifier, t);
+          this.lastTouch = t;
+          this.touchStartEvent.Dispatch();
           for(let [key,vi] of input.virtualInputs){
             if(vi.ScreenCoordInsideInput(t.clientX, t.clientY)){
               vi.AddTouch(t);
@@ -115,6 +120,8 @@ class Input {
         let touches = e.changedTouches;
         for(let t of touches){
           input.ongoingTouches.delete(t.identifier);
+          this.lastTouch = t;
+          this.touchEndEvent.Dispatch();
           for(let [key,vi] of input.virtualInputs){
             vi.RemoveTouch(t);
           }
@@ -124,6 +131,8 @@ class Input {
         let touches = e.changedTouches;
         for(let t of touches){
           input.ongoingTouches.delete(t.identifier);
+          this.lastTouch = t;
+          this.touchEndEvent.Dispatch();
           for(let [key,vi] of input.virtualInputs){
             vi.RemoveTouch(t);
           }
@@ -133,6 +142,8 @@ class Input {
         let touches = e.changedTouches;
         for(let t of touches){
           input.ongoingTouches.delete(t.identifier);
+          this.lastTouch = t;
+          this.touchEndEvent.Dispatch();
           for(let [key,vi] of input.virtualInputs){
             vi.RemoveTouch(t);
           }
@@ -240,4 +251,23 @@ class Input {
     return this.virtualInputs.get(name).GetDirection();
   }
 
+  CanvasToWorld(position){
+    let pos = position.Copy();
+    let camPos = manager.scene.camera.transform.GetWorldPos();
+    pos.x = (pos.x - manager.graphics.res.x / 2.0) / tileSize + camPos.x;
+    pos.y = (pos.y - manager.graphics.res.y / 2.0) / -tileSize + camPos.y;
+
+    return pos;
+  }
+
+  ScreenToCanvas(position){
+    let pos = position.Copy();
+    pos.x = pos.x * canvas.width / window.innerWidth;
+    pos.y = pos.y * canvas.height / window.innerHeight;
+
+    let scaleX = manager.graphics.res.x / canvas.width;
+    pos.x = (pos.x - (canvas.width-manager.graphics.res.x)*0.5);
+
+    return pos;
+  }
 }

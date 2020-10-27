@@ -16,12 +16,7 @@ class Parallax{
 
     //Sort layers by height in order to paint them properly
     this.layers.sort((l1,l2)=>{
-      if(l1.height < l2.height){
-        return -1;
-      } else if(l1.height > l2.height){
-        return 1;
-      }
-      return 0;
+      return Math.floor(l1.height) - Math.floor(l2.height);
     });
 
     //Add layer to parallax program

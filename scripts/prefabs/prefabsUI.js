@@ -4,8 +4,15 @@ prefabFactory.AddPrototype("uiImageTest", new Vec2(2, 2), new Vec2(1.0,0.0), fal
   ]
 });
 
-prefabFactory.AddPrototype("uiTextTest", new Vec2(1, 1), new Vec2(0.5,0.5), false, ()=>{
+prefabFactory.AddPrototype("uiTextChar", new Vec2(1, 1), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new TextRenderer('A'),
+    new TextRenderer('O', 1.0),
+  ]
+});
+
+prefabFactory.AddPrototype("uiTextBox", new Vec2(14,5), new Vec2(0.5,0.0), false, ()=>{
+  return [
+    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5),
+    new TextBox(0.025, 0.07, [0.1,0.1,0.3]),
   ]
 });

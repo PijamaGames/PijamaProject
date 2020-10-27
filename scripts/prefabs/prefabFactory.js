@@ -28,7 +28,7 @@ class PrefabFactory{
     scale = scale == null ? prefab.scale : scale;
 
     let obj = new Gameobj(type, prefab.count, null, manager.scene, prefab.GetPrototype(),
-      new Transform(position, height, scale, prefab.anchor), prefab.isStatic);
+      new Transform(position.Copy(), height, scale.Copy(), prefab.anchor.Copy()), prefab.isStatic);
 
     prefab.count++;
     return obj;

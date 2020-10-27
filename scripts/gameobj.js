@@ -19,6 +19,13 @@ class Gameobj {
     this.AddComponents(components);
   }
 
+  SetActive(active){
+    this.active=active;
+    for (var [key, child] of this.children){
+      child.active=active;
+    }
+  }
+
   get bytecode(){
     let str = this.name+' '+this.transform.position.x+' '+this.transform.position.y+' '+this.transform.height;
     if(!this.renderer.vertical){
@@ -52,7 +59,16 @@ class Gameobj {
   AddChild(child) {
     this.children.set(child.key, child);
   }
+  RemoveChild(child){
+    this.children.delete(child.key);
+  }
   SetParent(parent) {
+    if(this.parent != null){
+      this.parent.RemoveChild(this);
+    } else if (this.parent == null){
+      this.scene.RemoveGameobj(this);
+    }
+
     this.parent = parent;
     if (!parent)
       if(this.isStatic){

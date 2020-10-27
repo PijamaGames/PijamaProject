@@ -14,6 +14,153 @@ class Renderer extends Component{
     this.numTiles = numTiles;
     this.vertical = vertical;
     this.tint = new Float32Array([1,1,1,alpha]);
+    this.isButton = false;
+  }
+
+  UpdateButtonInput(){
+    if(this.isButton && this.pressed){
+      if(this.pressedFunc != null)
+        this.pressedFunc(this);
+      if(!this.ignoreTouchMove){
+        for(var touch of this.touches){
+          if(!this.CheckTouchInside(touch)){
+            this.RemoveTouch(touch,true);
+          }
+        }
+      }
+    }
+    if(input.isDesktop){
+      //Log("checkMouse");
+      this.CheckMouse();
+    }
+  }
+
+  CheckMouse(){
+    if(!this.hover){
+      if(this.CheckInputInside(input.mousePosition)){
+        this.hover = true;
+        if(this.hoverInFunc != null){
+          this.hoverInFunc(this);
+        }
+      }
+    }
+    if(this.hover){
+      if(!this.CheckInputInside(input.mousePosition)){
+        this.hover = false;
+        if(this.hoverOutFunc != null){
+          this.hoverOutFunc(this);
+        }
+      } else {
+        if(input.mouseLeftDown){
+          if(this.downFunc != null)
+            this.downFunc(this);
+
+          this.pressed = true;
+        } else if(input.mouseLeftUp){
+          this.pressed = false;
+          if(this.upFunc!=null){
+            this.upFunc(this);
+          }
+        }
+      }
+    }
+  }
+
+  SetDownFunc(downFunc){
+    this.downFunc = downFunc;
+    return this;
+  }
+
+  SetPressedFunc(pressedFunc){
+    this.pressedFunc = pressedFunc;
+    return this;
+  }
+
+  SetUpFunc(upFunc){
+    this.upFunc = upFunc;
+    return this;
+  }
+
+  SetHoverInFunc(hoverInFunc){
+    this.hoverInFunc = hoverInFunc;
+    return this;
+  }
+
+  SetHoverOutFunc(hoverOutFunc){
+    this.hoverOutFunc = hoverOutFunc;
+    return this;
+  }
+
+  GiveFunctionality(ignoreTouchMove = false){
+
+    this.button = true;
+    //this.down = false;
+    this.pressed = false;
+    this.hover = false;
+    //this.up = false;
+    Object.assign(this, {ignoreTouchMove});
+    this.downFunc = null;
+    this.upFunc = null;
+    this.pressedFunc = null;
+    this.hoverInFunc = null;
+    this.hoverOutFunc = null;
+
+    this.touches = new Map();
+    this.touchesCount = 0;
+    var that = this;
+    if(!input.isDesktop){
+      this.startListener = input.touchStartEvent.AddListener(this, ()=>that.AddTouch(input.lastTouch));
+      this.endListener = input.touchEndEvent.AddListener(this, ()=>that.RemoveTouch(input.lastTouch));
+    }
+    return this;
+  }
+
+  CheckInputInside(position){
+    position = input.ScreenToCanvas(position);
+    position = input.CanvasToWorld(position);
+
+    return this.gameobj.transform.IsInsideBoundaries(position);
+  }
+
+  RemoveFunctionality(){
+    if(this.isButton){
+      this.gameobj.scene.buttons.delete(this);
+      this.isButton=false;
+      this.delete(downFunc);
+      this.delete(pressedFunc);
+      this.delete(upFunc);
+      this.startListener.Remove();
+      this.endListener.Remove();
+    }
+  }
+
+  AddTouch(touch){
+    if(!this.CheckInputInside(new Vec2(touch.clientX, touch.clientY))){
+      return;
+    }
+    if(!this.touches.has(touch.identifier)){
+      this.touchesCount++;
+      this.touches.set(touch.identifier, touch);
+      //Log(this.touchesCount);
+      if(this.touchesCount == 1){
+        if(this.downFunc != null)
+          this.downFunc();
+        this.pressed = true;
+      }
+    }
+  }
+
+  RemoveTouch(touch, outOfBoundaries = false){
+    if(this.touches.has(touch.identifier)){
+      this.touches.delete(touch.identifier);
+      this.touchesCount--;
+      if(this.touchesCount == 0){
+        if(!outOfBoundaries && this.upFunc != null){
+          this.upFunc();
+        }
+        this.pressed=false;
+      }
+    }
   }
 
   SetTint(r=1.0,g=1.0,b=1.0,a=1.0){
@@ -32,11 +179,18 @@ class Renderer extends Component{
       if(program)
         program.renderers.add(this);
     }
+
+    if(this.button){
+      this.gameobj.scene.buttons.add(this);
+    }
   }
 
   Destroy(){
     for(var program of this.programs){
       program.renderers.delete(this);
+    }
+    if(this.button){
+      this.gameobj.scene.buttons.delete(this);
     }
   }
 }

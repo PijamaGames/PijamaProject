@@ -13,7 +13,7 @@ class EventDispatcher{
   }
 
   AddListener(listener, callback, oneTime){
-    new EventListener(this, listener, callback, oneTime);
+    return new EventListener(this, listener, callback, oneTime);
   }
 }
 

@@ -24,7 +24,7 @@ class ColliderGroup extends Component{
       if(DEBUG_VISUAL){
         let program = manager.graphics.programs.get('collider');
         for(var i = 0; i < this.colliders.length; i++){
-          program.renderers.set(this.gameobj.key+'_col'+i, this.colliders[i]);
+          program.renderers.add(this.colliders[i]);
         }
       }
     }

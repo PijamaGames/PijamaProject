@@ -12,7 +12,9 @@ function Main(){
   manager = new Manager();
   manager.AddScene(new Scene("testScene", BC_testScene));
   manager.AddScene(new Scene("tileTestScene", BC_tileTestScene));
-  manager.Start('tileTestScene');
+  manager.AddScene(new Scene("mainMenu", BC_MainMenu));
+  manager.AddScene(new Scene("optionMenu", BC_Options));
+  manager.Start('mainMenu');
 }
 
 function Log(text){

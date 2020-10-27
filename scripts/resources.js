@@ -44,6 +44,7 @@ var shaderURLs = [ //name, url
   ['fs_parallax', 'scripts/shaders/fs_parallax.glsl'],
   ['fs_mask', 'scripts/shaders/fs_mask.glsl'],
   ['fs_applyParallax', 'scripts/shaders/fs_applyParallax.glsl'],
+  ['fs_UI', 'scripts/shaders/fs_UI.glsl'],
 ];
 
 var soundsURLs=[

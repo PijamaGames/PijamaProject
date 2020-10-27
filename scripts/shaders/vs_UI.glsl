@@ -15,6 +15,7 @@ uniform vec2 position;
 uniform vec2 anchor;
 uniform float vertical;
 uniform float anchorXScale;
+uniform float aspectRatio;
 
 
 void main() {
@@ -23,6 +24,7 @@ void main() {
   vec2 vpos = vertPosition*0.5;
   vpos*=scale;
   float anchorScale = clamp(anchorXScale, 0.0, 1.0);
+  //float anchorScale = anchorXScale;
 
   vec2 realAnchor = anchor - 0.5;
   realAnchor.x*=anchorScale;
@@ -30,7 +32,7 @@ void main() {
 
   vec2 finalVpos = vpos * tileSizeDIVres*2.0;
   finalVpos += realAnchor*2.0;
-  finalVpos += position*vec2(anchorScale, 1.0);
+  finalVpos += position/vec2(aspectRatio*0.5, 0.5);
 
   //DEPTH Y
   gl_Position = vec4(finalVpos,0.0, 1.0);

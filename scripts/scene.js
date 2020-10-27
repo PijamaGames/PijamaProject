@@ -4,6 +4,7 @@ class Scene{
     this.CleanByteCode();
     this.gameobjs = new Map();
     this.staticGameobjs = new Map();
+    this.buttons = new Set();
     this.colliderGroups= [];
     this.rigidbodies = new Set();
     manager.scenes.set(this.name, this);
@@ -16,6 +17,9 @@ class Scene{
   Update(){
     for(let [key, gameobj] of this.gameobjs){
       gameobj.Update();
+    }
+    for(let button of this.buttons){
+      button.UpdateButtonInput();
     }
   }
 

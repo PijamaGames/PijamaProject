@@ -24,6 +24,14 @@ class Transform extends Component {
     }
   }
 
+  GetLocalPosition(){
+    return this.position;
+  }
+  SetLocalPosition(pos){
+    this.position.Set(pos.x, pos.y);
+    this.ChangeFlags();
+  }
+
   //For callbacks
   GetWorldPos() {
 
@@ -37,7 +45,7 @@ class Transform extends Component {
         this.lastWorldPos = wp;
         return wp;
       } else {
-        let parentPos = this.gameobj.parent.transform.worldPos;
+        let parentPos = this.gameobj.parent.transform.GetWorldPos();
         let wp = Vec2.Add(parentPos, this.position);
         this.lastWorldPos = wp;
         return wp;
@@ -103,7 +111,7 @@ class Transform extends Component {
 
   IsInsideBoundaries(position) {
 
-    let worldPos = this.worldPos;
+    let worldPos = this.GetWorldPos().Copy();
 
     worldPos.Set(
       worldPos.x - this.anchor.x * this.scale.x,

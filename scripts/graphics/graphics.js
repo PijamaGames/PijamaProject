@@ -12,10 +12,9 @@ class Graphics {
     this.auxTexture = null;
     this.lighting = new Lighting();
     this.colorsPerChannel = 12.0; //12.0 is a good number
-    this.defaultRes = new Vec2(640, 480);
     this.res = new Vec2(640, 480);
     this.lastRes = this.res.Copy();
-    this.portraitRes = new Vec2(480,480);
+    this.portraitRes = new Vec2(this.res.y,this.res.y);
     this.landscapeRes = this.res.Copy();
     this.aspectRatio = this.res.x / this.res.y;
     this.windowRes = new Vec2(window.innerWidth, window.innerHeight);
@@ -34,10 +33,34 @@ class Graphics {
       colorFiltering: true,
     }
 
+    this.currentConfig = 0;
+    this.maxConfig = 4;
+
     //this.SetLowSettings();
   }
 
+  SetSettingsByNumber(number){
+    switch(number){
+      case 0:
+        this.SetMinimumSettings();
+        break;
+      case 1:
+        this.SetLowSettings();
+        break;
+      case 2:
+        this.SetMediumSettings();
+        break;
+      case 3:
+        this.SetHighSettings();
+        break;
+      case 4:
+        this.SetMaxSettings();
+        break;
+    }
+  }
+
   SetMinimumSettings(){
+    this.currentConfig = 0;
     this.config = {
       bloom : false,
       fog : false,
@@ -50,6 +73,7 @@ class Graphics {
   }
 
   SetLowSettings(){
+    this.currentConfig = 1;
     this.config = {
       bloom : false,
       fog : false,
@@ -62,6 +86,7 @@ class Graphics {
   }
 
   SetMediumSettings(){
+    this.currentConfig = 2;
     this.config = {
       bloom : true,
       fog : true,
@@ -74,6 +99,7 @@ class Graphics {
   }
 
   SetHighSettings(){
+    this.currentConfig = 3;
     this.config = {
       bloom : true,
       fog : true,
@@ -86,6 +112,7 @@ class Graphics {
   }
 
   SetMaxSettings(){
+    this.currentConfig = 4;
     this.config = {
       bloom : true,
       fog : true,
@@ -772,12 +799,13 @@ class Graphics {
 
     //UI PROGRAM
     var uiTileMap = resources.textures.get('uiTileMap');
-    let uiProgram = new Program('UI', 'vs_UI', 'fs_color', true, false, true);
+    let uiProgram = new Program('UI', 'vs_UI', 'fs_UI', true, false, true);
     uiProgram.SetUniforms([
       new UniformTex('colorTex', ()=>uiTileMap),
       new Uniform2f('tileMapResDIVtileSize', () => new Vec2(uiTileMap.width / tileSize, uiTileMap.height / tileSize)),
       new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
       new Uniform1f('anchorXScale', ()=>canvas.width / manager.graphics.res.x),
+      new Uniform1f('aspectRatio', ()=> manager.graphics.res.x/ manager.graphics.res.y),
     ]);
     uiProgram.SetObjUniforms([
       new Uniform2f('numTiles', (obj) => obj.numTiles),
@@ -785,7 +813,8 @@ class Graphics {
       new Uniform2f('tile', (obj) => obj.tile),
       new Uniform2f('scale', (obj) => obj.gameobj.transform.scale),
       new Uniform2f('anchor', (obj) => obj.gameobj.transform.anchor),
-      new Uniform2f('position', (obj) => obj.gameobj.transform.GetWorldPosPerfect()),
+      new Uniform2f('position', (obj) => obj.gameobj.transform.GetWorldPos()),
+      new Uniform1f('isText', (obj)=>obj.isText ? 1.0 : 0.0),
     ]);
 
 
