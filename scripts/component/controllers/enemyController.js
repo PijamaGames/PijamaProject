@@ -1,20 +1,24 @@
 class EnemyController extends Component {
-  constructor(speed = 3.0, camOffset = 3.0) {
+  constructor(speed = 3.0) {
 
     super();
     this.type = "enemyController";
+    this.speed=speed;
     this.endAttackAnim=false;
+    this.shortestWay=[];
   }
 
   Update(){
     this.playerFSM.Update();
   }
 
-  ShortestWay(){
+  CheckShortestWay(){
+    //implementar dikjstra
 
   }
 
   EnemyMove() {
+    //hay q meterle la direccion que toque calculada en shortestWay
     let axis = this.leftAxis.Copy();
 
     this.gameobj.renderer.SetDirection(axis);
@@ -43,6 +47,7 @@ class EnemyController extends Component {
       //that.gameobj.renderer.AddAnimation('enemyRun', 'enemy_run', 14);
 
     }).SetStartFunc(()=>{
+      that.CheckShortestWay();
       //that.gameobj.renderer.SetAnimation('enemyRun');
 
     }).SetUpdateFunc(()=>{
@@ -77,7 +82,15 @@ class EnemyController extends Component {
       }),
     ]);
 
-    this.enemyFSM = new FSM([idleNode, runNode, attackNode]).Start('enemyIdle');
+    let deadNode = new Node('enemyDead').SetOnCreate(()=>{
+      //that.gameobj.renderer.AddAnimation('enemyDead', 'enemy_dead', 14);
+
+    }).SetStartFunc(()=>{
+      //that.gameobj.renderer.SetAnimation('enemyDead');
+
+    });
+
+    this.enemyFSM = new FSM([idleNode, runNode, attackNode, deadNode]).Start('enemyIdle');
   }
 
   SetGameobj(gameobj){

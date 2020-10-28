@@ -7,6 +7,8 @@ class Manager {
     this.scenes = new Map();
     this.delta = 0.0;
     this.ms = null;
+    this.musicVolume=1.0;
+    this.language=0;
     //mapPlacer = new MapPlacer();
     physics = new Physics();
   }
