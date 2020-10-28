@@ -27,6 +27,6 @@ class EventListener{
   }
 
   Remove(){
-    this.dispatcher.listeners.remove(this);
+    this.dispatcher.listeners.delete(this);
   }
 }

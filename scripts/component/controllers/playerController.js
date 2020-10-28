@@ -8,6 +8,7 @@ class PlayerController extends Component {
     this.leftAxis = new Vec2();
     this.rawLeftAxis = new Vec2();
     this.lerpLeftAxis = 10.0;
+    this.endAttackAnim=false;
   }
 
   Update(){
@@ -63,6 +64,10 @@ class PlayerController extends Component {
         return that.rawLeftAxis.mod > 0.05;
         //Left axis used
       }),
+      new Edge('attack').AddCondition(()=>{
+        //Left axis not used
+        return input.mouseLeftDown;
+      }),
     ]);
 
     let runNode = new Node('run').SetOnCreate(()=>{
@@ -81,9 +86,35 @@ class PlayerController extends Component {
         //Left axis not used
         return that.rawLeftAxis.mod < 0.05;
       }),
+      new Edge('attack').AddCondition(()=>{
+        //Left axis not used
+        return input.mouseLeftDown;
+      }),
     ]);
 
-    this.playerFSM = new FSM([idleNode, runNode/*, this.dash, this.attack*/]).Start('idle');
+    let attackNode = new Node('attack').SetOnCreate(()=>{
+      that.gameobj.renderer.AddAnimation('attack', 'nelu_attack', 14);
+
+    }).SetStartFunc(()=>{
+      that.gameobj.renderer.SetAnimation('attack');
+      that.endAttackAnim=false;
+      that.gameobj.renderer.endAnimEvent.AddListener(that, ()=>that.endAttackAnim=true,true);
+
+    }).SetUpdateFunc(()=>{
+      //METER LO Q HACE MIENTRAS ATACA
+
+    }).SetEdges([
+      new Edge('idle').AddCondition(()=>{
+        //Left axis not used
+        return that.rawLeftAxis.mod < 0.05 && that.endAttackAnim;
+      }),
+      new Edge('run').AddCondition(()=>{
+        return that.rawLeftAxis.mod > 0.05 && that.endAttackAnim;
+        //Left axis used
+      }),
+    ]);
+
+    this.playerFSM = new FSM([idleNode, runNode/*, this.dash*/, attackNode]).Start('idle');
   }
 
   SetGameobj(gameobj){
