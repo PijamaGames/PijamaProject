@@ -5,8 +5,11 @@ class Manager {
     input = new Input();
     this.scene = null;
     this.scenes = new Map();
+    this.sleepingScenes = new Map();
     this.delta = 0.0;
     this.ms = null;
+    finder = new Finder();
+
     //mapPlacer = new MapPlacer();
     physics = new Physics();
   }
@@ -36,8 +39,15 @@ class Manager {
       this.graphics.SetMediumSettings();
     if(input.GetKeyDown('Digit4'))
       this.graphics.SetHighSettings();
-    if(input.GetKeyDown('Digit5'))
+    if(input.GetKeyDown('Digit5')){
       this.graphics.SetMaxSettings();
+    }
+
+
+    if(input.GetKeyDown('KeyM')){
+      mapEditor.SetActive(!mapEditor.fsm.active);
+    }
+
   }
 
   GameLoop(that) {
@@ -57,7 +67,7 @@ class Manager {
       this.graphics.CanvasResponsive();
       this.graphics.Render();
       //Update map placer
-      if (mapPlacer) mapPlacer.Update();
+      if (mapEditor) mapEditor.Update();
     }
 
     input.LateUpdate();
@@ -72,6 +82,8 @@ class Manager {
     resources.Load(function() {
       that.graphics.LoadResources();
       that.AddInputs();
+
+      mapEditor = new MapEditor();
 
       if(input.isDesktop){
         that.graphics.SetMaxSettings();
@@ -96,35 +108,6 @@ class Manager {
       Log('Desktop platform');
       input.isDesktop = true;
       input.AddListeners();
-      this.AddInputKeys();
-    }
-  }
-
-  AddInputKeys() {
-    input.AddKey('KeyW');
-    input.AddKey('KeyA');
-    input.AddKey('KeyS');
-    input.AddKey('KeyD');
-
-    input.AddKey('KeyR');
-    //arrow keys
-    input.AddKey('ArrowLeft');
-    input.AddKey('ArrowRight');
-    input.AddKey('ArrowUp');
-    input.AddKey('ArrowDown');
-
-    input.AddKey('Space');
-
-    if(DEBUG){
-      input.AddKey('KeyT');
-      input.AddKey('KeyG');
-      input.AddKey('KeyY');
-      input.AddKey('KeyH');
-      input.AddKey('Digit1');
-      input.AddKey('Digit2');
-      input.AddKey('Digit3');
-      input.AddKey('Digit4');
-      input.AddKey('Digit5');
     }
   }
 
@@ -144,10 +127,25 @@ class Manager {
     this.scenes.set(scene.name, scene);
   }
 
-  LoadScene(sceneName) {
-    if (this.scene) this.scene.Unload();
-    this.scene = this.scenes.get(sceneName);
-    this.scene.LoadByteCode();
+  LoadScene(sceneName, sleep = false) {
+    Log("here");
+    let newScene = this.scenes.get(sceneName);
+    if(newScene == this.scene) return;
+
+    if (this.scene && !sleep){
+      this.scene.Unload();
+    } else if(this.scene && sleep){
+      this.sleepingScenes.set(this.scene.name, this.scene);
+    }
+    this.scene = newScene;
+
+    if(this.sleepingScenes.has(this.scene.name)){
+      this.sleepingScenes.delete(this.scene.name);
+      Log("WakeUp: "+this.scene.name);
+    } else {
+      this.scene.LoadByteCode();
+      Log("Loaded: "+this.scene.name);
+    }
   }
 
   EnterFullScreen(callback = function(){}) {

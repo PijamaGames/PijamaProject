@@ -11,8 +11,6 @@ class Camera extends Component {
   }
 
   Update() {
-
-
     let worldPos = this.gameobj.transform.GetWorldPos().Copy();
     let dir = Vec2.Sub(this.target, worldPos).Scale(this.speed*manager.delta);
     this.gameobj.transform.SetWorldPosition(worldPos.Add(dir));

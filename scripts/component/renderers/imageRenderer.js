@@ -1,6 +1,7 @@
 class ImageRenderer extends Renderer{
   constructor(tile = new Vec2(), numTiles = new Vec2(1,1), alpha = 1.0){
     super(tile, numTiles, false, alpha, ['UI']);
+    this.isUI = true;
     //Object.assign(this,{});
   }
 
@@ -30,26 +31,4 @@ class ImageRenderer extends Renderer{
 
     return position.x < right && position.x > left && position.y < top && position.y > bottom;
   }
-
-  //DEBUG ONLY
-  /*SetGameobj(gameobj){
-    this.gameobj = gameobj;
-    this.gameobj.renderer = this;
-
-    this.name = this.gameobj.key;
-    for(var program of this.programs){
-      if(program)
-        program.renderers.add(this);
-    }
-
-    //PARA DEBUG
-    var that = this;
-    this.GiveFunctionality().SetDownFunc(()=>{
-      that.gameobj.transform.SetWorldPosition(new Vec2(10,0));
-    });
-
-    if(this.button){
-      this.gameobj.scene.buttons.add(this);
-    }
-  }*/
 }

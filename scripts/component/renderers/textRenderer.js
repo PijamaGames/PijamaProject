@@ -4,6 +4,7 @@ class TextRenderer extends Renderer{
     this.isText = true;
     this.SetTileFromASCII(char);
     this.SetTint(tint[0], tint[1], tint[2]);
+    this.isUI = true;
   }
 
   SetTileFromASCII(char){

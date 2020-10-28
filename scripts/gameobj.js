@@ -1,17 +1,19 @@
 class Gameobj {
-  constructor(name, id, parent, scene, components = [], transform = null, isStatic = false) {
+  constructor(type, id, parent = null, scene = null, components = [], transform = null, isStatic = false) {
     Object.assign(this, {
-      name,
+      type,
       id,
       parent,
       scene,
       isStatic
     });
-    this.key = this.name+this.id;
-    this.active = true;
+    this.key = this.type+this.id;
+    this.selfActive = true;
+
     this.components = new Map();
     this.children = new Map();
     this.SetParent(this.parent);
+    this.parentActive = this.parent == null || this.parent.active;
     let t;
     if(transform) t = transform;
     else t = new Transform();
@@ -19,15 +21,56 @@ class Gameobj {
     this.AddComponents(components);
   }
 
+  get active(){
+    return this.selfActive && this.parentActive;
+  }
+
+  SetScene(scene, removeParent = true){
+    if(scene == this.scene) return;
+
+    for(var [key, value] of this.components){
+      value.SetScene(scene);
+    }
+
+    if(this.parent == null){
+      this.scene.RemoveGameobj(this);
+    } else if(removeParent) {
+      this.parent.RemoveChild(this);
+    }
+
+    this.scene = scene;
+    if(removeParent || this.parent == null){
+      if(this.isStatic){
+        this.scene.AddStaticGameobj(this);
+      } else {
+        this.scene.AddGameobj(this);
+      }
+    }
+
+
+
+
+    for(var [key, value] of this.children){
+      value.SetScene(scene, false);
+    }
+  }
+
   SetActive(active){
-    this.active=active;
+    this.selfActive=active;
     for (var [key, child] of this.children){
-      child.active=active;
+      child.SetParentActive(active);
+    }
+  }
+
+  SetParentActive(active){
+    this.parentActive = active;
+    for (var [key, child] of this.children){
+      child.SetParentActive(this.selfActive);
     }
   }
 
   get bytecode(){
-    let str = this.name+' '+this.transform.position.x+' '+this.transform.position.y+' '+this.transform.height;
+    let str = this.type+' '+this.transform.position.x+' '+this.transform.position.y+' '+this.transform.height;
     if(!this.renderer.vertical){
       str += ' ' + this.transform.scale.x + ' ' + this.transform.scale.y
     }
@@ -82,7 +125,7 @@ class Gameobj {
   }
 
   Destroy() {
-    console.log("deleting " + this.name);
+    console.log("deleting " + this.type);
 
     //Destroy _components
     for(var [key, component] of this.components){

@@ -12,7 +12,8 @@ class Graphics {
     this.auxTexture = null;
     this.lighting = new Lighting();
     this.colorsPerChannel = 12.0; //12.0 is a good number
-    this.res = new Vec2(640, 480);
+    this.defaultRes = new Vec2(640, 480);
+    this.res = this.defaultRes.Copy();
     this.lastRes = this.res.Copy();
     this.portraitRes = new Vec2(this.res.y,this.res.y);
     this.landscapeRes = this.res.Copy();

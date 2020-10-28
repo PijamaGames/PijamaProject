@@ -11,6 +11,36 @@ class Vec2 {
     return new Vec2(-this.x, -this.y);
   }
 
+  Round(){
+    this.x = Math.round(this.x);
+    this.y = Math.round(this.y);
+    return this;
+  }
+
+  static Round(v){
+    return v.Copy().Round();
+  }
+
+  Floor(){
+    this.x = Math.floor(this.x);
+    this.y = Math.floor(this.y);
+    return this;
+  }
+
+  static Floor(v){
+    return v.Copy().Floor();
+  }
+
+  Ceil(){
+    this.x = Math.ceil(this.x);
+    this.y = Math.ceil(this.y);
+    return this;
+  }
+
+  static Ceil(v){
+    return v.Copy().Ceil();
+  }
+
   Equals(v2){
     return this.x === v2.x && this.y === v2.y;
   }

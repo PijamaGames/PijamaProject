@@ -1,4 +1,170 @@
-var mapPlacer;
+var mapEditor;
+class MapEditor {
+  constructor() {
+    this.cameraSpeed = 300.0;
+
+    this.selected = null;
+    this.lastTint = new Float32Array([1.0, 1.0, 1.0, 1.0]);
+    this.overlapTint = new Float32Array([0.7, 0.7, 1.0, 1.0]);
+    this.lastMousePos = new Vec2();
+    this.lastScale;
+    this.scaleFactor = 2.5;
+    this.goToGalleryObj = null;
+    this.currentScene;
+    this.hoverGallery = false;
+
+    var that = this;
+    var selectNode = new Node("select").SetStartFunc(()=>{
+      this.currentScene = manager.scene.name;
+      if(this.goToGalleryObj != null){
+        this.goToGalleryObj.SetScene(manager.scene);
+      }else{
+        this.goToGalleryObj = prefabFactory.CreateObj("GoToGallery", new Vec2(-0.2,0.1));
+      }
+    }).SetUpdateFunc(() => {
+      that.CheckOverlappedObjs();
+    }).SetExitFunc(()=>{
+      this.goToGalleryObj.Destroy();
+      this.goToGalleryObj = null;
+
+      if(that.selected != null)
+        that.selected.renderer.tint = that.lastTint;
+    }).SetEdges([
+      new Edge("put").AddCondition(()=>input.mouseLeftDown && that.selected != null && !that.hoverGallery),
+      new Edge("copy").AddCondition(()=>that.selected != null && input.GetKeyDown("KeyC") && !that.hoverGallery),
+      new Edge("gallery").AddCondition(()=>manager.scene.name == "gallery"),
+    ]);
+
+    var galleryNode = new Node("gallery").SetStartFunc(()=>{
+      this.hoverGallery = false;
+      that.selected = null;
+    }).SetUpdateFunc(()=>{
+      that.CheckOverlappedObjs();
+    }).SetExitFunc(()=>{
+      manager.LoadScene(that.currentScene);
+    }).SetEdges([
+      new Edge("copy").AddCondition(()=>input.mouseLeftDown && that.selected != null),
+      new Edge("select").AddCondition(()=>manager.scene.name == that.currentScene),
+    ]);
+
+    var putNode = new Node("put").SetUpdateFunc(()=>{
+      //that.selected.transform.SetWorldCenter(Vec2.Sub(input.mouseGridPosition, Vec2.Scale(that.selected.transform.anchor, 1.0)));
+      that.selected.transform.SetWorldPosition(Vec2.Add(input.mouseGridPosition, Vec2.Scale(that.selected.transform.anchor, 0.5)));
+    }).SetEdges([
+      new Edge("select").AddCondition(()=>input.mouseLeftDown),
+      new Edge("scale").AddCondition(()=>input.GetKeyDown("Space") && !that.selected.renderer.vertical),
+    ]);
+
+    var scaleNode = new Node("scale").SetStartFunc(()=>{
+      that.lastMousePos.Set(input.mouseGridPosition.x, input.mouseGridPosition.y);
+      that.lastScale = that.selected.transform.scale.Copy();
+      //canvas.requestPointerLock();
+    }).SetUpdateFunc(()=>{
+      that.selected.transform.scale.Set(
+        Math.floor(Math.abs(input.mouseWorldPosition.x-that.lastMousePos.x)*this.scaleFactor+1),
+        Math.floor(Math.abs(input.mouseWorldPosition.y-that.lastMousePos.y)*this.scaleFactor+1)
+      );
+    }).SetExitFunc(()=>{
+      //document.exitPointerLock();
+    }).SetEdges([
+      new Edge("put").AddCondition(()=>input.GetKeyUp("Space")),
+    ]);
+
+    var copyNode = new Node("copy").SetStartFunc(()=>{
+      that.CopySelected();
+    }).SetEdges([
+      new Edge("put"),
+    ]);
+
+    this.fsm = new FSM([selectNode, putNode, scaleNode, copyNode, galleryNode]);
+    this.SetActive(false);
+    //this.SetActive(true); //The mapEditor is activated when a scene is loaded in Manager.LoadScene
+  }
+
+  Update() {
+    if(this.fsm.active){
+      let camPos = manager.scene.camera.transform.GetWorldPos().Copy();
+      let axis = input.GetLeftAxis();
+      camPos.Add(axis.Scale(this.cameraSpeed*manager.delta*(input.GetKeyPressedF('ShiftLeft')+1.0)));
+      manager.scene.camera.camera.target = camPos;
+    }
+
+    this.fsm.Update();
+  }
+
+  SetActive(active){
+    this.fsm.active = active;
+
+    if(active){
+      this.fsm.Start("select");
+      let nelu = finder.FindObjectsByType("Nelu");
+      if(nelu.length > 0){
+        this.player = nelu[0];
+        this.player.playerController.playerFSM.active = false;
+        this.player.playerController.playerFSM.Stop();
+      }
+    } else {
+      this.fsm.Stop();
+      manager.graphics.res = manager.graphics.defaultRes.Copy();
+      if(this.player){
+        this.player.playerController.playerFSM.active = true;
+        this.player.playerController.playerFSM.Start("idle");
+      }
+    }
+  }
+
+  CopySelected(){
+    this.selected = prefabFactory.CreateObj(
+      this.selected.type,
+      input.mouseGridPosition,
+      this.selected.transform.height,
+      this.selected.transform.scale
+    );
+  }
+
+  CheckOverlappedObjs(){
+    let that = this;
+    let pos = input.mouseWorldPosition;
+    let objs = manager.scene.GetObjectsInBoundaries(pos);
+    if(objs.length == 0){
+      if(that.selected != null){
+        that.selected.renderer.tint = that.lastTint;
+        that.selected = null;
+      }
+      return;
+    }
+    let closest = null;
+    let minDist = 999999999999999.99999;
+
+    let dist;
+    for (let obj of objs) {
+      if (obj.renderer) {
+        if (obj.renderer.isUI) {
+          Log("next");
+          continue;
+        } else {
+          dist = obj.transform.Distance(input.mouseWorldPosition);
+          if (dist < minDist) {
+            minDist = dist;
+            closest = obj;
+          }
+        }
+      }
+    }
+
+    if (closest && closest != null) {
+      if (that.selected != null) {
+        that.selected.renderer.tint = that.lastTint;
+      }
+      that.selected = closest;
+
+      that.lastTint = closest.renderer.tint;
+      closest.renderer.tint = that.overlapTint;
+    }
+  }
+}
+
+/*var mapPlacer;
 class MapPlacer {
   constructor() {
     this.gameobj = null;
@@ -149,3 +315,4 @@ class MapPlacer {
     //Log(this.scene.gameobjs);
   }
 }
+*/

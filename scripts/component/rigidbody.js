@@ -11,6 +11,11 @@ class Rigidbody extends Component{
     manager.scene.rigidbodies.add(this);
   }
 
+  SetScene(scene){
+    this.gameobj.scene.rigidbodies.delete(this);
+    scene.rigidbodies.add(this);
+  }
+
   AddForce(dir){
     this.force.Add(dir);
   }

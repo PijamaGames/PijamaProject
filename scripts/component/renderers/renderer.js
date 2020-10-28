@@ -14,7 +14,14 @@ class Renderer extends Component{
     this.numTiles = numTiles;
     this.vertical = vertical;
     this.tint = new Float32Array([1,1,1,alpha]);
-    this.isButton = false;
+    this.button = false;
+  }
+
+  SetScene(scene){
+    if(this.button){
+      this.gameobj.scene.buttons.delete(this);
+      scene.buttons.add(this);
+    }
   }
 
   UpdateButtonInput(){

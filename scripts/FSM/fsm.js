@@ -3,6 +3,7 @@ class FSM {
     this.nodes = new Map();
     this.AddNodes(nodes);
     this.currentNode;
+    this.active = true;
 
     for(let [key,node] of this.nodes){
       node.Create();
@@ -15,9 +16,18 @@ class FSM {
     return this;
   }
 
+  Stop(){
+    if(this.currentNode){
+      this.currentNode.Exit();
+    }
+    return this;
+  }
+
   Update() {
-    this.currentNode.Update();
-    this.ChangeCurrentNode();
+    if(this.active){
+      this.currentNode.Update();
+      this.ChangeCurrentNode();
+    }
   }
 
   ChangeCurrentNode() {

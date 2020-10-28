@@ -6,6 +6,12 @@ class ColliderGroup extends Component{
 
   }
 
+  SetScene(scene){
+    let index = this.gameobj.scene.gameobjs.indexOf(this);
+    this.gameobj.scene.colliderGroups.splice(index,1);
+    scene.colliderGroups.push(this);
+  }
+
   Destroy(){
     let index = this.gameobj.scene.colliderGroups.indexOf(this);
     this.gameobj.scene.colliderGroups.splice(index,1);

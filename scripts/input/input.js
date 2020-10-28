@@ -29,8 +29,6 @@ class Input {
     this.mouseLeftDown = false;
     this.mouseLeftUp = false;
     this.mouseLeft = false;
-    this.mouseLeftDownFirstFrame = false;
-    this.mouseLeftUpFirstFrame = false;
     this.keys = new Map();
     this.virtualInputs = new Map();
     this.ongoingTouches = new Map();
@@ -39,6 +37,26 @@ class Input {
     this.touchEndEvent = new EventDispatcher();
     var that = this;
 
+  }
+
+  GetLeftAxis(){
+    let axis;
+
+    if(this.isDesktop){
+      axis = new Vec2();
+      axis.x -= this.GetKeyPressed('KeyA') || this.GetKeyPressed('ArrowLeft') ? 1.0 : 0.0;
+      axis.x += this.GetKeyPressed('KeyD') || this.GetKeyPressed('ArrowRight') ? 1.0 : 0.0;
+
+      axis.y -= this.GetKeyPressed('KeyS') || this.GetKeyPressed('ArrowDown') ? 1.0 : 0.0;
+      axis.y += this.GetKeyPressed('KeyW') || this.GetKeyPressed('ArrowUp') ? 1.0 : 0.0;
+      axis.Norm();
+    } else {
+      let virtualDir = this.GetVirtualJoystick('leftJoystick');
+      //Log(virtualDir.mod);
+      let joystickDown = this.GetVirtualButtonPressed('leftJoystick')
+      axis = joystickDown ? Vec2.Norm(virtualDir) : new Vec2();
+    }
+    return axis;
   }
 
   AddListeners(){
@@ -50,8 +68,6 @@ class Input {
           that.mouseLeftDown = true;
           that.mouseLeft = true;
           that.mouseLeftUp = false;
-          that.mouseLeftDownFirstFrame = true;
-          that.mouseLeftUpFirstFrame = false;
         }
       };
 
@@ -60,18 +76,13 @@ class Input {
           that.mouseLeftDown = false;
           that.mouseLeft = false;
           that.mouseLeftUp = true;
-          that.mouseLeftDownFirstFrame = false;
-          that.mouseLeftUpFirstFrame = true;
         }
       };
 
       canvas.onmousemove = function(e) {
         that.mousePosition.Set(e.offsetX, e.offsetY);
         that.mouseMovement.Set(e.movementX, e.movementY);
-        that.mouseWorldPosition.Set(
-          (that.mousePosition.x - canvas.width / 2.0) / tileSize + manager.scene.camera.transform.position.x,
-          (that.mousePosition.y - canvas.height / 2.0) / -tileSize + manager.scene.camera.transform.position.y
-        );
+        that.mouseWorldPosition = that.CanvasToWorld(that.ScreenToCanvas(that.mousePosition));
         that.mouseGridPosition.Set(
           Math.round(that.mouseWorldPosition.x),
           Math.round(that.mouseWorldPosition.y)
@@ -82,10 +93,8 @@ class Input {
         for (var [key, value] of that.keys) {
           if (e.code == key && !value.pressed) {
             value.down = true;
-            value.firstFrameDown = true;
             value.pressed = true;
             value.up = false;
-            value.firstFrameUp = false;
           }
         }
       });
@@ -93,10 +102,8 @@ class Input {
         for (var [key, value] of that.keys) {
           if (e.code == key) {
             value.down = false;
-            value.firstFrameUp = true;
             value.pressed = false;
             value.up = true;
-            value.firstFrameDown = false;
           }
         }
       });
@@ -161,7 +168,7 @@ class Input {
   Update() {
     if(this.isDesktop){
       //MOUSE
-      if (this.mouseLeftDown && this.mouseLeftDownFirstFrame) {
+      /*if (this.mouseLeftDown && this.mouseLeftDownFirstFrame) {
         this.mouseLeftDownFirstFrame = false;
       } else if (this.mouseLeftDown) {
         this.mouseLeftDown = false;
@@ -171,13 +178,13 @@ class Input {
         this.mouseLeftUpFirstFrame = false;
       } else if (this.mouseLeftUp) {
         this.mouseLeftUp = false;
-      }
+      }*/
 
       let lerp = manager.delta / this.mouseGravity;
       this.mouseMovement.Scale(lerp);
 
       //KEYS
-      for (var [key, value] of this.keys) {
+      /*for (var [key, value] of this.keys) {
         if (value.down && value.firstFrameDown) {
           value.firstFrameDown = false;
         } else if (value.down) {
@@ -189,7 +196,7 @@ class Input {
         } else if (value.up) {
           value.up = false;
         }
-      }
+      }*/
     } else {
       for(let [key, vi] of this.virtualInputs){
         vi.Update();
@@ -201,6 +208,14 @@ class Input {
     for(let [key, vi] of this.virtualInputs){
       vi.LateUpdate();
     }
+
+    for(let [key, value] of this.keys){
+      value.up = false;
+      value.down = false;
+    }
+
+    this.mouseLeftDown = false;
+    this.mouseLeftUp = false;
   }
 
   AddKey(key) {
@@ -213,7 +228,14 @@ class Input {
     return vInput;
   }
 
+  CheckHasKey(key){
+    if(!this.keys.has(key)){
+      this.AddKey(key);
+    }
+  }
+
   GetKeyDown(key) {
+    this.CheckHasKey(key);
     let val = this.keys.get(key);
     if (!val) return false;
     return val.down;
@@ -222,6 +244,7 @@ class Input {
     return this.GetKeyDown(key) ? 1.0 : 0.0;
   }
   GetKeyUp(key) {
+    this.CheckHasKey(key);
     let val = this.keys.get(key);
     if (!val) return false;
     return val.up;
@@ -230,6 +253,7 @@ class Input {
     return this.GetKeyUp(key) ? 1.0 : 0.0;
   }
   GetKeyPressed(key) {
+    this.CheckHasKey(key);
     let val = this.keys.get(key);
     if (!val) return false;
     return val.pressed;

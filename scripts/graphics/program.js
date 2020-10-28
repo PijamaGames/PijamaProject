@@ -128,7 +128,11 @@ class Program{
     this.Use();
     let texUnitOffset = this.LoadUniforms();
     for(var renderer of this.renderers){
-      if(renderer.active || this.isPostProcess){
+      let aux = true;
+      if(renderer.gameobj){
+        aux = renderer.gameobj.scene == manager.scene;
+      }
+      if((renderer.active && aux) || this.isPostProcess){
         this.LoadObjUniforms(renderer, texUnitOffset);
         manager.graphics.Draw();
       }
@@ -159,7 +163,7 @@ class Program{
     };
     this.LoadUniforms();
     for(let renderer of notTexts){
-      if(renderer.active || this.isPostProcess){
+      if((renderer.active && renderer.gameobj.scene == manager.scene) || this.isPostProcess){
         this.LoadObjUniforms(renderer, texUnitOffset);
         manager.graphics.Draw();
       }
@@ -172,7 +176,7 @@ class Program{
     };
     this.LoadUniforms();
     for(var renderer of this.renderers){
-      if(renderer.isText && (renderer.active || this.isPostProcess)){
+      if(renderer.isText && ((renderer.active && renderer.gameobj.scene == manager.scene) || this.isPostProcess)){
         this.LoadObjUniforms(renderer, texUnitOffset);
         manager.graphics.Draw();
       }

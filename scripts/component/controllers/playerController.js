@@ -12,16 +12,14 @@ class PlayerController extends Component {
   }
 
   Update(){
-    let leftAxis = this.GetLeftAxis();
+    let leftAxis = input.GetLeftAxis();
     this.rawLeftAxis.Set(leftAxis.x, leftAxis.y);
     let axisDir = Vec2.Sub(leftAxis, this.leftAxis);
     this.leftAxis.Add(axisDir.Scale(this.lerpLeftAxis*manager.delta));
-
-
     this.playerFSM.Update();
   }
 
-  GetLeftAxis(){
+  /*GetLeftAxis(){
     let axis;
 
     if(input.isDesktop){
@@ -39,7 +37,7 @@ class PlayerController extends Component {
       axis = joystickDown ? Vec2.Norm(virtualDir) : new Vec2();
     }
     return axis;
-  }
+  }*/
 
   PlayerMove() {
     let axis = this.leftAxis.Copy();
