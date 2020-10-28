@@ -8,8 +8,9 @@ class Manager {
     this.sleepingScenes = new Map();
     this.delta = 0.0;
     this.ms = null;
+    this.musicVolume=1.0;
+    this.language=0;
     finder = new Finder();
-
     //mapPlacer = new MapPlacer();
     physics = new Physics();
   }

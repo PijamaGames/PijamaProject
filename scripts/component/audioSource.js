@@ -1,11 +1,16 @@
 class AudioSource extends Component{
-  constructor(names=[]){
+  constructor(names=[], soundOnAwake=null){
     super();
     this.sounds= new Map();
     for (name of names){
       var soundurl=new Howl({ src:[resources.sounds.get(name)]});
       this.sounds.set(name, soundurl);
     }
+    if(soundOnAwake!=null)
+      this.Play(soundOnAwake);
+  }
+  Update(){
+    this.ChangeVolAll(manager.musicVolume);
   }
 
   SetGameobj(gameobj){
