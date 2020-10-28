@@ -107,7 +107,13 @@ class Scene{
       i+=1;
     }
     this.bytecode = lines.join('\n');
+    Log("FOUND?: " +found);
     return found;
+  }
+
+  AddObjToBytecode(obj){
+    let str = obj.bytecode;
+    this.bytecode+=("\n"+str);
   }
 
   CleanByteCode(){

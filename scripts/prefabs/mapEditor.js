@@ -3,6 +3,8 @@ class MapEditor {
   constructor() {
     this.cameraSpeed = 300.0;
 
+    this.bytecodeText = document.getElementById('bytecodeText');
+
     this.selected = null;
     this.lastTint = new Float32Array([1.0, 1.0, 1.0, 1.0]);
     this.overlapTint = new Float32Array([0.7, 0.7, 1.0, 1.0]);
@@ -10,33 +12,54 @@ class MapEditor {
     this.lastScale;
     this.scaleFactor = 2.5;
     this.goToGalleryObj = null;
+    this.copyBytecodeObj = null;
     this.currentScene;
-    this.hoverGallery = false;
+    this.hoverCount = 0;
 
     var that = this;
     var selectNode = new Node("select").SetStartFunc(()=>{
-      this.currentScene = manager.scene.name;
-      if(this.goToGalleryObj != null){
-        this.goToGalleryObj.SetScene(manager.scene);
+
+
+      that.currentScene = manager.scene.name;
+      that.bytecodeText.value = manager.scene.bytecode;
+      //Log("BYTECODE: "+manager.scene.bytecode);
+
+      if(that.goToGalleryObj != null){
+        that.goToGalleryObj.SetScene(manager.scene);
       }else{
-        this.goToGalleryObj = prefabFactory.CreateObj("GoToGallery", new Vec2(-0.2,0.1));
+        that.goToGalleryObj = prefabFactory.CreateObj("GoToGallery", new Vec2(-0.2,0.1));
+      }
+      if(that.copyBytecodeObj != null){
+        that.copyBytecodeObj.SetScene(manager.scene);
+      } else {
+        that.copyBytecodeObj = prefabFactory.CreateObj("CopyBytecode", new Vec2(0.25,0.1));
       }
     }).SetUpdateFunc(() => {
       that.CheckOverlappedObjs();
     }).SetExitFunc(()=>{
-      this.goToGalleryObj.Destroy();
-      this.goToGalleryObj = null;
+      if(that.goToGalleryObj != null){
+        that.goToGalleryObj.Destroy();
+        that.goToGalleryObj = null;
+      }
+      if(that.copyBytecodeObj != null){
+        that.copyBytecodeObj.Destroy();
+        that.copyBytecodeObj = null;
+      }
+
 
       if(that.selected != null)
         that.selected.renderer.tint = that.lastTint;
     }).SetEdges([
-      new Edge("put").AddCondition(()=>input.mouseLeftDown && that.selected != null && !that.hoverGallery),
-      new Edge("copy").AddCondition(()=>that.selected != null && input.GetKeyDown("KeyC") && !that.hoverGallery),
+      new Edge("put").AddCondition(()=>input.mouseLeftDown && that.selected != null && !that.hoverCount > 0).SetFunc(()=>{
+        manager.scene.RemoveObjFromBytecode(that.selected);
+        Log("BYTECODE: "+manager.scene.bytecode);
+      }),
+      new Edge("copy").AddCondition(()=>that.selected != null && input.GetKeyDown("KeyC") && !that.hoverCount > 0),
       new Edge("gallery").AddCondition(()=>manager.scene.name == "gallery"),
     ]);
 
     var galleryNode = new Node("gallery").SetStartFunc(()=>{
-      this.hoverGallery = false;
+      that.hoverCount = 0;
       that.selected = null;
     }).SetUpdateFunc(()=>{
       that.CheckOverlappedObjs();
@@ -51,7 +74,11 @@ class MapEditor {
       //that.selected.transform.SetWorldCenter(Vec2.Sub(input.mouseGridPosition, Vec2.Scale(that.selected.transform.anchor, 1.0)));
       that.selected.transform.SetWorldPosition(Vec2.Add(input.mouseGridPosition, Vec2.Scale(that.selected.transform.anchor, 0.5)));
     }).SetEdges([
-      new Edge("select").AddCondition(()=>input.mouseLeftDown),
+      new Edge("select").AddCondition(()=>input.mouseLeftDown).SetFunc(()=>{
+        manager.scene.AddObjToBytecode(that.selected);
+        that.bytecodeText.value = manager.scene.bytecode;
+        Log("BYTECODE: "+manager.scene.bytecode);
+      }),
       new Edge("scale").AddCondition(()=>input.GetKeyDown("Space") && !that.selected.renderer.vertical),
     ]);
 
@@ -77,7 +104,8 @@ class MapEditor {
     ]);
 
     this.fsm = new FSM([selectNode, putNode, scaleNode, copyNode, galleryNode]);
-    this.SetActive(false);
+    this.fsm.active = false;
+    //this.SetActive(false);
     //this.SetActive(true); //The mapEditor is activated when a scene is loaded in Manager.LoadScene
   }
 
@@ -94,6 +122,13 @@ class MapEditor {
 
   SetActive(active){
     this.fsm.active = active;
+
+    let renderers = finder.FindComponents("renderer");
+    for(let r of renderers){
+      if(r.isUI && r.gameobj != this.goToGalleryObj && r != this.copyBytecodeObj && !r.isText){
+        r.gameobj.SetActive(!active);
+      }
+    }
 
     if(active){
       this.fsm.Start("select");
@@ -140,7 +175,6 @@ class MapEditor {
     for (let obj of objs) {
       if (obj.renderer) {
         if (obj.renderer.isUI) {
-          Log("next");
           continue;
         } else {
           dist = obj.transform.Distance(input.mouseWorldPosition);
