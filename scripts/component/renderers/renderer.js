@@ -25,6 +25,7 @@ class Renderer extends Component{
   }
 
   UpdateButtonInput(){
+    if(!this.active)return;
     if(this.isButton && this.pressed){
       if(this.pressedFunc != null)
         this.pressedFunc(this);
@@ -43,6 +44,7 @@ class Renderer extends Component{
   }
 
   CheckMouse(){
+    if(!this.active)return;
     if(!this.hover){
       if(this.CheckInputInside(input.mousePosition)){
         this.hover = true;
@@ -142,6 +144,7 @@ class Renderer extends Component{
   }
 
   AddTouch(touch){
+    if(!this.active)return;
     if(!this.CheckInputInside(new Vec2(touch.clientX, touch.clientY))){
       return;
     }
@@ -158,6 +161,7 @@ class Renderer extends Component{
   }
 
   RemoveTouch(touch, outOfBoundaries = false){
+    if(!this.active)return;
     if(this.touches.has(touch.identifier)){
       this.touches.delete(touch.identifier);
       this.touchesCount--;

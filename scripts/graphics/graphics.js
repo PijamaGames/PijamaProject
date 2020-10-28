@@ -476,11 +476,9 @@ class Graphics {
 
     //MASK PROGRAMS
     let maskProgram = new Program('mask', 'vs_color', 'fs_mask');
-    maskProgram.SetConstUniforms([
-      new UniformTex('colorTex', () => resources.textures.get('tileMap')),
-      new Uniform2f('tileMapResDIVtileSize', () => new Vec2(tileMap.width / tileSize, tileMap.height / tileSize))
-    ]);
     maskProgram.SetUniforms([
+      new UniformTex('colorTex', () => resources.textures.get('tileMap')),
+      new Uniform2f('tileMapResDIVtileSize', () => new Vec2(tileMap.width / tileSize, tileMap.height / tileSize)),
       new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
       new Uniform2f('cam', () => manager.scene.camera.transform.GetWorldPosPerfect())
     ]);
@@ -520,11 +518,9 @@ class Graphics {
 
     //TILE MAP PROGRAM
     let colorProgram = new Program('color', 'vs_color', 'fs_color');
-    colorProgram.SetConstUniforms([
-      new UniformTex('colorTex', () => resources.textures.get('tileMap')),
-      new Uniform2f('tileMapResDIVtileSize', () => new Vec2(tileMap.width / tileSize, tileMap.height / tileSize))
-    ]);
     colorProgram.SetUniforms([
+      new UniformTex('colorTex', () => resources.textures.get('tileMap')),
+      new Uniform2f('tileMapResDIVtileSize', () => new Vec2(tileMap.width / tileSize, tileMap.height / tileSize)),
       new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
       new Uniform2f('cam', () => manager.scene.camera.transform.GetWorldPosPerfect())
     ]);
@@ -560,12 +556,10 @@ class Graphics {
 
     //TILE MAP DEPTH PROGRAM
     let depthProgram = new Program('depth', 'vs_depth', 'fs_depth');
-    depthProgram.SetConstUniforms([
-      new UniformTex('colorTex', () => resources.textures.get('tileMap')),
-      new Uniform2f('tileMapResDIVtileSize', () => new Vec2(tileMap.width / tileSize, tileMap.height / tileSize))
-    ]);
     //let camTransform = manager.scene.camera.transform;
     depthProgram.SetUniforms([
+      new UniformTex('colorTex', () => resources.textures.get('tileMap')),
+      new Uniform2f('tileMapResDIVtileSize', () => new Vec2(tileMap.width / tileSize, tileMap.height / tileSize)),
       new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
       new Uniform2f('cam', () => manager.scene.camera.transform.GetWorldPosPerfect())
     ]);
@@ -600,12 +594,10 @@ class Graphics {
 
     //TILE MAP SUN DEPTH PROGRAM
     let sunDepthProgram = new Program('sunDepth', 'vs_sunDepth', 'fs_depth');
-    sunDepthProgram.SetConstUniforms([
-      new UniformTex('colorTex', () => resources.textures.get('tileMap')),
-      new Uniform2f('tileMapResDIVtileSize', () => new Vec2(tileMap.width / tileSize, tileMap.height / tileSize))
-    ]);
     //let camTransform = manager.scene.camera.transform;
     sunDepthProgram.SetUniforms([
+      new UniformTex('colorTex', () => resources.textures.get('tileMap')),
+      new Uniform2f('tileMapResDIVtileSize', () => new Vec2(tileMap.width / tileSize, tileMap.height / tileSize)),
       new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
       new Uniform2f('cam', () => manager.scene.camera.transform.GetWorldPosPerfect()),
       new Uniform1f('shadowLength', () => lighting.shadowLength)
@@ -789,10 +781,8 @@ class Graphics {
 
     //LIMIT COLOR PROGRAM
     let limitColorProgram = new Program('limitColor', 'vs_common', 'fs_limitColor', true, true);
-    limitColorProgram.SetConstUniforms([
-      new Uniform1f('colorsPerChannel', () => manager.graphics.colorsPerChannel),
-    ]);
     limitColorProgram.SetUniforms([
+      new Uniform1f('colorsPerChannel', () => manager.graphics.colorsPerChannel),
       new UniformTex('colorTex', () => manager.graphics.lastOutput.texture),
       new UniformTex('lastColorTex', ()=>manager.graphics.finalColorFBO.texture),
       new Uniform1f('motionBlur', ()=>lighting.motionBlur),
@@ -839,19 +829,6 @@ class Graphics {
       new Uniform4f('tint', (obj)=>obj.tint),
       new UniformTex('colorTex', (obj)=>obj.texture),
     ]);
-
-
-    /*
-
-
-
-    let applyLightProgram = new Program('applyLight', 'vs_common', 'fs_lightApply', true, true);
-    applyLightProgram.SetUniforms([
-      new UniformTex('colorTex', applyLightProgram, ()=>this.fbos.get('color').texture),
-      new UniformTex('lightTex', applyLightProgram, ()=>this.fbos.get('light').texture),
-      new Uniform4f('ambientLight', applyLightProgram, ()=>manager.scene.camera.camera.ambientLight),
-      new Uniform1f('shadowStrength', applyLightProgram, ()=>manager.scene.camera.camera.shadowStrength)
-    ]);*/
   }
 
   CreateBuffers() {

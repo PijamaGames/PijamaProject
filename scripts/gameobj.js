@@ -22,7 +22,7 @@ class Gameobj {
   }
 
   get active(){
-    return this.selfActive && this.parentActive;
+    return this.selfActive && this.parentActive && manager.scene == this.scene;
   }
 
   SetScene(scene, removeParent = true){
