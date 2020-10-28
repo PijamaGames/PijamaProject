@@ -18,8 +18,6 @@ class MapEditor {
 
     var that = this;
     var selectNode = new Node("select").SetStartFunc(()=>{
-
-
       that.currentScene = manager.scene.name;
       that.bytecodeText.value = manager.scene.bytecode;
       //Log("BYTECODE: "+manager.scene.bytecode);
@@ -54,6 +52,10 @@ class MapEditor {
         manager.scene.RemoveObjFromBytecode(that.selected);
         Log("BYTECODE: "+manager.scene.bytecode);
       }),
+      new Edge("delete").AddCondition(()=>input.GetKeyDown("KeyX") && that.selected != null).SetFunc(()=>{
+        manager.scene.RemoveObjFromBytecode(that.selected);
+        Log("BYTECODE: "+manager.scene.bytecode);
+      }),
       new Edge("copy").AddCondition(()=>that.selected != null && input.GetKeyDown("KeyC") && !that.hoverCount > 0),
       new Edge("gallery").AddCondition(()=>manager.scene.name == "gallery"),
     ]);
@@ -79,6 +81,7 @@ class MapEditor {
         that.bytecodeText.value = manager.scene.bytecode;
         Log("BYTECODE: "+manager.scene.bytecode);
       }),
+      new Edge("delete").AddCondition(()=>input.GetKeyDown("KeyX")),
       new Edge("scale").AddCondition(()=>input.GetKeyDown("Space") && !that.selected.renderer.vertical),
     ]);
 
@@ -103,7 +106,16 @@ class MapEditor {
       new Edge("put"),
     ]);
 
-    this.fsm = new FSM([selectNode, putNode, scaleNode, copyNode, galleryNode]);
+    var deleteNode = new Node("delete").SetStartFunc(()=>{
+      if(that.selected && that.selected != null){
+        that.selected.Destroy();
+        that.selected = null;
+      }
+    }).SetEdges([
+      new Edge("select"),
+    ]);
+
+    this.fsm = new FSM([selectNode, putNode, scaleNode, copyNode, galleryNode, deleteNode]);
     this.fsm.active = false;
     //this.SetActive(false);
     //this.SetActive(true); //The mapEditor is activated when a scene is loaded in Manager.LoadScene
