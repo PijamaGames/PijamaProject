@@ -27,10 +27,9 @@ class EnemyController extends Component {
     var that = this;
 
     let idleNode = new Node('enemyIdle').SetOnCreate(()=>{
-      that.gameobj.renderer.AddAnimation('enemyIdle', 'enemy_idle', 5);
-      manager.scene.camera.transform.SetWorldPosition(that.gameobj.transform.GetWorldCenter().Copy());
+      //that.gameobj.renderer.AddAnimation('enemyIdle', 'enemy_idle', 5);
     }).SetStartFunc(()=>{
-      that.gameobj.renderer.SetAnimation('enemyIdle');
+      //that.gameobj.renderer.SetAnimation('enemyIdle');
     }).SetEdges([
       new Edge('enemyRun').AddCondition(()=>{
 
@@ -41,10 +40,10 @@ class EnemyController extends Component {
     ]);
 
     let runNode = new Node('enemyRun').SetOnCreate(()=>{
-      that.gameobj.renderer.AddAnimation('enemyRun', 'enemy_run', 14);
+      //that.gameobj.renderer.AddAnimation('enemyRun', 'enemy_run', 14);
 
     }).SetStartFunc(()=>{
-      that.gameobj.renderer.SetAnimation('enemyRun');
+      //that.gameobj.renderer.SetAnimation('enemyRun');
 
     }).SetUpdateFunc(()=>{
       that.EnemyMove();
@@ -59,12 +58,12 @@ class EnemyController extends Component {
     ]);
 
     let attackNode = new Node('enemyAttack').SetOnCreate(()=>{
-      that.gameobj.renderer.AddAnimation('enemyAttack', 'enemy_attack', 14);
+      //that.gameobj.renderer.AddAnimation('enemyAttack', 'enemy_attack', 14);
 
     }).SetStartFunc(()=>{
-      that.gameobj.renderer.SetAnimation('enemyAttack');
+      //that.gameobj.renderer.SetAnimation('enemyAttack');
       that.endAttackAnim=false;
-      that.gameobj.renderer.endAnimEvent.AddListener(that, ()=>that.endAttackAnim=true,true);
+      //that.gameobj.renderer.endAnimEvent.AddListener(that, ()=>that.endAttackAnim=true,true);
 
     }).SetUpdateFunc(()=>{
       //METER LO Q HACE MIENTRAS ATACA
