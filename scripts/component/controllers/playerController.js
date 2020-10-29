@@ -9,6 +9,16 @@ class PlayerController extends Component {
     this.rawLeftAxis = new Vec2();
     this.lerpLeftAxis = 10.0;
     this.endAttackAnim=false;
+    this.life = 45;
+  }
+
+  SetScene(scene){
+    this.gameobj.scene.players.delete(this.gameobj);
+    scene.players.add(this.gameobj);
+  }
+
+  Destroy(){
+    this.gameobj.scene.players.delete(this.gameobj);
   }
 
   Update(){
@@ -19,25 +29,6 @@ class PlayerController extends Component {
     this.playerFSM.Update();
   }
 
-  /*GetLeftAxis(){
-    let axis;
-
-    if(input.isDesktop){
-      axis = new Vec2();
-      axis.x -= input.GetKeyPressed('KeyA') || input.GetKeyPressed('ArrowLeft') ? 1.0 : 0.0;
-      axis.x += input.GetKeyPressed('KeyD') || input.GetKeyPressed('ArrowRight') ? 1.0 : 0.0;
-
-      axis.y -= input.GetKeyPressed('KeyS') || input.GetKeyPressed('ArrowDown') ? 1.0 : 0.0;
-      axis.y += input.GetKeyPressed('KeyW') || input.GetKeyPressed('ArrowUp') ? 1.0 : 0.0;
-      axis.Norm();
-    } else {
-      let virtualDir = input.GetVirtualJoystick('leftJoystick');
-      //Log(virtualDir.mod);
-      let joystickDown = input.GetVirtualButtonPressed('leftJoystick')
-      axis = joystickDown ? Vec2.Norm(virtualDir) : new Vec2();
-    }
-    return axis;
-  }*/
 
   PlayerMove() {
     let axis = this.leftAxis.Copy();
@@ -115,10 +106,19 @@ class PlayerController extends Component {
     this.playerFSM = new FSM([idleNode, runNode/*, this.dash*/, attackNode]).Start('idle');
   }
 
+  TakeDamage(damage){
+    this.life -= damage;
+    this.lifeText.textBox.SetText(this.life + "HP");
+  }
+
   SetGameobj(gameobj){
     this.gameobj = gameobj;
     this.gameobj.playerController = this;
     this.CreateFSM();
+    manager.scene.players.add(this.gameobj);
+
+    this.lifeText = prefabFactory.CreateObj("lifeText", new Vec2(0.15,-0.1));
+    this.TakeDamage(0);
   }
 
 }

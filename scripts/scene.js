@@ -7,6 +7,7 @@ class Scene{
     this.buttons = new Set();
     this.colliderGroups= [];
     this.rigidbodies = new Set();
+    this.players = new Set();
     manager.scenes.set(this.name, this);
     this.camera = /*this.AddGameobj(*/new Gameobj('camera',0, null, this, [
       new Camera(2.5),

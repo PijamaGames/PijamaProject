@@ -15,7 +15,7 @@ function Main(){
   manager.AddScene(new Scene("mainMenu", BC_MainMenu));
   manager.AddScene(new Scene("optionMenu", BC_Options));
   manager.AddScene(new Scene("gallery", BC_Gallery));
-  manager.Start('mainMenu');
+  manager.Start('tileTestScene');
 }
 
 function Log(text){
