@@ -15,17 +15,30 @@ class EnemyController extends Component {
 
     this.detectionRange = 8.0;
     this.attackADRange = 4.0;
-    this.bodyattackADRange = 1.5;
+    this.attackCACRange = 1.5;
     this.target = null;
+
+    this.resetADAttackTime=5;
+    this.resetCACAttackTime=1;
+    this.contTimeAD=0;
+    this.contTimeCAC=0;
+
+    this.attackADDamage=5;
+    this.attackCACDamage=1;
+
+    this.life=15;
   }
 
   Update(){
     this.enemyFSM.Update();
+    this.contTimeAD+=manager.delta;
+    this.contTimeCAC+=manager.delta;
   }
 
   FindClosestPlayer(range){
     let minDist = range;
     let dist;
+    this.target=null;
     let wp = this.gameobj.transform.GetWorldPos();
     for(var player of this.gameobj.scene.players){
       dist = Vec2.Sub(player.transform.GetWorldPos(), wp).mod;
@@ -38,8 +51,7 @@ class EnemyController extends Component {
   }
 
   CheckShortestWay(){
-    let target = this.FindClosestPlayer();
-
+    let target=this.FindClosestPlayer(this.detectionRange);
     if(target == null) this.rawMoveAxis.Set(0,0);
     else{
       this.rawMoveAxis = Vec2.Sub(
@@ -53,7 +65,6 @@ class EnemyController extends Component {
   }
 
   EnemyMove() {
-    //hay q meterle la direccion que toque calculada en shortestWay
     let axis = this.moveAxis.Copy();
 
     this.gameobj.renderer.SetDirection(axis);
@@ -89,22 +100,45 @@ class EnemyController extends Component {
 
     }).SetEdges([
       new Edge('patrol').AddCondition(()=> that.FindClosestPlayer(that.detectionRange) == null),
-      new Edge('attackAD').AddCondition(()=>that.FindClosestPlayer(that.attackRange) != null),
+      new Edge('attackAD').AddCondition(()=>that.FindClosestPlayer(that.attackADRange) != null),
     ]);
 
     let attackADNode = new Node('attackAD').SetOnCreate(()=>{
-      //that.gameobj.renderer.AddAnimation('enemyattackAD', 'enemy_attackAD', 14);
+      that.gameobj.renderer.AddAnimation('enemyattackAD', 'nelu_attack', 14);
 
     }).SetStartFunc(()=>{
-      //that.gameobj.renderer.SetAnimation('enemyattackAD');
-      that.endattackADAnim=false;
-      //that.gameobj.renderer.endAnimEvent.AddListener(that, ()=>that.endattackADAnim=true,true);
+      that.gameobj.renderer.SetAnimation('enemyattackAD');
 
     }).SetUpdateFunc(()=>{
-      //METER LO Q HACE MIENTRAS ATACA
+      let target=that.FindClosestPlayer(that.attackADRange);
+
+      if(target!=null && this.contTimeAD>=this.resetADAttackTime){
+        target.playerController.TakeDamage(that.attackADDamage); // AQUI  REALMENTE VA A TENER QUE LANZAR UN OBJETO EN VEZ DE HACER DAÑO
+        this.contTimeAD=0;
+        }
+
 
     }).SetEdges([
-      new Edge('approachPlayer').AddCondition(()=>that.FindClosestPlayer(that.attackRange) == null),
+      new Edge('approachPlayer').AddCondition(()=>that.FindClosestPlayer(that.attackADRange) == null),
+      new Edge('attackCAC').AddCondition(()=>that.FindClosestPlayer(that.attackCACRange) != null),
+    ]);
+
+    let attackCACNode = new Node('attackCAC').SetOnCreate(()=>{
+      that.gameobj.renderer.AddAnimation('enemyattackCAC', 'nelu_idle', 14);
+
+    }).SetStartFunc(()=>{
+      that.gameobj.renderer.SetAnimation('enemyattackCAC');
+
+    }).SetUpdateFunc(()=>{
+      let target=that.FindClosestPlayer(that.attackADRange);
+
+      if(target!=null && this.contTimeCAC>=this.resetCACAttackTime){
+        target.playerController.TakeDamage(that.attackCACDamage);
+        this.contTimeCAC=0;
+      }
+
+    }).SetEdges([
+      new Edge('approachPlayer').AddCondition(()=>that.FindClosestPlayer(that.attackCACRange) == null),
     ]);
 
     let deadNode = new Node('dead').SetOnCreate(()=>{
@@ -115,7 +149,7 @@ class EnemyController extends Component {
 
     });
 
-    this.enemyFSM = new FSM([patrolNode, approachPlayerNode, attackADADNode, deadNode]).Start('patrol');
+    this.enemyFSM = new FSM([patrolNode, approachPlayerNode, attackADNode, attackCACNode, deadNode]).Start('patrol');
   }
 
   SetGameobj(gameobj){
