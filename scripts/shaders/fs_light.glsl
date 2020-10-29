@@ -77,7 +77,8 @@ vec2 ProcessCasters(vec3 lightPos, vec3 fragmentPos, float vertical){
 
   intensity = intensity *(1.0-vertical) + 1.0*vertical;
 
-  return vec2(intensity, minDiff);
+  const float minIntensity = 0.5;
+  return vec2(intensity*(1.0-minIntensity)+minIntensity, minDiff);
 }
 
 void main()

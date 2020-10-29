@@ -48,8 +48,6 @@ class Lighting{
     this.bloomStrength = 0.5;
 
     this.SetMorning();
-    this.SetNoon();
-    this.SetAfterNoon();
   }
 
   Update(){
@@ -95,7 +93,7 @@ class Lighting{
   SetMorning(){
     this.renderPointLights = false;
     this.sunTemperature = 0.48;
-    this.shadowBlur = 0.5;
+    this.shadowBlur = 0.15;
     this.shadowExtraBlur = 0.003;
     this.shadowStrength = 2.8;
     this.shadowLength = 1.2;
@@ -147,7 +145,7 @@ class Lighting{
   SetNight(){
     this.renderPointLights = true;
     this.sunTemperature = 0.0;
-    this.shadowBlur = 0.4/*0.0*/;
+    this.shadowBlur = 0.08/*0.0*/;
     this.shadowStrength = 1.0;
     this.shadowLength = 0.0;
     this.sunStrength = 0.3;
