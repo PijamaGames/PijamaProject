@@ -53,3 +53,28 @@ prefabFactory.AddPrototype("Light", null, null, true, ()=>{
     new LightSource(8.0),
   ]
 });
+prefabFactory.AddPrototype("apple", new Vec2(1, 1), new Vec2(0.5, 0.5), false, ()=>{
+  return [
+    new ColliderGroup([new CircleCollider(new Vec2(0,0.0), 0.15, true,
+    function(obj){
+      if(obj.playerController){
+        obj.playerController.TakeDamage()
+      }
+      Log("Manzana: holi");
+    },
+    function(obj){
+      if(obj.playerController){
+
+      }
+      Log("Manzana: aqui");
+    },
+    function(obj){
+      if(obj.playerController){
+
+      }
+      Log("Manzana: adios");
+    })]),
+    new SpriteRenderer('nelu_idle', new Vec2(0, 2),new Vec2(2,2), true, 8, [4,0,6,1,5,3,7,2], 14),
+    new Rigidbody(0.8),
+  ]
+});
