@@ -1,6 +1,5 @@
 class PlayerController extends Component {
   constructor() {
-
     super();
     this.type = "playerController";
     this.speed = 2.0;
@@ -12,15 +11,25 @@ class PlayerController extends Component {
     this.life = 45;
     this.combo = false;
     this.numCombo = 1;
-    this.waitComboMaxTime = 0.1;
+    this.waitComboMaxTime = 0.05;
     this.waitComboTime = 0.0;
     this.attackDir = new Vec2();
     this.attackImpulse = 20.0;
+    this.attack1Speed = 16;
+    this.attack2Speed = 16;
+    this.attack3Speed = 17;
     this.dashImpulse = 50.0;
     this.dashMaxTime = 0.1;
     this.dashTime = 0.0;
     this.dashMaxCooldown = 0.4;
     this.dashCooldown = this.dashMaxCooldown;
+
+    this.particlePosition = new Vec2(0,-1);
+    this.particleDisplacement = 0.4;
+
+    this.colibriOrBees = false;
+    this.hasColibri = true;
+    this.hasBees = true;
 
   }
 
@@ -47,9 +56,36 @@ class PlayerController extends Component {
     let axis = this.leftAxis.Copy();
 
     this.gameobj.renderer.SetDirection(axis);
+    this.particles.renderer.SetDirection(axis);
 
     let movement = axis.Scale(this.speed);
     this.gameobj.rigidbody.force.Add(movement);
+  }
+
+  PlayerADAttack(){
+    if(input.GetAttackADDown()){
+      if(!this.colibriOrBees){
+        if(this.hasColibri){
+          this.ThrowColibri();
+        }
+      } else {
+        if(this.hasBees){
+          this.ThrowBees();
+        }
+      }
+    }
+
+  }
+
+  ThrowColibri(){
+    Log("THROW COLIBRI");
+    this.hasColibri = false;
+    this.colibri.SetActive(true);
+    this.colibri.colibriController.SetLocalPosDir(Vec2.Sub(this.gameobj.renderer.dir, new Vec2(0,0.5)), input.GetRightAxis(this.gameobj));
+  }
+
+  ThrowBees(){
+
   }
 
   CreateFSM(){
@@ -62,11 +98,13 @@ class PlayerController extends Component {
       that.gameobj.renderer.SetAnimation('idle');
       manager.scene.camera.camera.target = that.gameobj.transform.GetWorldCenter().Copy();
       that.numCombo = 1;
+    }).SetUpdateFunc(()=>{
+      that.PlayerADAttack();
     }).SetEdges([
       new Edge('run').AddCondition(()=>that.rawLeftAxis.mod > 0.05).SetFunc(()=>{
         that.gameobj.renderer.SetAnimation('run');
       }),
-      new Edge('attack1').AddCondition(()=>input.mouseLeftDown),
+      new Edge('attack1').AddCondition(()=>input.GetAttackCACDown()),
     ]);
 
     let runNode = new Node('run').SetOnCreate(()=>{
@@ -78,69 +116,89 @@ class PlayerController extends Component {
 
     }).SetUpdateFunc(()=>{
       that.PlayerMove();
+      that.PlayerADAttack();
       let camTarget = that.gameobj.transform.GetWorldCenter().Copy().Add(Vec2.Scale(that.leftAxis, that.camOffset));
       manager.scene.camera.camera.target = camTarget;
 
     }).SetEdges([
       new Edge('idle').AddCondition(()=>that.rawLeftAxis.mod < 0.05),
-      new Edge('attack1').AddCondition(()=>input.mouseLeftDown),
-      new Edge('dash').AddCondition(()=>input.GetKeyDown("Space") && that.dashCooldown > that.dashMaxCooldown),
+      new Edge('attack1').AddCondition(()=>input.GetAttackCACDown()),
+      new Edge('dash').AddCondition(()=>input.GetDashDown() && that.dashCooldown > that.dashMaxCooldown),
     ]);
 
     let attack1Node = new Node('attack1').SetOnCreate(()=>{
-      that.gameobj.renderer.AddAnimation('attack1', 'nelu_attack1', 12, false);
-
+      that.gameobj.renderer.AddAnimation('attack1', 'nelu_attack1', that.attack1Speed, false);
+      that.particles.renderer.AddAnimation('attack1', 'nelu_particles1', that.attack1Speed, false);
+      //
+      //that.particles.transform.SetLocalPosition(that.particlePosition);
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('attack1');
+      that.particles.renderer.SetAnimation('attack1');
+      that.particles.SetActive(true);
       that.endAttackAnim=false;
       that.gameobj.renderer.endAnimEvent.AddListener(that, ()=>that.endAttackAnim=true,true);
       that.attackDir = that.gameobj.renderer.dir.Copy();
-      that.gameobj.rigidbody.force.Add(that.attackDir.Scale(that.attackImpulse));
+      that.gameobj.rigidbody.force.Add(Vec2.Scale(that.attackDir, that.attackImpulse));
       that.combo = false;
+
+      let displacement = Vec2.Norm(that.attackDir).Scale(that.particleDisplacement+0.5*Math.abs(that.attackDir.x));
+      that.particles.transform.SetLocalPosition(Vec2.Add(that.particlePosition, displacement));
+
     }).SetUpdateFunc(()=>{
       //METER LO Q HACE MIENTRAS ATACA
-      that.combo = that.combo || input.mouseLeftDown;
+      that.combo = that.combo || input.GetAttackCACDown();
     }).SetExitFunc(()=>{
       that.numCombo = 2;
+      that.particles.SetActive(false);
     }).SetEdges([
       new Edge('waitCombo').AddCondition(()=>that.endAttackAnim),
     ]);
 
     let attack2Node = new Node('attack2').SetOnCreate(()=>{
-      that.gameobj.renderer.AddAnimation('attack2', 'nelu_attack2', 12, false);
+      that.gameobj.renderer.AddAnimation('attack2', 'nelu_attack2', that.attack2Speed, false);
+      that.particles.renderer.AddAnimation('attack2', 'nelu_particles2', that.attack2Speed, false);
 
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('attack2');
+      that.particles.renderer.SetAnimation('attack2');
+      that.particles.SetActive(true);
       that.endAttackAnim=false;
       that.gameobj.renderer.endAnimEvent.AddListener(that, ()=>that.endAttackAnim=true,true);
-      that.gameobj.rigidbody.force.Add(that.attackDir.Scale(0.5));
+      that.gameobj.rigidbody.force.Add(Vec2.Scale(that.attackDir, that.attackImpulse));
       that.combo = false;
     }).SetUpdateFunc(()=>{
       //METER LO Q HACE MIENTRAS ATACA
-      this.combo = this.combo || input.mouseLeftDown;
+      this.combo = this.combo || input.GetAttackCACDown();
     }).SetExitFunc(()=>{
       that.numCombo = 3;
+      that.particles.SetActive(false);
     }).SetEdges([
       new Edge('waitCombo').AddCondition(()=>that.endAttackAnim),
     ]);
 
     let attack3Node = new Node('attack3').SetOnCreate(()=>{
-      that.gameobj.renderer.AddAnimation('attack3', 'nelu_attack3', 12, false);
+      that.gameobj.renderer.AddAnimation('attack3', 'nelu_attack3', that.attack3Speed, false);
+      that.particles.renderer.AddAnimation('attack3', 'nelu_particles3', that.attack3Speed, false);
 
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('attack3');
+      that.particles.renderer.SetAnimation('attack3');
+      that.particles.SetActive(true);
+
       that.endAttackAnim=false;
       that.gameobj.renderer.endAnimEvent.AddListener(that, ()=>that.endAttackAnim=true,true);
-      that.gameobj.rigidbody.force.Add(that.attackDir.Scale(0.5));
+      that.gameobj.rigidbody.force.Add(Vec2.Scale(that.attackDir, this.attackImpulse));
       that.combo = false;
     }).SetExitFunc(()=>{
       that.combo = false;
+      that.particles.SetActive(false);
     }).SetEdges([
       new Edge('waitCombo').AddCondition(()=>that.endAttackAnim),
     ]);
 
     let waitComboNode = new Node("waitCombo").SetStartFunc(()=>{
       that.waitComboTime = 0;
+      lighting.motionBlur = 0.0;
     }).SetUpdateFunc(()=>{
       that.waitComboTime += manager.delta;
       //that.combo = that.combo || input.mouseLeftDown;
@@ -180,6 +238,16 @@ class PlayerController extends Component {
   SetGameobj(gameobj){
     this.gameobj = gameobj;
     this.gameobj.playerController = this;
+
+    this.particles = prefabFactory.CreateObj("neluParticles", new Vec2(/*1.5*/0.0,-1), 1);
+    this.particles.SetParent(this.gameobj);
+    //this.particles.transform.height = 1.0;
+    this.particles.SetActive(false);
+
+    this.colibri = prefabFactory.CreateObj("Colibri", new Vec2(), 1);
+    this.colibri.colibriController.player = this.gameobj;
+    this.colibri.SetActive(false);
+
     this.CreateFSM();
     manager.scene.players.add(this.gameobj);
 

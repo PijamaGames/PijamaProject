@@ -2,7 +2,7 @@ var BC_tileTestScene = `
 -uiImageTest -0.1 0.1 0
 -uiTextBox 0.0 0.2 0
 Nelu 0 0 0
--MonkeyEnemy -6 6 0
+MonkeyEnemy -6 6 0
 Box -1 -4 0
 Tree -8 6 0
 Tree -2 6 0

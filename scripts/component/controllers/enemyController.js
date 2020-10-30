@@ -20,14 +20,14 @@ class EnemyController extends Component {
 
     this.resetADAttackTime=5;
     this.resetCACAttackTime=1;
-    this.contTimeAD=0;
-    this.contTimeCAC=0;
+    this.contTimeAD=5;
+    this.contTimeCAC=1;
+    this.endAttackCACAnim=false;
+    this.endAttackADAnim=false;
 
     this.attackADDamage=5;
-    this.attackCACDamage=10;
+    this.attackCACDamage=1;
     this.maxMissiles=5;
-
-    this.appleImpulse=10;
 
     this.life=15;
   }
@@ -41,16 +41,17 @@ class EnemyController extends Component {
   FindClosestPlayer(range){
     let minDist = range;
     let dist;
-    this.target=null;
+    let target=null;
     let wp = this.gameobj.transform.GetWorldPos();
     for(var player of this.gameobj.scene.players){
       dist = Vec2.Sub(player.transform.GetWorldPos(), wp).mod;
       if(dist < minDist){
-        this.target = player;
+        target = player;
+        this.target=target;
         minDist = dist;
       }
     }
-    return this.target;
+    return target;
   }
 
   CheckShortestWay(){
@@ -76,12 +77,6 @@ class EnemyController extends Component {
     this.gameobj.rigidbody.force.Add(movement);
   }
 
-  MissileMove(missile,target) {
-    let axis = Vec2.Sub(target.transform.GetWorldPos(), missile.transform.GetWorldPos());
-    let movement = axis.Scale(this.appleImpulse);
-    missile.rigidbody.force.Add(movement);
-  }
-
   CreateFSM(){
     var that = this;
 
@@ -92,6 +87,18 @@ class EnemyController extends Component {
     }).SetEdges([
       new Edge('approachPlayer').AddCondition(()=>that.FindClosestPlayer(that.detectionRange)!=null && this.target.playerController.life>0),
       new Edge('dead').AddCondition(()=> that.life<=0),
+    ]);
+
+    let rechargeNode = new Node('recharge').SetOnCreate(()=>{
+      that.gameobj.renderer.AddAnimation('enemyIdle', 'nelu_idle', 5);
+    }).SetStartFunc(()=>{
+      that.gameobj.renderer.SetAnimation('enemyIdle');
+    }).SetEdges([
+      new Edge('attackAD').AddCondition(()=>that.contTimeAD>=that.resetADAttackTime && that.FindClosestPlayer(that.attackADRange) != null && that.FindClosestPlayer(that.attackCACRange) == null),
+      new Edge('attackCAC').AddCondition(()=>that.contTimeCAC>=that.resetCACAttackTime && that.FindClosestPlayer(that.attackCACRange) != null),
+      new Edge('approachPlayer').AddCondition(()=>that.FindClosestPlayer(that.attackADRange) == null && that.FindClosestPlayer(that.detectionRange) != null && that.FindClosestPlayer(that.attackCACRange) == null),
+      new Edge('patrol').AddCondition(()=>that.target.playerController.life<0),
+
     ]);
 
     let approachPlayerNode = new Node('approachPlayer').SetOnCreate(()=>{
@@ -112,24 +119,28 @@ class EnemyController extends Component {
     ]);
 
     let attackADNode = new Node('attackAD').SetOnCreate(()=>{
-      that.gameobj.renderer.AddAnimation('enemyattackAD', 'nelu_attack', 14);
+      that.gameobj.renderer.AddAnimation('enemyattackAD', 'nelu_attack1', 14);
 
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('enemyattackAD');
+      that.endAttackADAnim=false;
+      that.gameobj.renderer.endAnimEvent.AddListener(that, ()=>that.endAttackADAnim=true,true);
 
     }).SetUpdateFunc(()=>{
       let target=that.FindClosestPlayer(that.attackADRange);
 
       if(target!=null && this.contTimeAD>=this.resetADAttackTime && this.pool.length>0){
         let obj=this.PoolPop();
-        this.MissileMove(obj,target);
+        obj.appleController.MissileMove(obj,target);
+        obj.appleController.startCoolDown=true;
         this.contTimeAD=0;
       }
 
     }).SetEdges([
-      new Edge('approachPlayer').AddCondition(()=>that.FindClosestPlayer(that.attackADRange) == null || that.target.playerController.life<0),
-      new Edge('attackCAC').AddCondition(()=>that.FindClosestPlayer(that.attackCACRange) != null && this.target.playerController.life>0),
-      new Edge('dead').AddCondition(()=> that.life<=0),
+      new Edge('approachPlayer').AddCondition(()=>that.FindClosestPlayer((that.attackADRange) == null || that.target.playerController.life<0) && that.endAttackADAnim),
+      new Edge('attackCAC').AddCondition(()=>that.FindClosestPlayer(that.attackCACRange) != null && this.target.playerController.life>0 && that.endAttackADAnim),
+      new Edge('dead').AddCondition(()=> that.life<=0 && that.endAttackADAnim),
+      new Edge('recharge').AddCondition(()=> that.contTimeAD<that.resetADAttackTime && that.endAttackADAnim),
     ]);
 
     let attackCACNode = new Node('attackCAC').SetOnCreate(()=>{
@@ -137,6 +148,8 @@ class EnemyController extends Component {
 
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('enemyattackCAC');
+      that.endAttackCACAnim=false;
+      that.gameobj.renderer.endAnimEvent.AddListener(that, ()=>that.endAttackCACAnim=true,true);
 
     }).SetUpdateFunc(()=>{
       let target=that.FindClosestPlayer(that.attackADRange);
@@ -147,8 +160,10 @@ class EnemyController extends Component {
       }
 
     }).SetEdges([
-      new Edge('approachPlayer').AddCondition(()=>that.FindClosestPlayer(that.attackCACRange) == null || that.target.playerController.life<0),
-      new Edge('dead').AddCondition(()=> that.life<=0),
+      new Edge('approachPlayer').AddCondition(()=>that.FindClosestPlayer((that.attackCACRange) == null || that.target.playerController.life<0) && that.endAttackCACAnim),
+      new Edge('dead').AddCondition(()=> that.life<=0 && that.endAttackCACAnim),
+      new Edge('recharge').AddCondition(()=> that.contTimeCAC<that.resetCACAttackTime && that.endAttackCACAnim),
+
     ]);
 
     let deadNode = new Node('dead').SetOnCreate(()=>{
@@ -156,10 +171,9 @@ class EnemyController extends Component {
 
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('enemyDead');
-
     });
 
-    this.enemyFSM = new FSM([patrolNode, approachPlayerNode, attackADNode, attackCACNode, deadNode]).Start('patrol');
+    this.enemyFSM = new FSM([patrolNode, approachPlayerNode, attackADNode, attackCACNode, rechargeNode, deadNode]).Start('patrol');
   }
 
   CreatePool(){
@@ -168,6 +182,7 @@ class EnemyController extends Component {
     let obj;
     for (var i = 0; i < size; i++) {
       obj = prefabFactory.CreateObj('apple');
+      obj.enemyController=this;
       obj.SetActive(false);
       this.pool.push(obj);
     }
@@ -177,7 +192,6 @@ class EnemyController extends Component {
     let obj = this.pool.pop();
     obj.transform.SetWorldPosition(this.gameobj.transform.GetWorldPos().Copy());
     obj.SetActive(true);
-
     return obj;
   }
 
@@ -194,7 +208,5 @@ class EnemyController extends Component {
     this.CreateFSM();
     this.gameobj.renderer.SetTint(1.0,0.5,0.5);
     this.CreatePool();
-
   }
-
 }

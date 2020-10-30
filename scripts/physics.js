@@ -1,7 +1,7 @@
 var physics;
 class Physics {
   constructor() {
-    this.steps = 2;
+    this.steps = 1;
     this.stepPCT = 1.0 / this.steps;
     this.repulsion = 45.0/this.steps;
   }
