@@ -59,6 +59,37 @@ class Input {
     return axis;
   }
 
+  GetRightAxis(player){
+    let axis;
+
+    if(this.isDesktop){
+      axis = Vec2.Sub(input.mouseWorldPosition, player.transform.GetWorldPos()).Norm();
+    } else {
+      axis = new Vec2(1,0);
+      /*let virtualDir = this.GetVirtualJoystick('leftJoystick');
+      //Log(virtualDir.mod);
+      let joystickDown = this.GetVirtualButtonPressed('leftJoystick')
+      axis = joystickDown ? Vec2.Norm(virtualDir) : new Vec2();*/
+    }
+    return axis;
+  }
+
+  GetDashDown(){
+    if(this.isDesktop){
+      return this.GetKeyDown("ShiftLeft");
+    } else {
+      return false;
+    }
+  }
+
+  GetAttackCACDown(){
+    if(this.isDesktop){
+      return this.GetKeyDown("Space");
+    } else {
+      return false;
+    }
+  }
+
   AddListeners(){
     var that = this;
     if(this.isDesktop){

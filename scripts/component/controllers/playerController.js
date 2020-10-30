@@ -1,6 +1,5 @@
 class PlayerController extends Component {
   constructor() {
-
     super();
     this.type = "playerController";
     this.speed = 2.0;
@@ -59,6 +58,10 @@ class PlayerController extends Component {
     this.gameobj.rigidbody.force.Add(movement);
   }
 
+  PlayerADAttack(){
+    
+  }
+
   CreateFSM(){
     var that = this;
 
@@ -73,7 +76,7 @@ class PlayerController extends Component {
       new Edge('run').AddCondition(()=>that.rawLeftAxis.mod > 0.05).SetFunc(()=>{
         that.gameobj.renderer.SetAnimation('run');
       }),
-      new Edge('attack1').AddCondition(()=>input.mouseLeftDown),
+      new Edge('attack1').AddCondition(()=>input.GetAttackCACDown()),
     ]);
 
     let runNode = new Node('run').SetOnCreate(()=>{
@@ -90,8 +93,8 @@ class PlayerController extends Component {
 
     }).SetEdges([
       new Edge('idle').AddCondition(()=>that.rawLeftAxis.mod < 0.05),
-      new Edge('attack1').AddCondition(()=>input.mouseLeftDown),
-      new Edge('dash').AddCondition(()=>input.GetKeyDown("Space") && that.dashCooldown > that.dashMaxCooldown),
+      new Edge('attack1').AddCondition(()=>input.GetAttackCACDown()),
+      new Edge('dash').AddCondition(()=>input.GetDashDown() && that.dashCooldown > that.dashMaxCooldown),
     ]);
 
     let attack1Node = new Node('attack1').SetOnCreate(()=>{
@@ -114,7 +117,7 @@ class PlayerController extends Component {
 
     }).SetUpdateFunc(()=>{
       //METER LO Q HACE MIENTRAS ATACA
-      that.combo = that.combo || input.mouseLeftDown;
+      that.combo = that.combo || input.GetAttackCACDown();
     }).SetExitFunc(()=>{
       that.numCombo = 2;
       that.particles.SetActive(false);
@@ -136,7 +139,7 @@ class PlayerController extends Component {
       that.combo = false;
     }).SetUpdateFunc(()=>{
       //METER LO Q HACE MIENTRAS ATACA
-      this.combo = this.combo || input.mouseLeftDown;
+      this.combo = this.combo || input.GetAttackCACDown();
     }).SetExitFunc(()=>{
       that.numCombo = 3;
       that.particles.SetActive(false);
@@ -207,10 +210,14 @@ class PlayerController extends Component {
     this.gameobj = gameobj;
     this.gameobj.playerController = this;
 
-    this.particles = prefabFactory.CreateObj("neluParticles", new Vec2(/*1.5*/0.0,-1));
+    this.particles = prefabFactory.CreateObj("neluParticles", new Vec2(/*1.5*/0.0,-1), 1);
     this.particles.SetParent(this.gameobj);
-    this.particles.transform.height = 1.0;
+    //this.particles.transform.height = 1.0;
     this.particles.SetActive(false);
+
+    this.colibri = prefabFactory.CreateObj("Colibri", new Vec2(), 1);
+    this.colibri.colibriController.player = this.gameobj;
+    this.colibri.SetActive(false);
 
     this.CreateFSM();
     manager.scene.players.add(this.gameobj);
