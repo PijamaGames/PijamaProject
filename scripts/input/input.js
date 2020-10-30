@@ -98,6 +98,14 @@ class Input {
     }
   }
 
+  GetChangeSkillDown(){
+    if(this.isDesktop){
+      return this.GetKeyDown("KeyQ");
+    } else {
+      return false;
+    }
+  }
+
   AddListeners(){
     var that = this;
     if(this.isDesktop){

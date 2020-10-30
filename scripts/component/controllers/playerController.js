@@ -31,6 +31,12 @@ class PlayerController extends Component {
     this.hasColibri = true;
     this.hasBees = true;
 
+    this.beesPool = [];
+    this.maxBees = 20;
+    this.numBees = this.maxBees;
+    this.beeBirthMaxTime = 0.5;
+    this.beeBirthTime = 0.0;
+    this.beesTarget = null;
   }
 
   SetScene(scene){
@@ -49,8 +55,37 @@ class PlayerController extends Component {
     this.leftAxis.Add(axisDir.Scale(this.lerpLeftAxis*manager.delta));
     this.playerFSM.Update();
     this.dashCooldown+=manager.delta;
+
+    if(input.GetChangeSkillDown()){
+      this.ChangeSkill();
+    }
+    this.ReloadBees();
   }
 
+  ChangeSkill(){
+    this.colibriOrBees = !this.colibriOrBees;
+    Log("Skill: " + (this.colibriOrBees ? "bees" : "colibri"));
+  }
+
+  ReloadBees(){
+    if(this.numBees == this.maxBees) return;
+    this.beeBirthTime += manager.delta;
+    if(this.beeBirthTime > this.beeBirthMaxTime){
+      let lastNumBees = this.numBees;
+      let poolSize = this.beesPool.length;
+      this.numBees = Math.min(this.numBees+1, poolSize);
+      if(lastNumBees != this.numBees){
+        this.beeBirthTime = 0.0;
+        Log("Num bees: " + this.numBees);
+      }
+    }
+  }
+
+  ManageBeesTarget(){
+    if(!this.beesTarget || this.beesTarget == null || this.beesTarget.scene != this.gameobj.scene){
+      this.beesTarget = this.GetBeesTarget();
+    }
+  }
 
   PlayerMove() {
     let axis = this.leftAxis.Copy();
@@ -85,7 +120,37 @@ class PlayerController extends Component {
   }
 
   ThrowBees(){
+    let target = this.GetBeesTarget();
+    if(target != null){
+      Log("THROW " + this.numBees +" BEES");
+      for(var i = 0; i < this.numBees; i++){
+        let bee = this.BeePoolPop();
+        bee.SetTarget(target);
+      }
+      this.numBees = 0;
+      this.beeBirthTime = 0.0;
+    } else {
+      Log("No target for bees");
+    }
 
+
+  }
+
+  GetBeesTarget(){
+    if(this.gameobj.scene.enemies.length == 0) return null;
+    let closest = null;
+    let minDist = 9999999999999.9999;
+    let dist;
+    let playerPos = this.gameobj.transform.GetWorldPos();
+    for(var enemy of this.gameobj.scene.enemies){
+      if(!enemy.active) continue;
+      dist = Vec2.Distance(playerPos, enemy.transform.playerPos);
+      if(dist < minDist){
+        closest = enemy;
+        minDist = dist;
+      }
+    }
+    return closest;
   }
 
   CreateFSM(){
@@ -248,10 +313,36 @@ class PlayerController extends Component {
     this.colibri.colibriController.player = this.gameobj;
     this.colibri.SetActive(false);
 
+    this.FillBeePool();
+
     this.CreateFSM();
     manager.scene.players.add(this.gameobj);
 
     this.lifeText = prefabFactory.CreateObj("lifeText", new Vec2(0.15,-0.1));
     this.TakeDamage(0);
+  }
+
+  FillBeePool(){
+    let obj
+    for(var i = 0; i < this.maxBees; i++){
+      obj = prefabFactory.CreateObj("Bee");
+      obj.SetActive(false);
+      obj.player = this.gameobj;
+      this.beesPool.push(obj)
+    }
+  }
+
+  BeePoolPop(){
+    let obj
+    if(this.beesPool.length > 0){
+      obj = this.beesPool.pop();
+      obj.SetActive(true);
+    }
+    return obj;
+  }
+
+  BeePoolAdd(obj){
+    this.beesPool.push(obj);
+    obj.SetActive(false);
   }
 }
