@@ -35,19 +35,20 @@ class Collider {
   CheckTrigger(c2){
     let c1Key=this.gameobj.key;
     let c2Key=c2.gameobj.key;
+    let obj=c2.gameobj;
 
     if(this.isColliding) {
-      if(this.isTrigger && !this.objsInsideTrigger.has(c2Key)){
+      if(this.isTrigger && obj.active && this.gameobj.active && !this.objsInsideTrigger.has(c2Key)){
         this.objsInsideTrigger.set(c2Key,c2);
-        this.OnTriggerEnter(c2.gameobj);
+        this.OnTriggerEnter(obj);
       }
-      else if(this.isTrigger && this.objsInsideTrigger.has(c2Key)){
-        this.OnTriggerStay(c2.gameobj);
+      else if(this.isTrigger && this.gameobj.active && obj.active && this.objsInsideTrigger.has(c2Key)){
+        this.OnTriggerStay(obj);
       }
     }
     else{
-      if(this.isTrigger && this.objsInsideTrigger.has(c2Key)){
-        this.OnTriggerExit(c2.gameobj);
+      if(this.isTrigger && this.gameobj.active && obj.active && this.objsInsideTrigger.has(c2Key)){
+        this.OnTriggerExit(obj);
         this.objsInsideTrigger.delete(c2Key);
       }
     }
@@ -72,15 +73,18 @@ class Collider {
   }
 
   OnTriggerEnter(obj){
-    this.OnTriggerEnterCallback(obj);
+    if(this.OnTriggerEnterCallback!=null)
+      this.OnTriggerEnterCallback(obj);
   }
 
   OnTriggerStay(obj){
-    this.OnTriggerStayCallback(obj);
+    if(this.OnTriggerStayCallback!=null)
+      this.OnTriggerStayCallback(obj);
   }
 
   OnTriggerExit(obj){
-    this.OnTriggerExitCallback(obj);
+    if (this.OnTriggerExitCallback!=null)
+      this.OnTriggerExitCallback(obj);
   }
 
   CirclesCollision(c2) {
