@@ -90,6 +90,14 @@ class Input {
     }
   }
 
+  GetAttackADDown(){
+    if(this.isDesktop){
+      return this.mouseLeftDown;
+    } else {
+      return false;
+    }
+  }
+
   AddListeners(){
     var that = this;
     if(this.isDesktop){

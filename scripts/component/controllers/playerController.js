@@ -27,6 +27,10 @@ class PlayerController extends Component {
     this.particlePosition = new Vec2(0,-1);
     this.particleDisplacement = 0.4;
 
+    this.colibriOrBees = false;
+    this.hasColibri = true;
+    this.hasBees = true;
+
   }
 
   SetScene(scene){
@@ -59,7 +63,29 @@ class PlayerController extends Component {
   }
 
   PlayerADAttack(){
-    
+    if(input.GetAttackADDown()){
+      if(!this.colibriOrBees){
+        if(this.hasColibri){
+          this.ThrowColibri();
+        }
+      } else {
+        if(this.hasBees){
+          this.ThrowBees();
+        }
+      }
+    }
+
+  }
+
+  ThrowColibri(){
+    Log("THROW COLIBRI");
+    this.hasColibri = false;
+    this.colibri.SetActive(true);
+    this.colibri.colibriController.SetLocalPosDir(Vec2.Sub(this.gameobj.renderer.dir, new Vec2(0,0.5)), input.GetRightAxis(this.gameobj));
+  }
+
+  ThrowBees(){
+
   }
 
   CreateFSM(){
@@ -72,6 +98,8 @@ class PlayerController extends Component {
       that.gameobj.renderer.SetAnimation('idle');
       manager.scene.camera.camera.target = that.gameobj.transform.GetWorldCenter().Copy();
       that.numCombo = 1;
+    }).SetUpdateFunc(()=>{
+      that.PlayerADAttack();
     }).SetEdges([
       new Edge('run').AddCondition(()=>that.rawLeftAxis.mod > 0.05).SetFunc(()=>{
         that.gameobj.renderer.SetAnimation('run');
@@ -88,6 +116,7 @@ class PlayerController extends Component {
 
     }).SetUpdateFunc(()=>{
       that.PlayerMove();
+      that.PlayerADAttack();
       let camTarget = that.gameobj.transform.GetWorldCenter().Copy().Add(Vec2.Scale(that.leftAxis, that.camOffset));
       manager.scene.camera.camera.target = camTarget;
 
