@@ -18,7 +18,7 @@ class ColliderGroup extends Component{
   }
 
   SetGameobj(gameobj){
-    if(!(gameobj.transform.height > 0.0)){
+    /*if(!(gameobj.transform.height > 0.0)){*/
       for (var c of this.colliders){
         c.colliderGroup = this;
       }
@@ -33,6 +33,6 @@ class ColliderGroup extends Component{
           program.renderers.add(this.colliders[i]);
         }
       }
-    }
+    /*}*/
   }
 }

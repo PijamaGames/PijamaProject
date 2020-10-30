@@ -35,7 +35,7 @@ prefabFactory.AddPrototype("Nelu", new Vec2(2, 2), new Vec2(0.5, 0.5), false, ()
 
 prefabFactory.AddPrototype("Colibri", new Vec2(1,1), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ColliderGroup([new CircleCollider(new Vec2(0,0),0.2,false)]),
+    new ColliderGroup([new CircleCollider(new Vec2(0,0),0.2,true)]),
     new SpriteRenderer('nelu_idle', new Vec2(0,0), new Vec2(1,1), false, 8, [4,0,6,1,5,3,7,2], 14),
     new Rigidbody(0.95),
     new ColibriController(),

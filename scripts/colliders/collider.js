@@ -57,14 +57,19 @@ class Collider {
 
   CheckCollision(c2){
     let dir;
-    if(this.isCircular && c2.isCircular){           //Circular collision
-      dir = this.CirclesCollision(c2);
-    } else if(!this.isCircular && !c2.isCircular){  //Box collision
-      dir = this.BoxesCollision(c2);
-    } else {                                        //Circular-Box Collision
-      dir = this.BoxCircleCollision(c2);
+    if(this.active && c2.active){
+      if(this.isCircular && c2.isCircular){           //Circular collision
+        dir = this.CirclesCollision(c2);
+      } else if(!this.isCircular && !c2.isCircular){  //Box collision
+        dir = this.BoxesCollision(c2);
+      } else {                                        //Circular-Box Collision
+        dir = this.BoxCircleCollision(c2);
+      }
+      if(!dir) dir = new Vec2();
+    } else {
+      dir = new Vec2();
     }
-    if(!dir) dir = new Vec2();
+
 
     this.isColliding=dir.mod > 0.0;
     c2.isColliding=this.isColliding;
