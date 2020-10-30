@@ -220,6 +220,6 @@ class EnemyController extends Component {
     this.CreateFSM();
     this.gameobj.renderer.SetTint(1.0,0.5,0.5);
     this.CreatePool();
-    manager.scene.enemies.add(this);
+    manager.scene.enemies.add(this.gameobj);
   }
 }
