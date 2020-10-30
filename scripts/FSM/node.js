@@ -52,7 +52,7 @@ class Node{
   }
 
   Exit(){
-    if (this.updateCallback && this.exitCallback != null)
+    if (this.exitCallback && this.exitCallback != null)
       this.exitCallback();
     return this;
   }
