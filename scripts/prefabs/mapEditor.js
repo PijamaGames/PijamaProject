@@ -15,6 +15,7 @@ class MapEditor {
     this.copyBytecodeObj = null;
     this.currentScene;
     this.hoverCount = 0;
+    this.heightStep = 0.5;
 
     var that = this;
     var selectNode = new Node("select").SetStartFunc(()=>{
@@ -73,6 +74,12 @@ class MapEditor {
     ]);
 
     var putNode = new Node("put").SetUpdateFunc(()=>{
+      if(input.GetKeyDown("ArrowDown")){
+        that.selected.transform.height -= that.heightStep;
+      }
+      if(input.GetKeyDown("ArrowUp")){
+        that.selected.transform.height += that.heightStep;
+      }
       //that.selected.transform.SetWorldCenter(Vec2.Sub(input.mouseGridPosition, Vec2.Scale(that.selected.transform.anchor, 1.0)));
       that.selected.transform.SetWorldPosition(Vec2.Add(input.mouseGridPosition, Vec2.Scale(that.selected.transform.anchor, 0.5)));
     }).SetEdges([
@@ -124,7 +131,13 @@ class MapEditor {
   Update() {
     if(this.fsm.active){
       let camPos = manager.scene.camera.transform.GetWorldPos().Copy();
-      let axis = input.GetLeftAxis();
+      //let axis = input.GetLeftAxis();
+      let axis = new Vec2();
+      axis.x -= input.GetKeyPressedF('KeyA');
+      axis.x += input.GetKeyPressedF('KeyD');
+      axis.y -= input.GetKeyPressedF('KeyS');
+      axis.y += input.GetKeyPressedF('KeyW');
+
       camPos.Add(axis.Scale(this.cameraSpeed*manager.delta*(input.GetKeyPressedF('ShiftLeft')+1.0)));
       manager.scene.camera.camera.target = camPos;
     }
