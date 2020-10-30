@@ -105,6 +105,15 @@ class Collider {
     }
 
     let circleCenter = circle.worldCenter;
+
+    let [left, right, up, down] = box.GetSides();
+    let inside = circleCenter.x >= left && circleCenter.x <= right && circleCenter.y <= up && circleCenter.y >= down;
+    if(inside){
+      let dir = box.worldCenter.Sub(circleCenter);
+      return this == (circle ? dir.Opposite() : dir).Scale(0.1);
+    }
+    //let inside = circleCenter.x > sides
+
     let corners = [box.leftUpCorner, box.rightUpCorner, box.leftDownCorner, box.rightDownCorner];
     let projections = [ //up, down, left, right
       Vec2.ProjectOnRect(circleCenter, corners[0], corners[1], true),
