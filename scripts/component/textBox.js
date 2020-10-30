@@ -35,7 +35,7 @@ Commodo delenit nonumes est an, adhuc patrioque temporibus qui et, viris tritani
   FillPool() {
     this.pool = [];
     let size = this.GetMaxCharacters();
-    Log("SIZE: " + size);
+    //Log("SIZE: " + size);
     //return;
     let obj;
     for (var i = 0; i < size; i++) {
@@ -87,8 +87,8 @@ Commodo delenit nonumes est an, adhuc patrioque temporibus qui et, viris tritani
     let maxX = this.GetMaxCharsPerLine();
     let maxY = this.GetMaxLines();
 
-    Log("maxX:" + maxX);
-    Log("maxY:" + maxY);
+    //Log("maxX:" + maxX);
+    //Log("maxY:" + maxY);
 
     let y = 0;
     let x = 0;
@@ -144,7 +144,7 @@ Commodo delenit nonumes est an, adhuc patrioque temporibus qui et, viris tritani
   PrepareDisplayedChars(str) {
     let numChars = str.length;
     let lastNumChars = this.displayedChars.length;
-    Log("diff: "+(numChars - lastNumChars));
+    //Log("diff: "+(numChars - lastNumChars));
     if (numChars > lastNumChars) {
       for (var i = 0; i < numChars - lastNumChars; i++) {
         this.displayedChars.push(this.PoolPop());

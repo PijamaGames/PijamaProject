@@ -1,6 +1,6 @@
 "use strict;"
 const DEBUG = true;
-const DEBUG_VISUAL = false;
+const DEBUG_VISUAL = true;
 const EDITOR_MODE = false;
 
 var timesCalled = 0.0;
