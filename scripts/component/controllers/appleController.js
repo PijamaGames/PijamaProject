@@ -15,6 +15,7 @@ class AppleController extends Component{
     }
     if(this.gameobj.active && this.contTime>=this.timeLimit){
       this.gameobj.SetActive(false);
+      this.gameobj.enemyController.PoolAdd(this.gameobj);
       this.startCoolDown=false;
     }
   }
@@ -22,6 +23,7 @@ class AppleController extends Component{
   MissileMove(missile,target) {
     let axis = Vec2.Sub(target.transform.GetWorldPos(), missile.transform.GetWorldPos());
     let movement = axis.Scale(this.appleImpulse);
+    Log(movement)
     missile.rigidbody.force.Add(movement);
   }
   SetGameobj(gameobj){

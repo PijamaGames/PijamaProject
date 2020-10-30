@@ -125,14 +125,16 @@ class EnemyController extends Component {
       that.gameobj.renderer.SetAnimation('enemyattackAD');
       that.endAttackADAnim=false;
       that.gameobj.renderer.endAnimEvent.AddListener(that, ()=>that.endAttackADAnim=true,true);
+      this.contTimeAD=this.resetADAttackTime;
 
     }).SetUpdateFunc(()=>{
       let target=that.FindClosestPlayer(that.attackADRange);
-
-      if(target!=null && this.contTimeAD>=this.resetADAttackTime && this.pool.length>0){
-        let obj=this.PoolPop();
-        obj.appleController.MissileMove(obj,target);
-        obj.appleController.startCoolDown=true;
+      if(this.contTimeAD>=this.resetADAttackTime){
+        if(this.pool.length>0){
+          let obj=this.PoolPop();
+          obj.appleController.MissileMove(obj,target);
+          obj.appleController.startCoolDown=true;
+        }
         this.contTimeAD=0;
       }
 
@@ -150,6 +152,7 @@ class EnemyController extends Component {
       that.gameobj.renderer.SetAnimation('enemyattackCAC');
       that.endAttackCACAnim=false;
       that.gameobj.renderer.endAnimEvent.AddListener(that, ()=>that.endAttackCACAnim=true,true);
+      this.contTimeCAC=this.resetCACAttackTime;
 
     }).SetUpdateFunc(()=>{
       let target=that.FindClosestPlayer(that.attackADRange);
@@ -202,11 +205,21 @@ class EnemyController extends Component {
     }
   }
 
+  SetScene(scene){
+    this.gameobj.scene.enemies.delete(this.gameobj);
+    scene.enemies.add(this.gameobj);
+  }
+
+  Destroy(){
+    this.gameobj.scene.enemies.delete(this.gameobj);
+  }
+
   SetGameobj(gameobj){
     this.gameobj = gameobj;
     this.gameobj.enemyController = this;
     this.CreateFSM();
     this.gameobj.renderer.SetTint(1.0,0.5,0.5);
     this.CreatePool();
+    manager.scene.enemies.add(this.gameobj);
   }
 }
