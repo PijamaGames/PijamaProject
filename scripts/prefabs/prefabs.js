@@ -57,24 +57,15 @@ prefabFactory.AddPrototype("apple", new Vec2(1, 1), new Vec2(0.5, 0.5), false, (
   return [
     new ColliderGroup([new CircleCollider(new Vec2(0,0.0), 0.15, true,
     function(obj){
+      let apple=this.gameobj;
       if(obj.playerController){
-        obj.playerController.TakeDamage()
+        obj.playerController.TakeDamage(5);
       }
-      Log("Manzana: holi");
-    },
-    function(obj){
-      if(obj.playerController){
-
-      }
-      Log("Manzana: aqui");
-    },
-    function(obj){
-      if(obj.playerController){
-
-      }
-      Log("Manzana: adios");
-    })]),
+      this.gameobj.enemyController.PoolAdd(apple);
+    }, null, null
+    )]),
     new SpriteRenderer('nelu_idle', new Vec2(0, 2),new Vec2(2,2), true, 8, [4,0,6,1,5,3,7,2], 14),
     new Rigidbody(0.8),
+    new AppleController(),
   ]
 });
