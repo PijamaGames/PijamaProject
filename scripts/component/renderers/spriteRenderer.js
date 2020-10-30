@@ -9,6 +9,7 @@ class SpriteRenderer extends Renderer{
     this.time = 0.0;
     this.loopBack = loopBack;
     this.way = 1;
+    this.dir = new Vec2(0,-1);
 
     //Default directions
     if(!dirIndex){
@@ -23,23 +24,28 @@ class SpriteRenderer extends Renderer{
     this.AddAnimation('default', spriteSheetName, fps);
     this.SetAnimation('default');
     this.endAnimEvent = new EventDispatcher();
+    this.paused = false;
+    this.loop = true;
     //this.animationEndEvent = new Event('onAnimationEnd');
 
     //This line makes every sprite spawn looking down
     this.tile.y = this.dirIndex[Math.trunc(0.75*numDirs)]*numTiles.y;
   }
 
-  AddAnimation(name,textureName, speed){
+  AddAnimation(name,textureName, speed, loopAnim = true){
     this.animations.set(name, {
       texture:resources.textures.get(textureName),
-      fps:speed
+      fps:speed,
+      loop:loopAnim
     });
   }
 
   SetAnimation(anim){
+    this.paused = false;
     let a = this.animations.get(anim);
     this.SetTexture(a.texture);
     this.interval = 1.0/a.fps;
+    this.loop = a.loop;
     this.maxFrames = new Vec2(Math.round(this.spriteSheet.width/this.numTiles.x / tileSize), Math.round(this.spriteSheet.height/this.numTiles.y / tileSize));
   }
 
@@ -54,6 +60,7 @@ class SpriteRenderer extends Renderer{
   }
 
   Update(){
+    if(this.paused) return;
     this.time += manager.delta;
 
     //if must change frame
@@ -64,19 +71,24 @@ class SpriteRenderer extends Renderer{
       //if last frame
       if(this.tile.x/this.numTiles.x >= this.maxFrames.x || this.tile.x < 0){
         this.endAnimEvent.Dispatch();
-        //if loopback, invert animation
-        if(this.loopBack){
-          if(this.way === 1){
-            this.tile.x = this.tile.x-this.numTiles.x*2;
-          } else {
-            this.tile.x = this.numTiles.x*2;
-          }
-          this.way *= -1;
-
-        //if not loopback, restart animation
+        if(!this.loop){
+          this.paused = true;
+          this.tile.x = (this.tile.x-this.numTiles.x*this.way);
         } else {
-          this.tile.x = 0;
-          this.way = 1;
+          //if loopback, invert animation
+          if(this.loopBack){
+            if(this.way === 1){
+              this.tile.x = this.tile.x-this.numTiles.x*2;
+            } else {
+              this.tile.x = this.numTiles.x*2;
+            }
+            this.way *= -1;
+
+          //if not loopback, restart animation
+          } else {
+            this.tile.x = 0;
+            this.way = 1;
+          }
         }
       }
 
@@ -91,6 +103,7 @@ class SpriteRenderer extends Renderer{
   SetDirection(v){
     v = Vec2.Norm(v);
     if(v.mod > 0.0){
+      this.dir = v;
       let quadrant = v.GetQuadrant(this.numDirs, 0.5);
       this.tile.y = this.dirIndex[quadrant]*this.numTiles.y;
     }

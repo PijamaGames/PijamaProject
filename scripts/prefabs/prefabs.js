@@ -25,20 +25,11 @@ prefabFactory.AddPrototype("Box", new Vec2(2, 2), new Vec2(0,0), false, ()=>{
 
 prefabFactory.AddPrototype("Nelu", new Vec2(2, 2), new Vec2(0.5, 0.5), false, ()=>{
   return [
-    new ColliderGroup([new CircleCollider(new Vec2(0,-0.65), 0.35, false,
-    function(){
-      Log("Nelu: holi");
-    },
-    function(){
-      Log("Nelu: aqui");
-    },
-    function(){
-      Log("Nelu: adios");
-    })]),
+    new ColliderGroup([new CircleCollider(new Vec2(0,-0.65), 0.35, false)]),
     new SpriteRenderer('nelu_idle', new Vec2(0, 2),new Vec2(2,2), true, 8, [4,0,6,1,5,3,7,2], 14),
-    new Rigidbody(0.5),
+    new Rigidbody(0.7),
     new ShadowCaster(new Vec2(0,-0.75), 0.75),
-    new PlayerController(2.5),
+    new PlayerController(),
   ]
 });
 
