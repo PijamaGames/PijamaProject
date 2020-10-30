@@ -3,16 +3,23 @@ class ColibriController extends Component {
     super();
     this.type = "colibriController";
     this.maxDistance = 7.0;
-    this.speed = 1.2;
+    this.speed = 2.0;
     this.targetThreshold = 0.3;
     this.dir = new Vec2(0, -1);
     this.comingBack = false;
     this.player = null;
     this.velocity = new Vec2();
     this.target = new Vec2();
+    this.maxLifeTime = 5.0;
+    this.lifeTime = 0.0;
   }
 
   Update() {
+    this.lifeTime += manager.delta;
+    if(this.lifeTime > this.maxLifeTime){
+      this.ComeBack();
+
+    }
     let distToTarget = Vec2.Distance(this.gameobj.transform.GetWorldPos(), this.target);
     if (distToTarget < this.targetThreshold) {
       if (!this.comingBack) {
@@ -39,6 +46,7 @@ class ColibriController extends Component {
     this.comingBack = false;
     this.gameobj.rigidbody.force.Set(0,0);
     this.gameobj.rigidbody.velocity.Set(0,0);
+    this.lifeTime = 0.0;
   }
 
   SetLocalPosDir(localPos, dir) {

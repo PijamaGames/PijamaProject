@@ -34,7 +34,7 @@ class PlayerController extends Component {
     this.beesPool = [];
     this.maxBees = 20;
     this.numBees = this.maxBees;
-    this.beeBirthMaxTime = 0.5;
+    this.beeBirthMaxTime = 1.0;
     this.beeBirthTime = 0.0;
     this.beesTarget = null;
   }
@@ -123,9 +123,11 @@ class PlayerController extends Component {
     let target = this.GetBeesTarget();
     if(target != null){
       Log("THROW " + this.numBees +" BEES");
+      let wp = this.gameobj.transform.GetWorldPos();
       for(var i = 0; i < this.numBees; i++){
         let bee = this.BeePoolPop();
-        bee.SetTarget(target);
+        bee.transform.SetWorldPosition(wp);
+        bee.beeController.SetTarget(target);
       }
       this.numBees = 0;
       this.beeBirthTime = 0.0;
@@ -144,7 +146,7 @@ class PlayerController extends Component {
     let playerPos = this.gameobj.transform.GetWorldPos();
     for(var enemy of this.gameobj.scene.enemies){
       if(!enemy.active) continue;
-      dist = Vec2.Distance(playerPos, enemy.transform.playerPos);
+      dist = Vec2.Distance(playerPos, enemy.transform.GetWorldPos());
       if(dist < minDist){
         closest = enemy;
         minDist = dist;
@@ -327,7 +329,7 @@ class PlayerController extends Component {
     for(var i = 0; i < this.maxBees; i++){
       obj = prefabFactory.CreateObj("Bee");
       obj.SetActive(false);
-      obj.player = this.gameobj;
+      obj.beeController.player = this.gameobj;
       this.beesPool.push(obj)
     }
   }
@@ -342,6 +344,7 @@ class PlayerController extends Component {
   }
 
   BeePoolAdd(obj){
+    obj.beeController.lifeTime = 0.0;
     this.beesPool.push(obj);
     obj.SetActive(false);
   }

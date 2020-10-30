@@ -26,7 +26,8 @@ class Collider {
     return this.circular === 1.0;
   }
   get worldCenter() {
-    return this.colliderGroup.gameobj.transform.GetWorldCenterPerfect().Copy().Add(this.displacement);
+    let transform = this.colliderGroup.gameobj.transform;
+    return transform.GetWorldCenterPerfect().Copy().Add(this.displacement).Add(new Vec2(0.0, transform.height));
   }
   get gameobj() {
     return this.colliderGroup.gameobj;
