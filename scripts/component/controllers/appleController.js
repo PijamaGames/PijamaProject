@@ -3,7 +3,7 @@ class AppleController extends Component{
     super();
     this.type = "appleController";
 
-    this.timeLimit=10;
+    this.timeLimit=5;
     this.appleImpulse=10;
     this.startCoolDown=false;
     this.contTime=0;
@@ -15,15 +15,15 @@ class AppleController extends Component{
     }
     if(this.gameobj.active && this.contTime>=this.timeLimit){
       this.gameobj.SetActive(false);
-      this.gameobj.enemyController.PoolAdd(this.gameobj);
-      this.startCoolDown=false;
+      this.enemy.enemyController.PoolAdd(this.gameobj);
+      //this.startCoolDown=false;
+      //this.contTime=0;
     }
   }
 
   MissileMove(missile,target) {
-    let axis = Vec2.Sub(target.transform.GetWorldPos(), missile.transform.GetWorldPos());
+    let axis = Vec2.Sub(target.transform.GetWorldCenter().Copy(), missile.transform.GetWorldCenter().Copy());
     let movement = axis.Scale(this.appleImpulse);
-    Log(movement)
     missile.rigidbody.force.Add(movement);
   }
   SetGameobj(gameobj){

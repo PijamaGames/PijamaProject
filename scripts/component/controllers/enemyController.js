@@ -18,9 +18,9 @@ class EnemyController extends Component {
     this.attackCACRange = 1.5;
     this.target = null;
 
-    this.resetADAttackTime=5;
+    this.resetADAttackTime=2;
     this.resetCACAttackTime=1;
-    this.contTimeAD=5;
+    this.contTimeAD=2;
     this.contTimeCAC=1;
     this.endAttackCACAnim=false;
     this.endAttackADAnim=false;
@@ -28,6 +28,8 @@ class EnemyController extends Component {
     this.attackADDamage=5;
     this.attackCACDamage=1;
     this.maxMissiles=5;
+    this.pool = [];
+    this.allApples = [];
 
     this.life=15;
   }
@@ -113,7 +115,7 @@ class EnemyController extends Component {
       that.EnemyMove();
 
     }).SetEdges([
-      new Edge('patrol').AddCondition(()=> that.FindClosestPlayer(that.detectionRange) == null || that.target.playerController.life<0),
+      new Edge('patrol').AddCondition(()=> that.FindClosestPlayer(that.detectionRange) == null || that.target.playerController.life<=0),
       new Edge('attackAD').AddCondition(()=>that.FindClosestPlayer(that.attackADRange) != null && this.target.playerController.life>0),
       new Edge('dead').AddCondition(()=> that.life<=0),
     ]);
@@ -130,16 +132,13 @@ class EnemyController extends Component {
     }).SetUpdateFunc(()=>{
       let target=that.FindClosestPlayer(that.attackADRange);
       if(this.contTimeAD>=this.resetADAttackTime){
-        if(this.pool.length>0){
-          let obj=this.PoolPop();
-          obj.appleController.MissileMove(obj,target);
-          obj.appleController.startCoolDown=true;
-        }
+
+        this.PoolPop(target);
         this.contTimeAD=0;
       }
 
     }).SetEdges([
-      new Edge('approachPlayer').AddCondition(()=>that.FindClosestPlayer((that.attackADRange) == null || that.target.playerController.life<0) && that.endAttackADAnim),
+      new Edge('approachPlayer').AddCondition(()=>that.FindClosestPlayer((that.attackADRange) == null || that.target.playerController.life<=0) && that.endAttackADAnim),
       new Edge('attackCAC').AddCondition(()=>that.FindClosestPlayer(that.attackCACRange) != null && this.target.playerController.life>0 && that.endAttackADAnim),
       new Edge('dead').AddCondition(()=> that.life<=0 && that.endAttackADAnim),
       new Edge('recharge').AddCondition(()=> that.contTimeAD<that.resetADAttackTime && that.endAttackADAnim),
@@ -180,29 +179,38 @@ class EnemyController extends Component {
   }
 
   CreatePool(){
-    this.pool = [];
-    let size = this.maxMissiles;
     let obj;
-    for (var i = 0; i < size; i++) {
-      obj = prefabFactory.CreateObj('apple');
-      obj.enemyController=this;
+    for (var i = 0; i < this.maxMissiles; i++) {
+      obj = prefabFactory.CreateObj('apple', new Vec2(), 1);
       obj.SetActive(false);
+      obj.appleController.enemy=this.gameobj;
       this.pool.push(obj);
+      this.allApples(obj);
     }
   }
 
-  PoolPop() {
-    let obj = this.pool.pop();
-    obj.transform.SetWorldPosition(this.gameobj.transform.GetWorldPos().Copy());
-    obj.SetActive(true);
-    return obj;
+  PoolPop(target) {
+    let obj;
+    if(this.pool.length>0){
+      obj=this.pool.pop();
+      Log(this.pool);
+      obj.SetActive(true);
+      Log(obj);
+      obj.transform.SetWorldPosition(this.gameobj.transform.GetWorldCenter().Copy());
+
+      //EXTRAÑAMENTE NO SE PONE A FUCKING TRUE A VECES NO SE SAE POR QUÉ
+      obj.appleController.MissileMove(obj,target);
+      obj.appleController.startCoolDown=true;
+
+    }
+    //return obj;
   }
 
   PoolAdd(obj) {
-    if (obj) {
-      obj.SetActive(false);
-      this.pool.push(obj);
-    }
+    this.pool.push(obj);
+    obj.SetActive(false);
+    obj.appleController.contTime=0
+    obj.appleController.startCoolDown=false;
   }
 
   SetScene(scene){
@@ -212,6 +220,9 @@ class EnemyController extends Component {
 
   Destroy(){
     this.gameobj.scene.enemies.delete(this.gameobj);
+    for(apple of this.allApples){
+      apple.Destroy();
+    }
   }
 
   SetGameobj(gameobj){
