@@ -185,7 +185,7 @@ class EnemyController extends Component {
       obj.SetActive(false);
       obj.appleController.enemy=this.gameobj;
       this.pool.push(obj);
-      this.allApples(obj);
+      this.allApples.push(obj);
     }
   }
 
