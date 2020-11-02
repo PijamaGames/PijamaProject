@@ -8,12 +8,18 @@
 </head>
 
 <body onload="Main()">
-  <!--<div id="parent">-->
-    <canvas id="game_surface" width="640" height="480"></canvas>
-    <input  type="text" id="userName" value="Introduce tu nombre...">
+  <style>
+    @font-face{
+      font-family:"Pixel Play" ;
+      src:url("resources/fonts/pixelplay.ttf") format('truetype'),
+          url("resources/fonts/pixelplay.woff") format('woff');
+    }
+  </style>
+
+  <canvas id="game_surface" width="640" height="480"></canvas>
+  <input  type="text" id="userName" value="Introduce tu nombre...">
 
 
-  <!--</div>-->
 
   <textarea id="bytecodeText" rows="8" cols="80"></textarea>
 

@@ -172,13 +172,14 @@ class Graphics {
 
   AdjustInputFieldPosition(){
     let xSize = 50;
-    let fontSize = 40;
+    let fontSize = 50;
 
     this.inputNameField.style.fontSize =""+ (fontSize * Math.min((this.windowRes.x/this.windowRes.y),1))+"px";
     this.inputNameField.style.width = xSize+ "%";
     this.inputNameField.style.left =""+ 50-(xSize*0.5)+"%";
 
     this.inputNameField.style.top = ""+50*Math.min((this.windowRes.x/this.windowRes.y),1)+"%";
+
     //Log(this.inputNameField);
   }
 
