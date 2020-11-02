@@ -6,9 +6,9 @@ prefabFactory.AddPrototype("Entrar", new Vec2(5,2), new Vec2(0.5,0.5), false, ()
     }).SetHoverOutFunc((obj)=>{
       obj.gameobj.transform.scale.Scale(1.0/1.1);
     }).SetUpFunc(()=>{
-      var nombreUsuario= document.getElementById("myText").value;
+      var nombreUsuario= document.getElementById("userName").value;
       manager.LoadScene("mainMenu");
-      document.getElementById("myText").hidden=true;
+      document.getElementById("userName").hidden=true;
       Log(nombreUsuario);
 
     }),

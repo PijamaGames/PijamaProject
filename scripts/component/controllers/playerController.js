@@ -23,6 +23,7 @@ class PlayerController extends Component {
     this.dashTime = 0.0;
     this.dashMaxCooldown = 0.4;
     this.dashCooldown = this.dashMaxCooldown;
+    this.canAttack = true;
 
     this.particlePosition = new Vec2(0,-1);
     this.particleDisplacement = 0.4;
@@ -32,6 +33,7 @@ class PlayerController extends Component {
     this.hasBees = true;
 
     this.beesPool = [];
+    this.allBees = [];
     this.maxBees = 20;
     this.numBees = this.maxBees;
     this.beeBirthMaxTime = 1.0;
@@ -46,6 +48,11 @@ class PlayerController extends Component {
 
   Destroy(){
     this.gameobj.scene.players.delete(this.gameobj);
+
+    this.colibri.Destroy();
+    for(var bee of this.allBees){
+      bee.Destroy();
+    }
   }
 
   Update(){
@@ -60,6 +67,7 @@ class PlayerController extends Component {
       this.ChangeSkill();
     }
     this.ReloadBees();
+    this.canAttack = this.canAttack || input.GetKeyUp("Space");
   }
 
   ChangeSkill(){
@@ -171,7 +179,7 @@ class PlayerController extends Component {
       new Edge('run').AddCondition(()=>that.rawLeftAxis.mod > 0.05).SetFunc(()=>{
         that.gameobj.renderer.SetAnimation('run');
       }),
-      new Edge('attack1').AddCondition(()=>input.GetAttackCACDown()),
+      new Edge('attack1').AddCondition(()=>input.GetAttackCACDown() && that.canAttack),
     ]);
 
     let runNode = new Node('run').SetOnCreate(()=>{
@@ -189,7 +197,7 @@ class PlayerController extends Component {
 
     }).SetEdges([
       new Edge('idle').AddCondition(()=>that.rawLeftAxis.mod < 0.05),
-      new Edge('attack1').AddCondition(()=>input.GetAttackCACDown()),
+      new Edge('attack1').AddCondition(()=>input.GetAttackCACDown() && that.canAttack),
       new Edge('dash').AddCondition(()=>input.GetDashDown() && that.dashCooldown > that.dashMaxCooldown),
     ]);
 
@@ -206,14 +214,14 @@ class PlayerController extends Component {
       that.gameobj.renderer.endAnimEvent.AddListener(that, ()=>that.endAttackAnim=true,true);
       that.attackDir = that.gameobj.renderer.dir.Copy();
       that.gameobj.rigidbody.force.Add(Vec2.Scale(that.attackDir, that.attackImpulse));
-      that.combo = false;
+      //that.combo = false;
 
       let displacement = Vec2.Norm(that.attackDir).Scale(that.particleDisplacement+0.5*Math.abs(that.attackDir.x));
       that.particles.transform.SetLocalPosition(Vec2.Add(that.particlePosition, displacement));
 
     }).SetUpdateFunc(()=>{
       //METER LO Q HACE MIENTRAS ATACA
-      that.combo = that.combo || input.GetAttackCACDown();
+      //that.combo = that.combo || input.GetAttackCACDown();
     }).SetExitFunc(()=>{
       that.numCombo = 2;
       that.particles.SetActive(false);
@@ -235,7 +243,7 @@ class PlayerController extends Component {
       that.combo = false;
     }).SetUpdateFunc(()=>{
       //METER LO Q HACE MIENTRAS ATACA
-      this.combo = this.combo || input.GetAttackCACDown();
+      //this.combo = this.combo || input.GetAttackCACDown();
     }).SetExitFunc(()=>{
       that.numCombo = 3;
       that.particles.SetActive(false);
@@ -257,8 +265,10 @@ class PlayerController extends Component {
       that.gameobj.rigidbody.force.Add(Vec2.Scale(that.attackDir, this.attackImpulse));
       that.combo = false;
     }).SetExitFunc(()=>{
-      that.combo = false;
+      //that.combo = false;
+      that.numCombo = 4;
       that.particles.SetActive(false);
+      this.canAttack = false;
     }).SetEdges([
       new Edge('waitCombo').AddCondition(()=>that.endAttackAnim),
     ]);
@@ -268,7 +278,7 @@ class PlayerController extends Component {
       lighting.motionBlur = 0.0;
     }).SetUpdateFunc(()=>{
       that.waitComboTime += manager.delta;
-      //that.combo = that.combo || input.mouseLeftDown;
+      that.combo = (that.combo || input.GetKeyPressed("Space")) && that.numCombo <= 3;
     }).SetEdges([
       new Edge('idle').AddCondition(()=>!that.combo && that.rawLeftAxis.mod < 0.05 && that.waitComboTime > that.waitComboMaxTime),
       new Edge('run').AddCondition(()=>!that.combo &&that.rawLeftAxis.mod > 0.05 && that.waitComboTime > that.waitComboMaxTime).SetFunc(()=>{
@@ -327,10 +337,11 @@ class PlayerController extends Component {
   FillBeePool(){
     let obj
     for(var i = 0; i < this.maxBees; i++){
-      obj = prefabFactory.CreateObj("Bee");
+      obj = prefabFactory.CreateObj("Bee", new Vec2(), 0.5);
       obj.SetActive(false);
       obj.beeController.player = this.gameobj;
       this.beesPool.push(obj)
+      this.allBees.push(obj);
     }
   }
 

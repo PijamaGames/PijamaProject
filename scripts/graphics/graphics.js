@@ -3,6 +3,8 @@ var gl;
 const tileSize = 32.0;
 class Graphics {
   constructor() {
+    this.inputNameField = document.getElementById("userName");
+
     this.programs = new Map();
     this.parallax = new Parallax();
     this.fbos = new Map();
@@ -168,8 +170,23 @@ class Graphics {
     this.CreateParallaxLayers();
   }
 
+  AdjustInputFieldPosition(){
+    let xSize = 50;
+    let fontSize = 40;
+
+    this.inputNameField.style.fontSize =""+ (fontSize * Math.min((this.windowRes.x/this.windowRes.y),1))+"px";
+    this.inputNameField.style.width = xSize+ "%";
+    this.inputNameField.style.left =""+ 50-(xSize*0.5)+"%";
+
+    this.inputNameField.style.top = ""+50*Math.min((this.windowRes.x/this.windowRes.y),1)+"%";
+    //Log(this.inputNameField);
+  }
+
   CanvasResponsive(forced = false) {
     let newWindowRes = new Vec2(window.innerWidth, window.innerHeight);
+
+    this.AdjustInputFieldPosition();
+
     if (!newWindowRes.Equals(this.windowRes) || forced) {
       this.windowRes = newWindowRes;
       let windowAspectRatio = newWindowRes.x / newWindowRes.y;

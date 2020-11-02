@@ -8,33 +8,12 @@
 </head>
 
 <body onload="Main()">
-  <div id="parent">
-    <input  type="text" id="myText" value="Introduce tu nombre...">
+  <!--<div id="parent">-->
+    <canvas id="game_surface" width="640" height="480"></canvas>
+    <input  type="text" id="userName" value="Introduce tu nombre...">
 
-  </div>
 
-  <canvas id="game_surface" width="640" height="480">
-  </canvas>
-  <div hidden="false" id="editor" class="editor">
-
-    <!--
-    <p><strong>Controls:</strong> Space: Create object | Left click: Place object | R: Remove selected item</p>
-
-    <label for="objectType">Object type</label>
-    <input type="text" id='objectType' name="objectType" value="">
-    <input id='create' type="submit" value="Create">-->
-    <!--<input id='add' type="submit" value="AddToBytecode">-->
-
-    <!--
-    <h3>Object types:</h3>
-    <div id="objectTypeDiv"></div>
-    <h3>Bytecode text:</h3>-->
-    <!--<button type="button" id="copyButton">Copy bytecode</button><br />-->
-    <!--<p id="bytecodeText">Empty scene</p>-->
-
-    <!--<input type="text" id="bytecodeText" value="">-->
-  </div>
-
+  <!--</div>-->
 
   <textarea id="bytecodeText" rows="8" cols="80"></textarea>
 
