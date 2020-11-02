@@ -1,11 +1,24 @@
+#myText{
+  top:100px;
+  left:80px;
+  z-index: 1000;
+  position: relative;
+
+}
+#parent{
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
 #game_surface{
   width: 100%;
   border:0;
   margin:0;
   padding: 0;
-  position: fixed;
   top:0;
   left:0;
+  position: fixed;
   image-rendering: optimizeSpeed;             /* Older versions of FF          */
   image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
   image-rendering: -webkit-optimize-contrast; /* Safari                        */
@@ -13,6 +26,7 @@
   image-rendering: pixelated;                 /* Awesome future-browsers       */
   -ms-interpolation-mode: nearest-neighbor;   /* IE                            */
 }
+
 
 /*
 *  ref: https://stackoverflow.com/questions/7615009/disable-interpolation-when-scaling-a-canvas

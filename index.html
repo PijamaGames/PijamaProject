@@ -8,8 +8,13 @@
 </head>
 
 <body onload="Main()">
-  <canvas id="game_surface" width="640" height="480"></canvas>
+  <div id="parent">
+    <input  type="text" id="myText" value="Introduce tu nombre...">
 
+  </div>
+
+  <canvas id="game_surface" width="640" height="480">
+  </canvas>
   <div hidden="false" id="editor" class="editor">
 
     <!--
@@ -29,6 +34,7 @@
 
     <!--<input type="text" id="bytecodeText" value="">-->
   </div>
+
 
   <textarea id="bytecodeText" rows="8" cols="80"></textarea>
 
@@ -107,6 +113,7 @@
   <script src="scripts/prefabs/particlePrefabs.js" charset="utf-8"></script>
   <script src="scripts/prefabs/mainMenuPrefabs.js" charset="utf-8"></script>
   <script src="scripts/prefabs/optionsPrefabs.js" charset="utf-8"></script>
+  <script src="scripts/prefabs/startPrefabs.js" charset="utf-8"></script>
   <script src="scripts/prefabs/galleryUIprefabs.js" charset="utf-8"></script>
   <script src="scripts/finder.js" charset="utf-8"></script>
   <script src="scripts/prefabs/mapEditor.js" charset="utf-8"></script>
@@ -116,6 +123,7 @@
   <script src="scripts/scenes/BC_MainMenu.js" charset="utf-8"></script>
   <script src="scripts/scenes/BC_Options.js" charset="utf-8"></script>
   <script src="scripts/scenes/BC_Gallery.js" charset="utf-8"></script>
+  <script src="scripts/scenes/BC_Start.js" charset="utf-8"></script>
 
 
   <script src="scripts/physics.js" charset="utf-8"></script>
