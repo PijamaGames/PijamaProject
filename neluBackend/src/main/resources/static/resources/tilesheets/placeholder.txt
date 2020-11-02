@@ -1,0 +1,1 @@
+los archivos siguen la convención: nombre_NxN (N = número de tiles que ocupa)
