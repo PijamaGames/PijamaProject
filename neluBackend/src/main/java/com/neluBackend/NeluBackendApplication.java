@@ -4,7 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 import com.neluBackend.controller.UserController;
 import com.neluBackend.model.UserModel;
@@ -13,8 +17,9 @@ import com.neluBackend.repository.UserRepository;
 
 
 @SpringBootApplication
+@EnableWebSocket
 //@EnableMongoRepositories(basePackageClasses=UserRepository.class)
-public class NeluBackendApplication implements CommandLineRunner {
+public class NeluBackendApplication implements WebSocketConfigurer {
 
 	@Autowired
 	private UserRepository repository;
@@ -24,9 +29,13 @@ public class NeluBackendApplication implements CommandLineRunner {
 	}
 	
 	@Override
-	public void run(String... args) throws Exception {
-		repository.save(new UserModel(2, "Alice", 0,0));
+	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+		registry.addHandler(gameHandler(), "/player");
 	}
 	
+	@Bean
+	public WebSocketGameHandler gameHandler() {
+		return new WebSocketGameHandler();
+	}
 	
 }

@@ -6,24 +6,25 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection="users")
 public class UserModel {
 
+	
+	//private int id;
 	@Id
-	private int id;
-	private String name;
+	private String id;
 	private int controlPoint;
 	private int points;
 	
-	public UserModel(int id, String name, int controlPoint, int points) {
-		this.id= id;
-		this.name = name;
+	public UserModel(String id, int controlPoint, int points) {
+		//this.id= id;
+		this.id = id;
 		this.controlPoint = controlPoint;
 		this.points = points;
 	}
 	
-	public int getId() {
+	/*public int getId() {
 		return id;
-	}
-	public String getName() {
-		return name;
+	}*/
+	public String getId() {
+		return id;
 	}
 	public int getControlPoint() {
 		return controlPoint;
@@ -32,11 +33,11 @@ public class UserModel {
 		return points;
 	}
 	
-	public void setId(int _id) {
+	/*public void setId(int _id) {
 		id = _id;
-	}
-	public void setName(String _name) {
-		name = _name;
+	}*/
+	public void setId(String _id) {
+		id = _id;
 	}
 	public void setControlPoint(int _controlPoint) {
 		controlPoint = _controlPoint;

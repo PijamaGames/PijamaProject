@@ -323,6 +323,7 @@ class Input {
   }
 
   CanvasToWorld(position){
+    if(!manager.scene.camera) return;
     let pos = position.Copy();
     let camPos = manager.scene.camera.transform.GetWorldPos();
     pos.x = (pos.x - manager.graphics.res.x / 2.0) / tileSize + camPos.x;

@@ -26,16 +26,22 @@ public class UserController {
 	private UserRepository repository;
 	
 	@PostMapping("/addUser")
-	public String SaveUser(@RequestBody UserModel user) {
-		repository.save(user);
-		return "Added user: " + user.toString();
+	public String SaveUser(@RequestBody String userName) {
+		Optional<UserModel> auxUser = repository.findById(userName);
+		if(auxUser.isPresent()) {
+			return "FAILURE";
+		} else {
+			UserModel user = new UserModel(userName,0,0);
+			repository.save(user);
+			return "SUCCESS";
+		}
 	}
 	
 	@PutMapping("/putUser")
 	public String UpdateUser(@RequestBody UserModel user) {
 		if(getUser(user.getId()) != null) {
 			repository.save(user);
-			return "Updated user: " + user.toString();
+			return "Updated user: " + user.getId();
 		} else {
 			return "USER DOES NOT EXIST";
 		}
@@ -47,15 +53,14 @@ public class UserController {
 	}
 	
 	@GetMapping("/findUser/{id}")
-	public Optional<UserModel> getUser(@PathVariable int id){
-		System.out.println(repository.findById(id).get().getName());
+	public Optional<UserModel> getUser(@PathVariable String id){
+		System.out.println(repository.findById(id).get().getId());
 		return repository.findById(id);
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	public String deleteUser(@PathVariable int id) {
+	public String deleteUser(@PathVariable String id) {
 		repository.deleteById(id);
-		return "user deleted with id: " + id;
+		return "user deleted: " + id;
 	}
-	
 }

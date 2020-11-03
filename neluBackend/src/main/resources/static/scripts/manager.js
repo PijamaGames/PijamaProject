@@ -60,7 +60,7 @@ class Manager {
     that.ManageTime();
     input.Update();
     //fsm.Update();
-    if (this.scene) {
+    if (this.scene && this.scene != null) {
       this.scene.Update();
       //this.scene.UpdatePhysics();
       physics.Update();
@@ -92,9 +92,11 @@ class Manager {
         that.graphics.SetLowSettings();
       }
 
-      that.LoadScene(initScene);
-      that.ms = Date.now();
-      that.GameLoop(that);
+      InitWebSocket(()=>{
+        that.LoadScene(initScene);
+        that.ms = Date.now();
+        that.GameLoop(that);
+      });
     });
   }
 
