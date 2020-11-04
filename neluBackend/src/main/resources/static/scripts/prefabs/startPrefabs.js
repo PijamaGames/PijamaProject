@@ -12,8 +12,19 @@ prefabFactory.AddPrototype("Entrar", new Vec2(5,2), new Vec2(0.5,0.5), false, ()
         event:backendEvents.LOGIN,
         name:nombreUsuario,
       });
-
     }),
     new TextBox(0.025, 0.07, [0.1,0.1,0.3], "Entrar"),
+  ]
+});
+
+prefabFactory.AddPrototype("introduceName", new Vec2(), new Vec2(0.5,0.5), false, ()=>{
+  return [
+    new TextBox2(null, "Introduce tu nombre", new Vec2(0.4,0.1), true),
+  ]
+});
+
+prefabFactory.AddPrototype("nameInputField", new Vec2(), new Vec2(0.5,0.5), false, ()=>{
+  return [
+    new InputField("userName","", new Vec2(0.4,0.1)),
   ]
 });

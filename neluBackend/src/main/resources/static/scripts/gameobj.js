@@ -57,6 +57,11 @@ class Gameobj {
 
   SetActive(active){
     this.selfActive=active;
+
+    for(var [key, component] of this.components){
+      component.OnSetActive(active);
+    }
+
     for (var [key, child] of this.children){
       child.SetParentActive(active);
     }
@@ -66,6 +71,9 @@ class Gameobj {
     this.parentActive = active;
     for (var [key, child] of this.children){
       child.SetParentActive(this.selfActive);
+      for(var [key, component] of child.components){
+        component.OnSetActive(active);
+      }
     }
   }
 

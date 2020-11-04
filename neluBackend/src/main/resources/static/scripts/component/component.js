@@ -13,6 +13,10 @@ class Component{
     return this.gameobj.active;
   }
 
+  OnSetActive(active){
+    
+  }
+
   SetScene(scene){
 
   }

@@ -35,12 +35,12 @@ function InitWebSocket(onOpenCallback){
     switch (msg.event) {
       case frontendEvents.LOGIN:
         var inputField = document.getElementById("userName");
-        var messageName = document.getElementById("message");
+        //var messageName = document.getElementById("message");
         if(msg.userAvaible){
           new User(inputField.value, msg.points, msg.controlPoint);
           manager.LoadScene("mainMenu");
-          inputField.hidden=true;
-          messageName.hidden=true;
+          //inputField.hidden=true;
+          //messageName.hidden=true;
           Log("user avaible");
         } else {
           inputField.value = "Usuario no disponible";
