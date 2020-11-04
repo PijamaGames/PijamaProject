@@ -23,6 +23,13 @@
   -ms-interpolation-mode: nearest-neighbor;   /* IE                            */
 }
 
+#message{
+  top:80px;
+  left:80px;
+  z-index: 1000;
+  position: fixed;
+  font-family: "Pixel Play";
+}
 
 /*
 *  ref: https://stackoverflow.com/questions/7615009/disable-interpolation-when-scaling-a-canvas
