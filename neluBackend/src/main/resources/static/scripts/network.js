@@ -33,23 +33,25 @@ function InitWebSocket(onOpenCallback){
     var msg=JSON.parse(message.data);
     Log("[FRONTEND] "+msg.event);
     switch (msg.event) {
-      case frontendEvents.LOGIN:
-        var inputField = document.getElementById("userName");
-        //var messageName = document.getElementById("message");
-        if(msg.userAvaible){
-          new User(inputField.value, msg.points, msg.controlPoint);
-          manager.LoadScene("mainMenu");
-          //inputField.hidden=true;
-          //messageName.hidden=true;
-          Log("user avaible");
-        } else {
-          inputField.value = "Usuario no disponible";
-          Log("user not avaible");
-        }
-
-        break;
-      default:
-
+      case frontendEvents.LOGIN: Login(msg); break;
     }
   };
+}
+
+function Login(msg){
+  var inputField = document.getElementById("userName");
+  if(msg.userAvaible){
+    new User(inputField.value, msg.points, msg.controlPoint);
+    manager.LoadScene("mainMenu");
+    Log("user avaible");
+  } else {
+    inputField.value = "";
+    var wrongNameElem = document.getElementById("wrongName");
+    wrongNameElem.hidden = false;
+    setTimeout(()=>{
+      wrongNameElem.hidden = true;
+    }, 4000);
+
+    Log("user not avaible");
+  }
 }
