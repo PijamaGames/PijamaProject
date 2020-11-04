@@ -184,7 +184,7 @@ class Graphics {
     this.message.style.fontSize =""+ (fontSize * Math.min((this.windowRes.x/this.windowRes.y),1))+"px";
     this.message.style.width = xSize+ "%";
     this.message.style.left =""+ 50-(xSize*0.5)+"%";
-    this.message.style.top = ""+20*Math.min((this.windowRes.x/this.windowRes.y),1)+"%";
+    this.message.style.top = ""+30*Math.min((this.windowRes.x/this.windowRes.y),1)+"%";
 
   }
 
