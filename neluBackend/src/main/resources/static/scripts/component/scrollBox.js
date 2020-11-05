@@ -9,11 +9,11 @@ class ScrollBox extends TextBox{
     this.element = document.createElement("div");
     this.element.style.overflow=scroll;
     this.element.setAttribute("type", "text");
-    this.element.className +=  "game_input";
+    this.element.className +=  "game_scrollBox";
     if(this.centered){
       this.element.style.textAlign = "center";
     }
-    var text = document.createTextNode("dxdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd dddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+    var text = document.createTextNode(this.text);
     this.element.appendChild(text);
 
     var parent = document.getElementById("UI");
