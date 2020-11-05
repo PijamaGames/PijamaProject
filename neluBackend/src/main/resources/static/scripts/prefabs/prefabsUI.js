@@ -20,6 +20,6 @@ prefabFactory.AddPrototype("uiTextBox", new Vec2(14,5), new Vec2(0.5,0.0), false
 prefabFactory.AddPrototype("lifeText", new Vec2(3.0,2), new Vec2(0.0,1.0), false, ()=>{
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5),
-    new TextBox(0.025, 0.07, [0.1,0.1,0.3], "XHP"),
+    new TextBox2(null, "XHP", new Vec2(0.3,0.1), true),
   ]
 });

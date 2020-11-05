@@ -7,7 +7,7 @@ prefabFactory.AddPrototype("StartButton", new Vec2(8,2), new Vec2(0.5,0.5), fals
     }).SetUpFunc(()=>{
       manager.LoadScene('tileTestScene');
     }),
-    new TextBox(0.025, 0.07, [0.1,0.1,0.3], "Empezar"),
+    new TextBox2(null, "Empezar", new Vec2(0.3,0.1), true),
   ]
 });
 
@@ -20,6 +20,6 @@ prefabFactory.AddPrototype("OptionsButton", new Vec2(8,2), new Vec2(0.5,0.5), fa
     }).SetUpFunc(()=>{
       manager.LoadScene('optionMenu');
     }),
-    new TextBox(0.025, 0.07, [0.1,0.1,0.3], "Opciones"),
+    new TextBox2(null, "Opciones", new Vec2(0.3,0.1), true),
   ]
 });

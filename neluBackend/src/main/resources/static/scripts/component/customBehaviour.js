@@ -1,0 +1,42 @@
+class CustomBehaviour extends Component{
+  constructor(){
+    super();
+    this.type = "CustomBehaviour";
+  }
+
+  Destroy(){
+    if(this.onDestroy) this.onDestroy(this.gameobj);
+  }
+
+  SetActive(active){
+    if(active){
+      if(this.onEnable) this.onEnable(this.gameobj);
+    } else {
+      if(this.onDisable) this.onDisable(this.gameobj);
+    }
+  }
+
+  SetOnCreate(onCreate){
+    this.onCreate = onCreate;
+    return this;
+  }
+  SetOnEnable(onEnable){
+    this.onEnable=onEnable;
+    return this;
+  }
+  SetOnDisable(onDisable){
+    this.onDisable = onDisable;
+    return this;
+  }
+
+  SetOnDestroy(onDestroy){
+    this.onDestroy=onDestroy;
+    return this;
+  }
+
+  SetGameobj(gameobj){
+    this.gameobj = gameobj;
+    this.gameobj.customBehaviour = this;
+    if(this.onCreate) this.onCreate(this.gameobj);
+  }
+}
