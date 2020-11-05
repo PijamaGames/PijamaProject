@@ -13,6 +13,7 @@ body{
   padding-right: 2vmin;
   left:0;
   top:0;
+  overflow: scroll;
 }
 
 .game_text{
@@ -27,7 +28,7 @@ body{
   -moz-user-select: none;
    -webkit-user-select: none;
    -ms-user-select: none;
-   user-select: none; 
+   user-select: none;
 }
 
 #UI{
