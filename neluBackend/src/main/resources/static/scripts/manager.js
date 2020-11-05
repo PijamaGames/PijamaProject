@@ -13,6 +13,9 @@ class Manager {
     finder = new Finder();
     //mapPlacer = new MapPlacer();
     physics = new Physics();
+    this.lastScene="";
+    this.lastGame="";
+    this.choosenEnviroment=-1;
   }
 
   ManageTime() {

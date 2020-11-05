@@ -1,4 +1,4 @@
-class InputField extends TextBox2{
+class InputField extends TextBox{
   constructor(id, text, scale, centered = false){
     super(id, text, scale, centered);
     this.isInputField = true;
@@ -20,12 +20,17 @@ class InputField extends TextBox2{
 
     if(this.id != null){
       this.element.id = this.id;
+      var inputField = document.getElementById(this.id);
+      inputField.value=this.text;
     }
   }
 
   SetText(text){
-    this.text = text;
-    this.element.value = text;
+    if(this.id != null){
+      this.element.id = this.id;
+      var inputField = document.getElementById(this.id);
+      inputField.value=text;
+    }
     return this;
   }
 }

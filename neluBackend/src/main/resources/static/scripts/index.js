@@ -16,6 +16,12 @@ function Main(){
   manager.AddScene(new Scene("optionMenu", BC_Options));
   manager.AddScene(new Scene("gallery", BC_Gallery));
   manager.AddScene(new Scene("start", BC_Start));
+  manager.AddScene(new Scene("pause", BC_Pause));
+  manager.AddScene(new Scene("singleGame", BC_SingleGame));
+  manager.AddScene(new Scene("multiGame", BC_MultiGame));
+  manager.AddScene(new Scene("lobby", BC_Lobby));
+  manager.AddScene(new Scene("chooseEnviroment", BC_ChooseEnviroment));
+  manager.AddScene(new Scene("room", BC_Room));
   manager.Start('start');
 }
 

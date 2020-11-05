@@ -40,11 +40,11 @@ function InitWebSocket(onOpenCallback){
 
 function Login(msg){
   var inputField = document.getElementById("userName");
-  if(msg.userAvaible){
+  if(msg.userAvaible && inputField.value!=""){
     new User(inputField.value, msg.points, msg.controlPoint);
     manager.LoadScene("mainMenu");
     Log("user avaible");
-  } else {
+  } else if (inputField.value!=""){
     inputField.value = "";
     var wrongNameElem = document.getElementById("wrongName");
     wrongNameElem.hidden = false;
