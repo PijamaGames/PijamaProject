@@ -4,11 +4,10 @@ import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.neluBackend.model.UserModel;
+import com.neluBackend.model.User;
 
-public interface UserRepository extends MongoRepository<UserModel, String> {
+public interface UserRepository extends MongoRepository<User, String> {
 	
 	@Override
-	public List<UserModel> findAll();
-	
+	public List<User> findAll();
 }

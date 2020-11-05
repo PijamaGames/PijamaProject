@@ -11,7 +11,7 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 import com.neluBackend.controller.UserController;
-import com.neluBackend.model.UserModel;
+import com.neluBackend.model.User;
 import com.neluBackend.repository.UserRepository;
 
 
