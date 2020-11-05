@@ -1,3 +1,8 @@
+prefabFactory.AddPrototype("DialogSystem", new Vec2(), new Vec2(), false, ()=>{
+  return [
+      new DialogSystem(dialogLevel1XML),
+  ];
+});
 
 prefabFactory.AddPrototype("PauseFromSingleGame", new Vec2(3,1), new Vec2(1.0,1.0), false, ()=>{
   return [

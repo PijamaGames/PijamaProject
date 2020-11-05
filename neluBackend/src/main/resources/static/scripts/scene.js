@@ -9,6 +9,7 @@ class Scene{
     this.rigidbodies = new Set();
     this.players = new Set();
     this.enemies = new Set();
+    this.paused = false;
     manager.scenes.set(this.name, this);
     this.camera = /*this.AddGameobj(*/new Gameobj('camera',0, null, this, [
       new Camera(2.5),
