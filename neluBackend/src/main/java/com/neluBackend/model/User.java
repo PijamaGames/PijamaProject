@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="users")
-public class UserModel {
+public class User {
 
 	
 	//private int id;
@@ -13,7 +13,7 @@ public class UserModel {
 	private int controlPoint;
 	private int points;
 	
-	public UserModel(String id, int controlPoint, int points) {
+	public User(String id, int controlPoint, int points) {
 		//this.id= id;
 		this.id = id;
 		this.controlPoint = controlPoint;
