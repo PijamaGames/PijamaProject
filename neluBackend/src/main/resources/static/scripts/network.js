@@ -1,7 +1,9 @@
 var serverURL = "http://localhost:8080";
 var webSocketURL = "localhost:8080/player";
 var socket = null;
-var publicRooms = new Set();
+var publicRooms = [];
+var roomButtons = [];
+var gameStarted = false;
 
 const frontendEvents = {
   LOGIN: "LOGIN",
@@ -9,6 +11,7 @@ const frontendEvents = {
   JOIN_ROOM: "JOIN_ROOM",
   GET_PUBLIC_ROOMS: "GET_PUBLIC_ROOMS",
   CONNECTION_LOST: "CONNECTION_LOST",
+  START_GAME: "START_GAME",
 }
 
 const backendEvents = {
@@ -17,6 +20,7 @@ const backendEvents = {
   JOIN_ROOM: "JOIN_ROOM",
   GET_PUBLIC_ROOMS: "GET_PUBLIC_ROOMS",
   LEAVE_ROOM:"LEAVE_ROOM",
+  START_GAME:"START_GAME",
 }
 
 async function getAllUsers() {
@@ -57,8 +61,16 @@ function InitWebSocket(onOpenCallback) {
       case frontendEvents.CONNECTION_LOST :
         ConnectionLost(msg);
         break;
+      case frontendEvents.START_GAME:
+        StartGame(msg);
+        break;
     }
   };
+}
+
+function StartGame(msg){
+  manager.LoadScene("multiGame");
+  gameStarted = true;
 }
 
 function CreateRoom(msg) {
@@ -69,28 +81,44 @@ function CreateRoom(msg) {
 }
 
 function JoinRoom(msg) {
-  if (msg.room != "") {
-    user.hostName=msg.room;
-    user.isClient=true;
-    manager.enviroment=msg.enviroment;
-    manager.lighting=msg.lighting;
-    manager.LoadScene("room");
+  if(user.isHost){
+    //Mostrar en la sala de espera el nombre del jugador que se ha conectado
+    //Activar el botón de comenzar
+  } else {
+    if (msg.room != "") {
+      user.hostName=msg.room;
+      user.isClient=true;
+      manager.enviroment=msg.enviroment;
+      manager.lighting=msg.lighting;
+      manager.LoadScene("room");
+    }
   }
+
 }
 
 function GetPublicRoom(msg) {
-  for (var i = 0; i < msg.numRooms; i++) {
-    if(!publicRooms.has(msg["room" + i])){
-      publicRooms.add(msg["room" + i]);
-      var buttons = document.getElementById("buttonsList");
-      if (buttons && buttons != null) {
-        var button = document.createElement("input");
-        button.type = "button";
-        button.value = "Escenario "+msg["enviroment"+i]+"\t"+msg["room" + i];
-        button.onclick = Onclick(msg["room" + i], msg["enviroment"+i],msg["lighting"+i]);
-        buttons.appendChild(button);
-      }
+  var buttons = document.getElementById("buttonsList");
+  let numButtons = roomButtons.length;
+  publicRooms = [];
+  for (var i = 0; i < msg.numRooms; i++){
+    var room = msg["room" + i];
+    var button;
+    if(i >= numButtons){
+      button = document.createElement("input");
+      button.type = "button";
+      buttons.appendChild(button);
+      roomButtons.push(button);
+    } else {
+      button = roomButtons[i];
     }
+    publicRooms.push(room);
+    button.value = "Escenario "+msg["enviroment"+i]+"\t"+room;
+    button.onclick = Onclick(room, msg["enviroment"+i],msg["lighting"+i]);
+  }
+
+  for(var i = msg.numRooms; i < numButtons; i++){
+    roomButtons.splice(msg.numRooms, 1);
+    buttons.removeChild(roomButtons[i]);
   }
 }
 function Onclick(room,enviroment,light){
@@ -101,13 +129,15 @@ function Onclick(room,enviroment,light){
     })
     user.hostName=room;
     manager.LoadScene("room");
-    publicRooms.clear();
   }
 }
 
 function ConnectionLost(msg) {
-  if(user.isClient){
+  if(gameStarted || user.isClient){
     manager.LoadScene("connectionFailed");
+  } else if(user.isHost) {
+    //Desactivar botón de comenzar
+    //Quitar nombre del jugador y volver a poner esperando...
   }
 
 
