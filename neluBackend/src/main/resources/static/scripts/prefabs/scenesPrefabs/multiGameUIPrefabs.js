@@ -1,4 +1,4 @@
-prefabFactory.AddPrototype("PauseFromMultiGame", new Vec2(3,1), new Vec2(1.0,1.0), false, ()=>{
+prefabFactory.AddPrototype("PauseFromMultiGame", new Vec2(3,1), new Vec2(0.0,1.0), false, ()=>{
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7).GiveFunctionality().SetHoverInFunc((obj)=>{
       obj.gameobj.transform.scale.Scale(1.1);

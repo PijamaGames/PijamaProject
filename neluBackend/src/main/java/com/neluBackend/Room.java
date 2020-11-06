@@ -13,16 +13,21 @@ public class Room {
 	private Player slaveHost;
 	boolean started;
 	boolean isPrivate;
+	int enviroment;
+	int lighting;
+	
 	
 	private ScheduledFuture<?> task;
 	
-	public Room(int id, Player host) {
+	public Room(int id, Player host, boolean isPrivate, int enviroment, int lighting) {
 		this.id = id;
 		this.slaveHost = host;
+		this.lighting=lighting;
+		this.enviroment=enviroment;
 		this.slaveHost.setRoom(this);
 		this.slaveHost.setIsHost(true);
 		this.slaveHost.setIsClient(false);
-		setPrivate(true);
+		setPrivate(isPrivate);
 	}
 	
 	public void setPrivate(boolean isPrivate) {

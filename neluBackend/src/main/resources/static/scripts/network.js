@@ -1,13 +1,21 @@
 var serverURL = "http://localhost:8080";
 var webSocketURL = "localhost:8080/player";
 var socket = null;
+var publicRooms=["ale","pedro","ale","pedro","ale","pedro","ale","pedro","ale","pedro","ale","pedro"];
 
 const frontendEvents = {
   LOGIN:"LOGIN",
+  CREATE_ROOM:"CREATE_ROOM",
+  JOIN_ROOM:"JOIN_ROOM",
+  GET_PUBLIC_ROOMS:"GET_PUBLIC_ROOMS",
+  CONNECTION_LOST:"CONNECTION_LOST",
 }
 
 const backendEvents = {
   LOGIN:"LOGIN",
+  CREATE_ROOM:"CREATE_ROOM",
+  JOIN_ROOM:"JOIN_ROOM",
+  GET_PUBLIC_ROOMS:"GET_PUBLIC_ROOMS",
 }
 
 async function getAllUsers(){
@@ -34,8 +42,34 @@ function InitWebSocket(onOpenCallback){
     Log("[FRONTEND] "+msg.event);
     switch (msg.event) {
       case frontendEvents.LOGIN: Login(msg); break;
+      case frontendEvents.CREATE_ROOM: CreateRoom(msg); break;
+      case frontendEvents.JOIN_ROOM: JoinRoom(msg); break;
+      case frontendEvents.GET_PUBLIC_ROOM: GetPublicRoom(msg); break;
+      case frontendEvents.CONNECTION_LOST: ConnectionLost(msg); break;
     }
   };
+}
+
+function CreateRoom(msg){
+  if(msg.room!=-1){
+    user.hostName=user.name;
+  }
+}
+
+function JoinRoom(msg){
+  if(msg.room!=-1){
+    user.hostName=msg.room;
+  }
+}
+
+function GetPublicRoom(msg){
+  for(var i=0;i<msg.numRooms;i++){
+    publicRooms.push(msg["room"+i]);
+  }
+}
+
+function ConnectionLost(msg){
+  manager.LoadScene("connectionFailed");
 }
 
 function Login(msg){

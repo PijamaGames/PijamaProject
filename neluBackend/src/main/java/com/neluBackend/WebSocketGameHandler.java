@@ -125,11 +125,14 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 
 	private ObjectNode createRoom(JsonNode inMsg, ObjectNode outMsg, Player player) {
 		boolean playerAlreadyInRoom = player.getRoom() != null;
-
+		int  enviroment= inMsg.get("enviroment").asInt();
+		boolean  isPrivate= inMsg.get("private").asBoolean();
+		int  lighting= inMsg.get("lighting").asInt();
+		
 		outMsg.put("event", FrontEndEvents.CREATE_ROOM);
 
 		if (!playerAlreadyInRoom) {
-			Room room = game.addRoom(new Room(roomId.incrementAndGet(), player));
+			Room room = game.addRoom(new Room(roomId.incrementAndGet(), player,isPrivate,enviroment,lighting));
 			outMsg.put("room", room.getId());
 		} else {
 			outMsg.put("room", -1);

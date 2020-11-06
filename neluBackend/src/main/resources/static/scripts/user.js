@@ -9,7 +9,7 @@ class User{
 
     this.isHost = false;
     this.isClient = false;
-    this.roomId = -1;
+    this.hostName = "";
 
     user = this;
   }

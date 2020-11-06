@@ -7,7 +7,6 @@ class ScrollBox extends TextBox{
 
   CreateElement(){
     this.element = document.createElement("div");
-    this.element.style.overflow=scroll;
     this.element.setAttribute("type", "text");
     this.element.className +=  "game_scrollBox";
     if(this.centered){

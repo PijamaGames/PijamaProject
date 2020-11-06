@@ -11,8 +11,16 @@ prefabFactory.AddPrototype("RoomFromChoosing", new Vec2(4,2), new Vec2(0.5,0.0),
     }).SetHoverOutFunc((obj)=>{
       obj.gameobj.transform.scale.Scale(1.0/1.1);
     }).SetUpFunc(()=>{
-      if(manager.choosenEnviroment!=-1)
+      if(manager.choosenEnviroment!=-1){
         manager.LoadScene("room");
+        SendWebSocketMsg({
+          event:backendEvents.CREATE_ROOM,
+          enviroment:manager.choosenEnviroment,
+          lighting: lighting.currentLight,
+          private: manager.privateRoom,
+        });
+      }
+
     }),
     new TextBox(null, "Empezar", new Vec2(0.3,0.1), true),
   ]
@@ -75,6 +83,30 @@ prefabFactory.AddPrototype("Option4", new Vec2(5,3), new Vec2(0.5,0.0), false, (
     }),
   ]
 });
+prefabFactory.AddPrototype("Lighting", new Vec2(1,1), new Vec2(0.5,0.5), false, ()=>{
+  return [
+    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7).GiveFunctionality().SetHoverInFunc((obj)=>{
+      obj.gameobj.transform.scale.Scale(1.1);
+    }).SetHoverOutFunc((obj)=>{
+      obj.gameobj.transform.scale.Scale(1.0/1.1);
+    }).SetUpFunc(()=>{
+      switch(lighting.currentLight){
+        case 1:
+          lighting.SetAfterNoon();
+          lighting.currentLight=2;
+        break;
+        case 2:
+          lighting.SetNight();
+          lighting.currentLight=3;
+        break;
+        case 3:
+          lighting.SetMorning();
+          lighting.currentLight=1;
+        break;
+      }
+    }),
+  ]
+});
 prefabFactory.AddPrototype("PrivacityOption", new Vec2(4,2), new Vec2(0.5,0.0), false, ()=>{
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7).GiveFunctionality().SetHoverInFunc((obj)=>{
@@ -82,11 +114,13 @@ prefabFactory.AddPrototype("PrivacityOption", new Vec2(4,2), new Vec2(0.5,0.0), 
     }).SetHoverOutFunc((obj)=>{
       obj.gameobj.transform.scale.Scale(1.0/1.1);
     }).SetUpFunc((obj)=>{
-      if(obj.gameobj.textBox.text=="Privada"){
+      if(manager.privateRoom){
         obj.gameobj.textBox.SetText("Pública");
+        manager.privateRoom=false;
       }
       else{
         obj.gameobj.textBox.SetText("Privada");
+        manager.privateRoom=true;
       }
 
     }),

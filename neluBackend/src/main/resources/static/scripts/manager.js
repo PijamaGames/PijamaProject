@@ -16,6 +16,7 @@ class Manager {
     this.lastScene="";
     this.lastGame="";
     this.choosenEnviroment=-1;
+    this.privateRoom=false;
   }
 
   ManageTime() {

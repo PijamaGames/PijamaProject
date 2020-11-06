@@ -4,6 +4,12 @@ body{
   padding: 0;
 }
 
+input{
+  display: block;
+  width: 100%;
+  height: 8vmin;
+}
+
 .game_input{
   z-index: 1000;
   position: absolute;

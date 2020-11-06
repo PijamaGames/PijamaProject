@@ -47,6 +47,7 @@ class Lighting{
     this.bloomBlur = 0.01;
     this.bloomStrength = 0.5;
 
+    this.currentLight=1;
     this.SetMorning();
   }
 
