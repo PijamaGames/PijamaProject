@@ -43,6 +43,14 @@ public class Room {
 		return isPrivate;
 	}
 	
+	public int getEnviroment() {
+		return enviroment;
+	}
+	
+	public int getLighting() {
+		return lighting;
+	}
+	
 	public Player getMasterClient() {
 		return masterClient;
 	}
@@ -92,6 +100,7 @@ public class Room {
 		}
 		
 		GameHandler.INSTANCE.removeRoom(this);
+		GameHandler.INSTANCE.removePublicRoom(this);
 	}
 	
 	public void Update() {

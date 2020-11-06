@@ -165,11 +165,13 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 			if (hostRoom != null && !hostRoom.hasStarted()) {
 				hostRoom.setClient(player);
 				hostRoom.startGame();
-				outMsg.put("room", hostRoom.getId());
+				outMsg.put("room", hostRoom.getSlaveHost().getName());
+				outMsg.put("enviroment", hostRoom.getEnviroment());
+				outMsg.put("lighting", hostRoom.getLighting());
 				return outMsg;
 			}
 		}
-		outMsg.put("room", -1);
+		outMsg.put("room", "");
 		return outMsg;
 	}
 
@@ -181,7 +183,7 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 		int size = 0;
 		for (Room room : publicRooms) {
 			outMsg.put("room" + size, room.getSlaveHost().getName());
-			outMsg.put("roomId" + size, room.getId());
+			outMsg.put("enviroment" + size, room.getEnviroment());
 			size++;
 		}
 		outMsg.put("numRooms", size);
@@ -198,9 +200,9 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 				ObjectNode outMsg = mapper.createObjectNode();
 				outMsg.put("event", FrontEndEvents.CONNECTION_LOST);
 				if (player.getIsHost()) {
-					room.getMasterClient().sendMessage(outMsg.asText());
+					room.getMasterClient().sendMessage(outMsg.toString());
 				} else {
-					room.getSlaveHost().sendMessage(outMsg.asText());
+					room.getSlaveHost().sendMessage(outMsg.toString());
 				}
 			}
 			room.stopGame();

@@ -1,7 +1,7 @@
 var serverURL = "http://localhost:8080";
 var webSocketURL = "localhost:8080/player";
 var socket = null;
-var publicRooms = [];
+var publicRooms = new Set();
 
 const frontendEvents = {
   LOGIN: "LOGIN",
@@ -16,6 +16,7 @@ const backendEvents = {
   CREATE_ROOM: "CREATE_ROOM",
   JOIN_ROOM: "JOIN_ROOM",
   GET_PUBLIC_ROOMS: "GET_PUBLIC_ROOMS",
+  LEAVE_ROOM:"LEAVE_ROOM",
 }
 
 async function getAllUsers() {
@@ -53,7 +54,7 @@ function InitWebSocket(onOpenCallback) {
       case frontendEvents.GET_PUBLIC_ROOMS:
         GetPublicRoom(msg);
         break;
-      case frontendEvents.CONNECTION_LOST:
+      case frontendEvents.CONNECTION_LOST :
         ConnectionLost(msg);
         break;
     }
@@ -63,37 +64,55 @@ function InitWebSocket(onOpenCallback) {
 function CreateRoom(msg) {
   if (msg.room != -1) {
     user.hostName = user.name;
+    user.isHost=true;
   }
 }
 
 function JoinRoom(msg) {
-  if (msg.room != -1) {
-    user.hostName = msg.room;
+  if (msg.room != "") {
+    user.hostName=msg.room;
+    user.isClient=true;
+    manager.enviroment=msg.enviroment;
+    manager.lighting=msg.lighting;
+    manager.LoadScene("room");
   }
 }
 
 function GetPublicRoom(msg) {
   for (var i = 0; i < msg.numRooms; i++) {
-    publicRooms.push(msg["room" + i]);
-  }
-  var buttons = document.getElementById("buttonsList");
-  if (buttons && buttons != null) {
-    for (var room of publicRooms) {
-      var button = document.createElement("input");
-      button.type = "button";
-      button.value = room;
-      //button.onclick = OnClick;
-      buttons.appendChild(button);
+    if(!publicRooms.has(msg["room" + i])){
+      publicRooms.add(msg["room" + i]);
+      var buttons = document.getElementById("buttonsList");
+      if (buttons && buttons != null) {
+        var button = document.createElement("input");
+        button.type = "button";
+        button.value = "Escenario "+msg["enviroment"+i]+"\t"+msg["room" + i];
+        button.onclick = Onclick(msg["room" + i], msg["enviroment"+i],msg["lighting"+i]);
+        buttons.appendChild(button);
+      }
     }
-
   }
 }
-function OnClick(){
-  Log("holi");
+function Onclick(room,enviroment,light){
+  return function(){
+    SendWebSocketMsg({
+      event:"JOIN_ROOM",
+      hostName: room,
+    })
+    user.hostName=room;
+    manager.LoadScene("room");
+    publicRooms.clear();
+  }
 }
 
 function ConnectionLost(msg) {
-  manager.LoadScene("connectionFailed");
+  if(user.isClient){
+    manager.LoadScene("connectionFailed");
+  }
+
+
+  //else
+    //BORRAR LA SALA DE LA LISTA
 }
 
 function Login(msg) {

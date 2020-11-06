@@ -23,7 +23,15 @@ prefabFactory.AddPrototype("ChoosingFromRoom", new Vec2(4,2), new Vec2(0.5,0.0),
     }).SetHoverOutFunc((obj)=>{
       obj.gameobj.transform.scale.Scale(1.0/1.1);
     }).SetUpFunc(()=>{
-      manager.LoadScene("chooseEnviroment");
+      if(user.hostName==user.name){
+        SendWebSocketMsg({
+          event:backendEvents.LEAVE_ROOM,
+        })
+        manager.LoadScene("chooseEnviroment");
+      }
+      else
+        manager.LoadScene("lobby");
+
     }),
     new TextBox(null, "Volver", new Vec2(0.3,0.1), true),
   ]
