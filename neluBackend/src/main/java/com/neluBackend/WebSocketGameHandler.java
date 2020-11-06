@@ -32,6 +32,7 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 		public final static String CREATE_ROOM = "CREATE_ROOM";
 		public final static String JOIN_ROOM = "JOIN_ROOM";
 		public final static String GET_PUBLIC_ROOMS = "GET_PUBLIC_ROOMS";
+		public final static String LEAVE_ROOM = "LEAVE_ROOM";
 	}
 
 	private GameHandler game = GameHandler.INSTANCE;
@@ -75,19 +76,24 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 			switch (event) {
 			case BackEndEvents.LOGIN:
 				outMsg = login(inMsg, outMsg, player);
+				player.sendMessage(outMsg.toString());
 				break;
 			case BackEndEvents.CREATE_ROOM:
 				outMsg = createRoom(inMsg, outMsg, player);
+				player.sendMessage(outMsg.toString());
 				break;
 			case BackEndEvents.JOIN_ROOM:
 				outMsg = joinRoom(inMsg, outMsg, player);
+				player.sendMessage(outMsg.toString());
 				break;
 			case BackEndEvents.GET_PUBLIC_ROOMS:
 				outMsg = getPublicRooms(inMsg, outMsg, player);
+				player.sendMessage(outMsg.toString());
+				break;
+			case BackEndEvents.LEAVE_ROOM:
+				connectionLost(player);
 				break;
 			}
-
-			player.sendMessage(outMsg.toString());
 
 		} catch (Exception e) {
 			System.err.println("Exception processing message" + message.getPayload());
