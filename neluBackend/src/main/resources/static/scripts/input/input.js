@@ -281,20 +281,31 @@ class Input {
     }
   }
 
-  GetKeyDown(key) {
+  GetKeyDown(key, consume = false) {
     this.CheckHasKey(key);
     let val = this.keys.get(key);
     if (!val) return false;
+    if(consume && val.down){
+      let v = val.down;
+      val.down = false;
+      return v;
+    }
     return val.down;
   }
   GetKeyDownF(key) {
     return this.GetKeyDown(key) ? 1.0 : 0.0;
   }
-  GetKeyUp(key) {
+  GetKeyUp(key, consume = false) {
     this.CheckHasKey(key);
     let val = this.keys.get(key);
     if (!val) return false;
+    if(consume && val.up){
+      let v = val.up;
+      val.up = false;
+      return v;
+    }
     return val.up;
+
   }
   getKeyUpF(key) {
     return this.GetKeyUp(key) ? 1.0 : 0.0;

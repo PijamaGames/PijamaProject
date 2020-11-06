@@ -1,7 +1,7 @@
 var dialogLevel1XML = `
 <root>
 	<dialog>
-		<id>String</id>
+		<id>testDialog</id>
 		<text>
       <focus>nelu</focus>
 			<name>

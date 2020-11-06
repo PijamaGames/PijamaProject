@@ -176,10 +176,14 @@ class PlayerController extends Component {
     }).SetUpdateFunc(()=>{
       that.PlayerADAttack();
     }).SetEdges([
-      new Edge('run').AddCondition(()=>that.rawLeftAxis.mod > 0.05).SetFunc(()=>{
+      new Edge('run').AddCondition(()=>{
+        return that.rawLeftAxis.mod > 0.05 && !manager.scene.paused
+      }).SetFunc(()=>{
         that.gameobj.renderer.SetAnimation('run');
       }),
-      new Edge('attack1').AddCondition(()=>input.GetAttackCACDown() && that.canAttack),
+      new Edge('attack1').AddCondition(()=>{
+        return input.GetAttackCACDown() && that.canAttack && !manager.scene.paused
+      }),
     ]);
 
     let runNode = new Node('run').SetOnCreate(()=>{
@@ -197,6 +201,7 @@ class PlayerController extends Component {
 
     }).SetEdges([
       new Edge('idle').AddCondition(()=>that.rawLeftAxis.mod < 0.05),
+      new Edge('idle').AddCondition(()=>manager.scene.paused),
       new Edge('attack1').AddCondition(()=>input.GetAttackCACDown() && that.canAttack),
       new Edge('dash').AddCondition(()=>input.GetDashDown() && that.dashCooldown > that.dashMaxCooldown),
     ]);
@@ -226,6 +231,7 @@ class PlayerController extends Component {
       that.numCombo = 2;
       that.particles.SetActive(false);
     }).SetEdges([
+      new Edge('idle').AddCondition(()=>manager.scene.paused),
       new Edge('waitCombo').AddCondition(()=>that.endAttackAnim),
     ]);
 
@@ -248,6 +254,7 @@ class PlayerController extends Component {
       that.numCombo = 3;
       that.particles.SetActive(false);
     }).SetEdges([
+      new Edge('idle').AddCondition(()=>manager.scene.paused),
       new Edge('waitCombo').AddCondition(()=>that.endAttackAnim),
     ]);
 
@@ -270,6 +277,7 @@ class PlayerController extends Component {
       that.particles.SetActive(false);
       this.canAttack = false;
     }).SetEdges([
+      new Edge('idle').AddCondition(()=>manager.scene.paused),
       new Edge('waitCombo').AddCondition(()=>that.endAttackAnim),
     ]);
 
@@ -280,6 +288,7 @@ class PlayerController extends Component {
       that.waitComboTime += manager.delta;
       that.combo = (that.combo || input.GetKeyPressed("Space")) && that.numCombo <= 3;
     }).SetEdges([
+      new Edge('idle').AddCondition(()=>manager.scene.paused),
       new Edge('idle').AddCondition(()=>!that.combo && that.rawLeftAxis.mod < 0.05 && that.waitComboTime > that.waitComboMaxTime),
       new Edge('run').AddCondition(()=>!that.combo &&that.rawLeftAxis.mod > 0.05 && that.waitComboTime > that.waitComboMaxTime).SetFunc(()=>{
         that.gameobj.renderer.SetAnimation('run');
@@ -300,6 +309,7 @@ class PlayerController extends Component {
       that.gameobj.renderer.paused = false;
       that.dashCooldown = 0.0;
     }).SetEdges([
+      new Edge('idle').AddCondition(()=>manager.scene.paused),
       new Edge('idle').AddCondition(()=>that.rawLeftAxis.mod < 0.05 && that.dashTime > that.dashMaxTime),
       new Edge('run').AddCondition(()=>that.rawLeftAxis.mod > 0.05 && that.dashTime > that.dashMaxTime),
     ]);
