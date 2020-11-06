@@ -90,6 +90,8 @@ public class Room {
 			isPrivate = true;
 			Log("stopped");
 		}
+		
+		GameHandler.INSTANCE.removeRoom(this);
 	}
 	
 	public void Update() {

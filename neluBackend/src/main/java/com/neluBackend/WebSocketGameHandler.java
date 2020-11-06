@@ -131,14 +131,14 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 
 	private ObjectNode createRoom(JsonNode inMsg, ObjectNode outMsg, Player player) {
 		boolean playerAlreadyInRoom = player.getRoom() != null;
-		int  enviroment= inMsg.get("enviroment").asInt();
-		boolean  isPrivate= inMsg.get("private").asBoolean();
-		int  lighting= inMsg.get("lighting").asInt();
-		
+		int enviroment = inMsg.get("enviroment").asInt();
+		boolean isPrivate = inMsg.get("private").asBoolean();
+		int lighting = inMsg.get("lighting").asInt();
+
 		outMsg.put("event", FrontEndEvents.CREATE_ROOM);
 
 		if (!playerAlreadyInRoom) {
-			Room room = game.addRoom(new Room(roomId.incrementAndGet(), player,isPrivate,enviroment,lighting));
+			Room room = game.addRoom(new Room(roomId.incrementAndGet(), player, isPrivate, enviroment, lighting));
 			outMsg.put("room", room.getId());
 		} else {
 			outMsg.put("room", -1);
@@ -193,15 +193,16 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 		game.removePlayer(player);
 
 		Room room = player.getRoom();
-		if (room != null && room.getMasterClient() != null && room.getSlaveHost() != null) {
-			ObjectNode outMsg = mapper.createObjectNode();
-			outMsg.put("event", FrontEndEvents.CONNECTION_LOST);
-			if (player.getIsHost()) {
-				room.getMasterClient().sendMessage(outMsg.asText());
-			} else {
-				room.getSlaveHost().sendMessage(outMsg.asText());
+		if (room != null) {
+			if (room.getMasterClient() != null && room.getSlaveHost() != null) {
+				ObjectNode outMsg = mapper.createObjectNode();
+				outMsg.put("event", FrontEndEvents.CONNECTION_LOST);
+				if (player.getIsHost()) {
+					room.getMasterClient().sendMessage(outMsg.asText());
+				} else {
+					room.getSlaveHost().sendMessage(outMsg.asText());
+				}
 			}
-
 			room.stopGame();
 		}
 	}
