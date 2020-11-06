@@ -53,8 +53,8 @@ class TextBox extends Component{
   }
 
   ElementResponsive(){
-    const fontSize = 5;
-    this.element.style.fontSize = "" + fontSize + "vmin";
+    /*const fontSize = 5;
+    this.element.style.fontSize = "" + fontSize + "vmin";*/
 
     let width = this.scale.x*100;
     let height = this.scale.y*100;

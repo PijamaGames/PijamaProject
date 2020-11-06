@@ -5,21 +5,17 @@ class ScrollButtton extends TextBox{
   }
 
   CreateElement(){
+
     this.element = document.createElement("div");
+    if(this.id!=null){
+      this.element.id=this.id;
+    }
+
     this.element.className +=  "game_scrollBox";
     var parent = document.getElementById("UI");
     parent.appendChild(this.element);
 
-    for (var room of publicRooms){
-      var button = document.createElement("input");
-      button.type = "button";
-      button.value = room;
-      button.onclick = this.OnClick;
-      this.element.appendChild(button);
-    }
   }
 
-  OnClick(){
-    Log("holi");
-  }
+
 }

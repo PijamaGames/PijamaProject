@@ -15,9 +15,16 @@ class CustomBehaviour extends Component{
       if(this.onDisable) this.onDisable(this.gameobj);
     }
   }
-
+  Update(){
+    if(this.onUpdate)
+      this.onUpdate(this.gameobj);
+  }
   SetOnCreate(onCreate){
     this.onCreate = onCreate;
+    return this;
+  }
+  SetOnUpdate(onUpdate){
+    this.onUpdate=onUpdate;
     return this;
   }
   SetOnEnable(onEnable){

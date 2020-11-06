@@ -58,13 +58,23 @@ prefabFactory.AddPrototype("RankingText", new Vec2(7,2), new Vec2(0.5,0.5), fals
 prefabFactory.AddPrototype("RankingTextBox", new Vec2(7,9), new Vec2(0.5,0.5), false, ()=>{
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5),
-    new ScrollBox(null, "", new Vec2(0.3,0.6), true),
+    new ScrollBox("scrollButtons", "", new Vec2(0.4,0.55), true),
+
   ]
 });
 prefabFactory.AddPrototype("RoomsButtonBox", new Vec2(7,7), new Vec2(0.5,0.5), false, ()=>{
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5),
-    new ScrollButtton(null, "", new Vec2(0.4,0.4), true),
+    new ScrollButtton("buttonsList", "", new Vec2(0.4,0.4), true),
+    new CustomBehaviour().SetOnCreate((obj)=>obj.cont=0).SetOnUpdate((obj)=>{
+      obj.cont+=manager.delta;
+      if(obj.cont>=5){
+        SendWebSocketMsg({
+          event:frontendEvents.GET_PUBLIC_ROOMS
+        })
+        obj.cont=0;
+      }
+    })
   ]
 });
 prefabFactory.AddPrototype("RoomsText", new Vec2(7,2), new Vec2(0.5,0.5), false, ()=>{
