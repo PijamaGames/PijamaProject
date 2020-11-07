@@ -2,7 +2,7 @@ class Rigidbody extends Component{
 
   constructor(drag = 0.4){
     super();
-    this.drag = drag;
+    this.drag = drag*0.32;
     this.originalDrag = this.drag;
     this.type="rigidbody";
     this.force = new Vec2();
@@ -34,7 +34,18 @@ class Rigidbody extends Component{
   }
 
   PrepareVelocity(){
-    this.velocity.Scale(this.drag);
+    //this.velocity.Scale(this.drag);
+    //Log("prev speed: "+this.velocity.mod);
+    /*this.velocity.Set(
+      this.velocity.x * (1.0-manager.delta) + this.velocity.x * this.drag * manager.delta,
+      this.velocity.y * (1.0-manager.delta) + this.velocity.y * this.drag * manager.delta
+    );*/
+    /*let powResult = Math.pow(this.drag, manager.delta);
+    this.velocity.Scale(powResult);*/
+    //Log("post speed: "+this.velocity.mod);
+
+    this.force.Add(Vec2.Scale(this.velocity, -this.drag));
+
     this.velocity.Add(this.force);
     this.force.Set(0.0,0.0);
 

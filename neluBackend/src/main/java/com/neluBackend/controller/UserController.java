@@ -57,7 +57,7 @@ public class UserController {
 	public List<User> getUsers(){
 		return repository.findAll();
 	}
-	
+
 	@GetMapping("/ranking")
 	public List<User> ranking(){
 		List<User> users = repository.findAll();

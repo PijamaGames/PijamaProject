@@ -3,7 +3,7 @@ class PlayerController extends Component {
     super();
     this.type = "playerController";
     this.speed = 2.0;
-    this.camOffset = 3.0;
+    this.camOffset = 5.0;
     this.leftAxis = new Vec2();
     this.rawLeftAxis = new Vec2();
     this.lerpLeftAxis = 10.0;

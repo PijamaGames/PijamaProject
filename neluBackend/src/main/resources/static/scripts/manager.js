@@ -8,7 +8,7 @@ class Manager {
     this.sleepingScenes = new Map();
     this.delta = 0.0;
     this.ms = null;
-    this.targetFPS = 40;
+    this.targetFPS = 144;
     this.musicVolume=1.0;
     this.language=0;
     finder = new Finder();
@@ -105,6 +105,7 @@ class Manager {
           that.graphics.SetMaxSettings();
         } else {
           that.graphics.SetLowSettings();
+          manager.targetFPS = 35;
         }
 
         that.LoadScene(initScene);
