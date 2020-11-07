@@ -195,11 +195,11 @@ prefabFactory.AddPrototype("LogVertical", new Vec2(1,2), new Vec2(0,0), true, ()
   ]
 });
 
-prefabFactory.AddPrototype("Apple", new Vec2(1,1), new Vec2(0,0), true, ()=>{
+/*prefabFactory.AddPrototype("Apple", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(4,3), new Vec2(1,1), false),
   ]
-});
+});*/
 
 prefabFactory.AddPrototype("CampLog", new Vec2(1,2), new Vec2(0,0), true, ()=>{
   return [
@@ -687,11 +687,9 @@ prefabFactory.AddPrototype("apple", new Vec2(1, 1), new Vec2(0.5, 0.5), false, (
         obj.playerController.TakeDamage(5);
         apple.appleController.enemy.enemyController.PoolAdd(apple);
       }
-      Log(apple.appleController.enemy.enemyController)
-
     }, null, null
     )]),
-    new Renderer(new Vec2(3, 4),new Vec2(2,2), true),
+    new Renderer(new Vec2(4,3), new Vec2(1,1), false),
     new Rigidbody(0.9),
     new AppleController(),
   ]

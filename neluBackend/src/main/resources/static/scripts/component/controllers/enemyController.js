@@ -131,7 +131,7 @@ class EnemyController extends Component {
 
     }).SetUpdateFunc(()=>{
       let target=that.FindClosestPlayer(that.attackADRange);
-      if(this.contTimeAD>=this.resetADAttackTime){
+      if(this.contTimeAD>=this.resetADAttackTime && target != null){
 
         this.PoolPop(target);
         this.contTimeAD=0;
