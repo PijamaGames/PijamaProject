@@ -77,26 +77,29 @@ function CreateRoom(msg) {
   if (msg.room != -1) {
     user.hostName = user.name;
     user.isHost=true;
+    manager.LoadScene("room");
   }
 }
 
 function JoinRoom(msg) {
-  var text=document.getElementById("WaitingMessage");
   if(user.isHost){
+    let text=document.getElementById("WaitingMessage");
     text.innerHTML=msg.clientName+" se ha unido a la sala";
     var obj=finder.FindObjectsByType("MultiGameFromRoom");
     if(obj.length>0) obj[0].SetActive(true);
   } else {
+    Log("ROOM: " + msg.room);
     if (msg.room != "") {
+      manager.LoadScene("room");
+      let text=document.getElementById("WaitingMessage");
       user.hostName=msg.room;
       text.innerHTML="Te has unido a la sala de "+user.hostName;
       user.isClient=true;
       manager.enviroment=msg.enviroment;
       manager.lighting=msg.lighting;
-      manager.LoadScene("room");
+
     }
   }
-
 }
 
 function GetPublicRoom(msg) {
@@ -120,8 +123,8 @@ function GetPublicRoom(msg) {
   }
 
   for(var i = msg.numRooms; i < numButtons; i++){
-    roomButtons.splice(msg.numRooms, 1);
     buttons.removeChild(roomButtons[i]);
+    roomButtons.splice(msg.numRooms, 1);
   }
 }
 function Onclick(room,enviroment,light){
@@ -144,7 +147,6 @@ function ConnectionLost(msg) {
     var obj=finder.FindObjectsByType("MultiGameFromRoom");
     if(obj.length>0) obj[0].SetActive(false);
   }
-
 }
 
 function Login(msg) {

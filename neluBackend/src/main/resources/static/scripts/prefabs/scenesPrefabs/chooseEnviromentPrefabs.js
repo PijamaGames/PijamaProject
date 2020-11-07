@@ -11,7 +11,7 @@ prefabFactory.AddPrototype("RoomFromChoosing", new Vec2(4,2), new Vec2(0.5,0.0),
     }).SetHoverOutFunc((obj)=>{
       obj.gameobj.transform.scale.Scale(1.0/1.1);
     }).SetUpFunc(()=>{
-      manager.LoadScene("room");
+
       SendWebSocketMsg({
         event:backendEvents.CREATE_ROOM,
         enviroment:manager.choosenEnviroment,
@@ -119,8 +119,10 @@ prefabFactory.AddPrototype("PrivacityOption", new Vec2(4,2), new Vec2(0.5,0.0), 
         obj.gameobj.textBox.SetText("Privada");
         manager.privateRoom=true;
       }
-
     }),
     new TextBox(null, "Pública", new Vec2(0.3,0.1), true),
+    new CustomBehaviour().SetOnDestroy((obj)=>{
+      manager.privateRoom = false;
+    })
   ]
 });

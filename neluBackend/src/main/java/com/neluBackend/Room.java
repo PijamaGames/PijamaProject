@@ -69,9 +69,11 @@ public class Room {
 	
 	public void setClient(Player client) {
 		masterClient = client;
-		masterClient.setIsClient(true);
-		masterClient.setIsHost(false);
-		masterClient.setRoom(this);
+		if(client != null) {
+			masterClient.setIsClient(true);
+			masterClient.setIsHost(false);
+			masterClient.setRoom(this);
+		}
 	}
 	
 	public void startGame() {
@@ -98,6 +100,8 @@ public class Room {
 			isPrivate = true;
 			Log("stopped");
 		}
+		
+		
 		
 		GameHandler.INSTANCE.removeRoom(this);
 		GameHandler.INSTANCE.removePublicRoom(this);

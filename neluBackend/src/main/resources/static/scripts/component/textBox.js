@@ -69,7 +69,7 @@ class TextBox extends Component{
     let gameAspectRatio = gameResX/manager.graphics.res.y;
 
     let leftDisplacement = ((1.0-(gameResX/canvas.width))*0.5)*aspectRatio;
-    this.element.style.left = "" + (pos.x+anchor.x*gameAspectRatio+leftDisplacement)*100-(width*0.5) - (this.isInputField ? 2.0 : 0.0) +"vmin";
+    this.element.style.left = "" + (pos.x+anchor.x*gameAspectRatio+leftDisplacement)*100-(width*0.5) - (this.isInputField ? 4.0 : 0.0) +"vmin";
 
     this.element.style.top = "" + (-pos.y+1.0-anchor.y)*100 - (height*0.5) + "vmin";
   }

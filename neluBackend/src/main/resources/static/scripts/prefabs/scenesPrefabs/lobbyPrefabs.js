@@ -75,14 +75,22 @@ prefabFactory.AddPrototype("RoomsButtonBox", new Vec2(7,7), new Vec2(0.5,0.5), f
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5),
     new ScrollButtton("buttonsList", "", new Vec2(0.4,0.4), true),
-    new CustomBehaviour().SetOnCreate((obj)=>obj.cont=5).SetOnUpdate((obj)=>{
+    new CustomBehaviour().SetOnCreate((obj)=>obj.cont=9999999).SetOnUpdate((obj)=>{
       obj.cont+=manager.delta;
-      if(obj.cont>=5){
+      if(obj.cont>=1){
         SendWebSocketMsg({
           event:frontendEvents.GET_PUBLIC_ROOMS
         })
         obj.cont=0;
       }
+    }).SetOnDestroy((obj)=>{
+      //var buttons = document.getElementById("buttonsList");
+      let numButtons = roomButtons.length
+      /*for(var i = 0; i < numButtons; i++){
+        buttons.removeChild(roomButtons[i]);
+      }*/
+      roomButtons.splice(0, numButtons);
+      roomButtons = [];
     })
   ]
 });
