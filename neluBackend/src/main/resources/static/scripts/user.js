@@ -14,6 +14,17 @@ class User{
     user = this;
   }
 
+  SetUserWinner(winner){
+    manager.LoadScene("connectionFailed");
+    var text=document.getElementById("ConnectionTitle");
+    if(winner){
+      text.innerHTML="¡Enhorabuena! ¡Has ganado!";
+    }
+    else{
+      text.innerHTML="Has sido derrotado...otra vez será";
+    }
+  }
+
   get name(){
     return this.entity.id;
   }

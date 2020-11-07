@@ -145,6 +145,7 @@ class EnemyController extends Component {
     ]);
 
     let attackCACNode = new Node('attackCAC').SetOnCreate(()=>{
+
       that.gameobj.renderer.AddAnimation('enemyattackCAC', 'monkey_CAC', 20);
 
     }).SetStartFunc(()=>{

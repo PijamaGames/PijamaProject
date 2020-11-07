@@ -1,6 +1,6 @@
 "use strict;"
 const DEBUG = true;
-const DEBUG_VISUAL = true;
+const DEBUG_VISUAL = false;
 const EDITOR_MODE = false;
 
 var timesCalled = 0.0;
@@ -23,7 +23,7 @@ function Main(){
   manager.AddScene(new Scene("chooseEnviroment", BC_ChooseEnviroment));
   manager.AddScene(new Scene("room", BC_Room));
   manager.AddScene(new Scene("connectionFailed", BC_ConnectionFailed));
-  manager.Start('tileTestScene');
+  manager.Start('start');
 }
 
 function Log(text){

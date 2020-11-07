@@ -138,8 +138,6 @@ function Onclick(room,enviroment,light){
       event:"JOIN_ROOM",
       hostName: room,
     })
-    user.hostName=room;
-    manager.LoadScene("room");
   }
 }
 

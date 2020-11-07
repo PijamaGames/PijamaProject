@@ -319,7 +319,9 @@ class PlayerController extends Component {
 
   TakeDamage(damage){
     this.life -= damage;
-    this.lifeText.textBox.SetText(this.life + "HP");
+    var text=document.getElementById("LifeText");
+    text.innerHTML=this.life + "HP";
+    //this.lifeText.textBox.SetText(this.life + "HP");
   }
 
   SetGameobj(gameobj){
@@ -340,7 +342,7 @@ class PlayerController extends Component {
     this.CreateFSM();
     manager.scene.players.add(this.gameobj);
 
-    this.lifeText = prefabFactory.CreateObj("lifeText", new Vec2(0.15,-0.1));
+    //this.lifeText = prefabFactory.CreateObj("lifeText", new Vec2(0.15,-0.1));
     this.TakeDamage(0);
   }
 

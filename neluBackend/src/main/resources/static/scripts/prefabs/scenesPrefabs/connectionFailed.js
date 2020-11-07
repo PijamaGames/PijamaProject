@@ -1,7 +1,7 @@
 prefabFactory.AddPrototype("ConnectionTitle", new Vec2(17,2), new Vec2(0.5,0.5), false, ()=>{
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7),
-    new TextBox(null, "El otro jugador abandonó la partida", new Vec2(0.7,0.1), true),
+    new TextBox("ConnectionTitle", "El otro jugador abandonó la partida", new Vec2(0.7,0.1), true),
   ]
 });
 
