@@ -1,6 +1,7 @@
 var BC_Gallery = `
 GalleryText 0 -0.1 0
 GameFromGallery 0 0.1 0
+Apple -1 0 0
 Grass 0 0 0
 Dirt 1 0 0
 Sand 2 0 0
@@ -25,7 +26,6 @@ Campfire 7 2 0
 LianaLeft 8 2 0
 LianaRight 8 4 0
 LogVertical 3 3 0
-Apple 4 3 0
 CampLog 5 3 0
 CampTop1 4 4 0
 CampTop2 5 5 0
