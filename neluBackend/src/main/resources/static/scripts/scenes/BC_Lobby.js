@@ -6,6 +6,6 @@ Create 0.3 0.1 0
 -LobbyTitle 0 0.4 0
 RoomsText 0.3 0.25 0
 RankingText -0.3 0.4 0
-RankingTextBox -0.3 -0.0 0
+RankingTextBox -0.3 0.0 0
 RoomsButtonBox 0.3 -0.07 0
 `

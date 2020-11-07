@@ -23,11 +23,16 @@ const backendEvents = {
   START_GAME:"START_GAME",
 }
 
-async function getAllUsers() {
-  let response = await fetch(serverURL + "/users/findAllUsers");
-  let users = await response.json();
-
-  Log(users);
+async function getRanking() {
+  let response = await fetch(serverURL + "/users/ranking");
+  let rankingInfo = await response.json();
+  var ranking = document.getElementById("rankingText");
+  Log(rankingInfo);
+  var text="";
+  for (i=0; i<rankingInfo.length; i++){
+    text+=rankingInfo[i].points+ " "+rankingInfo[i].id+"<br>";
+  }
+  ranking.innerHTML=text;
 }
 
 function SendWebSocketMsg(msg) {
