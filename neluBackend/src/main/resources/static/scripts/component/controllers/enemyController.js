@@ -145,7 +145,7 @@ class EnemyController extends Component {
     ]);
 
     let attackCACNode = new Node('attackCAC').SetOnCreate(()=>{
-      that.gameobj.renderer.AddAnimation('enemyattackCAC', 'monkey_CAC', 14);
+      that.gameobj.renderer.AddAnimation('enemyattackCAC', 'monkey_CAC', 20);
 
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('enemyattackCAC');
@@ -193,17 +193,12 @@ class EnemyController extends Component {
     let obj;
     if(this.pool.length>0){
       obj=this.pool.pop();
-      Log(this.pool);
       obj.SetActive(true);
-      Log(obj);
       obj.transform.SetWorldPosition(this.gameobj.transform.GetWorldCenter().Copy());
 
-      //EXTRAÑAMENTE NO SE PONE A FUCKING TRUE A VECES NO SE SAE POR QUÉ
       obj.appleController.MissileMove(obj,target);
       obj.appleController.startCoolDown=true;
-
     }
-    //return obj;
   }
 
   PoolAdd(obj) {
