@@ -216,12 +216,14 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 	private void connectionLost(Player player) throws Exception {
 		game.removePlayer(player);
 
+		ObjectNode outMsg = mapper.createObjectNode();
+		outMsg.put("event", FrontEndEvents.CONNECTION_LOST);
+		
 		Room room = player.getRoom();
 		if (room != null) {
 			if(room.started || player.getIsHost()) {
 				if (room.getMasterClient() != null && room.getSlaveHost() != null) {
-					ObjectNode outMsg = mapper.createObjectNode();
-					outMsg.put("event", FrontEndEvents.CONNECTION_LOST);
+					
 					if (player.getIsHost()) {
 						room.getMasterClient().sendMessage(outMsg.toString());
 					} else {
@@ -230,7 +232,7 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 				}
 				room.stopGame();
 			} else if(!room.started && player.getIsClient()) {
-				
+				room.getSlaveHost().sendMessage(outMsg.toString());
 			}
 			
 		}

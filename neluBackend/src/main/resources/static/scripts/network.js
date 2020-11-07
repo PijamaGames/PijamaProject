@@ -81,12 +81,15 @@ function CreateRoom(msg) {
 }
 
 function JoinRoom(msg) {
+  var text=document.getElementById("WaitingMessage");
   if(user.isHost){
-    //Mostrar en la sala de espera el nombre del jugador que se ha conectado
-    //Activar el botón de comenzar
+    text.innerHTML=msg.clientName+" se ha unido a la sala";
+    var obj=finder.FindObjectsByType("MultiGameFromRoom");
+    if(obj.length>0) obj[0].SetActive(true);
   } else {
     if (msg.room != "") {
       user.hostName=msg.room;
+      text.innerHTML="Te has unido a la sala de "+user.hostName;
       user.isClient=true;
       manager.enviroment=msg.enviroment;
       manager.lighting=msg.lighting;
@@ -136,13 +139,12 @@ function ConnectionLost(msg) {
   if(gameStarted || user.isClient){
     manager.LoadScene("connectionFailed");
   } else if(user.isHost) {
-    //Desactivar botón de comenzar
-    //Quitar nombre del jugador y volver a poner esperando...
+    var text=document.getElementById("WaitingMessage");
+    text.innerHTML="Esperando a otro jugador...";
+    var obj=finder.FindObjectsByType("MultiGameFromRoom");
+    if(obj.length>0) obj[0].SetActive(false);
   }
 
-
-  //else
-    //BORRAR LA SALA DE LA LISTA
 }
 
 function Login(msg) {

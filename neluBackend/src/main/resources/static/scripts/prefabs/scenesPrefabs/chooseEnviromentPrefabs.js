@@ -11,16 +11,13 @@ prefabFactory.AddPrototype("RoomFromChoosing", new Vec2(4,2), new Vec2(0.5,0.0),
     }).SetHoverOutFunc((obj)=>{
       obj.gameobj.transform.scale.Scale(1.0/1.1);
     }).SetUpFunc(()=>{
-      if(manager.choosenEnviroment!=-1){
-        manager.LoadScene("room");
-        SendWebSocketMsg({
-          event:backendEvents.CREATE_ROOM,
-          enviroment:manager.choosenEnviroment,
-          lighting: lighting.currentLight,
-          private: manager.privateRoom,
-        });
-      }
-
+      manager.LoadScene("room");
+      SendWebSocketMsg({
+        event:backendEvents.CREATE_ROOM,
+        enviroment:manager.choosenEnviroment,
+        lighting: lighting.currentLight,
+        private: manager.privateRoom,
+      });
     }),
     new TextBox(null, "Empezar", new Vec2(0.3,0.1), true),
   ]

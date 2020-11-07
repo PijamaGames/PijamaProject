@@ -15,7 +15,7 @@ class Manager {
     physics = new Physics();
     this.lastScene="";
     this.lastGame="";
-    this.choosenEnviroment=-1;
+    this.choosenEnviroment=1;
     this.privateRoom=false;
   }
 
