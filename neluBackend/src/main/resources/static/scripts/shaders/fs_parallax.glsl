@@ -30,7 +30,9 @@ void main(){
 
   coords += (cam*tileSizeDIVres*vec2(1.0,-1.0))*((MAX_HEIGHT-abs(height))/MAX_HEIGHT);
 
+  coords.y = fTexCoords.y;
   coords.x = (coords.x / aspect) * aspectTex + (aspect-1.0)*0.5;
+
 
   coords /= scale;
   coords += position;

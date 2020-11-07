@@ -122,6 +122,27 @@ class Program{
 
   Use(){
     gl.useProgram(this.program);
+    if(manager.scene){
+      this.ComputeCamBounds(manager.scene.camera);
+    }
+  }
+
+  ComputeCamBounds(cam){
+    let camCenter = cam.transform.GetWorldCenter();
+    this.camDown = camCenter.y - cam.transform.scale.y *0.5;
+    this.camUp = camCenter.y + cam.transform.scale.y *0.5;
+    this.camRight = camCenter.x + cam.transform.scale.x *0.5;
+    this.camLeft = camCenter.x - cam.transform.scale.x *0.5;
+  }
+
+  InCamBounds(obj){
+    if(!obj) return true;
+    let objCenter = obj.transform.GetWorldCenter();
+    let down = objCenter.y - obj.transform.scale.y*0.5;
+    let up = objCenter.y + obj.transform.scale.y*0.5;
+    let right = objCenter.x + obj.transform.scale.x*0.5;
+    let left = objCenter.x - obj.transform.scale.x*0.5;
+    return !(right < this.camLeft || up < this.camDown || left > this.camRight || down > this.camUp);
   }
 
   Render(){
@@ -132,7 +153,7 @@ class Program{
       if(renderer.gameobj){
         aux = renderer.gameobj.scene == manager.scene;
       }
-      if((renderer.active && aux) || this.isPostProcess){
+      if((renderer.active && aux && this.InCamBounds(renderer.gameobj)) || this.isPostProcess){
         this.LoadObjUniforms(renderer, texUnitOffset);
         manager.graphics.Draw();
       }
@@ -142,16 +163,16 @@ class Program{
   RenderUI(){
     this.Use();
     let texUnitOffset = this.LoadUniforms();
-    let notTexts = [];
+    /*let notTexts = [];
     for(var renderer of this.renderers){
       if(!renderer.isText){
         notTexts.push(renderer);
       }
-    }
-    notTexts.sort((e1,e2)=>{
+    }*/
+    /*this.renderers.sort((e1,e2)=>{
       return Math.floor(e1.gameobj.transform.height) - Math.floor(e2.gameobj.transform.height);
 
-    });
+    });*/
 
     var that = this;
     this.colorTex.getValue = function(){
@@ -162,7 +183,7 @@ class Program{
       return new Vec2(that.uiTileMap.width / tileSize, that.uiTileMap.height / tileSize);
     };
     this.LoadUniforms();
-    for(let renderer of notTexts){
+    for(let renderer of this.renderers){
       if((renderer.active && renderer.gameobj.scene == manager.scene) || this.isPostProcess){
         this.LoadObjUniforms(renderer, texUnitOffset);
         manager.graphics.Draw();
@@ -170,7 +191,7 @@ class Program{
     }
 
     //CHANGE TILE MAP FOR CHARACTERS
-    this.colorTex.getValue = function(){return that.fontTileMap;};
+    /*this.colorTex.getValue = function(){return that.fontTileMap;};
     this.tileMapResDIVtileSize.getValue = function(){
       return new Vec2(that.fontTileMap.width / tileSize, that.fontTileMap.height / tileSize);
     };
@@ -180,7 +201,7 @@ class Program{
         this.LoadObjUniforms(renderer, texUnitOffset);
         manager.graphics.Draw();
       }
-    }
+    }*/
   }
 
   CreateProgram(_vertexShaderName, _fragmentShaderName){
