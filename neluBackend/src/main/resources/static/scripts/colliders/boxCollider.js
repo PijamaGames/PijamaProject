@@ -24,7 +24,7 @@ class BoxCollider extends Collider{
     let h = this.colliderGroup.gameobj.transform.height;
     return new Vec2(
       (pos.x/this.width-0.5)*2.0+1.0,
-      ((pos.y+h)/this.height-0.5)*2.0+1.0
+      ((pos.y)/this.height-0.5)*2.0+1.0
     )
   }
 

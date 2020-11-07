@@ -11,7 +11,7 @@ prefabFactory.AddPrototype("PauseFromSingleGame", new Vec2(3,1), new Vec2(1.0,1.
     }).SetHoverOutFunc((obj)=>{
       obj.gameobj.transform.scale.Scale(1.0/1.1);
     }).SetUpFunc(()=>{
-      manager.LoadScene("pause");
+      manager.LoadScene("pause",true);
       manager.lastGame="singleGame";
     }),
     new TextBox(null, "Pausa", new Vec2(0.3,0.1), true),

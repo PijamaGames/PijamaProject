@@ -8,6 +8,7 @@ class Manager {
     this.sleepingScenes = new Map();
     this.delta = 0.0;
     this.ms = null;
+    this.targetFPS = 40;
     this.musicVolume=1.0;
     this.language=0;
     finder = new Finder();
@@ -15,15 +16,21 @@ class Manager {
     physics = new Physics();
     this.lastScene="";
     this.lastGame="";
-    this.choosenEnviroment=-1;
+    this.choosenEnviroment=1;
     this.privateRoom=false;
   }
 
   ManageTime() {
     var newMs = Date.now();
-    this.delta = (newMs - this.ms) / 1000.0;
-    if (this.delta > 0.1) this.delta = 0.1;
-    this.ms = newMs;
+    let diff = (newMs - this.ms) / 1000.0;
+    if(diff > 1/this.targetFPS){
+      this.delta = diff;
+      if (this.delta > 0.1) this.delta = 0.1;
+      this.ms = newMs;
+      return true;
+    } else {
+      return false;
+    }
   }
 
   DebugIteration(){
@@ -48,11 +55,9 @@ class Manager {
       this.graphics.SetMaxSettings();
     }
 
-
     if(input.GetKeyDown('KeyM')){
       mapEditor.SetActive(!mapEditor.fsm.active);
     }
-
   }
 
   GameLoop(that) {
@@ -61,21 +66,24 @@ class Manager {
     }
     //Log(timesComputed/timesCalled*100.0+"%");
     //Log("Gameloop iteration");
-    that.ManageTime();
-    input.Update();
-    //fsm.Update();
-    if (this.scene && this.scene != null) {
-      this.scene.Update();
-      //this.scene.UpdatePhysics();
-      physics.Update();
-      lighting.Update();
-      this.graphics.CanvasResponsive();
-      this.graphics.Render();
-      //Update map placer
-      if (mapEditor) mapEditor.Update();
+
+    if(that.ManageTime()){
+      input.Update();
+      //fsm.Update();
+      if (this.scene && this.scene != null) {
+        this.scene.Update();
+        //this.scene.UpdatePhysics();
+        physics.Update();
+        lighting.Update();
+        this.graphics.CanvasResponsive();
+        this.graphics.Render();
+        //Update map placer
+        if (mapEditor) mapEditor.Update();
+      }
+
+      input.LateUpdate();
     }
 
-    input.LateUpdate();
 
     window.requestAnimationFrame(function() {
       that.GameLoop(that);
@@ -85,18 +93,20 @@ class Manager {
   Start(initScene = 'testScene') {
     var that = this;
     resources.Load(function() {
-      that.graphics.LoadResources();
-      that.AddInputs();
-
-      mapEditor = new MapEditor();
-
-      if(input.isDesktop){
-        that.graphics.SetMaxSettings();
-      } else {
-        that.graphics.SetLowSettings();
-      }
-
       InitWebSocket(()=>{
+        that.graphics.LoadResources();
+        that.AddInputs();
+
+        if(DEBUG){
+          mapEditor = new MapEditor();
+        }
+
+        if(input.isDesktop){
+          that.graphics.SetMaxSettings();
+        } else {
+          that.graphics.SetLowSettings();
+        }
+
         that.LoadScene(initScene);
         that.ms = Date.now();
         that.GameLoop(that);

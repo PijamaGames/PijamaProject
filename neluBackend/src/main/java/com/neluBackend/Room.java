@@ -43,6 +43,14 @@ public class Room {
 		return isPrivate;
 	}
 	
+	public int getEnviroment() {
+		return enviroment;
+	}
+	
+	public int getLighting() {
+		return lighting;
+	}
+	
 	public Player getMasterClient() {
 		return masterClient;
 	}
@@ -61,9 +69,11 @@ public class Room {
 	
 	public void setClient(Player client) {
 		masterClient = client;
-		masterClient.setIsClient(true);
-		masterClient.setIsHost(false);
-		masterClient.setRoom(this);
+		if(client != null) {
+			masterClient.setIsClient(true);
+			masterClient.setIsHost(false);
+			masterClient.setRoom(this);
+		}
 	}
 	
 	public void startGame() {
@@ -91,7 +101,10 @@ public class Room {
 			Log("stopped");
 		}
 		
+		
+		
 		GameHandler.INSTANCE.removeRoom(this);
+		GameHandler.INSTANCE.removePublicRoom(this);
 	}
 	
 	public void Update() {

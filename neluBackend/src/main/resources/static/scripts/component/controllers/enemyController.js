@@ -83,7 +83,7 @@ class EnemyController extends Component {
     var that = this;
 
     let patrolNode = new Node('patrol').SetOnCreate(()=>{
-      that.gameobj.renderer.AddAnimation('enemyIdle', 'nelu_idle', 5);
+      that.gameobj.renderer.AddAnimation('enemyIdle', 'monkey_idle', 5);
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('enemyIdle');
     }).SetEdges([
@@ -92,7 +92,7 @@ class EnemyController extends Component {
     ]);
 
     let rechargeNode = new Node('recharge').SetOnCreate(()=>{
-      that.gameobj.renderer.AddAnimation('enemyIdle', 'nelu_idle', 5);
+      that.gameobj.renderer.AddAnimation('enemyIdle', 'monkey_idle', 5);
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('enemyIdle');
     }).SetEdges([
@@ -104,7 +104,7 @@ class EnemyController extends Component {
     ]);
 
     let approachPlayerNode = new Node('approachPlayer').SetOnCreate(()=>{
-      that.gameobj.renderer.AddAnimation('enemyRun', 'nelu_run', 14);
+      that.gameobj.renderer.AddAnimation('enemyRun', 'monkey_run', 14);
 
     }).SetStartFunc(()=>{
       that.CheckShortestWay();
@@ -121,7 +121,7 @@ class EnemyController extends Component {
     ]);
 
     let attackADNode = new Node('attackAD').SetOnCreate(()=>{
-      that.gameobj.renderer.AddAnimation('enemyattackAD', 'nelu_attack1', 14);
+      that.gameobj.renderer.AddAnimation('enemyattackAD', 'monkey_AD', 14);
 
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('enemyattackAD');
@@ -131,7 +131,7 @@ class EnemyController extends Component {
 
     }).SetUpdateFunc(()=>{
       let target=that.FindClosestPlayer(that.attackADRange);
-      if(this.contTimeAD>=this.resetADAttackTime){
+      if(this.contTimeAD>=this.resetADAttackTime && target != null){
 
         this.PoolPop(target);
         this.contTimeAD=0;
@@ -145,7 +145,7 @@ class EnemyController extends Component {
     ]);
 
     let attackCACNode = new Node('attackCAC').SetOnCreate(()=>{
-      that.gameobj.renderer.AddAnimation('enemyattackCAC', 'nelu_idle', 14);
+      that.gameobj.renderer.AddAnimation('enemyattackCAC', 'monkey_CAC', 20);
 
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('enemyattackCAC');
@@ -169,7 +169,7 @@ class EnemyController extends Component {
     ]);
 
     let deadNode = new Node('dead').SetOnCreate(()=>{
-      that.gameobj.renderer.AddAnimation('enemyDead', 'nelu_run', 14);
+      that.gameobj.renderer.AddAnimation('enemyDead', 'monkey_die', 14);
 
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('enemyDead');
@@ -193,17 +193,12 @@ class EnemyController extends Component {
     let obj;
     if(this.pool.length>0){
       obj=this.pool.pop();
-      Log(this.pool);
       obj.SetActive(true);
-      Log(obj);
       obj.transform.SetWorldPosition(this.gameobj.transform.GetWorldCenter().Copy());
 
-      //EXTRAÑAMENTE NO SE PONE A FUCKING TRUE A VECES NO SE SAE POR QUÉ
       obj.appleController.MissileMove(obj,target);
       obj.appleController.startCoolDown=true;
-
     }
-    //return obj;
   }
 
   PoolAdd(obj) {

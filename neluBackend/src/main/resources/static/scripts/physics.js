@@ -48,6 +48,7 @@ class Physics {
   }
 
   ResolveColliderGroups(cg1, cg2){
+    if(!cg1.gameobj.rigidbody && !cg2.gameobj.rigidbody) return;
     let dir;
     for(var c1 of cg1.colliders){
       //if(c1.gameobj.transform.height > 0.0) continue;

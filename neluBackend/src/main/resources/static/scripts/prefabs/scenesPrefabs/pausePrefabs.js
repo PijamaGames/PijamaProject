@@ -40,6 +40,11 @@ prefabFactory.AddPrototype("MenuFromPause", new Vec2(8,2), new Vec2(0.5,0.5), fa
       obj.gameobj.transform.scale.Scale(1.0/1.1);
     }).SetUpFunc(()=>{
       manager.LoadScene("mainMenu");
+      if(user.hostName==user.name){
+        SendWebSocketMsg({
+          event:backendEvents.LEAVE_ROOM,
+        })
+      }
     }),
     new TextBox(null, "Menú", new Vec2(0.3,0.1), true),
   ]

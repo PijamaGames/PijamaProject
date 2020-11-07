@@ -8,6 +8,10 @@ prefabFactory.AddPrototype("Create", new Vec2(4,2), new Vec2(0.5,0.0), false, ()
       manager.LoadScene("chooseEnviroment");
     }),
     new TextBox(null, "Crear", new Vec2(0.3,0.1), true),
+    new CustomBehaviour().SetOnCreate(()=>{
+      user.isHost=false;
+      user.isClient=false;
+    })
   ]
 });
 
@@ -24,7 +28,12 @@ prefabFactory.AddPrototype("SelectRoom", new Vec2(1,1.5), new Vec2(0.5,0.5), fal
     }).SetHoverOutFunc((obj)=>{
       obj.gameobj.transform.scale.Scale(1.0/1.1);
     }).SetUpFunc(()=>{
-      //Mandar al jugador a la sala elegida
+      var inputField=document.getElementById("roomName");
+      var room=inputField.value;
+      SendWebSocketMsg({
+        event:"JOIN_ROOM",
+        hostName: room,
+      })
     }),
     new TextBox(null, "Ir", new Vec2(0.3,0.1), true),
   ]
@@ -58,7 +67,10 @@ prefabFactory.AddPrototype("RankingText", new Vec2(7,2), new Vec2(0.5,0.5), fals
 prefabFactory.AddPrototype("RankingTextBox", new Vec2(7,9), new Vec2(0.5,0.5), false, ()=>{
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5),
-    new ScrollBox("scrollButtons", "", new Vec2(0.4,0.55), true),
+    new ScrollBox("rankingText", "", new Vec2(0.4,0.55), false),
+    new CustomBehaviour().SetOnCreate((obj)=>{
+      getRanking();
+    }),
 
   ]
 });
@@ -66,14 +78,18 @@ prefabFactory.AddPrototype("RoomsButtonBox", new Vec2(7,7), new Vec2(0.5,0.5), f
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5),
     new ScrollButtton("buttonsList", "", new Vec2(0.4,0.4), true),
-    new CustomBehaviour().SetOnCreate((obj)=>obj.cont=0).SetOnUpdate((obj)=>{
+    new CustomBehaviour().SetOnCreate((obj)=>obj.cont=9999999).SetOnUpdate((obj)=>{
       obj.cont+=manager.delta;
-      if(obj.cont>=5){
+      if(obj.cont>=1){
         SendWebSocketMsg({
           event:frontendEvents.GET_PUBLIC_ROOMS
         })
         obj.cont=0;
       }
+    }).SetOnDestroy((obj)=>{
+      let numButtons = roomButtons.length
+      roomButtons.splice(0, numButtons);
+      roomButtons = [];
     })
   ]
 });

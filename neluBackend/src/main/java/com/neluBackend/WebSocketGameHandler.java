@@ -25,6 +25,7 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 		public final static String JOIN_ROOM = "JOIN_ROOM";
 		public final static String GET_PUBLIC_ROOMS = "GET_PUBLIC_ROOMS";
 		public final static String CONNECTION_LOST = "CONNECTION_LOST";
+		public final static String START_GAME = "START_GAME";
 	}
 
 	private class BackEndEvents {
@@ -33,6 +34,7 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 		public final static String JOIN_ROOM = "JOIN_ROOM";
 		public final static String GET_PUBLIC_ROOMS = "GET_PUBLIC_ROOMS";
 		public final static String LEAVE_ROOM = "LEAVE_ROOM";
+		public final static String START_GAME = "START_GAME";
 	}
 
 	private GameHandler game = GameHandler.INSTANCE;
@@ -93,11 +95,25 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 			case BackEndEvents.LEAVE_ROOM:
 				connectionLost(player);
 				break;
+			case BackEndEvents.START_GAME:
+				startGame(inMsg, outMsg, player);
+				break;
 			}
 
 		} catch (Exception e) {
 			System.err.println("Exception processing message" + message.getPayload());
 			e.printStackTrace(System.err);
+		}
+	}
+	
+	private void startGame(JsonNode inMsg, ObjectNode outMsg, Player player) throws Exception {
+		
+		outMsg.put("event", FrontEndEvents.START_GAME);
+		
+		Player client =  player.getRoom().getMasterClient();
+		if(client != null) {
+			player.sendMessage(outMsg.toString());
+			client.sendMessage(outMsg.toString());
 		}
 	}
 
@@ -151,7 +167,7 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 	 * Si el cliente no está en una room y el host sí y su partida no ha empezado,
 	 * une al cliente a la partida del host
 	 */
-	private ObjectNode joinRoom(JsonNode inMsg, ObjectNode outMsg, Player player) {
+	private ObjectNode joinRoom(JsonNode inMsg, ObjectNode outMsg, Player player) throws Exception {
 
 		boolean playerAlreadyInRoom = player.getRoom() != null;
 
@@ -160,16 +176,25 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 		outMsg.put("event", FrontEndEvents.JOIN_ROOM);
 
 		if (!playerAlreadyInRoom && game.hasUser(hostName)) {
+			
 			Player host = game.getPlayer(hostName);
 			Room hostRoom = host.getRoom();
 			if (hostRoom != null && !hostRoom.hasStarted()) {
 				hostRoom.setClient(player);
-				hostRoom.startGame();
-				outMsg.put("room", hostRoom.getId());
+				//hostRoom.startGame();
+				outMsg.put("room", hostRoom.getSlaveHost().getName());
+				outMsg.put("enviroment", hostRoom.getEnviroment());
+				outMsg.put("lighting", hostRoom.getLighting());
+				
+				//Indicar al host el nombre del cliente que se le ha conectado
+				ObjectNode outMsgForHost = mapper.createObjectNode();
+				outMsgForHost.put("event", FrontEndEvents.JOIN_ROOM);
+				outMsgForHost.put("clientName", player.getName());
+				host.sendMessage(outMsgForHost.toString());
 				return outMsg;
 			}
 		}
-		outMsg.put("room", -1);
+		outMsg.put("room", "");
 		return outMsg;
 	}
 
@@ -181,7 +206,7 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 		int size = 0;
 		for (Room room : publicRooms) {
 			outMsg.put("room" + size, room.getSlaveHost().getName());
-			outMsg.put("roomId" + size, room.getId());
+			outMsg.put("enviroment" + size, room.getEnviroment());
 			size++;
 		}
 		outMsg.put("numRooms", size);
@@ -190,26 +215,53 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 	}
 
 	private void connectionLost(Player player) throws Exception {
-		game.removePlayer(player);
+		
 
+		ObjectNode outMsg = mapper.createObjectNode();
+		outMsg.put("event", FrontEndEvents.CONNECTION_LOST);
+		
 		Room room = player.getRoom();
-		if (room != null) {
-			if (room.getMasterClient() != null && room.getSlaveHost() != null) {
-				ObjectNode outMsg = mapper.createObjectNode();
-				outMsg.put("event", FrontEndEvents.CONNECTION_LOST);
-				if (player.getIsHost()) {
-					room.getMasterClient().sendMessage(outMsg.asText());
-				} else {
-					room.getSlaveHost().sendMessage(outMsg.asText());
+		if(room!= null) {
+			if(room.started) {
+				room.getMasterClient().sendMessage(outMsg.toString());
+				room.getSlaveHost().sendMessage(outMsg.toString());
+				//room.getMasterClient().setRoom(null);
+				//room.getSlaveHost().setRoom(null);
+				
+				room.stopGame();
+			} else {
+				if(player.getIsClient()) {
+					room.getSlaveHost().sendMessage(outMsg.toString());
+					//room.getMasterClient().sendMessage(outMsg.toString());
+					player.setIsClient(false);
+					player.setIsHost(false);
+					player.setRoom(null);
+					room.setClient(null);
+				} else if (player.getIsHost()) {
+					//room.getSlaveHost().sendMessage(outMsg.toString());
+					player.setIsClient(false);
+					player.setIsHost(false);
+					player.setRoom(null);
+					Player client = room.getMasterClient();
+					if(client != null) {
+						client.sendMessage(outMsg.toString());
+						client.setIsClient(false);
+						client.setIsHost(false);
+						client.setRoom(null);
+						room.setClient(null);
+					}
+					room.stopGame();
+					
 				}
 			}
-			room.stopGame();
+			
 		}
 	}
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		Player player = (Player) session.getAttributes().get(PLAYER_ATTRIBUTE);
+		game.removePlayer(player);
 		connectionLost(player);
 		Log("Player disconnected: " + player.getPlayerId());
 	}
