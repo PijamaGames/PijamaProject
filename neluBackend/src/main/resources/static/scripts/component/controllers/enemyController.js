@@ -41,6 +41,8 @@ class EnemyController extends Component {
     this.canTakeDamage = true;
     this.damageCooldown = 0.5;
     this.damageForce = 10.0;
+
+    this.aproachFPS=14;
   }
 
   TakeDamage(damage){
@@ -128,7 +130,7 @@ class EnemyController extends Component {
     ]);
 
     let approachPlayerNode = new Node('approachPlayer').SetOnCreate(()=>{
-      that.gameobj.renderer.AddAnimation('enemyRun', this.runAnim, 14);
+      that.gameobj.renderer.AddAnimation('enemyRun', this.runAnim, this.aproachFPS);
 
     }).SetStartFunc(()=>{
       that.CheckShortestWay();
@@ -162,7 +164,7 @@ class EnemyController extends Component {
       }
 
     }).SetEdges([
-      new Edge('approachPlayer').AddCondition(()=>that.FindClosestPlayer((that.attackADRange) == null || that.target.playerController.life<=0) && that.endAttackADAnim),
+      new Edge('approachPlayer').AddCondition(()=>(that.FindClosestPlayer(that.attackADRange) == null || that.target.playerController.life<=0) && (that.endAttackADAnim || that.FindClosestPlayer(that.detectionRange) != null)),
       new Edge('attackCAC').AddCondition(()=>that.FindClosestPlayer(that.attackCACRange) != null && this.target.playerController.life>0 && that.endAttackADAnim),
       new Edge('dead').AddCondition(()=> that.life<=0 && that.endAttackADAnim),
       new Edge('recharge').AddCondition(()=> that.contTimeAD<that.resetADAttackTime && that.endAttackADAnim),
@@ -187,7 +189,7 @@ class EnemyController extends Component {
       }
 
     }).SetEdges([
-      new Edge('approachPlayer').AddCondition(()=>that.FindClosestPlayer((that.attackCACRange) == null || that.target.playerController.life<0) && that.endAttackCACAnim),
+      new Edge('approachPlayer').AddCondition(()=>(that.FindClosestPlayer(that.attackCACRange) == null || that.target.playerController.life<0) && (that.endAttackCACAnim || that.FindClosestPlayer(that.detectionRange) != null)),
       new Edge('dead').AddCondition(()=> that.life<=0 && that.endAttackCACAnim),
       new Edge('recharge').AddCondition(()=> that.contTimeCAC<that.resetCACAttackTime && that.endAttackCACAnim),
 

@@ -1,14 +1,14 @@
 class BeekeeperController extends EnemyController {
   constructor(speed = 3.0) {
 
-    super();
+    super(speed);
     this.type = "beekeeperController";
 
     this.detectionRange = 10.0;
     this.attackADRange = 3.0;
     this.attackCACRange = 1.5;
 
-    this.resetADAttackTime=0.1;//ME PREOCUPA
+    this.resetADAttackTime=0.1;
     this.resetCACAttackTime=1;
     this.contTimeAD=0.1;
     this.contTimeCAC=1;
@@ -23,6 +23,8 @@ class BeekeeperController extends EnemyController {
     this.maxParticles=10;
     this.pool = [];
     this.allParticles = [];
+
+    this.aproachFPS=8;
 
     this.life=25;
   }

@@ -14,7 +14,7 @@ prefabFactory.AddPrototype("BeekeeperEnemy", new Vec2(2, 2), new Vec2(0.5, 0.5),
     new SpriteRenderer('beekeeper_idle', new Vec2(0, 2),new Vec2(2,2), true, 8, [4,0,6,1,5,3,7,2], 14),
     new Rigidbody(0.5),
     new ShadowCaster(new Vec2(0,-0.75), 0.75),
-    new BeekeeperController(0.5),
+    new BeekeeperController(1),
   ]
 });
 
