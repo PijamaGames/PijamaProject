@@ -2,9 +2,9 @@ class ColibriController extends Component {
   constructor() {
     super();
     this.type = "colibriController";
-    this.maxDistance = 7.0;
+    this.maxDistance = 7.5;
     this.speed = 2.0;
-    this.targetThreshold = 0.3;
+    this.targetThreshold = 0.5;
     this.dir = new Vec2(0, -1);
     this.comingBack = false;
     this.player = null;
@@ -24,18 +24,20 @@ class ColibriController extends Component {
     if (distToTarget < this.targetThreshold) {
       if (!this.comingBack) {
         this.comingBack = true;
+        Log("colibri coming back");
       } else {
         this.ComeBack();
       }
     }
     if (this.player != null && this.comingBack) {
-
-      let playerPos = this.player.transform.GetWorldPos();
+      let playerPos = this.player.transform.GetWorldFloor();
       this.dir = Vec2.Sub(playerPos, this.gameobj.transform.GetWorldPos()).Norm();
       this.velocity.Set(this.dir.x * this.speed, this.dir.y * this.speed);
       this.target.Set(playerPos.x, playerPos.y);
     }
 
+    this.dir = Vec2.Sub(this.target, this.gameobj.transform.GetWorldPos()).Norm();
+    this.velocity.Set(this.dir.x * this.speed, this.dir.y * this.speed);
     this.gameobj.rigidbody.force.Add(this.velocity);
     this.gameobj.renderer.SetDirection(this.gameobj.rigidbody.velocity);
   }

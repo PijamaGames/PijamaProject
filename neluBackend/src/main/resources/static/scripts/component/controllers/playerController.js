@@ -70,6 +70,7 @@ class PlayerController extends Component {
       this.ChangeSkill();
     }
     this.ReloadBees();
+    this.ManageBeesTarget();
     this.canAttack = this.canAttack || input.GetKeyUp("Space");
   }
 
@@ -87,14 +88,15 @@ class PlayerController extends Component {
       this.numBees = Math.min(this.numBees+1, poolSize);
       if(lastNumBees != this.numBees){
         this.beeBirthTime = 0.0;
-        Log("Num bees: " + this.numBees);
+        //Log("Num bees: " + this.numBees);
       }
     }
   }
 
   ManageBeesTarget(){
-    if(!this.beesTarget || this.beesTarget == null || this.beesTarget.scene != this.gameobj.scene){
+    if(!this.beesTarget || this.beesTarget == null || !this.beesTarget.enemyController.canTakeDamage || this.beesTarget.scene != this.gameobj.scene){
       this.beesTarget = this.GetBeesTarget();
+
     }
   }
 
@@ -127,18 +129,19 @@ class PlayerController extends Component {
     Log("THROW COLIBRI");
     this.hasColibri = false;
     this.colibri.SetActive(true);
-    this.colibri.colibriController.SetLocalPosDir(Vec2.Sub(this.gameobj.renderer.dir, new Vec2(0,0)), input.GetRightAxis(this.gameobj));
+    this.colibri.colibriController.SetLocalPosDir(input.GetRightAxis(this.gameobj));
+    this.colibri.rigidbody.velocity.Set(this.gameobj.rigidbody.velocity.x, this.gameobj.rigidbody.velocity.y).Scale(2.5);
   }
 
   ThrowBees(){
-    let target = this.GetBeesTarget();
-    if(target != null){
+    this.beesTarget = this.GetBeesTarget();
+    if(this.beesTarget != null){
       Log("THROW " + this.numBees +" BEES");
-      let wp = this.gameobj.transform.GetWorldPos();
+      let wp = this.gameobj.transform.GetWorldFloor();
       for(var i = 0; i < this.numBees; i++){
         let bee = this.BeePoolPop();
         bee.transform.SetWorldPosition(wp);
-        bee.beeController.SetTarget(target);
+        //bee.beeController.SetTarget(target);
       }
       this.numBees = 0;
       this.beeBirthTime = 0.0;
@@ -156,7 +159,7 @@ class PlayerController extends Component {
     let dist;
     let playerPos = this.gameobj.transform.GetWorldPos();
     for(var enemy of this.gameobj.scene.enemies){
-      if(!enemy.active) continue;
+      if(!enemy.active || !enemy.enemyController.canTakeDamage) continue;
       dist = Vec2.Distance(playerPos, enemy.transform.GetWorldPos());
       if(dist < minDist){
         closest = enemy;

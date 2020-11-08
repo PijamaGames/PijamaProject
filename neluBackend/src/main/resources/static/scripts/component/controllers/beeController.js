@@ -1,7 +1,7 @@
 class BeeController extends Component{
   constructor(){
     super();
-    this.target = null;
+    //this.target = null;
     this.speed = 2.0;
     this.randomNess = 7.0;
     this.player = null;
@@ -9,23 +9,40 @@ class BeeController extends Component{
     this.threshold = 0.3;
     this.lifeTime = 0.0;
     this.maxLifeTime = 5.0;
+    this.damage = 1;
+  }
+
+  get target(){
+    return this.player.playerController.beesTarget;
   }
 
   Update(){
     this.lifeTime += manager.delta;
 
+    let target = this.target;
+    if(target == null){
+      let distToPlayer = Vec2.Sub(this.gameobj.transform.GetWorldPos(), this.player.transform.GetWorldFloor()).mod;
+      if(distToPlayer >  this.threshold){
+        target = this.player;
+      }
 
-    if(this.lifeTime > this.maxLifeTime || !this.target || this.target == null || this.target.scene != this.gameobj.scene){ //If not target or maxLife
+    }
+
+    if(this.lifeTime > this.maxLifeTime || !target || target == null || target.scene != this.gameobj.scene){ //If not target or maxLife
       if(this.player){
         this.player.playerController.BeePoolAdd(this.gameobj);
       }
     } else {
-      let dir = Vec2.Sub(this.target.transform.GetWorldPos(), this.gameobj.transform.GetWorldPos());
-      if(dir.mod < this.threshold){
+      let dir = Vec2.Sub(target.transform.GetWorldFloor(), this.gameobj.transform.GetWorldPos());
+      if(dir.mod < this.threshold && target.enemyController){
         //TARGET GETS DAMAGE
-        if(this.player != null){
-          //this.player.playerController.BeePoolAdd(this.gameobj);
+        if(target.enemyController.canTakeDamage){
+          target.enemyController.TakeDamage(this.damage);
+          if(this.player != null){
+            this.player.playerController.BeePoolAdd(this.gameobj);
+          }
         }
+
       } else {
         let force = dir;
         force.Norm().Scale(this.speed);
@@ -42,7 +59,7 @@ class BeeController extends Component{
     this.gameobj.beeController = this;
   }
 
-  SetTarget(enemy){
+  /*SetTarget(enemy){
     this.target = enemy;
-  }
+  }*/
 }
