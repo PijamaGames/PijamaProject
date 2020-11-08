@@ -8,7 +8,7 @@ class Manager {
     this.sleepingScenes = new Map();
     this.delta = 0.0;
     this.ms = null;
-    this.targetFPS = 144;
+    this.targetFPS = 60;
     this.musicVolume=1.0;
     this.language=0;
     finder = new Finder();
@@ -23,14 +23,15 @@ class Manager {
   ManageTime() {
     var newMs = Date.now();
     let diff = (newMs - this.ms) / 1000.0;
-    if(diff > 1/this.targetFPS){
+    /*if(diff > 1/this.targetFPS){*/
       this.delta = diff;
       if (this.delta > 0.1) this.delta = 0.1;
       this.ms = newMs;
       return true;
+      /*return true;
     } else {
       return false;
-    }
+    }*/
   }
 
   DebugIteration(){
@@ -84,10 +85,13 @@ class Manager {
       input.LateUpdate();
     }
 
-
-    window.requestAnimationFrame(function() {
+    setTimeout(function(){
       that.GameLoop(that);
-    });
+    }, (1/that.targetFPS)*1000);
+
+    /*window.requestAnimationFrame(function() {
+      that.GameLoop(that);
+    });*/
   }
 
   Start(initScene = 'testScene') {
@@ -105,7 +109,7 @@ class Manager {
           that.graphics.SetMaxSettings();
         } else {
           that.graphics.SetLowSettings();
-          manager.targetFPS = 35;
+          manager.targetFPS = 30;
         }
 
         that.LoadScene(initScene);

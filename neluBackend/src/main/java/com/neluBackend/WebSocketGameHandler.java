@@ -26,6 +26,7 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 		public final static String GET_PUBLIC_ROOMS = "GET_PUBLIC_ROOMS";
 		public final static String CONNECTION_LOST = "CONNECTION_LOST";
 		public final static String START_GAME = "START_GAME";
+		public final static String RECEIVE_ENTITIES = "RECEIVE_ENTITIES";
 	}
 
 	private class BackEndEvents {
@@ -35,6 +36,7 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 		public final static String GET_PUBLIC_ROOMS = "GET_PUBLIC_ROOMS";
 		public final static String LEAVE_ROOM = "LEAVE_ROOM";
 		public final static String START_GAME = "START_GAME";
+		public final static String SEND_ENTITIES = "SEND_ENTITIES";
 	}
 
 	private GameHandler game = GameHandler.INSTANCE;
@@ -98,11 +100,26 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 			case BackEndEvents.START_GAME:
 				startGame(inMsg, outMsg, player);
 				break;
+			case BackEndEvents.SEND_ENTITIES:
+				sendEntities(inMsg, outMsg, player);
+				break;
 			}
 
 		} catch (Exception e) {
 			System.err.println("Exception processing message" + message.getPayload());
 			e.printStackTrace(System.err);
+		}
+	}
+	
+	private void sendEntities(JsonNode inMsg, ObjectNode outMsg, Player player) throws Exception {
+		Room room = player.getRoom();
+		if(room != null) {
+			Player client = room.getMasterClient();
+			if(client != null) {
+				outMsg = mapper.treeToValue(inMsg, ObjectNode.class);
+				outMsg.put("event", FrontEndEvents.RECEIVE_ENTITIES);
+				client.sendMessage(outMsg.toString());
+			}
 		}
 	}
 	

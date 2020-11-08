@@ -4,6 +4,7 @@ var socket = null;
 var publicRooms = [];
 var roomButtons = [];
 var gameStarted = false;
+var sendEntitiesRate = 30;
 
 const frontendEvents = {
   LOGIN: "LOGIN",
@@ -12,6 +13,7 @@ const frontendEvents = {
   GET_PUBLIC_ROOMS: "GET_PUBLIC_ROOMS",
   CONNECTION_LOST: "CONNECTION_LOST",
   START_GAME: "START_GAME",
+  RECEIVE_ENTITIES:"RECEIVE_ENTITIES",
 }
 
 const backendEvents = {
@@ -21,6 +23,81 @@ const backendEvents = {
   GET_PUBLIC_ROOMS: "GET_PUBLIC_ROOMS",
   LEAVE_ROOM:"LEAVE_ROOM",
   START_GAME:"START_GAME",
+  SEND_ENTITIES:"SEND_ENTITIES",
+}
+
+function SendEntitiesInfo(){
+  let numEntities = manager.scene.networkEntities.size;
+  msg = {
+    event:"SEND_ENTITIES",
+    numEntities:numEntities,
+  }
+
+  let i = 0;
+  for(var [key, value] of manager.scene.networkEntities){
+    msg["info"+i] = value.GetInfo();
+    i++;
+  }
+
+  SendWebSocketMsg(msg);
+}
+
+function SendEntitiesLoop(){
+  setTimeout(function(){
+    SendEntitiesInfo();
+    SendEntitiesLoop();
+  }, (1/sendEntitiesRate)*1000);
+}
+
+function StartSendEntitiesLoop(){
+  SendEntitiesInfo();
+  SendEntitiesLoop();
+}
+
+function ReceiveEntities(msg){
+  if(user.isHost) return;
+
+
+  let numEntities = msg.numEntities;
+  let info;
+  let obj;
+
+  let keySet = new Set();
+
+  for(var i = 0; i < numEntities; i++){
+    info = msg["info"+i];
+    keySet.add(info.key);
+
+    Log(manager.scene.networkEntities);
+    if(!manager.scene.networkEntities.has(info.key)){
+      obj = prefabFactory.CreateObj(info.type, new Vec2(info.posX, info.posY), info.height, null, info.id);
+    } else {
+      obj = manager.scene.networkEntities.get(info.key).gameobj;
+    }
+
+    obj.transform.SetWorldPosition(new Vec2(info.posX, info.posY));
+    obj.transform.height = info.height;
+
+    if(obj.active != info.active){
+      obj.SetActive(info.active);
+    }
+
+    if(info.tileX != -1){
+      obj.renderer.tile.Set(info.tileX, info.tileY);
+      obj.renderer.SetTint(info.tintR, info.tintG, info.tintB);
+    }
+    if(info.anim != -1){
+      if(obj.renderer.anim != info.anim){
+        obj.renderer.SetAnimation(info.anim);
+      }
+    }
+  }
+
+  for(var [key,value] of manager.scene.networkEntities){
+    if(!keySet.has(key)){
+      value.Destroy();
+    }
+  }
 }
 
 async function getRanking() {
@@ -69,13 +146,21 @@ function InitWebSocket(onOpenCallback) {
       case frontendEvents.START_GAME:
         StartGame(msg);
         break;
+      case frontendEvents.RECEIVE_ENTITIES:
+        ReceiveEntities(msg);
+        break;
     }
   };
 }
 
+
 function StartGame(msg){
   manager.LoadScene("multiGame");
   gameStarted = true;
+
+  if(user.isHost){
+    StartSendEntitiesLoop();
+  }
 }
 
 function CreateRoom(msg) {
@@ -137,7 +222,7 @@ function Onclick(room,enviroment,light){
     SendWebSocketMsg({
       event:"JOIN_ROOM",
       hostName: room,
-    })
+    });
   }
 }
 

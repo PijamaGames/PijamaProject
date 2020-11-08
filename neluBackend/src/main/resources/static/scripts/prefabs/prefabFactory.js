@@ -22,12 +22,12 @@ class PrefabFactory{
     return this.prefabMapper.has(type);
   }
 
-  CreateObj(type, position = new Vec2(), height = 0.0, scale = null){
+  CreateObj(type, position = new Vec2(), height = 0.0, scale = null, id = null){
     let prefab = this.prefabMapper.get(type);
 
     scale = scale == null ? prefab.scale : scale;
 
-    let obj = new Gameobj(type, prefab.count, null, manager.scene, prefab.GetPrototype(),
+    let obj = new Gameobj(type, id == null ? prefab.count : id, null, manager.scene, prefab.GetPrototype(),
       new Transform(position.Copy(), height, scale.Copy(), prefab.anchor.Copy()), prefab.isStatic);
 
     prefab.count++;

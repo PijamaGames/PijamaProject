@@ -21,6 +21,7 @@ class SpriteRenderer extends Renderer{
     this.numDirs = numDirs;
 
     this.animations = new Map();
+    this.anim = 'default';
     this.AddAnimation('default', spriteSheetName, fps);
     this.SetAnimation('default');
     this.endAnimEvent = new EventDispatcher();
@@ -41,6 +42,7 @@ class SpriteRenderer extends Renderer{
   }
 
   SetAnimation(anim){
+    this.anim = anim;
     this.paused = false;
     let a = this.animations.get(anim);
     this.SetTexture(a.texture);

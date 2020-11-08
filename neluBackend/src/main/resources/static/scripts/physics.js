@@ -13,6 +13,7 @@ class Physics {
   }
 
   Update() {
+    if(user && user.isClient) return;
     for (var rb of manager.scene.rigidbodies) {
       rb.PrepareVelocity();
     }

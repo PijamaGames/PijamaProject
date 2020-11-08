@@ -56,6 +56,7 @@ class PlayerController extends Component {
   }
 
   Update(){
+    //Log("playerSpd: " + this.gameobj.rigidbody.velocity.mod);
     let leftAxis = input.GetLeftAxis();
     this.rawLeftAxis.Set(leftAxis.x, leftAxis.y);
     let axisDir = Vec2.Sub(this.rawLeftAxis, this.leftAxis);
