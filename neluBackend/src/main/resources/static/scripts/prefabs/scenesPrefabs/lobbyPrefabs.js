@@ -67,7 +67,7 @@ prefabFactory.AddPrototype("RankingText", new Vec2(7,2), new Vec2(0.5,0.5), fals
 prefabFactory.AddPrototype("RankingTextBox", new Vec2(7,9), new Vec2(0.5,0.5), false, ()=>{
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5),
-    new ScrollBox("rankingText", "", new Vec2(0.4,0.55), false),
+    new ScrollButton("rankingText", "", new Vec2(0.4,0.55), false),
     new CustomBehaviour().SetOnCreate((obj)=>{
       getRanking();
     }),
@@ -77,7 +77,7 @@ prefabFactory.AddPrototype("RankingTextBox", new Vec2(7,9), new Vec2(0.5,0.5), f
 prefabFactory.AddPrototype("RoomsButtonBox", new Vec2(7,7), new Vec2(0.5,0.5), false, ()=>{
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5),
-    new ScrollButtton("buttonsList", "", new Vec2(0.4,0.4), true),
+    new ScrollButton("buttonsList", "", new Vec2(0.4,0.4), true),
     new CustomBehaviour().SetOnCreate((obj)=>obj.cont=9999999).SetOnUpdate((obj)=>{
       obj.cont+=manager.delta;
       if(obj.cont>=1){

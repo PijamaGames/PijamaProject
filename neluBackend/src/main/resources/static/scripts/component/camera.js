@@ -11,12 +11,12 @@ class Camera extends Component {
   }
 
   Update() {
-    //Log("CAM UPDATE");
     if(user && user.isClient) return;
     this.UpdateCam(manager.delta);
   }
 
   UpdateCam(delta){
+    //Log("updating cam");
     let worldPos = this.gameobj.transform.GetWorldPos().Copy();
     let dir = Vec2.Sub(this.target, worldPos).Scale(this.speed*delta);
     this.gameobj.transform.SetWorldPosition(worldPos.Add(dir));

@@ -9,13 +9,30 @@ class Scene{
     this.rigidbodies = new Set();
     this.players = new Set();
     this.enemies = new Set();
+    this.domElements = new Set();
     this.networkEntities = new Map();
     this.paused = false;
     manager.scenes.set(this.name, this);
+    this.GenerateCam();
+  }
+
+  GenerateCam(){
     this.camera = /*this.AddGameobj(*/new Gameobj('camera',0, null, this, [
       new Camera(2.5),
       //new DebugController(3.0),
     ], new Transform(new Vec2(0,0), 0.0, new Vec2(canvas.width/tileSize+2, canvas.height/tileSize+5)));
+  }
+
+  Sleep(){
+    for(var elem of this.domElements){
+      elem.element.hidden = true;
+    }
+  }
+
+  WakeUp(){
+    for(var elem of this.domElements){
+      elem.element.hidden = !elem.active;
+    }
   }
 
   Update(){

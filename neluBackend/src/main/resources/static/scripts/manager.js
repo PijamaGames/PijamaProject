@@ -150,7 +150,6 @@ class Manager {
   }
 
   LoadScene(sceneName, sleep = false) {
-    Log("here");
     let newScene = this.scenes.get(sceneName);
     if(newScene == this.scene) return;
 
@@ -158,14 +157,17 @@ class Manager {
       this.scene.Unload();
     } else if(this.scene && sleep){
       this.sleepingScenes.set(this.scene.name, this.scene);
+      this.scene.Sleep();
     }
     this.scene = newScene;
 
     if(this.sleepingScenes.has(this.scene.name)){
       this.sleepingScenes.delete(this.scene.name);
+      this.scene.WakeUp();
       Log("WakeUp: "+this.scene.name);
     } else {
       this.scene.LoadByteCode();
+      this.scene.GenerateCam();
       Log("Loaded: "+this.scene.name);
     }
   }

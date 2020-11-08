@@ -16,6 +16,7 @@ class TextBox extends Component{
 
   Destroy(){
     this.element.parentNode.removeChild(this.element);
+    this.gameobj.scene.domElements.delete(this);
   }
 
   Update(){
@@ -27,6 +28,7 @@ class TextBox extends Component{
     this.gameobj.textBox = this;
 
     this.CreateElement();
+    this.gameobj.scene.domElements.add(this);
   }
 
   CreateElement(){

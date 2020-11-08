@@ -210,6 +210,7 @@ function StartGame(msg){
     prefabFactory.CreateObj("Nelu");
     StartSendEntitiesLoop();
   } else {
+    Log("creating master");
     prefabFactory.CreateObj("Master");
     networkMs = Date.now();
   }

@@ -26,7 +26,7 @@ class MasterController extends Component{
     let followNode = new Node("follow").SetUpdateFunc(()=>{
 
       if(that.player && that.player != null){
-        Log("update camera follow");
+        //Log("update camera follow");
         manager.scene.camera.camera.target = that.player.transform.GetWorldPos();
       }
     }).SetEdges([
@@ -34,7 +34,7 @@ class MasterController extends Component{
     ]);
 
     let moveNode = new Node("move").SetUpdateFunc(()=>{
-      Log("update camera move");
+      //Log("update camera move");
       let axis = input.GetLeftAxis();
       manager.scene.camera.camera.target.Add(axis.Scale(that.moveSpeed));
     }).SetEdges([
