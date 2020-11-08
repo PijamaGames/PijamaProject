@@ -26,13 +26,15 @@ class BeekeeperController extends EnemyController {
 
     this.aproachFPS=8;
 
+    this.recharge=false;
+
     this.life=25;
   }
 
   CreatePool(){
     let obj;
     for (var i = 0; i < this.maxParticles; i++) {
-      obj = prefabFactory.CreateObj('particle', new Vec2(), 1);
+      obj = prefabFactory.CreateObj('particle', new Vec2(), this.missileHeight);
       obj.SetActive(false);
       obj.particlesController.enemy=this.gameobj;
       this.pool.push(obj);
@@ -45,7 +47,7 @@ class BeekeeperController extends EnemyController {
     if(this.pool.length>0){
       obj=this.pool.pop();
       obj.SetActive(true);
-      obj.transform.SetWorldPosition(this.gameobj.transform.GetWorldCenter().Copy());
+      obj.transform.SetWorldPosition(this.gameobj.transform.GetWorldFloor().Copy());
 
       obj.particlesController.MissileMove(obj,target);
       obj.particlesController.startCoolDown=true;

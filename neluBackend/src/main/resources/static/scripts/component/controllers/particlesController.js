@@ -22,7 +22,7 @@ class ParticlesController extends Component{
   }
 
   MissileMove(missile,target) {
-    let axis = Vec2.Sub(target.transform.GetWorldCenter().Copy(), missile.transform.GetWorldCenter().Copy());
+    let axis = Vec2.Sub(target.transform.GetWorldFloor().Copy(), missile.transform.GetWorldCenter().Copy());
     let movement = axis.Scale(this.particleImpulse);
     missile.rigidbody.force.Add(movement);
   }

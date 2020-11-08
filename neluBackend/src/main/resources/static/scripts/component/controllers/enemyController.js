@@ -36,11 +36,14 @@ class EnemyController extends Component {
     this.maxMissiles=5;
     this.pool = [];
     this.allApples = [];
+    this.missileHeight=1;
 
     this.life=15;
     this.canTakeDamage = true;
     this.damageCooldown = 0.5;
     this.damageForce = 10.0;
+
+    this.recharge=true;
 
     this.aproachFPS=14;
   }
@@ -147,9 +150,10 @@ class EnemyController extends Component {
     ]);
 
     let attackADNode = new Node('attackAD').SetOnCreate(()=>{
-      that.gameobj.renderer.AddAnimation('enemyattackAD', this.attackADAnim, 14);
+      that.gameobj.renderer.AddAnimation('enemyattackAD', this.attackADAnim, 14, false);
 
     }).SetStartFunc(()=>{
+      Log("vuelve a ataque");
       that.gameobj.renderer.SetAnimation('enemyattackAD');
       that.endAttackADAnim=false;
       that.gameobj.renderer.endAnimEvent.AddListener(that, ()=>that.endAttackADAnim=true,true);
@@ -167,7 +171,7 @@ class EnemyController extends Component {
       new Edge('approachPlayer').AddCondition(()=>(that.FindClosestPlayer(that.attackADRange) == null || that.target.playerController.life<=0) && (that.endAttackADAnim || that.FindClosestPlayer(that.detectionRange) != null)),
       new Edge('attackCAC').AddCondition(()=>that.FindClosestPlayer(that.attackCACRange) != null && this.target.playerController.life>0 && that.endAttackADAnim),
       new Edge('dead').AddCondition(()=> that.life<=0 && that.endAttackADAnim),
-      new Edge('recharge').AddCondition(()=> that.contTimeAD<that.resetADAttackTime && that.endAttackADAnim),
+      new Edge('recharge').AddCondition(()=> that.contTimeAD<that.resetADAttackTime && that.endAttackADAnim && that.recharge),
     ]);
 
     let attackCACNode = new Node('attackCAC').SetOnCreate(()=>{
@@ -208,7 +212,7 @@ class EnemyController extends Component {
   CreatePool(){
     let obj;
     for (var i = 0; i < this.maxMissiles; i++) {
-      obj = prefabFactory.CreateObj('apple', new Vec2(), 1);
+      obj = prefabFactory.CreateObj('apple', new Vec2(), this.missileHeight);
       obj.SetActive(false);
       obj.appleController.enemy=this.gameobj;
       this.pool.push(obj);
@@ -221,7 +225,7 @@ class EnemyController extends Component {
     if(this.pool.length>0){
       obj=this.pool.pop();
       obj.SetActive(true);
-      obj.transform.SetWorldPosition(this.gameobj.transform.GetWorldCenter().Copy());
+      obj.transform.SetWorldPosition(this.gameobj.transform.GetWorldFloor().Copy());
 
       obj.appleController.MissileMove(obj,target);
       obj.appleController.startCoolDown=true;
@@ -258,7 +262,6 @@ class EnemyController extends Component {
     this.gameobj = gameobj;
     this.gameobj.enemyController = this;
     this.CreateFSM();
-    this.gameobj.renderer.SetTint(1.0,0.5,0.5);
     this.CreatePool();
     manager.scene.enemies.add(this.gameobj);
   }
