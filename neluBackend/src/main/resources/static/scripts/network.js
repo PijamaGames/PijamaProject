@@ -253,7 +253,8 @@ function JoinRoom(msg) {
       text.innerHTML="Te has unido a la sala de "+user.hostName;
       user.isClient=true;
       manager.enviroment=msg.enviroment;
-      manager.lighting=msg.lighting;
+      lighting.currentLight=msg.lighting;
+      lighting.SetCurrentLight(msg.lighting);
 
     }
   }

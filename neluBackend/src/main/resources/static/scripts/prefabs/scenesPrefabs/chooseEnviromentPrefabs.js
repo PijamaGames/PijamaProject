@@ -87,20 +87,7 @@ prefabFactory.AddPrototype("Lighting", new Vec2(1,1), new Vec2(0.5,0.5), false, 
     }).SetHoverOutFunc((obj)=>{
       obj.gameobj.transform.scale.Scale(1.0/1.1);
     }).SetUpFunc(()=>{
-      switch(lighting.currentLight){
-        case 1:
-          lighting.SetAfterNoon();
-          lighting.currentLight=2;
-        break;
-        case 2:
-          lighting.SetNight();
-          lighting.currentLight=3;
-        break;
-        case 3:
-          lighting.SetMorning();
-          lighting.currentLight=1;
-        break;
-      }
+      lighting.SwitchLight();
     }),
   ]
 });

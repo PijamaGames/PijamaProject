@@ -48,7 +48,42 @@ class Lighting{
     this.bloomStrength = 0.5;
 
     this.currentLight=1;
+    this.nextLight=1;
     this.SetMorning();
+  }
+
+  SwitchLight(){
+    switch(this.nextLight){
+      case 1:
+        this.SetAfterNoon();
+        this.currentLight=1;
+        this.nextLight=2;
+      break;
+      case 2:
+        this.SetNight();
+        this.currentLight=2;
+        this.nextLight=3;
+      break;
+      case 3:
+        this.SetMorning();
+        this.currentLight=3;
+        this.nextLight=1;
+      break;
+    }
+  }
+
+  SetCurrentLight(light) {
+    switch(light){
+      case 1:
+        this.SetAfterNoon();
+      break;
+      case 2:
+        this.SetNight();
+      break;
+      case 3:
+        this.SetMorning();
+      break;
+    }
   }
 
   Update(){
