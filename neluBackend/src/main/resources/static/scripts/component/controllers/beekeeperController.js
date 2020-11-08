@@ -3,56 +3,38 @@ class BeekeeperController extends EnemyController {
 
     super();
     this.type = "beekeeperController";
-    this.speed=speed;
-    this.endattackADAnim=false;
-    this.shortestWay=[];
 
-    this.moveAxis = new Vec2();
-    this.rawMoveAxis = new Vec2();
-    this.lerpMoveAxis = 10.0;
-
-    this.lastPlayerPos = new Vec2();
-
-    this.detectionRange = 8.0;
-    this.attackADRange = 4.0;
+    this.detectionRange = 10.0;
+    this.attackADRange = 3.0;
     this.attackCACRange = 1.5;
-    this.target = null;
 
-    this.resetADAttackTime=2;
+    this.resetADAttackTime=0.1;//ME PREOCUPA
     this.resetCACAttackTime=1;
-    this.contTimeAD=2;
+    this.contTimeAD=0.1;
     this.contTimeCAC=1;
-    this.endAttackCACAnim=false;
-    this.endAttackADAnim=false;
 
-    this.attackADAnim='monkey_AD';
-    this.attackCACAnim='monkey_CAC';
-    this.idleAnim='monkey_idle';
-    this.dieAnim='monkey_die';
-    this.runAnim='monkey_run';
+    this.attackADAnim='beekeeper_AD';
+    this.attackCACAnim='beekeeper_CAC';
+    this.idleAnim='beekeeper_idle';
+    this.dieAnim='beekeeper_die';
+    this.runAnim='beekeeper_run';
 
-    this.attackADDamage=5;
-    this.attackCACDamage=1;
-    this.maxMissiles=5;
+    this.attackCACDamage=5;
+    this.maxParticles=10;
     this.pool = [];
-    this.allApples = [];
+    this.allParticles = [];
 
-    this.life=15;
-    this.canTakeDamage = true;
-    this.damageCooldown = 0.5;
-    this.damageForce = 10.0;
+    this.life=25;
   }
-
-
 
   CreatePool(){
     let obj;
-    for (var i = 0; i < this.maxMissiles; i++) {
-      obj = prefabFactory.CreateObj('apple', new Vec2(), 1);
+    for (var i = 0; i < this.maxParticles; i++) {
+      obj = prefabFactory.CreateObj('particle', new Vec2(), 1);
       obj.SetActive(false);
-      obj.appleController.enemy=this.gameobj;
+      obj.particlesController.enemy=this.gameobj;
       this.pool.push(obj);
-      this.allApples.push(obj);
+      this.allParticles.push(obj);
     }
   }
 
@@ -63,16 +45,16 @@ class BeekeeperController extends EnemyController {
       obj.SetActive(true);
       obj.transform.SetWorldPosition(this.gameobj.transform.GetWorldCenter().Copy());
 
-      obj.appleController.MissileMove(obj,target);
-      obj.appleController.startCoolDown=true;
+      obj.particlesController.MissileMove(obj,target);
+      obj.particlesController.startCoolDown=true;
     }
   }
 
   PoolAdd(obj) {
     this.pool.push(obj);
     obj.SetActive(false);
-    obj.appleController.contTime=0
-    obj.appleController.startCoolDown=false;
+    obj.particlesController.contTime=0
+    obj.particlesController.startCoolDown=false;
   }
 
   SetScene(scene){
@@ -82,24 +64,9 @@ class BeekeeperController extends EnemyController {
 
   Destroy(){
     this.gameobj.scene.enemies.delete(this.gameobj);
-    for(let apple of this.allApples){
+    for(let apple of this.allParticles){
       apple.Destroy();
     }
   }
 
-  SetAnimDir(target){
-    if(target!=null){
-      let axis = Vec2.Sub(target.transform.GetWorldCenter().Copy(), this.gameobj.transform.GetWorldCenter().Copy());
-      this.gameobj.renderer.SetDirection(axis);
-    }
-  }
-
-  SetGameobj(gameobj){
-    this.gameobj = gameobj;
-    this.gameobj.enemyController = this;
-    this.CreateFSM();
-    this.gameobj.renderer.SetTint(1.0,0.5,0.5);
-    this.CreatePool();
-    manager.scene.enemies.add(this.gameobj);
-  }
 }
