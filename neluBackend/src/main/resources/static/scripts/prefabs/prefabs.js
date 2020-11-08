@@ -50,7 +50,7 @@ prefabFactory.AddPrototype("Colibri", new Vec2(1,1), new Vec2(0.5,0.5), false, (
 prefabFactory.AddPrototype("Bee", new Vec2(1,1), new Vec2(0.5,0.5), false, ()=>{
   return [
     //new ColliderGroup([new CircleCollider(new Vec2(0,0),0.2,true)]),
-    new SpriteRenderer('nelu_idle', new Vec2(0,0), new Vec2(1,1), false, 8, [4,0,6,1,5,3,7,2], 14, false, 1.0, ['spriteColor','spriteDepth', 'spriteMask']),
+    new SpriteRenderer('bee', new Vec2(0,0), new Vec2(1,1), false, 4, [2,0,3,1], 14, false, 1.0, ['spriteColor','spriteDepth', 'spriteMask']),
     new Rigidbody(0.2),
     new BeeController(),
   ]
