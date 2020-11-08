@@ -43,7 +43,6 @@ prefabFactory.AddPrototype("Chronometer", new Vec2(3,1), new Vec2(0.0,1.0), fals
         seconds=sec;
         obj.chronometer.innerHTML=""+mins+":"+sec;
         if(obj.totalTime<=0){
-          Log("holi")
           user.SetUserWinner(true);
         }
       }

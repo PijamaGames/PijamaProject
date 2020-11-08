@@ -24,7 +24,7 @@ class BeekeeperController extends EnemyController {
     this.pool = [];
     this.allParticles = [];
 
-    this.aproachFPS=8;
+    this.aproachFPS=14;
 
     this.recharge=false;
 

@@ -339,7 +339,9 @@ class PlayerController extends Component {
   }
 
   PlayerDead(){
-
+    manager.LoadScene("connectionFailed");
+    var text=document.getElementById("ConnectionTitle");
+    text.innerHTML="Fin del juego";
   }
 
   TakeDamage(damage){
