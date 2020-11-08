@@ -62,7 +62,7 @@ public class UserController {
 	public List<User> ranking(){
 		List<User> users = repository.findAll();
 		users.sort((a,b)->{
-			return Integer.compare(a.getPoints(), b.getPoints());
+			return Integer.compare(-a.getPoints(), -b.getPoints());
 		});
 		return users;
 	}

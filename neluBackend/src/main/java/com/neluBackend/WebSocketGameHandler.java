@@ -122,6 +122,7 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 	
 	private void endGame(JsonNode inMsg, ObjectNode outMsg, Player player) throws Exception {
 		Room room = player.getRoom();
+		boolean hostWinner = inMsg.get("hostWinner").asBoolean();
 		if(room != null) {
 			Player host = room.getSlaveHost();
 			Player client = room.getMasterClient();
@@ -129,9 +130,17 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 			outMsg.put("event", FrontEndEvents.END_GAME);
 			if(host != null) {
 				host.sendMessage(outMsg.toString());
+				if(hostWinner) {
+					host.getUser().setPoints(host.getUser().getPoints()+1);
+					repository.save(host.getUser());
+				}
 			}
 			if(client != null) {
 				client.sendMessage(outMsg.toString());
+				if(!hostWinner) {
+					client.getUser().setPoints(client.getUser().getPoints()+1);
+					repository.save(client.getUser());
+				}
 			}
 			room.stopGame();
 		}
