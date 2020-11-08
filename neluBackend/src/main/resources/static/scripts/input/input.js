@@ -22,8 +22,8 @@ class Input {
       //canvas.exitPointerLock()
     }*/
     this.mousePosition = new Vec2();
-    this.mouseWorldPosition = new Vec2();
-    this.mouseGridPosition = new Vec2();
+    /*this.mouseWorldPosition = new Vec2();
+    this.mouseGridPosition = new Vec2();*/
     this.mouseMovement = new Vec2();
     this.mouseGravity = 0.05;
     this.mouseLeftDown = false;
@@ -35,8 +35,26 @@ class Input {
     this.lastTouch = null;
     this.touchStartEvent = new EventDispatcher();
     this.touchEndEvent = new EventDispatcher();
+    this.clickEvent = new EventDispatcher();
+    //this.clickPosition = new Vec2();
     var that = this;
+  }
 
+  get clickPosition(){
+    if(this.isDesktop){
+      return this.mouseWorldPosition;
+    } else {
+      return this.CanvasToWorld(this.ScreenToCanvas(new Vec2(this.lastTouch.clientX, this.lastTouch.clientY)));
+    }
+  }
+
+  get mouseWorldPosition(){
+    return this.CanvasToWorld(this.ScreenToCanvas(this.mousePosition));
+  }
+
+  get mouseGridPosition(){
+    let wp = this.mouseWorldPosition;
+    return new Vec2(Math.round(wp.x),Math.round(wp.y));
   }
 
   GetLeftAxis(){
@@ -106,6 +124,24 @@ class Input {
     }
   }
 
+  GetFreeCamera(){
+    if(this.isDesktop){
+      return this.GetLeftAxis().mod > 0.1;
+    } else {
+      return false;
+    }
+
+  }
+
+  GetBlockCamera(){
+    if(this.isDesktop){
+      return this.GetKeyDown("Space");
+    } else {
+      return false;
+    }
+
+  }
+
   AddListeners(){
     var that = this;
     if(this.isDesktop){
@@ -115,6 +151,7 @@ class Input {
           that.mouseLeftDown = true;
           that.mouseLeft = true;
           that.mouseLeftUp = false;
+          that.clickEvent.Dispatch();
         }
       };
 
@@ -129,11 +166,6 @@ class Input {
       canvas.onmousemove = function(e) {
         that.mousePosition.Set(e.offsetX, e.offsetY);
         that.mouseMovement.Set(e.movementX, e.movementY);
-        that.mouseWorldPosition = that.CanvasToWorld(that.ScreenToCanvas(that.mousePosition));
-        that.mouseGridPosition.Set(
-          Math.round(that.mouseWorldPosition.x),
-          Math.round(that.mouseWorldPosition.y)
-        )
       };
 
       document.addEventListener('keydown', (e) => {
@@ -163,6 +195,7 @@ class Input {
           input.ongoingTouches.set(t.identifier, t);
           this.lastTouch = t;
           this.touchStartEvent.Dispatch();
+          this.clickEvent.Dispatch();
           for(let [key,vi] of input.virtualInputs){
             if(vi.ScreenCoordInsideInput(t.clientX, t.clientY)){
               vi.AddTouch(t);

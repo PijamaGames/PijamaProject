@@ -7,6 +7,8 @@ var gameStarted = false;
 var sendEntitiesRate = 30;
 var minutes;
 var seconds;
+var networkDelta = 0.0;
+var networkMs = 0.0;
 
 const frontendEvents = {
   LOGIN: "LOGIN",
@@ -59,6 +61,10 @@ function StartSendEntitiesLoop(){
 }
 
 function ReceiveEntities(msg){
+  var newMs = Date.now();
+  networkDelta = (newMs - networkMs) / 1000.0;
+  networkMs = newMs;
+
   if(user.isHost) return;
   let chronometer=document.getElementById("chronometer");
   chronometer.innerHTML=msg.minutes+":"+msg.seconds;
@@ -73,7 +79,7 @@ function ReceiveEntities(msg){
     info = msg["info"+i];
     keySet.add(info.key);
 
-    Log(manager.scene.networkEntities);
+    //Log(manager.scene.networkEntities);
     if(!manager.scene.networkEntities.has(info.key)){
       obj = prefabFactory.CreateObj(info.type, new Vec2(info.posX, info.posY), info.height, null, info.id);
     } else {
@@ -103,6 +109,8 @@ function ReceiveEntities(msg){
       value.Destroy();
     }
   }
+
+  manager.scene.camera.camera.UpdateCam(networkDelta);
 }
 
 async function getRanking() {
@@ -165,6 +173,9 @@ function StartGame(msg){
 
   if(user.isHost){
     StartSendEntitiesLoop();
+  } else {
+    prefabFactory.CreateObj("Master");
+    networkMs = Date.now();
   }
 }
 
