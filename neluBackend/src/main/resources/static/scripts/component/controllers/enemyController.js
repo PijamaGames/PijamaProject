@@ -153,7 +153,6 @@ class EnemyController extends Component {
       that.gameobj.renderer.AddAnimation('enemyattackAD', this.attackADAnim, 14, false);
 
     }).SetStartFunc(()=>{
-      Log("vuelve a ataque");
       that.gameobj.renderer.SetAnimation('enemyattackAD');
       that.endAttackADAnim=false;
       that.gameobj.renderer.endAnimEvent.AddListener(that, ()=>that.endAttackADAnim=true,true);
