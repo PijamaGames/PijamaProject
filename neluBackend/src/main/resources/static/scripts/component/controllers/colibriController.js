@@ -49,9 +49,9 @@ class ColibriController extends Component {
     this.lifeTime = 0.0;
   }
 
-  SetLocalPosDir(localPos, dir) {
-    this.gameobj.transform.SetWorldPosition(Vec2.Add(this.player.transform.GetWorldPos(),localPos));
-    let wp = this.gameobj.transform.GetWorldPos();
+  SetLocalPosDir(dir) {
+    this.gameobj.transform.SetWorldCenter(this.player.transform.GetWorldFloor());
+    let wp = this.gameobj.transform.GetWorldCenter();
     this.dir = Vec2.Norm(dir);
     //this.target = Vec2.dsScale(this.dir, this.maxDistance).Add(wp);
     this.velocity.Set(this.dir.x * this.speed, this.dir.y * this.speed);

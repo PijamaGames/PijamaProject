@@ -84,7 +84,7 @@ class Transform extends Component {
   }
 
   GetWorldFloor(){
-    let center = this.GetWorldCenter();
+    let center = this.GetWorldCenter().Copy();
     center.y = center.y - this.scale.y*0.5;
     return center;
   }

@@ -127,7 +127,7 @@ class PlayerController extends Component {
     Log("THROW COLIBRI");
     this.hasColibri = false;
     this.colibri.SetActive(true);
-    this.colibri.colibriController.SetLocalPosDir(Vec2.Sub(this.gameobj.renderer.dir, new Vec2(0,0.5)), input.GetRightAxis(this.gameobj));
+    this.colibri.colibriController.SetLocalPosDir(Vec2.Sub(this.gameobj.renderer.dir, new Vec2(0,0)), input.GetRightAxis(this.gameobj));
   }
 
   ThrowBees(){
