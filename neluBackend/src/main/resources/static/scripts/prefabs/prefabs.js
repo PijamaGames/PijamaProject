@@ -337,9 +337,9 @@ prefabFactory.AddPrototype("Shit", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   ]
 });
 
-prefabFactory.AddPrototype("Grass8", new Vec2(1,1), new Vec2(0,0), true, ()=>{
+prefabFactory.AddPrototype("GrassPillar", new Vec2(1,3), new Vec2(0,0), true, ()=>{
   return [
-    new Renderer(new Vec2(7,7), new Vec2(1,1), false),
+    new Renderer(new Vec2(7,7), new Vec2(1,3), false),
   ]
 });
 
@@ -459,12 +459,6 @@ prefabFactory.AddPrototype("Grass27", new Vec2(1,1), new Vec2(0,0), true, ()=>{
 prefabFactory.AddPrototype("Grass28", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(7,10), new Vec2(1,1), false),
-  ]
-});
-
-prefabFactory.AddPrototype("GrassPillar", new Vec2(1,3), new Vec2(0,0), true, ()=>{
-  return [
-    new Renderer(new Vec2(8,7), new Vec2(1,3), false),
   ]
 });
 
@@ -654,12 +648,6 @@ prefabFactory.AddPrototype("Dirt28", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   ]
 });
 
-prefabFactory.AddPrototype("BigLogPackBody", new Vec2(1,3), new Vec2(0,0), true, ()=>{
-  return [
-    new Renderer(new Vec2(8,6), new Vec2(1,3), true),
-  ]
-});
-
 prefabFactory.AddPrototype("BigLogPack", new Vec2(1,5), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(8,6), new Vec2(1,5), true),
@@ -682,5 +670,15 @@ prefabFactory.AddPrototype("Apple", new Vec2(1,1), new Vec2(0,0), true, ()=>{
 prefabFactory.AddPrototype("Light", null, null, true, ()=>{
   return [
     new LightSource(8.0),
+  ]
+});
+prefabFactory.AddPrototype("Water", new Vec2(1,1), new Vec2(0,0), true, ()=>{
+  return [
+    new Renderer(new Vec2(5,8), new Vec2(1,1), true),
+  ]
+});
+prefabFactory.AddPrototype("Mud", new Vec2(1,1), new Vec2(0,0), true, ()=>{
+  return [
+    new Renderer(new Vec2(6,2), new Vec2(1,1), true),
   ]
 });

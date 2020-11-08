@@ -49,7 +49,7 @@ Grass5 3 7 0
 Grass6 4 7 0
 Grass7 5 7 0
 Shit 6 7 0
-Grass8 7 7 0
+GrassPillar 7 7 0
 Grass9 0 8 0
 Grass10 1 8 0
 Grass11 2 8 0
@@ -70,7 +70,6 @@ Grass25 4 10 0
 Grass26 5 10 0
 Grass27 6 10 0
 Grass28 7 10 0
-GrassPillar 8 7 0
 DirtWall4 0 11 0
 DirtWall5 1 11 0
 Cave 2 11 0
@@ -102,7 +101,26 @@ Dirt25 2 14 0
 Dirt26 0 15 0
 Dirt27 1 15 0
 Dirt28 2 15 0
-BigLogPackBody 8 6 0
+Tree 3 16 0
+Bush 0 16 0
+
+WaterBottom 2 16 0
+WaterBottomRight 0 17 0
+WaterBottomLeft 2 17 0
+WaterLeft 1 17 0
+WaterOuterBottomLeft 0 18 0
+WaterOuterBottomRight 2 18 0
+WaterOuterTopLeft 1 18 0
+WaterOuterTopRight 0 19 0
+WaterRight 2 19 0
+WaterTop 1 19 0
+WaterTopLeft 0 20 0
+WaterTopRight 2 20 0
+Water1 1 20 0
+Water2 0 21 0
+Water3 1 21 0
+Mud 6 2 0
+Water 5 8 0
 BigLogPack 8 6 0
 BigLogPackLiana 8 11 0
 `
