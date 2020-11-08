@@ -25,6 +25,12 @@ class EnemyController extends Component {
     this.endAttackCACAnim=false;
     this.endAttackADAnim=false;
 
+    this.attackADAnim='monkey_AD';
+    this.attackCACAnim='monkey_CAC';
+    this.idleAnim='monkey_idle';
+    this.dieAnim='monkey_die';
+    this.runAnim='monkey_run';
+
     this.attackADDamage=5;
     this.attackCACDamage=1;
     this.maxMissiles=5;
@@ -101,7 +107,7 @@ class EnemyController extends Component {
     var that = this;
 
     let patrolNode = new Node('patrol').SetOnCreate(()=>{
-      that.gameobj.renderer.AddAnimation('enemyIdle', 'monkey_idle', 5);
+      that.gameobj.renderer.AddAnimation('enemyIdle', this.idleAnim, 5);
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('enemyIdle');
     }).SetEdges([
@@ -110,7 +116,7 @@ class EnemyController extends Component {
     ]);
 
     let rechargeNode = new Node('recharge').SetOnCreate(()=>{
-      that.gameobj.renderer.AddAnimation('enemyIdle', 'monkey_idle', 5);
+      that.gameobj.renderer.AddAnimation('enemyIdle', this.idleAnim, 5);
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('enemyIdle');
     }).SetEdges([
@@ -122,7 +128,7 @@ class EnemyController extends Component {
     ]);
 
     let approachPlayerNode = new Node('approachPlayer').SetOnCreate(()=>{
-      that.gameobj.renderer.AddAnimation('enemyRun', 'monkey_run', 14);
+      that.gameobj.renderer.AddAnimation('enemyRun', this.runAnim, 14);
 
     }).SetStartFunc(()=>{
       that.CheckShortestWay();
@@ -139,7 +145,7 @@ class EnemyController extends Component {
     ]);
 
     let attackADNode = new Node('attackAD').SetOnCreate(()=>{
-      that.gameobj.renderer.AddAnimation('enemyattackAD', 'monkey_AD', 14);
+      that.gameobj.renderer.AddAnimation('enemyattackAD', this.attackADAnim, 14);
 
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('enemyattackAD');
@@ -149,8 +155,8 @@ class EnemyController extends Component {
 
     }).SetUpdateFunc(()=>{
       let target=that.FindClosestPlayer(that.attackADRange);
+      this.SetAnimDir(target);
       if(this.contTimeAD>=this.resetADAttackTime && target != null){
-
         this.PoolPop(target);
         this.contTimeAD=0;
       }
@@ -164,7 +170,7 @@ class EnemyController extends Component {
 
     let attackCACNode = new Node('attackCAC').SetOnCreate(()=>{
 
-      that.gameobj.renderer.AddAnimation('enemyattackCAC', 'monkey_CAC', 20);
+      that.gameobj.renderer.AddAnimation('enemyattackCAC', this.attackCACAnim, 20);
 
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('enemyattackCAC');
@@ -174,7 +180,7 @@ class EnemyController extends Component {
 
     }).SetUpdateFunc(()=>{
       let target=that.FindClosestPlayer(that.attackADRange);
-
+      this.SetAnimDir(target);
       if(target!=null && this.contTimeCAC>=this.resetCACAttackTime){
         target.playerController.TakeDamage(that.attackCACDamage);
         this.contTimeCAC=0;
@@ -188,7 +194,7 @@ class EnemyController extends Component {
     ]);
 
     let deadNode = new Node('dead').SetOnCreate(()=>{
-      that.gameobj.renderer.AddAnimation('enemyDead', 'monkey_die', 14);
+      that.gameobj.renderer.AddAnimation('enemyDead', this.dieAnim, 14);
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('enemyDead');
       that.gameobj.renderer.endAnimEvent.AddListener(this, ()=>that.gameobj.Destroy(), true);
@@ -236,6 +242,13 @@ class EnemyController extends Component {
     this.gameobj.scene.enemies.delete(this.gameobj);
     for(let apple of this.allApples){
       apple.Destroy();
+    }
+  }
+
+  SetAnimDir(target){
+    if(target!=null){
+      let axis = Vec2.Sub(target.transform.GetWorldCenter().Copy(), this.gameobj.transform.GetWorldCenter().Copy());
+      this.gameobj.renderer.SetDirection(axis);
     }
   }
 

@@ -32,16 +32,20 @@ prefabFactory.AddPrototype("Chronometer", new Vec2(3,1), new Vec2(0.0,1.0), fals
       obj.totalTime=120;
       obj.chronometer=document.getElementById("chronometer");
     }).SetOnUpdate((obj)=>{
-      obj.totalTime-=manager.delta;
-      let time= Math.trunc(obj.totalTime);
-      let mins= Math.trunc(time/60);
-      let seconds= time%60;
-      seconds=seconds<10 ? "0"+seconds : seconds;
-      mins=mins<10 ? "0"+mins : mins;
-      obj.chronometer.innerHTML=""+mins+":"+seconds;
-      if(obj.totalTime<=0){
-        Log("holi")
-        user.SetUserWinner(true);
+      if(user.isHost){
+        obj.totalTime-=manager.delta;
+        let time= Math.trunc(obj.totalTime);
+        let mins= Math.trunc(time/60);
+        let sec= time%60;
+        sec=sec<10 ? "0"+sec : sec;
+        mins=mins<10 ? "0"+mins : mins;
+        minutes=mins;
+        seconds=sec;
+        obj.chronometer.innerHTML=""+mins+":"+sec;
+        if(obj.totalTime<=0){
+          Log("holi")
+          user.SetUserWinner(true);
+        }
       }
     })
   ]

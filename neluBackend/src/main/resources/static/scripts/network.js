@@ -5,6 +5,8 @@ var publicRooms = [];
 var roomButtons = [];
 var gameStarted = false;
 var sendEntitiesRate = 30;
+var minutes;
+var seconds;
 
 const frontendEvents = {
   LOGIN: "LOGIN",
@@ -31,6 +33,8 @@ function SendEntitiesInfo(){
   msg = {
     event:"SEND_ENTITIES",
     numEntities:numEntities,
+    minutes:minutes,
+    seconds:seconds,
   }
 
   let i = 0;
@@ -56,7 +60,8 @@ function StartSendEntitiesLoop(){
 
 function ReceiveEntities(msg){
   if(user.isHost) return;
-
+  let chronometer=document.getElementById("chronometer");
+  chronometer.innerHTML=msg.minutes+":"+msg.seconds;
 
   let numEntities = msg.numEntities;
   let info;

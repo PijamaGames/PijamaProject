@@ -4,7 +4,7 @@ class AppleController extends Component{
     this.type = "appleController";
 
     this.timeLimit=5;
-    this.appleImpulse=10;
+    this.appleImpulse=20;
     this.startCoolDown=false;
     this.contTime=0;
   }
