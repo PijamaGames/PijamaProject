@@ -27,6 +27,8 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 		public final static String CONNECTION_LOST = "CONNECTION_LOST";
 		public final static String START_GAME = "START_GAME";
 		public final static String RECEIVE_ENTITIES = "RECEIVE_ENTITIES";
+		public final static String RECEIVE_ENEMY = "RECEIVE_ENEMY";
+		public final static String END_GAME = "END_GAME";
 	}
 
 	private class BackEndEvents {
@@ -37,6 +39,8 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 		public final static String LEAVE_ROOM = "LEAVE_ROOM";
 		public final static String START_GAME = "START_GAME";
 		public final static String SEND_ENTITIES = "SEND_ENTITIES";
+		public final static String SEND_ENEMY = "SEND_ENEMY";
+		public final static String END_GAME = "END_GAME";
 	}
 
 	private GameHandler game = GameHandler.INSTANCE;
@@ -103,11 +107,46 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 			case BackEndEvents.SEND_ENTITIES:
 				sendEntities(inMsg, outMsg, player);
 				break;
+			case BackEndEvents.SEND_ENEMY:
+				sendEnemy(inMsg, outMsg, player);
+				break;
+			case BackEndEvents.END_GAME:
+				endGame(inMsg, outMsg, player);
+				break;
 			}
 
 		} catch (Exception e) {
 			System.err.println("Exception processing message" + message.getPayload());
 			e.printStackTrace(System.err);
+		}
+	}
+	
+	private void endGame(JsonNode inMsg, ObjectNode outMsg, Player player) throws Exception {
+		Room room = player.getRoom();
+		if(room != null) {
+			Player host = room.getSlaveHost();
+			Player client = room.getMasterClient();
+			outMsg = mapper.treeToValue(inMsg, ObjectNode.class);
+			outMsg.put("event", FrontEndEvents.END_GAME);
+			if(host != null) {
+				host.sendMessage(outMsg.toString());
+			}
+			if(client != null) {
+				client.sendMessage(outMsg.toString());
+			}
+			room.stopGame();
+		}
+	}
+	
+	private void sendEnemy(JsonNode inMsg, ObjectNode outMsg, Player player) throws Exception {
+		Room room = player.getRoom();
+		if(room != null) {
+			Player host = room.getSlaveHost();
+			if(host != null) {
+				outMsg = mapper.treeToValue(inMsg, ObjectNode.class);
+				outMsg.put("event", FrontEndEvents.RECEIVE_ENEMY);
+				host.sendMessage(outMsg.toString());
+			}
 		}
 	}
 	
@@ -126,11 +165,12 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 	private void startGame(JsonNode inMsg, ObjectNode outMsg, Player player) throws Exception {
 		
 		outMsg.put("event", FrontEndEvents.START_GAME);
-		
-		Player client =  player.getRoom().getMasterClient();
+		Room room = player.getRoom();
+		Player client =  room.getMasterClient();
 		if(client != null) {
 			player.sendMessage(outMsg.toString());
 			client.sendMessage(outMsg.toString());
+			room.startGame();
 		}
 	}
 

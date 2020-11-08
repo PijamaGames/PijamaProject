@@ -17,7 +17,7 @@ public class Room {
 	int lighting;
 	
 	
-	private ScheduledFuture<?> task;
+	//private ScheduledFuture<?> task;
 	
 	public Room(int id, Player host, boolean isPrivate, int enviroment, int lighting) {
 		this.id = id;
@@ -80,14 +80,14 @@ public class Room {
 		
 		if(!started) {
 			started = true;
-			task = GameHandler.scheduler.scheduleAtFixedRate(()->this.Update(), 0, GameHandler.TICK_DELAY, TimeUnit.SECONDS);
+			//task = GameHandler.scheduler.scheduleAtFixedRate(()->this.Update(), 0, GameHandler.TICK_DELAY, TimeUnit.SECONDS);
 			Log("started");
 		}
 	}
 	
 	public void stopGame() {
 		if(started) {
-			task.cancel(true);
+			//task.cancel(true);
 			masterClient.setIsClient(false);
 			masterClient.setIsHost(false);
 			slaveHost.setIsClient(false);
@@ -101,16 +101,14 @@ public class Room {
 			Log("stopped");
 		}
 		
-		
-		
 		GameHandler.INSTANCE.removeRoom(this);
 		GameHandler.INSTANCE.removePublicRoom(this);
 	}
 	
-	public void Update() {
+	/*public void Update() {
 		
 		
-	}
+	}*/
 	
 	private static boolean DEBUG_MODE = true;
 	private void Log(String msg) {

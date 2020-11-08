@@ -4,6 +4,17 @@ class MasterController extends Component{
     this.type = "masterController";
     this.cameraFree = false;
     this.moveSpeed = 0.5;
+    var that = this;
+    this.enemyType = 0;
+    this.listener = input.clickEvent.AddListener(this, ()=>that.SpawnEnemy(), false);
+  }
+
+  Destroy(){
+    this.listener.Remove();
+  }
+
+  SpawnEnemy(){
+    SendEnemy(this.enemyType, input.clickPosition);
   }
 
   get player(){

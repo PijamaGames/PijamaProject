@@ -15,6 +15,10 @@ class User{
   }
 
   SetUserWinner(winner){
+    this.isHost = false;
+    this.isClient = false;
+    this.hostName = "";
+    gameStarted = false;
     manager.LoadScene("connectionFailed");
     var text=document.getElementById("ConnectionTitle");
     if(winner){

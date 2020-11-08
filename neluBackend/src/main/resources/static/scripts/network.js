@@ -18,6 +18,8 @@ const frontendEvents = {
   CONNECTION_LOST: "CONNECTION_LOST",
   START_GAME: "START_GAME",
   RECEIVE_ENTITIES:"RECEIVE_ENTITIES",
+  RECEIVE_ENEMY:"RECEIVE_ENEMY",
+  END_GAME:"END_GAME",
 }
 
 const backendEvents = {
@@ -28,6 +30,8 @@ const backendEvents = {
   LEAVE_ROOM:"LEAVE_ROOM",
   START_GAME:"START_GAME",
   SEND_ENTITIES:"SEND_ENTITIES",
+  SEND_ENEMY:"SEND_ENEMY",
+  END_GAME:"END_GAME",
 }
 
 function SendEntitiesInfo(){
@@ -49,10 +53,12 @@ function SendEntitiesInfo(){
 }
 
 function SendEntitiesLoop(){
-  setTimeout(function(){
-    SendEntitiesInfo();
-    SendEntitiesLoop();
-  }, (1/sendEntitiesRate)*1000);
+  if(user.isHost){
+    setTimeout(function(){
+      SendEntitiesInfo();
+      SendEntitiesLoop();
+    }, (1/sendEntitiesRate)*1000);
+  }
 }
 
 function StartSendEntitiesLoop(){
@@ -61,6 +67,7 @@ function StartSendEntitiesLoop(){
 }
 
 function ReceiveEntities(msg){
+  if(!user.isClient) return;
   var newMs = Date.now();
   networkDelta = (newMs - networkMs) / 1000.0;
   networkMs = newMs;
@@ -129,6 +136,28 @@ function SendWebSocketMsg(msg) {
   socket.send(JSON.stringify(msg));
 }
 
+function ReceiveEnemy(msg){
+  let obj;
+  Log("ENEMY TYPE: " + msg.type);
+  switch(msg.type){
+    case 0:
+      obj = prefabFactory.CreateObj("MonkeyEnemy", new Vec2(msg.positionX, msg.positionY));
+      break;
+    case 1:
+      obj = prefabFactory.CreateObj("BeekeeperEnemy", new Vec2(msg.positionX, msg.positionY));
+      break;
+  }
+}
+
+function SendEnemy(type, position){
+  SendWebSocketMsg({
+    event:backendEvents.SEND_ENEMY,
+    type:type,
+    positionX:position.x,
+    positionY:position.y
+  });
+}
+
 function InitWebSocket(onOpenCallback) {
   socket = new WebSocket("ws://" + webSocketURL);
 
@@ -162,6 +191,12 @@ function InitWebSocket(onOpenCallback) {
       case frontendEvents.RECEIVE_ENTITIES:
         ReceiveEntities(msg);
         break;
+      case frontendEvents.RECEIVE_ENEMY:
+        ReceiveEnemy(msg);
+        break;
+      case frontendEvents.END_GAME:
+        EndGame(msg);
+        break;
     }
   };
 }
@@ -172,11 +207,26 @@ function StartGame(msg){
   gameStarted = true;
 
   if(user.isHost){
+    prefabFactory.CreateObj("Nelu");
     StartSendEntitiesLoop();
   } else {
     prefabFactory.CreateObj("Master");
     networkMs = Date.now();
   }
+}
+
+function EndGame(msg){
+  //manager.LoadScene("connectionFailed");
+  //var text=document.getElementById("ConnectionTitle");
+  user.SetUserWinner(msg.hostWinner == user.isHost);
+
+}
+
+function SendEndGame(hostWinner){
+  SendWebSocketMsg({
+    event:backendEvents.END_GAME,
+    hostWinner:hostWinner
+  })
 }
 
 function CreateRoom(msg) {
