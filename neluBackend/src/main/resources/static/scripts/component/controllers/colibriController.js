@@ -19,7 +19,6 @@ class ColibriController extends Component {
     this.lifeTime += manager.delta;
     if(this.lifeTime > this.maxLifeTime){
       this.ComeBack();
-
     }
     let distToTarget = Vec2.Distance(this.gameobj.transform.GetWorldPos(), this.target);
     if (distToTarget < this.targetThreshold) {
