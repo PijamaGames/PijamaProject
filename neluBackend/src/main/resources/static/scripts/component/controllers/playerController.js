@@ -18,6 +18,7 @@ class PlayerController extends Component {
     this.attack1Speed = 16;
     this.attack2Speed = 16;
     this.attack3Speed = 17;
+    this.dieSpeed = 12;
     this.dashImpulse = 50.0;
     this.dashMaxTime = 0.1;
     this.dashTime = 0.0;
@@ -186,6 +187,7 @@ class PlayerController extends Component {
       new Edge('attack1').AddCondition(()=>{
         return input.GetAttackCACDown() && that.canAttack && !manager.scene.paused
       }),
+      new Edge('die').AddCondition(()=>that.life <= 0),
     ]);
 
     let runNode = new Node('run').SetOnCreate(()=>{
@@ -206,6 +208,7 @@ class PlayerController extends Component {
       new Edge('idle').AddCondition(()=>manager.scene.paused),
       new Edge('attack1').AddCondition(()=>input.GetAttackCACDown() && that.canAttack),
       new Edge('dash').AddCondition(()=>input.GetDashDown() && that.dashCooldown > that.dashMaxCooldown),
+      new Edge('die').AddCondition(()=>that.life <= 0),
     ]);
 
     let attack1Node = new Node('attack1').SetOnCreate(()=>{
@@ -235,6 +238,7 @@ class PlayerController extends Component {
     }).SetEdges([
       new Edge('idle').AddCondition(()=>manager.scene.paused),
       new Edge('waitCombo').AddCondition(()=>that.endAttackAnim),
+      new Edge('die').AddCondition(()=>that.life <= 0),
     ]);
 
     let attack2Node = new Node('attack2').SetOnCreate(()=>{
@@ -258,6 +262,7 @@ class PlayerController extends Component {
     }).SetEdges([
       new Edge('idle').AddCondition(()=>manager.scene.paused),
       new Edge('waitCombo').AddCondition(()=>that.endAttackAnim),
+      new Edge('die').AddCondition(()=>that.life <= 0),
     ]);
 
     let attack3Node = new Node('attack3').SetOnCreate(()=>{
@@ -281,6 +286,7 @@ class PlayerController extends Component {
     }).SetEdges([
       new Edge('idle').AddCondition(()=>manager.scene.paused),
       new Edge('waitCombo').AddCondition(()=>that.endAttackAnim),
+      new Edge('die').AddCondition(()=>that.life <= 0),
     ]);
 
     let waitComboNode = new Node("waitCombo").SetStartFunc(()=>{
@@ -297,6 +303,7 @@ class PlayerController extends Component {
       }),
       new Edge('attack2').AddCondition(()=>that.combo && that.numCombo == 2),
       new Edge('attack3').AddCondition(()=>that.combo && that.numCombo == 3),
+      new Edge('die').AddCondition(()=>that.life <= 0),
     ]);
 
     let dashNode = new Node("dash").SetStartFunc(()=>{
@@ -316,7 +323,20 @@ class PlayerController extends Component {
       new Edge('run').AddCondition(()=>that.rawLeftAxis.mod > 0.05 && that.dashTime > that.dashMaxTime),
     ]);
 
-    this.playerFSM = new FSM([idleNode, runNode, dashNode, waitComboNode, attack1Node, attack2Node, attack3Node]).Start('idle');
+    let dieNode = new Node("die").SetOnCreate(()=>{
+      that.gameobj.renderer.AddAnimation('die', 'nelu_die', that.dieSpeed, false);
+    }).SetStartFunc(()=>{
+      that.gameobj.renderer.SetAnimation('die');
+      that.gameobj.renderer.endAnimEvent.AddListener(this, ()=>{
+        that.PlayerDead();
+      }, true);
+    })
+
+    this.playerFSM = new FSM([idleNode, runNode, dashNode, waitComboNode, attack1Node, attack2Node, attack3Node, dieNode]).Start('idle');
+  }
+
+  PlayerDead(){
+
   }
 
   TakeDamage(damage){
