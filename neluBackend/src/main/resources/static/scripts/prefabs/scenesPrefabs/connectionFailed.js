@@ -14,7 +14,7 @@ prefabFactory.AddPrototype("LobbyFromError", new Vec2(8,2), new Vec2(0.5,0.5), f
     }).SetUpFunc(()=>{
       manager.LoadScene("lobby");
     }),
-    new TextBox(null, "Lobby", new Vec2(0.3,0.1), true),
+    new TextBox(null, "Arena", new Vec2(0.3,0.1), true),
   ]
 });
 
