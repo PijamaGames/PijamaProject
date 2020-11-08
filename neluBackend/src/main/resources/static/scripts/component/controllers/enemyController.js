@@ -64,6 +64,7 @@ class EnemyController extends Component {
   }
 
   Update(){
+    if(user && user.isClient) return;
     this.enemyFSM.Update();
     this.contTimeAD+=manager.delta;
     this.contTimeCAC+=manager.delta;

@@ -15,6 +15,7 @@ class ColibriController extends Component {
   }
 
   Update() {
+    if(user && user.isClient) return;
     this.lifeTime += manager.delta;
     if(this.lifeTime > this.maxLifeTime){
       this.ComeBack();

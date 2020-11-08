@@ -67,7 +67,6 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 		Log("New player connected: " + player.getPlayerId());
 
 		// player.sendMessage("CONNECTION ESTABLISHED");
-
 	}
 
 	@Override
@@ -163,7 +162,6 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 	}
 	
 	private void startGame(JsonNode inMsg, ObjectNode outMsg, Player player) throws Exception {
-		
 		outMsg.put("event", FrontEndEvents.START_GAME);
 		Room room = player.getRoom();
 		Player client =  room.getMasterClient();

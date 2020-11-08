@@ -44,6 +44,7 @@ prefabFactory.AddPrototype("Colibri", new Vec2(1,1), new Vec2(0.5,0.5), false, (
     new SpriteRenderer('hummingbird', new Vec2(0,0), new Vec2(1,1), false, 8, [4,0,6,1,5,3,7,2], 14/*, false, 1.0, ['spriteColor','spriteDepth', 'spriteMask']*/),
     new Rigidbody(0.2),
     new ColibriController(),
+    new NetworkEntity(),
   ]
 });
 
@@ -53,6 +54,7 @@ prefabFactory.AddPrototype("Bee", new Vec2(1,1), new Vec2(0.5,0.5), false, ()=>{
     new SpriteRenderer('bee', new Vec2(0,0), new Vec2(1,1), false, 4, [2,0,3,1], 14, false, 1.0, ['spriteColor','spriteDepth', 'spriteMask']),
     new Rigidbody(0.2),
     new BeeController(),
+    new NetworkEntity(),
   ]
 });
 

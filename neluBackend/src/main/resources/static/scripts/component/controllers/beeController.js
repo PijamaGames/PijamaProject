@@ -17,6 +17,7 @@ class BeeController extends Component{
   }
 
   Update(){
+    if(user && user.isClient) return;
     this.lifeTime += manager.delta;
 
     let target = this.target;
@@ -50,6 +51,7 @@ class BeeController extends Component{
         this.randomVec.Scale(this.randomNess);
         force.Add(this.randomVec);
         this.gameobj.rigidbody.force.Add(force);
+        this.gameobj.renderer.SetDirection(this.gameobj.rigidbody.velocity);
       }
     }
   }
