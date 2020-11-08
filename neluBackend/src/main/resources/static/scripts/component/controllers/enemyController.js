@@ -32,6 +32,24 @@ class EnemyController extends Component {
     this.allApples = [];
 
     this.life=15;
+    this.canTakeDamage = true;
+    this.damageCooldown = 0.5;
+    this.damageForce = 10.0;
+  }
+
+  TakeDamage(damage){
+    if(this.canTakeDamage){
+      this.life -= damage;
+      this.canTakeDamage = false;
+      this.gameobj.renderer.SetTint(1.0,0.0,0.0);
+      this.gameobj.rigidbody.force.Add(Vec2.Scale(this.gameobj.renderer.dir, - this.damageForce));
+      if(this.life > 0){
+        setTimeout(()=>{
+          this.canTakeDamage = true;
+          this.gameobj.renderer.SetTint(1,1,1);
+        }, this.damageCooldown*1000);
+      }
+    }
   }
 
   Update(){
@@ -171,9 +189,9 @@ class EnemyController extends Component {
 
     let deadNode = new Node('dead').SetOnCreate(()=>{
       that.gameobj.renderer.AddAnimation('enemyDead', 'monkey_die', 14);
-
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('enemyDead');
+      that.gameobj.renderer.endAnimEvent.AddListener(this, ()=>that.gameobj.Destroy(), true);
     });
 
     this.enemyFSM = new FSM([patrolNode, approachPlayerNode, attackADNode, attackCACNode, rechargeNode, deadNode]).Start('patrol');
@@ -216,7 +234,7 @@ class EnemyController extends Component {
 
   Destroy(){
     this.gameobj.scene.enemies.delete(this.gameobj);
-    for(apple of this.allApples){
+    for(let apple of this.allApples){
       apple.Destroy();
     }
   }
