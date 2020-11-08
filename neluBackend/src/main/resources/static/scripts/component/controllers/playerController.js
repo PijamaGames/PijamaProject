@@ -330,7 +330,7 @@ class PlayerController extends Component {
       that.gameobj.renderer.endAnimEvent.AddListener(this, ()=>{
         that.PlayerDead();
       }, true);
-    })
+    });
 
     this.playerFSM = new FSM([idleNode, runNode, dashNode, waitComboNode, attack1Node, attack2Node, attack3Node, dieNode]).Start('idle');
   }

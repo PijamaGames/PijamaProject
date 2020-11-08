@@ -82,6 +82,13 @@ class Transform extends Component {
       return worldPos;
     }
   }
+
+  GetWorldFloor(){
+    let center = this.GetWorldCenter();
+    center.y = center.y - this.scale.y*0.5;
+    return center;
+  }
+
   GetWorldCenterPerfect(){
     let wc = this.GetWorldCenter();
     return new Vec2(
