@@ -40,8 +40,9 @@ prefabFactory.AddPrototype("particle", new Vec2(1, 1), new Vec2(0.5, 0.5), false
     new ColliderGroup([new CircleCollider(new Vec2(0.0,0.0), 0.3, true,
     function(obj){
       let particle=this.gameobj;
+      let damage=0.5;
       if(obj.playerController){
-        obj.playerController.TakeDamage(2.5);
+        obj.playerController.TakeDamage(damage);
         particle.particlesController.enemy.enemyController.PoolAdd(particle);
       }
     }, null, null
