@@ -2,7 +2,7 @@ var BC_Gallery = `
 BoxColliderScalable -1 1 0
 GalleryText 0 -0.1 0
 GameFromGallery 0 0.1 0
-Apple -1 0 0
+DecoApple -1 0 0
 Grass 0 0 0
 Dirt 1 0 0
 Sand 2 0 0
