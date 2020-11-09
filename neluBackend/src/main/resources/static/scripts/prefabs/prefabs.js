@@ -1,3 +1,19 @@
+prefabFactory.AddPrototype("BoxColliderScalable", new Vec2(1, 1), new Vec2(0,0), false, ()=>{
+  return [
+    new Renderer(new Vec2(6, 13), new Vec2(1,1), false),
+    new ColliderGroup([new BoxCollider(new Vec2(0.0,0.0), 1.0, 1.0)]),
+    new CustomBehaviour().SetOnCreate(()=>{
+      if(!DEBUG){
+        obj.renderer.tile.x -= 1;
+      }
+    }).SetOnUpdate((obj)=>{
+      obj.colliderGroup.colliders[0].scale.Set(obj.transform.scale.x, obj.transform.scale.y);
+      obj.colliderGroup.colliders[0].width = obj.transform.scale.x;
+      obj.colliderGroup.colliders[0].height = obj.transform.scale.y;
+    }),
+  ]
+});
+
 prefabFactory.AddPrototype("Tree", new Vec2(2, 2), new Vec2(0.0,0.0), true, ()=>{
   return [
     new ColliderGroup([new CircleCollider(new Vec2(0.0,-0.8), 0.2,false,

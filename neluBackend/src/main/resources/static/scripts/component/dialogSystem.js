@@ -103,6 +103,10 @@ class DialogSystem extends Component {
     this.dialogs = new Map();
     for(var d of rawDialogs){
       let texts = [];
+      if(!d.dialog.text) continue;
+      if(!Array.isArray(d.dialog.text)){
+        d.dialog.text = [d.dialog.text];
+      }
       for(var t of d.dialog.text){
         texts.push({
           //focus: t.focus.value,

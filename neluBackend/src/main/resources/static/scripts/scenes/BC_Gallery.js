@@ -1,4 +1,5 @@
 var BC_Gallery = `
+BoxColliderScalable -1 1 0
 GalleryText 0 -0.1 0
 GameFromGallery 0 0.1 0
 DecoApple -1 0 0
