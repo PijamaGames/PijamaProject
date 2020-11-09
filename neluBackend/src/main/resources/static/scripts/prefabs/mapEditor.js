@@ -148,12 +148,12 @@ class MapEditor {
   SetActive(active){
     this.fsm.active = active;
 
-    let renderers = finder.FindComponents("renderer");
+    /*let renderers = finder.FindComponents("renderer");
     for(let r of renderers){
       if(r.isUI && r.gameobj != this.goToGalleryObj && r != this.copyBytecodeObj && !r.isText){
         r.gameobj.SetActive(!active);
       }
-    }
+    }*/
 
     if(active){
       this.fsm.Start("select");

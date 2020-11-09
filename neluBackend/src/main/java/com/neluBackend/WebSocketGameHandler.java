@@ -144,9 +144,7 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 					client.sendMessage(outMsg.toString());
 				}
 			}
-			if(room.started) {
-				room.stopGame();
-			}
+			room.stopGame();
 			player.setRoom(null);
 			player.setIsClient(false);
 			player.setIsHost(false);
