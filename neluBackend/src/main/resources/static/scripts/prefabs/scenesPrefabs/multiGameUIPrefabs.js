@@ -104,6 +104,8 @@ prefabFactory.AddPrototype("MenuFromPauseMultiGame", new Vec2(8,2), new Vec2(0.5
       obj.gameobj.transform.scale.Scale(1.0/1.1);
     }).SetUpFunc(()=>{
       manager.LoadScene("mainMenu");
+      user.isHost = false;
+      user.isClient = false;
       SendWebSocketMsg({
         event:backendEvents.LEAVE_ROOM,
       })

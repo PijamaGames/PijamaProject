@@ -15,6 +15,7 @@ class MasterController extends Component{
   }
 
   SpawnEnemy(){
+    if(Renderer.hoverSet && Renderer.hoverSet.size != 0) return;
     SendEnemy(this.enemyType, input.clickPosition);
   }
 

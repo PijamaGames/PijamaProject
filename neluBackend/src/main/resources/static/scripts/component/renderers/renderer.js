@@ -1,4 +1,6 @@
 class Renderer extends Component{
+  static hoverSet = new Set();
+
   constructor(tile = new Vec2(), numTiles = new Vec2(1,1), vertical = true, alpha = 1.0, programs = null){
     super();
     this.type = "renderer";
@@ -21,6 +23,12 @@ class Renderer extends Component{
     if(this.button){
       this.gameobj.scene.buttons.delete(this);
       scene.buttons.add(this);
+    }
+  }
+
+  SetActive(active){
+    if(!active){
+      Renderer.hoverSet.delete(this);
     }
   }
 
@@ -47,6 +55,7 @@ class Renderer extends Component{
     if(!this.active)return;
     if(!this.hover){
       if(this.CheckInputInside(input.mousePosition)){
+        Renderer.hoverSet.add(this);
         this.hover = true;
         if(this.hoverInFunc != null){
           this.hoverInFunc(this);
@@ -55,6 +64,7 @@ class Renderer extends Component{
     }
     if(this.hover){
       if(!this.CheckInputInside(input.mousePosition)){
+        Renderer.hoverSet.delete(this);
         this.hover = false;
         if(this.hoverOutFunc != null){
           this.hoverOutFunc(this);
@@ -203,5 +213,6 @@ class Renderer extends Component{
     if(this.button){
       this.gameobj.scene.buttons.delete(this);
     }
+    Renderer.hoverSet.delete(this);
   }
 }
