@@ -1,9 +1,10 @@
 class TextBox extends Component{
-  constructor(id, defaultText, scale, centered){
+  constructor(id, spanishText, englishText, scale, centered){
     super();
     this.type = "textBox";
     this.element = null;
-    this.text = defaultText;
+    this.textSp = spanishText;
+    this.textEn = englishText;
     this.scale=scale;
     this.centered=centered;
     this.isInputField=false;
@@ -37,7 +38,7 @@ class TextBox extends Component{
     if(this.centered){
       this.element.style.textAlign = "center";
     }
-    var text = document.createTextNode(this.text);
+    var text = manager.english? document.createTextNode(this.textEn) : document.createTextNode(this.textSp);
     this.element.appendChild(text);
 
     var parent = document.getElementById("UI");

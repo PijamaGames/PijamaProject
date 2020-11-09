@@ -11,7 +11,7 @@ prefabFactory.AddPrototype("MoreGraphics", new Vec2(2,2), new Vec2(0.5,0.5), fal
       }
       manager.graphics.SetSettingsByNumber(config);
     }),
-    new TextBox(null, "+", new Vec2(0.3,0.1), true),
+    new TextBox(null, "+","+", new Vec2(0.3,0.1), true),
   ]
 });
 
@@ -28,13 +28,13 @@ prefabFactory.AddPrototype("LessGraphics", new Vec2(2,2), new Vec2(0.5,0.5), fal
       }
       manager.graphics.SetSettingsByNumber(config);
     }),
-    new TextBox(null, "-", new Vec2(0.3,0.1), true),
+    new TextBox(null, "-","-", new Vec2(0.3,0.1), true),
   ]
 });
 prefabFactory.AddPrototype("GraphicsText", new Vec2(7,2), new Vec2(0.5,0.5), false, ()=>{
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5),
-    new TextBox(null, "Calidad", new Vec2(0.3,0.1), true),
+    new TextBox("QualityTextOptions", "Calidad", "Quality", new Vec2(0.3,0.1), true),
   ]
 });
 prefabFactory.AddPrototype("MenuFromOptions", new Vec2(4,2), new Vec2(0.5,0.0), false, ()=>{
@@ -46,7 +46,7 @@ prefabFactory.AddPrototype("MenuFromOptions", new Vec2(4,2), new Vec2(0.5,0.0), 
     }).SetUpFunc(()=>{
       manager.LoadScene(manager.lastScene);
     }),
-    new TextBox(null, "Volver", new Vec2(0.3,0.1), true),
+    new TextBox("ReturnButtonOptions", "Volver","Return", new Vec2(0.3,0.1), true),
   ]
 });
 prefabFactory.AddPrototype("MoreVolume", new Vec2(2,2), new Vec2(0.5,0.5), false, ()=>{
@@ -61,7 +61,7 @@ prefabFactory.AddPrototype("MoreVolume", new Vec2(2,2), new Vec2(0.5,0.5), false
         manager.musicVolume = 1.0;
       }
     }),
-    new TextBox(null, "+", new Vec2(0.3,0.1), true),
+    new TextBox(null, "+","+", new Vec2(0.3,0.1), true),
   ]
 });
 
@@ -77,13 +77,13 @@ prefabFactory.AddPrototype("LessVolume", new Vec2(2,2), new Vec2(0.5,0.5), false
         manager.musicVolume=0;
       }
     }),
-    new TextBox(null, "-", new Vec2(0.3,0.1), true),
+    new TextBox(null, "-","-", new Vec2(0.3,0.1), true),
   ]
 });
 prefabFactory.AddPrototype("VolumeText", new Vec2(7,2), new Vec2(0.5,0.5), false, ()=>{
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5),
-    new TextBox(null, "Volumen", new Vec2(0.3,0.1), true),
+    new TextBox("VolumeTextOptions", "Volumen","Volume", new Vec2(0.3,0.1), true),
   ]
 });
 prefabFactory.AddPrototype("Sound", new Vec2(2,2), new Vec2(0.5,0.5), false, ()=>{
@@ -99,10 +99,18 @@ prefabFactory.AddPrototype("Spanish", new Vec2(5,2), new Vec2(0.5,0.5), false, (
     }).SetHoverOutFunc((obj)=>{
       obj.gameobj.transform.scale.Scale(1.0/1.1);
     }).SetUpFunc(()=>{
-      manager.language=0;
+      manager.english=!manager.english;
+      ChangeLanguage("Language","English","Español");
+      ChangeLanguage("QualityTextOptions","Quality","Calidad");
+      ChangeLanguage("ReturnButtonOptions","Return","Volver");
+      ChangeLanguage("VolumeTextOptions","Volume","Volumen");
+      if(manager.easy) ChangeLanguage("Dificulty","Easy","Fácil");
+      else ChangeLanguage("Dificulty","Hard","Difícil");
+      ChangeLanguage("TitleTextOptions","Options","Configuración");
+
 
     }),
-    new TextBox(null, "Español", new Vec2(0.3,0.1), true),
+    new TextBox("Language", "Español","Spanish", new Vec2(0.3,0.1), true),
   ]
 });
 prefabFactory.AddPrototype("English", new Vec2(5,2), new Vec2(0.5,0.5), false, ()=>{
@@ -112,15 +120,27 @@ prefabFactory.AddPrototype("English", new Vec2(5,2), new Vec2(0.5,0.5), false, (
     }).SetHoverOutFunc((obj)=>{
       obj.gameobj.transform.scale.Scale(1.0/1.1);
     }).SetUpFunc(()=>{
-      manager.language=1;
-
+      ChangeDificulty();
     }),
-    new TextBox(null, "Inglés", new Vec2(0.3,0.1), true),
+    new TextBox("Dificulty", "Difícil","Hard", new Vec2(0.3,0.1), true),
+    new CustomBehaviour().SetOnCreate(()=>{
+      ChangeDificulty();
+    }),
   ]
 });
 prefabFactory.AddPrototype("OptionsTitle", new Vec2(17,2), new Vec2(0.5,0.5), false, ()=>{
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7),
-    new TextBox(null, "Configuración", new Vec2(0.3,0.1), true),
+    new TextBox("TitleTextOptions", "Configuración","Options", new Vec2(0.3,0.1), true),
   ]
 });
+function ChangeDificulty(){
+  let text=document.getElementById("Dificulty");
+  manager.easy=!manager.easy;
+  if(manager.easy) text.innerHTML=manager.english? "Easy": "Fácil";
+  else text.innerHTML=manager.english? "Hard": "Difícil";
+}
+function ChangeLanguage(id,textEn,textSp){
+  let text=document.getElementById(id);
+  text.innerHTML=manager.english? textEn: textSp;
+}

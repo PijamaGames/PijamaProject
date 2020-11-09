@@ -1,6 +1,6 @@
 class InputField extends TextBox{
-  constructor(id, text, scale, centered = false){
-    super(id, text, scale, centered);
+  constructor(id, text,engText, scale, centered = false){
+    super(id, text,engText, scale, centered);
     this.isInputField = true;
 
   }
@@ -12,7 +12,7 @@ class InputField extends TextBox{
     if(this.centered){
       this.element.style.textAlign = "center";
     }
-    var text = document.createTextNode(this.text);
+    var text = manager.english? document.createTextNode(this.textEn): document.createTextNode(this.textSp);
     this.element.appendChild(text);
 
     var parent = document.getElementById("UI");
@@ -21,7 +21,7 @@ class InputField extends TextBox{
     if(this.id != null){
       this.element.id = this.id;
       var inputField = document.getElementById(this.id);
-      inputField.value=this.text;
+      inputField.value=manager.english? this.textEn: this.textSp;
     }
   }
 

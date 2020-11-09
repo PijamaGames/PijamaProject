@@ -1,7 +1,7 @@
 prefabFactory.AddPrototype("SelectionTitle", new Vec2(17,2), new Vec2(0.5,0.5), false, ()=>{
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7),
-    new TextBox(null, "Selecciona un escenario", new Vec2(0.6,0.1), true),
+    new TextBox(null, "Selecciona un escenario","Choose an enviroment", new Vec2(0.6,0.1), true),
   ]
 });
 prefabFactory.AddPrototype("RoomFromChoosing", new Vec2(4,2), new Vec2(0.5,0.0), false, ()=>{
@@ -19,7 +19,7 @@ prefabFactory.AddPrototype("RoomFromChoosing", new Vec2(4,2), new Vec2(0.5,0.0),
         private: manager.privateRoom,
       });
     }),
-    new TextBox(null, "Empezar", new Vec2(0.3,0.1), true),
+    new TextBox(null, "Empezar","Start", new Vec2(0.3,0.1), true),
   ]
 });
 
@@ -32,7 +32,7 @@ prefabFactory.AddPrototype("LobbyFromChoosing", new Vec2(4,2), new Vec2(0.5,0.0)
     }).SetUpFunc(()=>{
       manager.LoadScene("lobby");
     }),
-    new TextBox(null, "Volver", new Vec2(0.3,0.1), true),
+    new TextBox(null, "Volver","Return", new Vec2(0.3,0.1), true),
   ]
 });
 
@@ -100,15 +100,17 @@ prefabFactory.AddPrototype("PrivacityOption", new Vec2(4,2), new Vec2(0.5,0.0), 
       obj.gameobj.transform.scale.Scale(1.0/1.1);
     }).SetUpFunc((obj)=>{
       if(manager.privateRoom){
-        obj.gameobj.textBox.SetText("Pública");
+        if(manager.english) obj.gameobj.textBox.SetText("Public");
+        else obj.gameobj.textBox.SetText("Pública");
         manager.privateRoom=false;
       }
       else{
-        obj.gameobj.textBox.SetText("Privada");
+        if(manager.english) obj.gameobj.textBox.SetText("Private");
+        else obj.gameobj.textBox.SetText("Privada");
         manager.privateRoom=true;
       }
     }),
-    new TextBox(null, "Pública", new Vec2(0.3,0.1), true),
+    new TextBox(null, "Pública","Public", new Vec2(0.3,0.1), true),
     new CustomBehaviour().SetOnDestroy((obj)=>{
       manager.privateRoom = false;
     })

@@ -10,7 +10,8 @@ class Manager {
     this.ms = null;
     this.targetFPS = 60;
     this.musicVolume=1.0;
-    this.language=0;
+    this.english=false;
+    this.easy=false;
     finder = new Finder();
     //mapPlacer = new MapPlacer();
     physics = new Physics();

@@ -1,6 +1,6 @@
 class ScrollButton extends TextBox{
-  constructor(id, text, scale, centered = false){
-    super(id, text, scale, centered);
+  constructor(id, text,t, scale, centered = false){
+    super(id, text,t, scale, centered);
 
   }
 
