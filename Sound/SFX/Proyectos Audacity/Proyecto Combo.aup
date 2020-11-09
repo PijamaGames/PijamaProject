@@ -1,0 +1,48 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="Proyecto Combo_data" version="1.3.0" audacityversion="2.4.2" sel0="5.2593197279" sel1="5.2593197279" vpos="0" h="0.0000000000" zoom="86.1328125000" rate="44100.0" snapto="off" selectionformat="hh:mm:ss + milliseconds" frequencyformat="Hz" bandwidthformat="octaves">
+	<tags>
+		<tag name="ARTIST" value="Juanma"/>
+		<tag name="TITLE" value="Combo"/>
+		<tag name="ALBUM" value="Nelu"/>
+		<tag name="YEAR" value="2020"/>
+		<tag name="TRACKNUMBER" value="4"/>
+		<tag name="GENRE" value="Aventura"/>
+	</tags>
+	<wavetrack name="Pista de audio" isSelected="1" height="150" minimized="0" channel="0" linked="1" mute="0" solo="0" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="158107">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808b43.au" len="158107" min="-1.0" max="0.999969" rms="0.085202"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+		<waveclip offset="5.13160998" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="62976">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808d2f.au" len="62976" min="-0.536099" max="0.323383" rms="0.055216"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="Pista de audio" isSelected="1" height="150" minimized="0" channel="1" linked="0" mute="0" solo="0" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="158107">
+				<waveblock start="0">
+					<simpleblockfile filename="e08087cd.au" len="158107" min="-1.0" max="0.999969" rms="0.08503"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+		<waveclip offset="5.13160998" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="62976">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808f29.au" len="62976" min="-0.536262" max="0.32246" rms="0.05512"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+</project>
