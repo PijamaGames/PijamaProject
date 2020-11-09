@@ -78,13 +78,13 @@ prefabFactory.AddPrototype("Sand", new Vec2(1,1), new Vec2(0,0), true, ()=>{
 
 prefabFactory.AddPrototype("Nenuphar", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
-    new Renderer(new Vec2(3,0), new Vec2(1,1), false),
+    new Renderer(new Vec2(3,0), new Vec2(1,1), false, 1.0 ,['color', 'depth', 'mask']),
   ]
 });
 
 prefabFactory.AddPrototype("NenupharBig", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
-    new Renderer(new Vec2(4,0), new Vec2(1,1), false),
+    new Renderer(new Vec2(4,0), new Vec2(1,1), false, 1.0 ,['color', 'depth', 'mask']),
   ]
 });
 
@@ -96,13 +96,13 @@ prefabFactory.AddPrototype("Rock", new Vec2(1,1), new Vec2(0,0), true, ()=>{
 
 prefabFactory.AddPrototype("RockHole", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
-    new Renderer(new Vec2(6,0), new Vec2(1,1), false),
+    new Renderer(new Vec2(6,0), new Vec2(1,1), false, 1.0 ,['color', 'depth', 'mask']),
   ]
 });
 
 prefabFactory.AddPrototype("RockHoleFilled", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
-    new Renderer(new Vec2(7,0), new Vec2(1,1), false),
+    new Renderer(new Vec2(7,0), new Vec2(1,1), false, 1.0 ,['color', 'depth', 'mask']),
   ]
 });
 
@@ -210,31 +210,31 @@ prefabFactory.AddPrototype("BigLog", new Vec2(1,3), new Vec2(0,0), true, ()=>{
 
 prefabFactory.AddPrototype("Herb1", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
-    new Renderer(new Vec2(0,5), new Vec2(1,1), true),
+    new Renderer(new Vec2(0,5), new Vec2(1,1), true, 1.0 ,['color', 'depth', 'mask']),
   ]
 });
 
 prefabFactory.AddPrototype("Herb2", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
-    new Renderer(new Vec2(1,5), new Vec2(1,1), true),
+    new Renderer(new Vec2(1,5), new Vec2(1,1), true, 1.0 ,['color', 'depth', 'mask']),
   ]
 });
 
 prefabFactory.AddPrototype("Nest", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
-    new Renderer(new Vec2(2,5), new Vec2(1,1), true),
+    new Renderer(new Vec2(2,5), new Vec2(1,1), true, 1.0 ,['color', 'depth', 'mask']),
   ]
 });
 
 prefabFactory.AddPrototype("Nest1", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
-    new Renderer(new Vec2(3,5), new Vec2(1,1), true),
+    new Renderer(new Vec2(3,5), new Vec2(1,1), true, 1.0 ,['color', 'depth', 'mask']),
   ]
 });
 
 prefabFactory.AddPrototype("BrokenEggs", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
-    new Renderer(new Vec2(4,5), new Vec2(1,1), true),
+    new Renderer(new Vec2(4,5), new Vec2(1,1), true, 1.0 ,['color', 'depth', 'mask']),
   ]
 });
 
@@ -303,7 +303,7 @@ prefabFactory.AddPrototype("Grass7", new Vec2(1,1), new Vec2(0,0), true, ()=>{
 
 prefabFactory.AddPrototype("Shit", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
-    new Renderer(new Vec2(6,7), new Vec2(1,1), false),
+    new Renderer(new Vec2(6,7), new Vec2(1,1), false, 1.0 ,['color', 'depth', 'mask']),
   ]
 });
 
@@ -630,9 +630,9 @@ prefabFactory.AddPrototype("BigLogPackLiana", new Vec2(1,5), new Vec2(0,0), true
   ]
 });
 
-prefabFactory.AddPrototype("Apple", new Vec2(1,1), new Vec2(0,0), true, ()=>{
+prefabFactory.AddPrototype("DecoApple", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
-    new Renderer(new Vec2(4,3), new Vec2(1,1), false),
+    new Renderer(new Vec2(4,3), new Vec2(1,1), false, 1.0 ,['color', 'depth', 'mask']),
     new ColliderGroup([new CircleCollider(new Vec2(0.0,0.0), 0.3, false)]),
   ]
 });
@@ -649,6 +649,6 @@ prefabFactory.AddPrototype("Water", new Vec2(1,1), new Vec2(0,0), true, ()=>{
 });
 prefabFactory.AddPrototype("Mud", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
-    new Renderer(new Vec2(6,2), new Vec2(1,1), true),
+    new Renderer(new Vec2(6,2), new Vec2(1,1), true, 1.0 ,['color', 'depth', 'mask']),
   ]
 });
