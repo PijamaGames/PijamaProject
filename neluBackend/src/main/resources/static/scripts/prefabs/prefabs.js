@@ -118,42 +118,6 @@ prefabFactory.AddPrototype("Stump", new Vec2(2,1), new Vec2(0,0), true, ()=>{
   ]
 });
 
-prefabFactory.AddPrototype("LifeFlower", new Vec2(1,1), new Vec2(0,0), true, ()=>{
-  return [
-    new Renderer(new Vec2(2,1), new Vec2(1,1), true),
-  ]
-});
-
-prefabFactory.AddPrototype("LifeFlowerUsed", new Vec2(1,1), new Vec2(0,0), true, ()=>{
-  return [
-    new Renderer(new Vec2(3,1), new Vec2(1,1), true),
-  ]
-});
-
-prefabFactory.AddPrototype("LifeFlowerBig", new Vec2(1,1), new Vec2(0,0), true, ()=>{
-  return [
-    new Renderer(new Vec2(4,1), new Vec2(1,1), true),
-  ]
-});
-
-prefabFactory.AddPrototype("LifeFlowerBigUsed", new Vec2(1,1), new Vec2(0,0), true, ()=>{
-  return [
-    new Renderer(new Vec2(5,1), new Vec2(1,1), true),
-  ]
-});
-
-prefabFactory.AddPrototype("FireFlower", new Vec2(1,1), new Vec2(0,0), true, ()=>{
-  return [
-    new Renderer(new Vec2(6,1), new Vec2(1,1), true),
-  ]
-});
-
-prefabFactory.AddPrototype("FireFlowerUsed", new Vec2(1,1), new Vec2(0,0), true, ()=>{
-  return [
-    new Renderer(new Vec2(7,1), new Vec2(1,1), true),
-  ]
-});
-
 prefabFactory.AddPrototype("Tent", new Vec2(3,3), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(0,2), new Vec2(3,3), true),

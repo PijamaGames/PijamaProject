@@ -376,6 +376,20 @@ class Input {
     return pos;
   }
 
+  WorldToCanvas(position){
+    if(!manager.scene.camera) return;
+    let pos = position.Copy();
+    let camPos = manager.scene.camera.transform.GetWorldPos();
+    pos.Sub(camPos);
+    pos.x = (pos.x / (manager.graphics.res.x *0.5 / tileSize)) *0.5;
+    pos.y = (pos.y / (manager.graphics.res.y *0.5 / tileSize)) *0.5;
+
+    //pos.x = (pos.x-camPos.x)/manager.graphics.res.x / 2.0/tileSize;
+    //pos.y = (pos.y-camPos.y)/-manager.graphics.res.y / 2.0/tileSize;
+    Log(pos.toString("WORLD TO CANVAS: "));
+    return pos;
+  }
+
   ScreenToCanvas(position){
     let pos = position.Copy();
     pos.x = pos.x * canvas.width / window.innerWidth;
