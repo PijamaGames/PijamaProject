@@ -130,7 +130,6 @@ class Input {
     } else {
       return false;
     }
-
   }
 
   GetBlockCamera(){
@@ -139,8 +138,9 @@ class Input {
     } else {
       return false;
     }
-
   }
+
+
 
   AddListeners(){
     var that = this;

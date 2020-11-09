@@ -13,7 +13,6 @@ class Manager {
     this.english=false;
     this.easy=false;
     finder = new Finder();
-    //mapPlacer = new MapPlacer();
     physics = new Physics();
     this.lastScene="";
     this.choosenEnviroment=1;

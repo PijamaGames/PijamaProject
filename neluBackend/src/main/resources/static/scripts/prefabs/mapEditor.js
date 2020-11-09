@@ -15,7 +15,8 @@ class MapEditor {
     this.copyBytecodeObj = null;
     this.currentScene;
     this.hoverCount = 0;
-    this.heightStep = 0.5;
+    this.heightStep = 0.05;
+    this.bigHeightStep = 0.5;
 
     this.adjustToGrid = true;
 
@@ -76,11 +77,15 @@ class MapEditor {
     ]);
 
     var putNode = new Node("put").SetUpdateFunc(()=>{
+      let step = that.heightStep;
+      if(input.GetKeyPressed("ShiftLeft")){
+        step = that.bigHeightStep;
+      }
       if(input.GetKeyDown("ArrowDown")){
-        that.selected.transform.height -= that.heightStep;
+        that.selected.transform.height -= step;
       }
       if(input.GetKeyDown("ArrowUp")){
-        that.selected.transform.height += that.heightStep;
+        that.selected.transform.height += step;
       }
       if(input.GetKeyDown("KeyG")){
         that.adjustToGrid = !that.adjustToGrid;
