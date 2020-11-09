@@ -92,7 +92,7 @@ prefabFactory.AddPrototype("Sound", new Vec2(2,2), new Vec2(0.5,0.5), false, ()=
   ]
 });
 
-prefabFactory.AddPrototype("Spanish", new Vec2(5,2), new Vec2(0.5,0.5), false, ()=>{
+prefabFactory.AddPrototype("LanguageText", new Vec2(5,2), new Vec2(0.5,0.5), false, ()=>{
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7).GiveFunctionality().SetHoverInFunc((obj)=>{
       obj.gameobj.transform.scale.Scale(1.1);
@@ -102,13 +102,11 @@ prefabFactory.AddPrototype("Spanish", new Vec2(5,2), new Vec2(0.5,0.5), false, (
       manager.SetEnglish(!manager.english);
       if(manager.easy) ChangeLanguage("Dificulty","Easy","Fácil");
       else ChangeLanguage("Dificulty","Hard","Difícil");
-
-
     }),
     new TextBox("Language", "Español","Spanish", new Vec2(0.3,0.1), true),
   ]
 });
-prefabFactory.AddPrototype("English", new Vec2(5,2), new Vec2(0.5,0.5), false, ()=>{
+prefabFactory.AddPrototype("DificultyText", new Vec2(5,2), new Vec2(0.5,0.5), false, ()=>{
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7).GiveFunctionality().SetHoverInFunc((obj)=>{
       obj.gameobj.transform.scale.Scale(1.1);

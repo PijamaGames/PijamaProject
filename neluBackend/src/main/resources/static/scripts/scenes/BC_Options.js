@@ -7,7 +7,7 @@ LessVolume -0.4 0.2 0
 VolumeText 0 0.2 0
 Sound 0.0 0.0 0
 MenuFromOptions 0.0 0.1 0
-English 0.2 -0.2 0
-Spanish -0.2 -0.2 0
+DificultyText 0.2 -0.2 0
+LanguageText -0.2 -0.2 0
 OptionsTitle 0 0.4 0
 `
