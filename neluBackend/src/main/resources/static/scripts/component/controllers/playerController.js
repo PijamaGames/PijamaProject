@@ -126,6 +126,7 @@ class PlayerController extends Component {
   }
 
   ThrowColibri(){
+    if(Renderer.hoverSet && Renderer.hoverSet.size != 0) return;
     Log("THROW COLIBRI");
     this.hasColibri = false;
     this.colibri.SetActive(true);
@@ -134,6 +135,7 @@ class PlayerController extends Component {
   }
 
   ThrowBees(){
+    if(Renderer.hoverSet && Renderer.hoverSet.size != 0) return;
     this.beesTarget = this.GetBeesTarget();
     if(this.beesTarget != null){
       Log("THROW " + this.numBees +" BEES");
@@ -148,8 +150,6 @@ class PlayerController extends Component {
     } else {
       Log("No target for bees");
     }
-
-
   }
 
   GetBeesTarget(){

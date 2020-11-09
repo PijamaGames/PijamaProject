@@ -175,6 +175,9 @@ class Manager {
       this.scene.GenerateCam();
       Log("Loaded: "+this.scene.name);
     }
+    if(Renderer.hoverSet){
+      Renderer.hoverSet = new Set();
+    }
   }
 
   EnterFullScreen(callback = function(){}) {
