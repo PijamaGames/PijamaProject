@@ -12,7 +12,7 @@ prefabFactory.AddPrototype("GameFromPause", new Vec2(8,2), new Vec2(0.5,0.5), fa
     }).SetHoverOutFunc((obj)=>{
       obj.gameobj.transform.scale.Scale(1.0/1.1);
     }).SetUpFunc(()=>{
-      manager.LoadScene(manager.lastGame);
+      manager.LoadScene("singleGame");
     }),
     new TextBox(null, "Volver al juego", new Vec2(0.3,0.1), true),
   ]
