@@ -644,7 +644,7 @@ prefabFactory.AddPrototype("Light", null, null, true, ()=>{
 });
 prefabFactory.AddPrototype("Water", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
-    new Renderer(new Vec2(5,8), new Vec2(1,1), true),
+    new Renderer(new Vec2(5,8), new Vec2(1,1), false),
   ]
 });
 prefabFactory.AddPrototype("Mud", new Vec2(1,1), new Vec2(0,0), true, ()=>{

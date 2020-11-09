@@ -44,23 +44,6 @@ function CreateEntitiesMsg(){
 }
 
 function SendEntitiesInfo(){
-  /*let numEntities = manager.scene.networkEntities.size;
-
-  msg = {
-    event:"SEND_ENTITIES",
-    numEntities:numEntities,
-    minutes:minutes,
-    seconds:seconds,
-  }
-
-  let i = 0;
-  for(var [key, value] of manager.scene.networkEntities){
-    msg["info"+i] = value.GetInfo();
-    i++;
-  }
-  Log(msg);
-  SendWebSocketMsg(msg);*/
-
   msgs = [];
   msgs.push(CreateEntitiesMsg());
   let msg = msgs[0];
@@ -137,7 +120,6 @@ function ReceiveEntities(msg){
   let info;
   let obj;
 
-  //let keySet = new Set();
 
   for(var i = 0; i < numEntities; i++){
     info = msg["info"+i];
@@ -149,9 +131,6 @@ function ReceiveEntities(msg){
       }
       continue;
     }
-    //keySet.add(info.key);
-
-    //Log(manager.scene.networkEntities);
     if(!manager.scene.networkEntities.has(info.key)){
       obj = prefabFactory.CreateObj(info.type, new Vec2(info.posX, info.posY), info.height, null, info.id);
     } else {
@@ -316,7 +295,7 @@ function CreateRoom(msg) {
 function JoinRoom(msg) {
   if(user.isHost){
     let text=document.getElementById("WaitingMessage");
-    text.innerHTML=msg.clientName+" se ha unido a la sala";
+    text.innerHTML=manager.english? (msg.clientName+" has joined to the room"):(msg.clientName+" se ha unido a la sala");
     var obj=finder.FindObjectsByType("MultiGameFromRoom");
     if(obj.length>0) obj[0].SetActive(true);
   } else {
@@ -325,7 +304,7 @@ function JoinRoom(msg) {
       manager.LoadScene("room");
       let text=document.getElementById("WaitingMessage");
       user.hostName=msg.room;
-      text.innerHTML="Te has unido a la sala de "+user.hostName;
+      text.innerHTML=manager.english? ("You've joined to "+user.hostName+" room"):("Te has unido a la sala de "+user.hostName);
       user.isClient=true;
       manager.enviroment=msg.enviroment;
       lighting.currentLight=msg.lighting;
@@ -374,7 +353,7 @@ function ConnectionLost(msg) {
     manager.LoadScene("connectionFailed");
   } else if(user.isHost) {
     var text=document.getElementById("WaitingMessage");
-    text.innerHTML="Esperando a otro jugador...";
+    text.innerHTML=manager.english? "Waiting some player...":"Esperando a otro jugador...";
     var obj=finder.FindObjectsByType("MultiGameFromRoom");
     if(obj.length>0) obj[0].SetActive(false);
   }
