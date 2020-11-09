@@ -22,10 +22,10 @@ class User{
     manager.LoadScene("connectionFailed");
     var text=document.getElementById("ConnectionTitle");
     if(winner){
-      text.innerHTML="¡Enhorabuena! ¡Has ganado!";
+      text.innerHTML=manager.english? "¡Congratulations! ¡You win!":"¡Enhorabuena! ¡Has ganado!";
     }
     else{
-      text.innerHTML="Has sido derrotado...otra vez será";
+      text.innerHTML=manager.english? "You lose...try again":"Has sido derrotado...otra vez será";
     }
   }
 
