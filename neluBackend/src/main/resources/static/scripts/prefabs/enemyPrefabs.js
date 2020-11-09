@@ -38,7 +38,7 @@ prefabFactory.AddPrototype("apple", new Vec2(1, 1), new Vec2(0.5, 0.5), false, (
   ]
 });
 
-prefabFactory.AddPrototype("particle", new Vec2(1, 1), new Vec2(0.5, 0.5), false, ()=>{
+prefabFactory.AddPrototype("particle", new Vec2(2, 2), new Vec2(0.5, 0.5), false, ()=>{
   return [
     new ColliderGroup([new CircleCollider(new Vec2(0.0,0.0), 0.3, true,
     function(obj){
@@ -50,8 +50,8 @@ prefabFactory.AddPrototype("particle", new Vec2(1, 1), new Vec2(0.5, 0.5), false
       }
     }, null, null
     )]),
-    new Renderer(new Vec2(4,3), new Vec2(1,1), false),
-    new Rigidbody(0.9),
+    new SpriteRenderer('smoke', new Vec2(0, 0),new Vec2(2,2), true, 1, [0], 8, true),
+    new Rigidbody(0.2),
     new ParticlesController(),
     new NetworkEntity(),
   ]
