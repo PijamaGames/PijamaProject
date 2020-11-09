@@ -13,6 +13,7 @@ class Scene{
     this.networkEntities = new Map();
     this.paused = false;
     manager.scenes.set(this.name, this);
+    this.masterController;
     this.GenerateCam();
   }
 

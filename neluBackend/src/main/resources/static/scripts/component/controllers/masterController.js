@@ -11,6 +11,7 @@ class MasterController extends Component{
 
   Destroy(){
     this.listener.Remove();
+    this.gameobj.scene.masterController=null;
   }
 
   SpawnEnemy(){
@@ -65,6 +66,7 @@ class MasterController extends Component{
   SetGameobj(gameobj){
     this.gameobj = gameobj;
     this.gameobj.masterController = this;
+    this.gameobj.scene.masterController=this;
     this.CreateFSM();
   }
 }

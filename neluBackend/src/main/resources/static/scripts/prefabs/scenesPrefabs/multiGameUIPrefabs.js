@@ -51,6 +51,28 @@ prefabFactory.AddPrototype("Chronometer", new Vec2(3,1), new Vec2(0.0,1.0), fals
     })
   ]
 });
+prefabFactory.AddPrototype("ChangeEnemy", new Vec2(1,1), new Vec2(0.0,1.0), false, ()=>{
+  return [
+    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7).GiveFunctionality().SetHoverInFunc((obj)=>{
+      obj.gameobj.transform.scale.Scale(1.1);
+    }).SetHoverOutFunc((obj)=>{
+      obj.gameobj.transform.scale.Scale(1.0/1.1);
+    }).SetUpFunc((obj)=>{
+      let enemyType=obj.gameobj.scene.masterController.enemyType;
+      if(enemyType==0) enemyType=1;
+      else enemyType=0;
+
+      obj.gameobj.scene.masterController.enemyType=enemyType;
+    }),
+    new TextBox(null, "E", new Vec2(0.3,0.1), true),
+    new CustomBehaviour().SetOnCreate((obj)=>{
+      if(user.isHost) obj.SetActive(false);
+    }),
+  ]
+});
+
+
+//PAUSA
 prefabFactory.AddPrototype("PauseTitleMultiGame", new Vec2(17,2), new Vec2(0.5,0.5), false, ()=>{
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7),
