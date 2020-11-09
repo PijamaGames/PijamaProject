@@ -66,15 +66,19 @@ function SendEntitiesInfo(){
   let msg = msgs[0];
   let i = 0;
   let aliveKeys = new Set();
+  let info;
   for(var [key, value] of manager.scene.networkEntities){
-    msg["info"+i] = value.GetInfo();
-    aliveKeys.add(key);
-    i++;
-    if(i == 30){
-      msg.numEntities = i;
-      let l = msgs.push(CreateEntitiesMsg());
-      msg = msgs[l-1];
-      i = 0;
+    info = value.GetInfo();
+    if(info.active || (lastAliveSet.has(info.key) && !info.active)){
+      msg["info"+i] = info;
+      aliveKeys.add(key);
+      i++;
+      if(i == 30){
+        msg.numEntities = i;
+        let l = msgs.push(CreateEntitiesMsg());
+        msg = msgs[l-1];
+        i = 0;
+      }
     }
   }
   for(var k of lastAliveSet){
