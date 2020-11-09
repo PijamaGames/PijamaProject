@@ -62,8 +62,8 @@ class DialogSystem extends Component {
     let nextTextNode = new Node("nextText").SetStartFunc(()=>{
       Log("dialog system next text");
       that.currentText = that.currentDialog.texts[that.currentDialogCount];
-      that.textBox.textBox.SetText(that.currentText.message.es);
-      that.textName.textBox.SetText(that.currentText.name.es);
+      that.textBox.textBox.SetText(manager.english ? that.currentText.message.en : that.currentText.message.es);
+      that.textName.textBox.SetText(manager.english ? that.currentText.name.en : that.currentText.name.es);
       that.currentDialogCount++;
     }).SetEdges([
       new Edge("nextText").AddCondition(()=>{
@@ -105,7 +105,7 @@ class DialogSystem extends Component {
       let texts = [];
       for(var t of d.dialog.text){
         texts.push({
-          focus: t.focus.value,
+          //focus: t.focus.value,
           name : {
             es:t.name.es.value,
             en:t.name.en.value
