@@ -88,6 +88,7 @@ prefabFactory.AddPrototype("Lighting", new Vec2(1,1), new Vec2(0.5,0.5), false, 
       obj.gameobj.transform.scale.Scale(1.0/1.1);
     }).SetUpFunc(()=>{
       lighting.SwitchLight();
+      lighting.SetCurrentLight(lighting.currentLight);
     }),
   ]
 });

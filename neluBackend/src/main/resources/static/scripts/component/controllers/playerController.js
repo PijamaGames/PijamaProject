@@ -352,6 +352,7 @@ class PlayerController extends Component {
   TakeDamage(damage){
     this.life -= damage;
     var text=document.getElementById("LifeText");
+    Log(this.life);
     text.innerHTML=this.life<0 ? (0 + "HP") : (this.life + "HP");
     //this.lifeText.textBox.SetText(this.life + "HP");
   }
