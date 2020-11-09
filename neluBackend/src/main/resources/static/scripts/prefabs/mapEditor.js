@@ -17,6 +17,8 @@ class MapEditor {
     this.hoverCount = 0;
     this.heightStep = 0.5;
 
+    this.adjustToGrid = true;
+
     var that = this;
     var selectNode = new Node("select").SetStartFunc(()=>{
       that.currentScene = manager.scene.name;
@@ -80,8 +82,16 @@ class MapEditor {
       if(input.GetKeyDown("ArrowUp")){
         that.selected.transform.height += that.heightStep;
       }
+      if(input.GetKeyDown("KeyG")){
+        that.adjustToGrid = !that.adjustToGrid;
+      }
       //that.selected.transform.SetWorldCenter(Vec2.Sub(input.mouseGridPosition, Vec2.Scale(that.selected.transform.anchor, 1.0)));
-      that.selected.transform.SetWorldPosition(Vec2.Add(input.mouseGridPosition, Vec2.Scale(that.selected.transform.anchor, 0.5)));
+      if(that.adjustToGrid){
+        that.selected.transform.SetWorldPosition(Vec2.Add(input.mouseGridPosition, Vec2.Scale(that.selected.transform.anchor, 0.5)));
+      } else {
+        that.selected.transform.SetWorldPosition(Vec2.Add(input.mouseWorldPosition, Vec2.Scale(that.selected.transform.anchor, 0.5)));
+      }
+
     }).SetEdges([
       new Edge("select").AddCondition(()=>input.mouseLeftDown).SetFunc(()=>{
         manager.scene.AddObjToBytecode(that.selected);

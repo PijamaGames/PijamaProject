@@ -37,10 +37,10 @@ class Manager {
   DebugIteration(){
     if(input.GetKeyDown('KeyT'))
       lighting.SetMorning();
-    if(input.GetKeyDown('KeyG'))
-      lighting.SetAfterNoon();
     if(input.GetKeyDown('KeyY'))
-      lighting.SetNoon();
+      lighting.SetAfterNoon();
+    /*if(input.GetKeyDown('KeyY'))
+      lighting.SetNoon();*/
     if(input.GetKeyDown('KeyH'))
       lighting.SetNight();
 
