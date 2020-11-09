@@ -11,13 +11,19 @@ class Manager {
     this.targetFPS = 60;
     this.musicVolume=1.0;
     this.english=false;
-    this.easy=false;
+    this.easy=true;
     finder = new Finder();
     //mapPlacer = new MapPlacer();
     physics = new Physics();
     this.lastScene="";
     this.choosenEnviroment=1;
     this.privateRoom=false;
+    this.changeLanguageEvent=new EventDispatcher();
+  }
+
+  SetEnglish(english){
+    this.english=english;
+    this.changeLanguageEvent.Dispatch();
   }
 
   ManageTime() {

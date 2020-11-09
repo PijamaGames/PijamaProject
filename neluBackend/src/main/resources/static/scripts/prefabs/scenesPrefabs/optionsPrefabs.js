@@ -99,14 +99,9 @@ prefabFactory.AddPrototype("Spanish", new Vec2(5,2), new Vec2(0.5,0.5), false, (
     }).SetHoverOutFunc((obj)=>{
       obj.gameobj.transform.scale.Scale(1.0/1.1);
     }).SetUpFunc(()=>{
-      manager.english=!manager.english;
-      ChangeLanguage("Language","English","Español");
-      ChangeLanguage("QualityTextOptions","Quality","Calidad");
-      ChangeLanguage("ReturnButtonOptions","Return","Volver");
-      ChangeLanguage("VolumeTextOptions","Volume","Volumen");
+      manager.SetEnglish(!manager.english);
       if(manager.easy) ChangeLanguage("Dificulty","Easy","Fácil");
       else ChangeLanguage("Dificulty","Hard","Difícil");
-      ChangeLanguage("TitleTextOptions","Options","Configuración");
 
 
     }),
@@ -122,10 +117,7 @@ prefabFactory.AddPrototype("English", new Vec2(5,2), new Vec2(0.5,0.5), false, (
     }).SetUpFunc(()=>{
       ChangeDificulty();
     }),
-    new TextBox("Dificulty", "Difícil","Hard", new Vec2(0.3,0.1), true),
-    new CustomBehaviour().SetOnCreate(()=>{
-      ChangeDificulty();
-    }),
+    new TextBox("Dificulty", "Fácil","Easy", new Vec2(0.3,0.1), true),
   ]
 });
 prefabFactory.AddPrototype("OptionsTitle", new Vec2(17,2), new Vec2(0.5,0.5), false, ()=>{

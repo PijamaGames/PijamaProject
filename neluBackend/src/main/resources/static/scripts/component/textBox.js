@@ -11,6 +11,10 @@ class TextBox extends Component{
     this.id = id;
   }
 
+  ChangeTextLanguage(){
+    this.element.innerHTML=manager.english? this.textEn: this.textSp;
+  }
+
   OnSetActive(active){
     this.element.hidden = !active;
   }
@@ -18,6 +22,7 @@ class TextBox extends Component{
   Destroy(){
     this.element.parentNode.removeChild(this.element);
     this.gameobj.scene.domElements.delete(this);
+    this.listener.Remove();
   }
 
   Update(){
@@ -30,6 +35,8 @@ class TextBox extends Component{
 
     this.CreateElement();
     this.gameobj.scene.domElements.add(this);
+    var that=this;
+    this.listener=manager.changeLanguageEvent.AddListener(this,()=>that.ChangeTextLanguage());
   }
 
   CreateElement(){
@@ -54,6 +61,8 @@ class TextBox extends Component{
     this.element.innerHTML = text;
     return this;
   }
+
+
 
   ElementResponsive(){
     /*const fontSize = 5;
