@@ -78,7 +78,9 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 			ObjectNode outMsg = mapper.createObjectNode();
 
 			String event = inMsg.get("event").asText();
-			Log(event);
+			if(!event.equals(BackEndEvents.SEND_ENTITIES)) {
+				Log(event);
+			}
 
 			switch (event) {
 			case BackEndEvents.LOGIN:
@@ -98,7 +100,8 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 				player.sendMessage(outMsg.toString());
 				break;
 			case BackEndEvents.LEAVE_ROOM:
-				connectionLost(player);
+				leaveRoom(player);
+				//connectionLost(player);
 				break;
 			case BackEndEvents.START_GAME:
 				startGame(inMsg, outMsg, player);
@@ -118,6 +121,38 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 			System.err.println("Exception processing message" + message.getPayload());
 			e.printStackTrace(System.err);
 		}
+	}
+	
+	private void leaveRoom(Player player) throws Exception {
+		Room room = player.getRoom();
+		
+		ObjectNode outMsg = mapper.createObjectNode();
+		outMsg.put("event", FrontEndEvents.CONNECTION_LOST);
+		
+		
+		if(room != null) {
+			if(player == room.getMasterClient()) {
+				//room.setMasterClient(null);
+				Player host = room.getSlaveHost();
+				if(host != null) {
+					host.sendMessage(outMsg.toString());
+				}
+			} else if (player == room.getSlaveHost()) {
+				//room.setSlaveHost(null);
+				Player client = room.getMasterClient();
+				if(client != null) {
+					client.sendMessage(outMsg.toString());
+				}
+			}
+			if(room.started) {
+				room.stopGame();
+			}
+			player.setRoom(null);
+			player.setIsClient(false);
+			player.setIsHost(false);
+			
+		}
+		//connectionLost(player);
 	}
 	
 	private void endGame(JsonNode inMsg, ObjectNode outMsg, Player player) throws Exception {
@@ -243,7 +278,7 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 			
 			Player host = game.getPlayer(hostName);
 			Room hostRoom = host.getRoom();
-			if (hostRoom != null && !hostRoom.hasStarted()) {
+			if (hostRoom != null && !hostRoom.hasStarted() && hostRoom.getMasterClient() == null) {
 				hostRoom.setClient(player);
 				//hostRoom.startGame();
 				outMsg.put("room", hostRoom.getSlaveHost().getName());
@@ -269,9 +304,11 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 
 		int size = 0;
 		for (Room room : publicRooms) {
-			outMsg.put("room" + size, room.getSlaveHost().getName());
-			outMsg.put("enviroment" + size, room.getEnviroment());
-			size++;
+			if(room.getMasterClient() == null) {
+				outMsg.put("room" + size, room.getSlaveHost().getName());
+				outMsg.put("enviroment" + size, room.getEnviroment());
+				size++;
+			}
 		}
 		outMsg.put("numRooms", size);
 
@@ -287,8 +324,12 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 		Room room = player.getRoom();
 		if(room!= null) {
 			if(room.started) {
-				room.getMasterClient().sendMessage(outMsg.toString());
-				room.getSlaveHost().sendMessage(outMsg.toString());
+				if(game.hasPlayer(room.getMasterClient())) {
+					room.getMasterClient().sendMessage(outMsg.toString());
+				}
+				if(game.hasPlayer(room.getSlaveHost())) {
+					room.getSlaveHost().sendMessage(outMsg.toString());
+				}
 				//room.getMasterClient().setRoom(null);
 				//room.getSlaveHost().setRoom(null);
 				
@@ -327,6 +368,6 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 		Player player = (Player) session.getAttributes().get(PLAYER_ATTRIBUTE);
 		game.removePlayer(player);
 		connectionLost(player);
-		Log("Player disconnected: " + player.getPlayerId());
+		Log("Player disconnected: " + player.getPlayerId()+ " status: " + status);
 	}
 }

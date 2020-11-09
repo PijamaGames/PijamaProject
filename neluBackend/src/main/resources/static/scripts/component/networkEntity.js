@@ -6,6 +6,8 @@ class NetworkEntity extends Component{
 
   Destroy(){
     this.gameobj.scene.networkEntities.delete(this.gameobj.key);
+
+    
   }
 
   GetInfo(){

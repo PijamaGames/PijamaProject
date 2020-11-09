@@ -59,6 +59,14 @@ public class Room {
 		return slaveHost;
 	}
 	
+	public void setMasterClient(Player player) {
+		masterClient = player;
+	}
+	
+	public void setSlaveHost(Player player) {
+		slaveHost = player;
+	}
+	
 	public boolean hasStarted() {
 		return started;
 	}
@@ -82,6 +90,8 @@ public class Room {
 			started = true;
 			//task = GameHandler.scheduler.scheduleAtFixedRate(()->this.Update(), 0, GameHandler.TICK_DELAY, TimeUnit.SECONDS);
 			Log("started");
+			//GameHandler.INSTANCE.removePublicRoom(this);
+			setPrivate(true);
 		}
 	}
 	

@@ -9,6 +9,7 @@ var minutes;
 var seconds;
 var networkDelta = 0.0;
 var networkMs = 0.0;
+var lastAliveSet = new Set();
 
 const frontendEvents = {
   LOGIN: "LOGIN",
@@ -34,8 +35,17 @@ const backendEvents = {
   END_GAME:"END_GAME",
 }
 
+function CreateEntitiesMsg(){
+  return {
+    event:"SEND_ENTITIES",
+    minutes:minutes,
+    seconds:seconds,
+  }
+}
+
 function SendEntitiesInfo(){
-  let numEntities = manager.scene.networkEntities.size;
+  /*let numEntities = manager.scene.networkEntities.size;
+
   msg = {
     event:"SEND_ENTITIES",
     numEntities:numEntities,
@@ -48,8 +58,51 @@ function SendEntitiesInfo(){
     msg["info"+i] = value.GetInfo();
     i++;
   }
+  Log(msg);
+  SendWebSocketMsg(msg);*/
 
-  SendWebSocketMsg(msg);
+  msgs = [];
+  msgs.push(CreateEntitiesMsg());
+  let msg = msgs[0];
+  let i = 0;
+  let aliveKeys = new Set();
+  for(var [key, value] of manager.scene.networkEntities){
+    msg["info"+i] = value.GetInfo();
+    aliveKeys.add(key);
+    i++;
+    if(i == 30){
+      msg.numEntities = i;
+      let l = msgs.push(CreateEntitiesMsg());
+      msg = msgs[l-1];
+      i = 0;
+    }
+  }
+  for(var k of lastAliveSet){
+    if(!aliveKeys.has(k)){
+      msg["info"+i] = {
+        key:k,
+        destroyed:true
+      }
+      //Log("SEND DESTROYED");
+      i++;
+      if(i == 30){
+        msg.numEntities = i;
+        let l = msgs.push(CreateEntitiesMsg());
+        msg = msgs[l-1];
+        i = 0;
+      }
+    }
+  }
+  lastAliveSet = aliveKeys;
+  if(!msg.numEntities){
+    msg.numEntities = i;
+  }
+
+  for(var m of msgs){
+    //Log(m);
+    SendWebSocketMsg(m);
+  }
+
 }
 
 function SendEntitiesLoop(){
@@ -80,11 +133,19 @@ function ReceiveEntities(msg){
   let info;
   let obj;
 
-  let keySet = new Set();
+  //let keySet = new Set();
 
   for(var i = 0; i < numEntities; i++){
     info = msg["info"+i];
-    keySet.add(info.key);
+    if(info.destroyed){
+      //Log("RECEIVE DESTROYED");
+      let k = info.key;
+      if(manager.scene.networkEntities.has(k)){
+        manager.scene.networkEntities.get(k).gameobj.Destroy();
+      }
+      continue;
+    }
+    //keySet.add(info.key);
 
     //Log(manager.scene.networkEntities);
     if(!manager.scene.networkEntities.has(info.key)){
@@ -111,11 +172,11 @@ function ReceiveEntities(msg){
     }
   }
 
-  for(var [key,value] of manager.scene.networkEntities){
+  /*for(var [key,value] of manager.scene.networkEntities){
     if(!keySet.has(key)){
       value.Destroy();
     }
-  }
+  }*/
 
   manager.scene.camera.camera.UpdateCam(networkDelta);
 }
@@ -133,7 +194,8 @@ async function getRanking() {
 }
 
 function SendWebSocketMsg(msg) {
-  socket.send(JSON.stringify(msg));
+  if(socket != null)
+    socket.send(JSON.stringify(msg));
 }
 
 function ReceiveEnemy(msg){
@@ -164,6 +226,15 @@ function InitWebSocket(onOpenCallback) {
   socket.onopen = () => {
     Log("WebSocket opened");
     onOpenCallback();
+  };
+
+  socket.onclose = ()=>{
+    Log("Websocket closed");
+    if(user && user != null){
+      user.isHost = false;
+      user.isClient = false;
+    }
+    socket = null;
   };
 
   socket.onmessage = (message) => {
