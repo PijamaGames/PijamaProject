@@ -8,6 +8,7 @@ class PlayerController extends Component {
     this.rawLeftAxis = new Vec2();
     this.lerpLeftAxis = 10.0;
     this.endAttackAnim=false;
+    this.maxLife = 45;
     this.life = 45;
     this.combo = false;
     this.numCombo = 1;
@@ -29,7 +30,7 @@ class PlayerController extends Component {
     this.particlePosition = new Vec2(0,-1);
     this.particleDisplacement = 0.4;
 
-    this.colibriOrBees = false;
+    //this.colibriOrBees = false;
     this.hasColibri = true;
     this.hasBees = true;
 
@@ -66,18 +67,18 @@ class PlayerController extends Component {
     this.playerFSM.Update();
     this.dashCooldown+=manager.delta;
 
-    if(input.GetChangeSkillDown()){
+    /*if(input.GetChangeSkillDown()){
       this.ChangeSkill();
-    }
+    }*/
     this.ReloadBees();
     this.ManageBeesTarget();
     this.canAttack = this.canAttack || input.GetKeyUp("Space");
   }
 
-  ChangeSkill(){
+  /*ChangeSkill(){
     this.colibriOrBees = !this.colibriOrBees;
     Log("Skill: " + (this.colibriOrBees ? "bees" : "colibri"));
-  }
+  }*/
 
   ReloadBees(){
     if(this.numBees == this.maxBees) return;
@@ -111,7 +112,17 @@ class PlayerController extends Component {
   }
 
   PlayerADAttack(){
-    if(input.GetAttackADDown()){
+    if(input.GetADBeesDown){
+      if(this.hasColibri){
+        this.ThrowColibri();
+      }
+    }
+    if(input.GetADColibriDown){
+      if(this.hasBees){
+        this.ThrowBees();
+      }
+    }
+    /*if(input.GetAttackADDown()){
       if(!this.colibriOrBees){
         if(this.hasColibri){
           this.ThrowColibri();
@@ -121,7 +132,7 @@ class PlayerController extends Component {
           this.ThrowBees();
         }
       }
-    }
+    }*/
 
   }
 
@@ -351,9 +362,21 @@ class PlayerController extends Component {
 
   TakeDamage(damage){
     this.life -= damage;
+    if(this.life < 0){
+      this.life = 0;
+    }
     var text=document.getElementById("LifeText");
-    text.innerHTML=this.life<0 ? (0 + "HP") : (this.life + "HP");
+    text.innerHTML=this.life + "HP";
     //this.lifeText.textBox.SetText(this.life + "HP");
+  }
+
+  GainLife(life){
+    this.life += life;
+    if(this.life > this.maxLife){
+      this.life = this.maxLife;
+    }
+    var text=document.getElementById("LifeText");
+    text.innerHTML=this.life + "HP";
   }
 
   SetGameobj(gameobj){

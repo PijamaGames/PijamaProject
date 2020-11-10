@@ -84,7 +84,7 @@ class Input {
       axis = Vec2.Sub(input.mouseWorldPosition, player.transform.GetWorldPos()).Norm();
     } else {
       let virtualDir = this.GetVirtualJoystick('rightJoystick');
-      let joystickDown = this.GetVirtualButtonPressed('rightJoystick')
+      let joystickDown = this.GetVirtualButtonPressed('rightJoystick');
       axis = joystickDown ? Vec2.Norm(virtualDir) : new Vec2();
     }
     return axis;
@@ -94,7 +94,7 @@ class Input {
     if(this.isDesktop){
       return this.GetKeyDown("ShiftLeft");
     } else {
-      return this.GetVirtualButtonPressed('dashBtn');
+      return this.GetVirtualButtonDown('dashBtn');
     }
   }
 
@@ -102,23 +102,23 @@ class Input {
     if(this.isDesktop){
       return this.GetKeyDown("Space");
     } else {
-      return this.GetVirtualButtonPressed('cacBtn');
+      return this.GetVirtualButtonDown('cacBtn');
     }
   }
 
-  GetAttackADDown(){
-    if(this.isDesktop){
-      return this.mouseLeftDown;
-    } else {
-      return false;
-    }
-  }
-
-  GetChangeSkillDown(){
+  GetADBeesDown(){
     if(this.isDesktop){
       return this.GetKeyDown("KeyQ");
     } else {
-      return false;
+      return this.GetVirtualButtonDown('beeBtn');
+    }
+  }
+
+  GetADColibriDown(){
+    if(this.isDesktop){
+      return this.mouseLeftDown;
+    } else {
+      return this.GetVirtualButtonUp('rightJoystick');
     }
   }
 
@@ -245,36 +245,10 @@ class Input {
 
   Update() {
     if(this.isDesktop){
-      //MOUSE
-      /*if (this.mouseLeftDown && this.mouseLeftDownFirstFrame) {
-        this.mouseLeftDownFirstFrame = false;
-      } else if (this.mouseLeftDown) {
-        this.mouseLeftDown = false;
-      }
-
-      if (this.mouseLeftUp && this.mouseLeftUpFirstFrame) {
-        this.mouseLeftUpFirstFrame = false;
-      } else if (this.mouseLeftUp) {
-        this.mouseLeftUp = false;
-      }*/
 
       let lerp = manager.delta / this.mouseGravity;
       this.mouseMovement.Scale(lerp);
 
-      //KEYS
-      /*for (var [key, value] of this.keys) {
-        if (value.down && value.firstFrameDown) {
-          value.firstFrameDown = false;
-        } else if (value.down) {
-          value.down = false;
-        }
-
-        if (value.up && value.firstFrameUp) {
-          value.firstFrameUp = false;
-        } else if (value.up) {
-          value.up = false;
-        }
-      }*/
     } else {
       for(let [key, vi] of this.virtualInputs){
         vi.Update();
