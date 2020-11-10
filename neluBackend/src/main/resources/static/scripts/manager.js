@@ -63,6 +63,7 @@ class Manager {
 
     if(input.GetKeyDown('KeyM')){
       mapEditor.SetActive(!mapEditor.fsm.active);
+      DEBUG_VISUAL = mapEditor.fsm.active;
     }
   }
 
@@ -106,7 +107,7 @@ class Manager {
         that.graphics.LoadResources();
         that.AddInputs();
 
-        if(DEBUG){
+        if(EDITOR_MODE){
           mapEditor = new MapEditor();
         }
 

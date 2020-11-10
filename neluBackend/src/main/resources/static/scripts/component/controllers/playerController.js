@@ -20,7 +20,7 @@ class PlayerController extends Component {
     this.attack2Speed = 16;
     this.attack3Speed = 17;
     this.dieSpeed = 12;
-    this.dashImpulse = 50.0;
+    this.dashImpulse = 10.0;
     this.dashMaxTime = 0.1;
     this.dashTime = 0.0;
     this.dashMaxCooldown = 0.4;
@@ -334,13 +334,15 @@ class PlayerController extends Component {
     ]);
 
     let dashNode = new Node("dash").SetStartFunc(()=>{
-      let dir = that.gameobj.renderer.dir.Copy();
-      that.gameobj.rigidbody.force.Add(dir.Scale(that.dashImpulse));
+
+      //that.gameobj.rigidbody.force.Add(dir.Scale(that.dashImpulse));
       that.gameobj.renderer.paused = true;
       //this.dashMaxTime = 0.2;
       this.dashTime = 0.0;
     }).SetUpdateFunc(()=>{
       this.dashTime += manager.delta;
+      let dir = that.gameobj.renderer.dir.Copy();
+      that.gameobj.rigidbody.force.Add(dir.Scale(that.dashImpulse));
     }).SetExitFunc(()=>{
       that.gameobj.renderer.paused = false;
       that.dashCooldown = 0.0;

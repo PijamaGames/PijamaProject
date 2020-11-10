@@ -3,13 +3,16 @@ prefabFactory.AddPrototype("BoxColliderScalable", new Vec2(1, 1), new Vec2(0,0),
     new Renderer(new Vec2(6, 13), new Vec2(1,1), false),
     new ColliderGroup([new BoxCollider(new Vec2(0.0,0.0), 1.0, 1.0)]),
     new CustomBehaviour().SetOnCreate(()=>{
-      if(!DEBUG){
-        obj.renderer.tile.x -= 1;
-      }
+
     }).SetOnUpdate((obj)=>{
       obj.colliderGroup.colliders[0].scale.Set(obj.transform.scale.x, obj.transform.scale.y);
       obj.colliderGroup.colliders[0].width = obj.transform.scale.x;
       obj.colliderGroup.colliders[0].height = obj.transform.scale.y;
+      if(EDITOR_MODE){
+        obj.renderer.tile.x = 5;
+      } else {
+        obj.renderer.tile.x = 6;
+      }
     }),
   ]
 });
@@ -178,7 +181,7 @@ prefabFactory.AddPrototype("LianaRight", new Vec2(1,2), new Vec2(0,0), true, ()=
 
 prefabFactory.AddPrototype("LogVertical", new Vec2(1,2), new Vec2(0,0), true, ()=>{
   return [
-    new Renderer(new Vec2(3,3), new Vec2(1,2), false),
+    new Renderer(new Vec2(3,3), new Vec2(1,2), true),
   ]
 });
 

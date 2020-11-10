@@ -27,12 +27,12 @@ class ColliderGroup extends Component{
       this.gameobj.scene.colliderGroups.push(this);
       this.gameobj.colliderGroup = this;
 
-      if(DEBUG_VISUAL){
+      //if(DEBUG_VISUAL){
         let program = manager.graphics.programs.get('collider');
         for(var i = 0; i < this.colliders.length; i++){
           program.renderers.add(this.colliders[i]);
         }
-      }
+      //}
     /*}*/
   }
 }
