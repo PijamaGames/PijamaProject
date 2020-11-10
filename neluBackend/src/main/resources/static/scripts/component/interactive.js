@@ -10,7 +10,7 @@ class Interactive extends Component {
   }
 
   IsInteracting(){
-    return this.canInteract && (this.textBox.renderer.pressed || input.GetKeyDown("KeyE"));
+    return this.canInteract && (this.textBox.renderer.pressed || (input.GetKeyDown("KeyE")&&input.isDesktop));
   }
 
   Update(){
@@ -25,6 +25,9 @@ class Interactive extends Component {
         if(this.IsInteracting()){
           this.canInteract = false;
           this.avaible = false;
+          this.textBox.renderer.pressed = false;
+          this.textBox.renderer.up = false;
+          this.textBox.renderer.down = false;
           Log("Interacting with: " + this.gameobj.key);
           this.interactFunc(this.gameobj);
         }
