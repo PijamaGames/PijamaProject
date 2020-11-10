@@ -102,7 +102,7 @@ class Input {
     if(this.isDesktop){
       return this.GetKeyDown("Space");
     } else {
-      return this.GetVirtualButtonDown('cacBtn');
+      return this.GetVirtualButtonPressed('cacBtn');
     }
   }
 

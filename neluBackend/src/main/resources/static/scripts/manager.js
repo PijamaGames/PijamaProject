@@ -149,13 +149,13 @@ class Manager {
 
     input.AddVirtualInput(new VirtualJoystick('leftJoystick', 'backJoystick', new Vec2(), true, 0.3, new Vec2(0.25, 0.3), new Vec2(0.3, 0.3), 0.35, 0.1, 'frontJoystick'));
 
-    input.AddVirtualInput(new VirtualJoystick('rightJoystick', 'backJoystick', new Vec2(-0.15, 0), false, 0.3, new Vec2(1.0, 0.3), new Vec2(0.3, 0.3), 0.25, 0.1, 'hummingbirdJoystick'));
+    input.AddVirtualInput(new VirtualJoystick('rightJoystick', 'backJoystick', new Vec2(), false, 0.3, new Vec2(0.9, 0.3), new Vec2(0.25, 0.25), 0.17, 0.1, 'hummingbirdJoystick'));
 
-    let dashBtn = input.AddVirtualInput(new VirtualInput('dashBtn', 'btn_dash', new Vec2(-0.40, 0), new Vec2(1, 0.3), new Vec2(0.15, 0.15), 0.1));
+    let dashBtn = input.AddVirtualInput(new VirtualInput('dashBtn', 'btn_dash', new Vec2(-0.42, 0), new Vec2(1, 0.3), new Vec2(0.15, 0.15), 0.1));
 
     let cacBtn = input.AddVirtualInput(new VirtualInput('cacBtn', 'btn_CAC', new Vec2(-0.33, 0.18), new Vec2(1, 0.3), new Vec2(0.15, 0.15), 0.1));
 
-    let beeBtn = input.AddVirtualInput(new VirtualInput('beeBtn', 'btn_bee', new Vec2(-0.15, 0.25), new Vec2(1, 0.3), new Vec2(0.15, 0.15), 0.1));
+    let beeBtn = input.AddVirtualInput(new VirtualInput('beeBtn', 'btn_bee', new Vec2(-0.15, 0.26), new Vec2(1, 0.3), new Vec2(0.15, 0.15), 0.1));
 
   }
 

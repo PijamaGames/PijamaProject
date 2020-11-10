@@ -45,9 +45,9 @@ class VirtualInput{
     this.tint[3]=alpha;
   }
 
-  GetCenter(original = false){
+  /*GetCenter(original = false){
     return Vec2.Add(this.anchor, original ? this.originalPosition : this.position);
-  }
+  }*/
 
   Update(){
     if(this.pressed){
@@ -79,10 +79,18 @@ class VirtualInput{
       screenCoordX/unit,
       (window.innerHeight-screenCoordY)/unit
     );
+    //let canvasCoords = input.ScreenToCanvas(new Vec2(screenCoordX, screenCoordY));
+    Log(canvasCoords.toString("canvas coords: "));
 
-    let center = this.GetCenter(this.isJoystick);
-    center.x*=(window.innerWidth/unit);
-    center.y*=(window.innerHeight/unit);
+    let anchor = this.anchor.Copy();
+    anchor.x*=(window.innerWidth/unit);
+    anchor.y*=(window.innerHeight/unit);
+
+    let center = Vec2.Add(anchor, this.isJoystick ? this.originalPosition : this.position);
+    /*center.x*=(window.innerWidth/unit);
+    center.y*=(window.innerHeight/unit);*/
+
+    Log(center.toString("center: "));
 
 
     this.dir = Vec2.Sub(canvasCoords, center);
