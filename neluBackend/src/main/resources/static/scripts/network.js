@@ -261,6 +261,7 @@ function StartGame(msg){
   gameStarted = true;
 
   if(user.isHost){
+    if(!input.isDesktop) input.HideVirtualInputs(false);
     prefabFactory.CreateObj("Nelu");
     StartSendEntitiesLoop();
   } else {
@@ -351,6 +352,7 @@ function Onclick(room,enviroment,light){
 function ConnectionLost(msg) {
   if(gameStarted || user.isClient){
     manager.LoadScene("connectionFailed");
+    if(user.isHost && !input.isDesktop) input.HideVirtualInputs(true);
   } else if(user.isHost) {
     var text=document.getElementById("WaitingMessage");
     text.innerHTML=manager.english? "Waiting some player...":"Esperando a otro jugador...";
