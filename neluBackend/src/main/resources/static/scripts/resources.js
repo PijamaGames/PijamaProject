@@ -1,18 +1,4 @@
 
-//From now on this is done automatically
-/*var textureNames = [
-  'tilesTex',
-  'tileMap',
-  'spriteSheet',
-  'nelu_idle',
-  'nelu_idleE',
-  'btn_placeHolder',
-  'backJoystick',
-  'frontJoystick',
-  'tree1',
-  'noise',
-];*/
-
 var shaderURLs = [ //name, url
   ['vs_UI', 'scripts/shaders/vs_UI.glsl'],
   ['vs_color', 'scripts/shaders/vs_color.glsl'],
