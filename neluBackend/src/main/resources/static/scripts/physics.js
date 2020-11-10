@@ -1,7 +1,12 @@
 var physics;
 class Physics {
   constructor() {
-    this.steps = 1;
+    if(input.isDesktop){
+      this.steps = 1;
+    } else {
+      this.steps = 1;
+    }
+
     this.stepPCT = 1.0 / this.steps;
     this.repulsion = 45.0/this.steps;
   }

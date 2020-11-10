@@ -125,7 +125,14 @@ class Collider {
       } else {
         dir.y *= 0.5;
       }
-      return (this == circle ? dir.Opposite() : dir).Scale(0.05);
+      dir = (this == circle ? dir.Opposite() : dir).Scale(0.05);
+      let rb = this.colliderGroup.gameobj.rigidbody;
+      if(rb){
+        let spd = rb.velocity.Opposite().Scale(0.05);
+        const rbInfluence = 0.5;
+        dir = Vec2.Add(spd.Scale(rbInfluence), dir.Scale(1.0-rbInfluence));
+      }
+      return dir;
     }
     //let inside = circleCenter.x > sides
 
