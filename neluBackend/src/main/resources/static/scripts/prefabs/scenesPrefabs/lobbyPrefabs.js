@@ -1,9 +1,10 @@
 prefabFactory.AddPrototype("Create", new Vec2(4,2), new Vec2(0.5,0.0), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7).GiveFunctionality().SetHoverInFunc((obj)=>{
-      obj.gameobj.transform.scale.Scale(1.1);
+    new ImageRenderer(new Vec2(7,10), new Vec2(4,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
+      obj.gameobj.renderer.MultiplyTint(0.8);
     }).SetHoverOutFunc((obj)=>{
-      obj.gameobj.transform.scale.Scale(1.0/1.1);
+      let tint=obj.gameobj.renderer.realTint;
+      obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       manager.LoadScene("chooseEnviroment");
     }),
@@ -17,16 +18,17 @@ prefabFactory.AddPrototype("Create", new Vec2(4,2), new Vec2(0.5,0.0), false, ()
 
 prefabFactory.AddPrototype("RoomInputField", new Vec2(), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new InputField("roomName","Busca una partida", "Search room",new Vec2(0.34,0.1)),
+    new InputField("roomName","Busca una sala", "Search room",new Vec2(0.3,0.1)),
   ]
 });
 
-prefabFactory.AddPrototype("SelectRoom", new Vec2(1,1.5), new Vec2(0.5,0.5), false, ()=>{
+prefabFactory.AddPrototype("SelectRoom", new Vec2(1.5,1.5), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7).GiveFunctionality().SetHoverInFunc((obj)=>{
-      obj.gameobj.transform.scale.Scale(1.1);
+    new ImageRenderer(new Vec2(7,12), new Vec2(1.5,1.5)).GiveFunctionality().SetHoverInFunc((obj)=>{
+      obj.gameobj.renderer.MultiplyTint(0.8);
     }).SetHoverOutFunc((obj)=>{
-      obj.gameobj.transform.scale.Scale(1.0/1.1);
+      let tint=obj.gameobj.renderer.realTint;
+      obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       var inputField=document.getElementById("roomName");
       var room=inputField.value;
@@ -41,10 +43,11 @@ prefabFactory.AddPrototype("SelectRoom", new Vec2(1,1.5), new Vec2(0.5,0.5), fal
 
 prefabFactory.AddPrototype("MenuFromLobby", new Vec2(4,2), new Vec2(0.5,0.0), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7).GiveFunctionality().SetHoverInFunc((obj)=>{
-      obj.gameobj.transform.scale.Scale(1.1);
+    new ImageRenderer(new Vec2(7,10), new Vec2(4,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
+      obj.gameobj.renderer.MultiplyTint(0.8);
     }).SetHoverOutFunc((obj)=>{
-      obj.gameobj.transform.scale.Scale(1.0/1.1);
+      let tint=obj.gameobj.renderer.realTint;
+      obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       manager.LoadScene("mainMenu");
     }),
@@ -60,13 +63,13 @@ prefabFactory.AddPrototype("LobbyTitle", new Vec2(17,2), new Vec2(0.5,0.5), fals
 });
 prefabFactory.AddPrototype("RankingText", new Vec2(7,2), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5),
+    new ImageRenderer(new Vec2(7,6), new Vec2(7,2)),
     new TextBox(null, "Clasificación","Ranking", new Vec2(0.3,0.1), true),
   ]
 });
 prefabFactory.AddPrototype("RankingTextBox", new Vec2(7,9), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5),
+    new ImageRenderer(new Vec2(0,0), new Vec2(7,9)),
     new ScrollButton("rankingText", "","", new Vec2(0.4,0.55), false),
     new CustomBehaviour().SetOnCreate((obj)=>{
       getRanking();
@@ -76,7 +79,7 @@ prefabFactory.AddPrototype("RankingTextBox", new Vec2(7,9), new Vec2(0.5,0.5), f
 });
 prefabFactory.AddPrototype("RoomsButtonBox", new Vec2(7,7), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5),
+    new ImageRenderer(new Vec2(0,9), new Vec2(7,7)),
     new ScrollButton("buttonsList", "","", new Vec2(0.4,0.4), true),
     new CustomBehaviour().SetOnCreate((obj)=>obj.cont=9999999).SetOnUpdate((obj)=>{
       obj.cont+=manager.delta;
@@ -95,7 +98,7 @@ prefabFactory.AddPrototype("RoomsButtonBox", new Vec2(7,7), new Vec2(0.5,0.5), f
 });
 prefabFactory.AddPrototype("RoomsText", new Vec2(7,2), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5),
+    new ImageRenderer(new Vec2(7,6), new Vec2(7,2)),
     new TextBox(null, "Partidas","Rooms", new Vec2(0.3,0.1), true),
   ]
 });

@@ -7,10 +7,11 @@ prefabFactory.AddPrototype("ConnectionTitle", new Vec2(17,2), new Vec2(0.5,0.5),
 
 prefabFactory.AddPrototype("LobbyFromError", new Vec2(8,2), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7).GiveFunctionality().SetHoverInFunc((obj)=>{
-      obj.gameobj.transform.scale.Scale(1.1);
+    new ImageRenderer(new Vec2(7,0), new Vec2(8,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
+      obj.gameobj.renderer.MultiplyTint(0.8);
     }).SetHoverOutFunc((obj)=>{
-      obj.gameobj.transform.scale.Scale(1.0/1.1);
+      let tint=obj.gameobj.renderer.realTint;
+      obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       manager.LoadScene("lobby");
     }),
@@ -20,10 +21,11 @@ prefabFactory.AddPrototype("LobbyFromError", new Vec2(8,2), new Vec2(0.5,0.5), f
 
 prefabFactory.AddPrototype("OptionsFromError", new Vec2(8,2), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7).GiveFunctionality().SetHoverInFunc((obj)=>{
-      obj.gameobj.transform.scale.Scale(1.1);
+    new ImageRenderer(new Vec2(7,0), new Vec2(8,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
+      obj.gameobj.renderer.MultiplyTint(0.8);
     }).SetHoverOutFunc((obj)=>{
-      obj.gameobj.transform.scale.Scale(1.0/1.1);
+      let tint=obj.gameobj.renderer.realTint;
+      obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       manager.LoadScene('optionMenu');
       manager.lastScene="mainMenu";
@@ -34,10 +36,11 @@ prefabFactory.AddPrototype("OptionsFromError", new Vec2(8,2), new Vec2(0.5,0.5),
 
 prefabFactory.AddPrototype("MenuFromError", new Vec2(8,2), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7).GiveFunctionality().SetHoverInFunc((obj)=>{
-      obj.gameobj.transform.scale.Scale(1.1);
+    new ImageRenderer(new Vec2(7,0), new Vec2(8,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
+      obj.gameobj.renderer.MultiplyTint(0.8);
     }).SetHoverOutFunc((obj)=>{
-      obj.gameobj.transform.scale.Scale(1.0/1.1);
+      let tint=obj.gameobj.renderer.realTint;
+      obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       manager.LoadScene("mainMenu");
     }),

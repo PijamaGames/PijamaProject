@@ -1,9 +1,10 @@
-prefabFactory.AddPrototype("PauseFromMultiGame", new Vec2(3,1), new Vec2(0.0,1.0), false, ()=>{
+prefabFactory.AddPrototype("PauseFromMultiGame", new Vec2(1.5,1.5), new Vec2(0.0,1.0), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7).GiveFunctionality().SetHoverInFunc((obj)=>{
-      obj.gameobj.transform.scale.Scale(1.1);
+    new ImageRenderer(new Vec2(7,12), new Vec2(1.5,1.5)).GiveFunctionality().SetHoverInFunc((obj)=>{
+      obj.gameobj.renderer.MultiplyTint(0.8);
     }).SetHoverOutFunc((obj)=>{
-      obj.gameobj.transform.scale.Scale(1.0/1.1);
+      let tint=obj.gameobj.renderer.realTint;
+      obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       ShowButtons(true, ["PauseTitleMultiGame", "GameFromPauseMultiGame","MenuFromPauseMultiGame"]);
       ShowButtons(false, ["MultiLifeText","Chronometer","PauseFromMultiGame"]);
@@ -79,10 +80,11 @@ prefabFactory.AddPrototype("PauseTitleMultiGame", new Vec2(17,2), new Vec2(0.5,0
 
 prefabFactory.AddPrototype("GameFromPauseMultiGame", new Vec2(8,2), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7).GiveFunctionality().SetHoverInFunc((obj)=>{
-      obj.gameobj.transform.scale.Scale(1.1);
+    new ImageRenderer(new Vec2(7,4), new Vec2(8,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
+      obj.gameobj.renderer.MultiplyTint(0.8);
     }).SetHoverOutFunc((obj)=>{
-      obj.gameobj.transform.scale.Scale(1.0/1.1);
+      let tint=obj.gameobj.renderer.realTint;
+      obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       ShowButtons(false, ["PauseTitleMultiGame", "GameFromPauseMultiGame","MenuFromPauseMultiGame"]);
       ShowButtons(true, ["MultiLifeText","Chronometer","PauseFromMultiGame","MultiTextBox"]);
@@ -95,10 +97,11 @@ prefabFactory.AddPrototype("GameFromPauseMultiGame", new Vec2(8,2), new Vec2(0.5
 
 prefabFactory.AddPrototype("MenuFromPauseMultiGame", new Vec2(8,2), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7).GiveFunctionality().SetHoverInFunc((obj)=>{
-      obj.gameobj.transform.scale.Scale(1.1);
+    new ImageRenderer(new Vec2(7,4), new Vec2(8,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
+      obj.gameobj.renderer.MultiplyTint(0.8);
     }).SetHoverOutFunc((obj)=>{
-      obj.gameobj.transform.scale.Scale(1.0/1.1);
+      let tint=obj.gameobj.renderer.realTint;
+      obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       manager.LoadScene("mainMenu");
       user.isHost = false;
