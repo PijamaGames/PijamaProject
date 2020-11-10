@@ -47,7 +47,10 @@ class VirtualJoystick extends VirtualInput {
       if(!that.dynamicPosition){
         v.Set(0,0);
       }
-      that.position = Vec2.Add(that.originalPosition, v);
+      if(this.dynamicPosition){
+        that.position = Vec2.Add(that.originalPosition, v);
+      }
+
     }, function(){},
     ()=>{
       //that.dir.Set(0,0);
@@ -58,7 +61,13 @@ class VirtualJoystick extends VirtualInput {
 
   UpdateJoystick(){
     if(this.pressed){
-      let v =  Vec2.Sub(this.dir, this.position);
+      let v;
+      if(this.dynamicPosition){
+        v =  Vec2.Sub(this.dir, this.position);
+      } else {
+        v =  this.dir;
+      }
+
       if(v.mod > this.renderRatio){
         v.Norm().Scale(this.renderRatio);
       }
@@ -73,7 +82,7 @@ class VirtualJoystick extends VirtualInput {
   }
 
   GetDirection(){
-    let dir = Vec2.Sub(this.dir, this.position);
+    let dir = this.dynamicPosition ? Vec2.Sub(this.dir, this.position) : this.dir;
     return dir.mod > this.deadZone*this.renderRatio ? dir : new Vec2();
   }
 }

@@ -83,10 +83,13 @@ class Input {
     if(this.isDesktop){
       axis = Vec2.Sub(input.mouseWorldPosition, player.transform.GetWorldPos()).Norm();
     } else {
-      let virtualDir = this.GetVirtualJoystick('rightJoystick');
-      let joystickDown = this.GetVirtualButtonPressed('rightJoystick');
-      axis = joystickDown ? Vec2.Norm(virtualDir) : new Vec2();
+      //let virtualDir = this.GetVirtualJoystick('rightJoystick');
+      let virtualDir = this.virtualInputs.get("rightJoystick").stickPosition;
+      Log(virtualDir.toString("axis: "));
+      //let joystickDown = this.GetVirtualButtonPressed('rightJoystick');
+      axis = /*joystickDown ?*/ Vec2.Norm(virtualDir);
     }
+
     return axis;
   }
 

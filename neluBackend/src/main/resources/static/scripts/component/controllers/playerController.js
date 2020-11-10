@@ -321,7 +321,7 @@ class PlayerController extends Component {
       lighting.motionBlur = 0.0;
     }).SetUpdateFunc(()=>{
       that.waitComboTime += manager.delta;
-      that.combo = (that.combo || input.GetKeyPressed("Space")) && that.numCombo <= 3;
+      that.combo = (that.combo || input.GetAttackCACDown()) && that.numCombo <= 3;
     }).SetEdges([
       new Edge('idle').AddCondition(()=>manager.scene.paused),
       new Edge('idle').AddCondition(()=>!that.combo && that.rawLeftAxis.mod < 0.05 && that.waitComboTime > that.waitComboMaxTime),
