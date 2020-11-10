@@ -139,11 +139,13 @@ class Input {
   }
 
   HideVirtualInputs(hide){
-    this.virtualInputs.get("leftJoystick").active=!hide;
-    this.virtualInputs.get("rightJoystick").active=!hide;
-    this.virtualInputs.get("beeBtn").active=!hide;
-    this.virtualInputs.get("cacBtn").active=!hide;
-    this.virtualInputs.get("dashBtn").active=!hide;
+    if(!this.isDesktop){
+      this.virtualInputs.get("leftJoystick").active=!hide;
+      this.virtualInputs.get("rightJoystick").active=!hide;
+      this.virtualInputs.get("beeBtn").active=!hide;
+      this.virtualInputs.get("cacBtn").active=!hide;
+      this.virtualInputs.get("dashBtn").active=!hide;
+    }
   }
 
   AddListeners(){

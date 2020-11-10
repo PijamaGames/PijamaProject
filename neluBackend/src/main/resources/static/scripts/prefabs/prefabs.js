@@ -185,12 +185,6 @@ prefabFactory.AddPrototype("LogVertical", new Vec2(1,2), new Vec2(0,0), true, ()
   ]
 });
 
-/*prefabFactory.AddPrototype("Apple", new Vec2(1,1), new Vec2(0,0), true, ()=>{
-  return [
-    new Renderer(new Vec2(4,3), new Vec2(1,1), false),
-  ]
-});*/
-
 prefabFactory.AddPrototype("CampLog", new Vec2(1,2), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(5,3), new Vec2(1,2), true),
