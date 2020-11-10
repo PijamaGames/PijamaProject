@@ -103,7 +103,7 @@ class Input {
 
   GetAttackCACDown(){
     if(this.isDesktop){
-      return this.GetKeyDown("Space");
+      return this.GetKeyPressed("Space");
     } else {
       return this.GetVirtualButtonPressed('cacBtn');
     }
