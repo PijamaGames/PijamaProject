@@ -1,14 +1,19 @@
 prefabFactory.AddPrototype("InteractBox", new Vec2(1,1), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5),
-    new TextBox(null, "E", new Vec2(0.3,0.1), true),
+    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5).GiveFunctionality(),
+    new TextBox(null, "E", "E", new Vec2(0.3,0.1), true),
   ]
 });
 
 prefabFactory.AddPrototype("LifeFlower", new Vec2(1,1), new Vec2(0,0), false, ()=>{
   return [
     new Renderer(new Vec2(2,1), new Vec2(1,1), true),
-    new Interactive(2.0),
+    new Interactive(2.0).SetOnInteract((obj)=>{
+      obj.flowerController.PickUp();
+    }),
+    new FlowerController(10).SetOnPickUp((obj)=>{
+      obj.flowerController.player.playerController.GainLife(20);
+    }),
   ]
 });
 

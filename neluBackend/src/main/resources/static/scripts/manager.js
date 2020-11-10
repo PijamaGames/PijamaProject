@@ -152,28 +152,11 @@ class Manager {
     input.AddVirtualInput(new VirtualJoystick('rightJoystick', 'backImage', new Vec2(), false, 0.3, new Vec2(0.25, 0.3), new Vec2(0.3, 0.3), 0.55, 0.1, 'hummingbird'));
 
     let dashBtn = input.AddVirtualInput(new VirtualInput('dashBtn', 'btn_dash', new Vec2(-0.07, -0.93), new Vec2(1, 1), new Vec2(0.1, 0.1), 0.1));
-    fullScreenBtn.AddAction(() => {
-      manager.EnterFullScreen(()=>fullScreenBtn.NextAction());
-    });
-    fullScreenBtn.AddAction(() => {
-      manager.ExitFullScreen(()=>fullScreenBtn.NextAction());
-    });
 
     let cacBtn = input.AddVirtualInput(new VirtualInput('cacBtn', 'btn_CAC', new Vec2(-0.07, -0.83), new Vec2(1, 1), new Vec2(0.1, 0.1), 0.1));
-    fullScreenBtn.AddAction(() => {
-      manager.EnterFullScreen(()=>fullScreenBtn.NextAction());
-    });
-    fullScreenBtn.AddAction(() => {
-      manager.ExitFullScreen(()=>fullScreenBtn.NextAction());
-    });
 
     let beeBtn = input.AddVirtualInput(new VirtualInput('beeBtn', 'btn_bee', new Vec2(-0.07, -0.73), new Vec2(1, 1), new Vec2(0.1, 0.1), 0.1));
-    fullScreenBtn.AddAction(() => {
-      manager.EnterFullScreen(()=>fullScreenBtn.NextAction());
-    });
-    fullScreenBtn.AddAction(() => {
-      manager.ExitFullScreen(()=>fullScreenBtn.NextAction());
-    });
+
   }
 
   AddScene(scene) {
