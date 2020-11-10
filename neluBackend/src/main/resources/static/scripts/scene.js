@@ -21,7 +21,7 @@ class Scene{
     this.camera = /*this.AddGameobj(*/new Gameobj('camera',0, null, this, [
       new Camera(2.5),
       //new DebugController(3.0),
-    ], new Transform(new Vec2(0,0), 0.0, new Vec2(canvas.width/tileSize+2, canvas.height/tileSize+10)));
+    ], new Transform(new Vec2(0,0), 0.0, new Vec2(canvas.width/tileSize+2, canvas.height/tileSize+13)));
   }
 
   Sleep(){

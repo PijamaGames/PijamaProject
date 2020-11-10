@@ -5,6 +5,13 @@ prefabFactory.AddPrototype("Tree", new Vec2(6,6), new Vec2(0.0, 0.0), false, ()=
     new SpriteRenderer('tree', new Vec2(0, 0),new Vec2(6,6), true, 1, [0], 8, true),
   ]
 });
+
+prefabFactory.AddPrototype("DecoTree", new Vec2(6,6), new Vec2(0.0, 0.0), false, ()=>{
+  return [
+    new SpriteRenderer('tree', new Vec2(0, 0),new Vec2(6,6), true, 1, [0], 8, true),
+  ]
+});
+
 prefabFactory.AddPrototype("Bush", new Vec2(2,2), new Vec2(0.0, 0.0), false, ()=>{
   return [
     new SpriteRenderer('bush', new Vec2(0, 0),new Vec2(2,2), true, 1, [0], 8, true),

@@ -112,14 +112,15 @@ class PlayerController extends Component {
   }
 
   PlayerADAttack(){
-    if(input.GetADBeesDown){
-      if(this.hasColibri){
-        this.ThrowColibri();
-      }
-    }
-    if(input.GetADColibriDown){
+    if(input.GetADBeesDown()){
+
       if(this.hasBees){
         this.ThrowBees();
+      }
+    }
+    if(input.GetADColibriDown()){
+      if(this.hasColibri){
+        this.ThrowColibri();
       }
     }
     /*if(input.GetAttackADDown()){

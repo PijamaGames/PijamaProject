@@ -103,6 +103,7 @@ Dirt26 0 15 0
 Dirt27 1 15 0
 Dirt28 2 15 0
 Tree 3 16 0
+DecoTree 3 22 0
 Bush 0 16 0
 
 WaterBottom 2 16 0
