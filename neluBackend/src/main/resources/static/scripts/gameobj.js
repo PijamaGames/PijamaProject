@@ -151,7 +151,8 @@ class Gameobj {
     }
 
     //Destroy self
+    //Log(this.scene);
     this.scene.RemoveGameobj(this);
-    this.scene = null;
+    //this.scene = null;
   }
 }

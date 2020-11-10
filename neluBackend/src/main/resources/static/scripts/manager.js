@@ -49,6 +49,9 @@ class Manager {
     if(input.GetKeyDown('KeyH'))
       lighting.SetNight();
 
+    if(input.GetKeyDown("KeyP"))
+      DEBUG_VISUAL = !DEBUG_VISUAL;
+
     if(input.GetKeyDown('Digit1'))
       this.graphics.SetMinimumSettings();
     if(input.GetKeyDown('Digit2'))

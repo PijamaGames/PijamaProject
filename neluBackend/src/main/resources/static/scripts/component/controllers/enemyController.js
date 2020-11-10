@@ -46,20 +46,23 @@ class EnemyController extends Component {
     this.recharge=true;
 
     this.aproachFPS=14;
+
+    this.damageTime = 0.0;
   }
 
-  TakeDamage(damage){
-    if(this.canTakeDamage){
+  TakeDamage(damage, forced = false){
+    if(this.canTakeDamage || forced){
       this.life -= damage;
       this.canTakeDamage = false;
       this.gameobj.renderer.SetTint(1.0,0.0,0.0);
       this.gameobj.rigidbody.force.Add(Vec2.Scale(this.gameobj.renderer.dir, - this.damageForce));
-      if(this.life > 0){
+      this.damageTime = 0.0;
+      /*if(this.life > 0){
         setTimeout(()=>{
           this.canTakeDamage = true;
           this.gameobj.renderer.SetTint(1,1,1);
         }, this.damageCooldown*1000);
-      }
+      }*/
     }
   }
 
@@ -68,6 +71,14 @@ class EnemyController extends Component {
     this.enemyFSM.Update();
     this.contTimeAD+=manager.delta;
     this.contTimeCAC+=manager.delta;
+
+    if(!this.canTakeDamage && this.life > 0){
+      this.damageTime+=manager.delta;
+      if(this.damageTime > this.damageCooldown){
+        this.canTakeDamage = true;
+        this.gameobj.renderer.SetTint(1,1,1);
+      }
+    }
   }
 
   FindClosestPlayer(range){
@@ -252,8 +263,8 @@ class EnemyController extends Component {
     }
   }
 
-  SetAnimDir(target){
-    if(target!=null){
+  SetAnimDir(target) {
+    if(target!=null) {
       let axis = Vec2.Sub(target.transform.GetWorldCenter().Copy(), this.gameobj.transform.GetWorldCenter().Copy());
       this.gameobj.renderer.SetDirection(axis);
     }

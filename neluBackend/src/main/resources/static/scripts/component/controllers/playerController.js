@@ -43,9 +43,11 @@ class PlayerController extends Component {
     this.beesTarget = null;
 
     this.firePower = false;
-    this.firePowerMaxTime = 5;
+    this.firePowerMaxTime = 20;
     this.firePowerTime = 0.0;
-
+    this.fire = null;
+    this.fireDisplacement = 2.0;
+    this.fireImpulse = 5.0;
   }
 
   SetScene(scene){
@@ -256,6 +258,10 @@ class PlayerController extends Component {
       let displacement = Vec2.Norm(that.attackDir).Scale(that.particleDisplacement+0.5*Math.abs(that.attackDir.x));
       that.particles.transform.SetLocalPosition(Vec2.Add(that.particlePosition, displacement));
 
+      if(this.firePower){
+        this.MakeFirePower();
+      }
+
     }).SetUpdateFunc(()=>{
       //METER LO Q HACE MIENTRAS ATACA
       //that.combo = that.combo || input.GetAttackCACDown();
@@ -305,6 +311,8 @@ class PlayerController extends Component {
       that.gameobj.renderer.endAnimEvent.AddListener(that, ()=>that.endAttackAnim=true,true);
       that.gameobj.rigidbody.force.Add(Vec2.Scale(that.attackDir, this.attackImpulse));
       that.combo = false;
+
+
     }).SetExitFunc(()=>{
       //that.combo = false;
       that.numCombo = 4;
@@ -373,7 +381,15 @@ class PlayerController extends Component {
       var text=document.getElementById("ConnectionTitle");
       text.innerHTML=manager.english? "Game over":"Fin del juego";
     }
+  }
 
+  MakeFirePower(){
+    this.fire.SetActive(true);
+    this.fire.renderer.SetDirection(this.gameobj.renderer.dir);
+    this.fire.renderer.tile.x = 0;
+    this.fire.transform.SetWorldPosition(Vec2.Add(this.gameobj.transform.GetWorldFloor(), Vec2.Norm(this.gameobj.renderer.dir).Scale(this.fireDisplacement)));
+    let force = Vec2.Scale(this.gameobj.renderer.dir, this.fireImpulse);
+    this.fire.rigidbody.force.Set(force.x, force.y);
   }
 
   TakeDamage(damage){
@@ -398,6 +414,7 @@ class PlayerController extends Component {
   ActivateFirePower(){
     this.firePower = true;
     this.firePowerTime = 0.0;
+
     Log("activate fire power");
   }
 
@@ -421,8 +438,19 @@ class PlayerController extends Component {
 
     this.FillBeePool();
 
+    this.fire = prefabFactory.CreateObj("neluFire", new Vec2(), 1);
+    var that = this;
+    this.fire.renderer.endAnimEvent.AddListener(this, ()=>{
+      that.fire.SetActive(false);
+    });
+    //this.fire.SetParent(this.gameobj);
+    this.fire.transform.SetWorldPosition(this.gameobj.transform.GetWorldFloor());
+    this.fire.SetActive(false);
+
     this.CreateFSM();
     manager.scene.players.add(this.gameobj);
+
+
 
     //this.lifeText = prefabFactory.CreateObj("lifeText", new Vec2(0.15,-0.1));
     this.TakeDamage(0);

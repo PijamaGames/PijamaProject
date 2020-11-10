@@ -15,6 +15,11 @@ class ColliderGroup extends Component{
   Destroy(){
     let index = this.gameobj.scene.colliderGroups.indexOf(this);
     this.gameobj.scene.colliderGroups.splice(index,1);
+
+    let program = manager.graphics.programs.get('collider');
+    for(var i = 0; i < this.colliders.length; i++){
+      program.renderers.delete(this.colliders[i]);
+    }
   }
 
   SetGameobj(gameobj){

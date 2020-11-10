@@ -14,7 +14,9 @@ prefabFactory.AddPrototype("DecoTree", new Vec2(6,6), new Vec2(0.0, 0.0), false,
 
 prefabFactory.AddPrototype("Bush", new Vec2(2,2), new Vec2(0.0, 0.0), false, ()=>{
   return [
+    //new ColliderGroup([new CircleCollider(new Vec2(0.0,0.0), 0.5, true)]),
     new SpriteRenderer('bush', new Vec2(0, 0),new Vec2(2,2), true, 1, [0], 8, true),
+    //new Burnable(),
   ]
 });
 var waterFPS=4;

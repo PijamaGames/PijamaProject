@@ -1,4 +1,6 @@
 var BC_Gallery = `
+MonkeyEnemy -3 0 0
+BeekeeperEnemy -3 3 0
 BoxColliderScalable -1 1 0
 GalleryText 0 -0.1 0
 GameFromGallery 0 0.1 0
