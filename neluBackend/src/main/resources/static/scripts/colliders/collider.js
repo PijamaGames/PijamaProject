@@ -120,7 +120,12 @@ class Collider {
     let inside = circleCenter.x >= left && circleCenter.x <= right && circleCenter.y <= up && circleCenter.y >= down;
     if(inside){
       let dir = box.worldCenter.Sub(circleCenter);
-      return this == (circle ? dir.Opposite() : dir).Scale(0.1);
+      if(Math.abs(dir.x) > Math.abs(dir.y)){
+        dir.x *= 0.5;
+      } else {
+        dir.y *= 0.5;
+      }
+      return (this == circle ? dir.Opposite() : dir).Scale(0.05);
     }
     //let inside = circleCenter.x > sides
 

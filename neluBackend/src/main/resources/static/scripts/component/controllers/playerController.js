@@ -41,6 +41,11 @@ class PlayerController extends Component {
     this.beeBirthMaxTime = 1.0;
     this.beeBirthTime = 0.0;
     this.beesTarget = null;
+
+    this.firePower = false;
+    this.firePowerMaxTime = 5;
+    this.firePowerTime = 0.0;
+
   }
 
   SetScene(scene){
@@ -73,6 +78,13 @@ class PlayerController extends Component {
     this.ReloadBees();
     this.ManageBeesTarget();
     this.canAttack = this.canAttack || input.GetKeyUp("Space");
+
+    if(this.firePower){
+      this.firePowerTime += manager.delta;
+      if(this.firePowerTime > this.firePowerMaxTime){
+        this.DeactivateFirePower();
+      }
+    }
   }
 
   /*ChangeSkill(){
@@ -378,6 +390,17 @@ class PlayerController extends Component {
     }
     var text=document.getElementById("LifeText");
     text.innerHTML=this.life + "HP";
+  }
+
+  ActivateFirePower(){
+    this.firePower = true;
+    this.firePowerTime = 0.0;
+    Log("activate fire power");
+  }
+
+  DeactivateFirePower(){
+    this.firePower = false;
+    Log("deactivate fire power");
   }
 
   SetGameobj(gameobj){

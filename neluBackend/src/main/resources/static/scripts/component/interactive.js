@@ -14,7 +14,7 @@ class Interactive extends Component {
   }
 
   Update(){
-    Log("AVAIBLE "+this.avaible);
+    //Log("AVAIBLE "+this.avaible);
     if(!this.avaible) return;
     let player = this.player;
     if(player && player != null){
@@ -38,7 +38,7 @@ class Interactive extends Component {
   }
 
   get player(){
-    return this.gameobj.scene.players.values().next().value;
+    return manager.scene.players.values().next().value;
   }
 
   SetOnInteract(func){
@@ -51,5 +51,6 @@ class Interactive extends Component {
     this.gameobj.interactive = this;
 
     this.textBox = prefabFactory.CreateObj("InteractBox");
+    this.textBox.SetActive(false);
   }
 }

@@ -358,7 +358,7 @@ class Input {
 
     //pos.x = (pos.x-camPos.x)/manager.graphics.res.x / 2.0/tileSize;
     //pos.y = (pos.y-camPos.y)/-manager.graphics.res.y / 2.0/tileSize;
-    Log(pos.toString("WORLD TO CANVAS: "));
+    //Log(pos.toString("WORLD TO CANVAS: "));
     return pos;
   }
 

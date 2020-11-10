@@ -15,7 +15,7 @@ class FlowerController extends Component {
   Update(){
     if(this.used){
       this.time += manager.delta;
-      Log("time: " + this.time + " of: " + this.coolDown);
+      //Log("time: " + this.time + " of: " + this.coolDown);
       if(this.time > this.coolDown){
         this.used = false;
         this.gameobj.interactive.avaible = true;
