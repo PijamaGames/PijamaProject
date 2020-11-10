@@ -153,8 +153,8 @@ var dialogLevel1XML = `
         			<en>Alliacea</en>
       			</name>
       			<message>
-        			<es>Bueno, espero que esto me salga bien...</es>
-        			<en>Well, I hope this turns out okay in the end...</en>
+        			<es>(Bueno, espero que esto me salga bien...)</es>
+        			<en>(Well, I hope this turns out okay in the end...)</en>
       			</message>
 		</text>
 	</dialog>
