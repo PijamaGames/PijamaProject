@@ -8,11 +8,23 @@ prefabFactory.AddPrototype("InteractBox", new Vec2(1,1), new Vec2(0.5,0.5), fals
 prefabFactory.AddPrototype("LifeFlower", new Vec2(1,1), new Vec2(0,0), false, ()=>{
   return [
     new Renderer(new Vec2(2,1), new Vec2(1,1), true),
-    new Interactive(2.0).SetOnInteract((obj)=>{
+    new Interactive(3.0).SetOnInteract((obj)=>{
       obj.flowerController.PickUp();
     }),
     new FlowerController(10).SetOnPickUp((obj)=>{
       obj.flowerController.player.playerController.GainLife(20);
+    }),
+  ]
+});
+
+prefabFactory.AddPrototype("LifeFlower", new Vec2(1,1), new Vec2(0,0), false, ()=>{
+  return [
+    new Renderer(new Vec2(4,1), new Vec2(1,1), true),
+    new Interactive(3.0).SetOnInteract((obj)=>{
+      obj.flowerController.PickUp();
+    }),
+    new FlowerController(10).SetOnPickUp((obj)=>{
+      obj.flowerController.player.playerController.GainLife(30);
     }),
   ]
 });

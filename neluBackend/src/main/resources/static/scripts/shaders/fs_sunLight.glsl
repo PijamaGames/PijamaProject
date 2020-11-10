@@ -96,6 +96,14 @@ void main()
   float occlusion = clamp(cond + depthSample.z*verticalShadowStrength,0.0,1.0);
   //float occlusion = float(depthSample.z != sunDepthSample.z);
   occlusion = 1.0-occlusion;
+
+  /*float highEnough = float(depthSample.y < 0.01);
+  occlusion = 1.0 * highEnough + occlusion * (1.0-highEnough);*/
+
+  if(depthSample.y < 0.9){
+    occlusion = 1.0;
+  }
+
   float diff = (abs(depthSample.y-sunDepthSample.y)*(1.0-depthVertical));
 
   float intensity = occlusion*strength;

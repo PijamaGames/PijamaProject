@@ -6,6 +6,7 @@ class Interactive extends Component {
     this.canInteract = false;
     this.avaible = true;
     this.interactFunc = function(){};
+    this.displacement = displacement;
   }
 
   IsInteracting(){
@@ -20,7 +21,7 @@ class Interactive extends Component {
       let dist = Vec2.Distance(player.transform.GetWorldCenter(), this.gameobj.transform.GetWorldCenter());
       if(dist <= this.radius){
         this.canInteract = true;
-        this.textBox.transform.SetWorldPosition(input.WorldToCanvas(Vec2.Add(this.gameobj.transform.GetWorldCenter(), this.displacement));
+        this.textBox.transform.SetWorldPosition(input.WorldToCanvas(Vec2.Add(this.gameobj.transform.GetWorldCenter(), this.displacement)));
         if(this.IsInteracting()){
           this.canInteract = false;
           this.avaible = false;
