@@ -17,13 +17,7 @@ class Key {
 var input;
 class Input {
   constructor() {
-    /*canvas.onclick = function() {
-      canvas.requestPointerLock();
-      //canvas.exitPointerLock()
-    }*/
     this.mousePosition = new Vec2();
-    /*this.mouseWorldPosition = new Vec2();
-    this.mouseGridPosition = new Vec2();*/
     this.mouseMovement = new Vec2();
     this.mouseGravity = 0.05;
     this.mouseLeftDown = false;
@@ -83,11 +77,9 @@ class Input {
     if(this.isDesktop){
       axis = Vec2.Sub(input.mouseWorldPosition, player.transform.GetWorldPos()).Norm();
     } else {
-      //let virtualDir = this.GetVirtualJoystick('rightJoystick');
       let virtualDir = this.virtualInputs.get("rightJoystick").stickPosition;
       Log(virtualDir.toString("axis: "));
-      //let joystickDown = this.GetVirtualButtonPressed('rightJoystick');
-      axis = /*joystickDown ?*/ Vec2.Norm(virtualDir);
+      axis = Vec2.Norm(virtualDir);
     }
 
     return axis;
@@ -103,7 +95,7 @@ class Input {
 
   GetAttackCACDown(){
     if(this.isDesktop){
-      return this.GetKeyDown("Space");
+      return this.GetKeyPressed("Space");
     } else {
       return this.GetVirtualButtonPressed('cacBtn');
     }
@@ -367,9 +359,6 @@ class Input {
     pos.x = (pos.x / (manager.graphics.res.x *0.5 / tileSize)) *0.5;
     pos.y = (pos.y / (manager.graphics.res.y *0.5 / tileSize)) *0.5;
 
-    //pos.x = (pos.x-camPos.x)/manager.graphics.res.x / 2.0/tileSize;
-    //pos.y = (pos.y-camPos.y)/-manager.graphics.res.y / 2.0/tileSize;
-    //Log(pos.toString("WORLD TO CANVAS: "));
     return pos;
   }
 

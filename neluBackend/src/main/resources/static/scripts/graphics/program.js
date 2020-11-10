@@ -163,16 +163,6 @@ class Program{
   RenderUI(){
     this.Use();
     let texUnitOffset = this.LoadUniforms();
-    /*let notTexts = [];
-    for(var renderer of this.renderers){
-      if(!renderer.isText){
-        notTexts.push(renderer);
-      }
-    }*/
-    /*this.renderers.sort((e1,e2)=>{
-      return Math.floor(e1.gameobj.transform.height) - Math.floor(e2.gameobj.transform.height);
-
-    });*/
 
     var that = this;
     this.colorTex.getValue = function(){
@@ -190,18 +180,6 @@ class Program{
       }
     }
 
-    //CHANGE TILE MAP FOR CHARACTERS
-    /*this.colorTex.getValue = function(){return that.fontTileMap;};
-    this.tileMapResDIVtileSize.getValue = function(){
-      return new Vec2(that.fontTileMap.width / tileSize, that.fontTileMap.height / tileSize);
-    };
-    this.LoadUniforms();
-    for(var renderer of this.renderers){
-      if(renderer.isText && ((renderer.active && renderer.gameobj.scene == manager.scene) || this.isPostProcess)){
-        this.LoadObjUniforms(renderer, texUnitOffset);
-        manager.graphics.Draw();
-      }
-    }*/
   }
 
   CreateProgram(_vertexShaderName, _fragmentShaderName){
