@@ -45,6 +45,7 @@ prefabFactory.AddPrototype("MenuFromOptions", new Vec2(4,2), new Vec2(0.5,0.0), 
       obj.gameobj.transform.scale.Scale(1.0/1.1);
     }).SetUpFunc(()=>{
       manager.LoadScene(manager.lastScene);
+      
     }),
     new TextBox("ReturnButtonOptions", "Volver","Return", new Vec2(0.3,0.1), true),
   ]
