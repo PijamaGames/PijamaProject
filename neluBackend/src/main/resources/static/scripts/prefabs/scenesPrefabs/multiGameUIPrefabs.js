@@ -8,6 +8,7 @@ prefabFactory.AddPrototype("PauseFromMultiGame", new Vec2(3,1), new Vec2(0.0,1.0
       ShowButtons(true, ["PauseTitleMultiGame", "GameFromPauseMultiGame","MenuFromPauseMultiGame"]);
       ShowButtons(false, ["MultiLifeText","Chronometer","PauseFromMultiGame"]);
       manager.lastGame="multiGame";
+      if(!input.isDesktop) input.HideVirtualInputs(true);
     }),
     new TextBox(null, "Pausa","Pause", new Vec2(0.3,0.1), true),
   ]
@@ -85,6 +86,7 @@ prefabFactory.AddPrototype("GameFromPauseMultiGame", new Vec2(8,2), new Vec2(0.5
     }).SetUpFunc(()=>{
       ShowButtons(false, ["PauseTitleMultiGame", "GameFromPauseMultiGame","MenuFromPauseMultiGame"]);
       ShowButtons(true, ["MultiLifeText","Chronometer","PauseFromMultiGame","MultiTextBox"]);
+      if(!input.isDesktop) input.HideVirtualInputs(false);
     }),
     new TextBox(null, "Volver al juego","Return to game", new Vec2(0.3,0.1), true),
     new CustomBehaviour().SetOnCreate((obj)=> obj.SetActive(false)),
