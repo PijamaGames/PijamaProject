@@ -163,7 +163,7 @@ prefabFactory.AddPrototype("Puddle", new Vec2(1,1), new Vec2(0,0), true, ()=>{
 
 prefabFactory.AddPrototype("Campfire", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
-    new Renderer(new Vec2(7,2), new Vec2(1,1), false),
+    new Renderer(new Vec2(7,2), new Vec2(1,1), false, 1.0 ,['color', 'depth', 'mask']),
   ]
 });
 
