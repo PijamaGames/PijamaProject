@@ -7,7 +7,7 @@ class VirtualInput{
     this.down = false;
     this.pressed = false;
     this.up = false;
-    this.tint = new Float32Array([1.0,1.0,1.0,0.5]);
+    this.tint = new Float32Array([1.0,1.0,1.0,1.0]);
 
     this.touches = new Set();
     this.touchesCount = 0;
@@ -122,7 +122,8 @@ class VirtualInput{
         this.down = false;
         this.pressed = false;
         this.up = true;
-        this.onButtonUp[this.action]();
+        if(this.maxActions > 0)
+          this.onButtonUp[this.action]();
         this.SetTint(1.0,1.0,1.0);
       }
     }
