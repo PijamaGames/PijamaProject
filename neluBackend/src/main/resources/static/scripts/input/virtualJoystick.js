@@ -2,7 +2,7 @@ class VirtualJoystickContainer{
   constructor(vi){
     this.vi = vi;
     this.scale = Vec2.Scale(vi.scale,0.5);
-    this.tint = vi.tint;
+    this.tint = new Float32Array([1.0,1.0,1.0,1.0]);
     this.anchor=vi.anchor;
   }
 
@@ -28,7 +28,7 @@ class VirtualJoystick extends VirtualInput {
     });
 
     this.isJoystick = true;
-
+    this.tint = new Float32Array([1.0,1.0,1.0,0.3]);
     this.stickPosition = new Vec2();
     this.gravity = 9.8;
     this.target = new Vec2();

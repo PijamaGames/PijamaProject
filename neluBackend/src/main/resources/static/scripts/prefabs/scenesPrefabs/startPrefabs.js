@@ -36,6 +36,7 @@ prefabFactory.AddPrototype("wrongName", new Vec2(), new Vec2(0.5,0.5), false, ()
     new TextBox("wrongName", "Usuario no disponible","User in use", new Vec2(0.4,0.1), true),
     new CustomBehaviour().SetOnCreate((obj)=>{
       obj.textBox.element.hidden = true;
+      input.HideVirtualInputs(true);
     })
   ]
 });

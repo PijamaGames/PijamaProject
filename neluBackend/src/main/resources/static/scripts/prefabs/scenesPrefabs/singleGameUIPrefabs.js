@@ -13,6 +13,7 @@ prefabFactory.AddPrototype("PauseFromSingleGame", new Vec2(3,1), new Vec2(0.0,1.
     }).SetUpFunc(()=>{
       manager.LoadScene("pause",true);
       manager.lastGame="singleGame";
+      input.HideVirtualInputs(true);
     }),
     new TextBox(null, "Pausa","Pause", new Vec2(0.3,0.1), true),
   ]

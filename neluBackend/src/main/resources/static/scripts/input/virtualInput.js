@@ -74,28 +74,19 @@ class VirtualInput{
   ScreenCoordInsideInput(screenCoordX, screenCoordY){
     let unit = Math.min(window.innerWidth, window.innerHeight);
 
-
     let canvasCoords = new Vec2(
       screenCoordX/unit,
       (window.innerHeight-screenCoordY)/unit
     );
-    //let canvasCoords = input.ScreenToCanvas(new Vec2(screenCoordX, screenCoordY));
-    Log(canvasCoords.toString("canvas coords: "));
 
     let anchor = this.anchor.Copy();
     anchor.x*=(window.innerWidth/unit);
     anchor.y*=(window.innerHeight/unit);
 
     let center = Vec2.Add(anchor, this.isJoystick ? this.originalPosition : this.position);
-    /*center.x*=(window.innerWidth/unit);
-    center.y*=(window.innerHeight/unit);*/
-
-    Log(center.toString("center: "));
-
 
     this.dir = Vec2.Sub(canvasCoords, center);
     let condition = this.dir.mod < this.ratio;
-
 
     return condition;
   }
@@ -116,7 +107,7 @@ class VirtualInput{
         Log("down");
       }
 
-      this.SetTint(0.0,0.0,1.0);
+      this.SetTint(0.8,0.8,0.8);
     }
   }
 

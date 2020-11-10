@@ -13,6 +13,7 @@ prefabFactory.AddPrototype("SingleGameFromMenu", new Vec2(8,2), new Vec2(0.5,0.5
       obj.gameobj.transform.scale.Scale(1.0/1.1);
     }).SetUpFunc(()=>{
       manager.LoadScene('singleGame');
+      input.HideVirtualInputs(false);
     }),
     new TextBox(null, "Aventura","Adventure", new Vec2(0.3,0.1), true),
   ]
