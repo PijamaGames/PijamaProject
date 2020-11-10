@@ -15,6 +15,7 @@ class Interactive extends Component {
 
   Update(){
     //Log("AVAIBLE "+this.avaible);
+    if(user && user.isClient) return;
     if(!this.avaible) return;
     let player = this.player;
     if(player && player != null){

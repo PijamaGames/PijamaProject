@@ -5,6 +5,7 @@ prefabFactory.AddPrototype("MonkeyEnemy", new Vec2(1, 1), new Vec2(0.5, 0.5), fa
     new Rigidbody(0.5),
     new ShadowCaster(new Vec2(0,-0.75), 0.75),
     new EnemyController(2.0),
+    new Burnable(),
     new NetworkEntity(),
   ]
 });
@@ -16,6 +17,9 @@ prefabFactory.AddPrototype("BeekeeperEnemy", new Vec2(2, 2), new Vec2(0.5, 0.5),
     new Rigidbody(0.5),
     new ShadowCaster(new Vec2(0,-0.75), 0.75),
     new BeekeeperController(1),
+    new Burnable().SetOnBurn((obj)=>{
+      obj.enemyController.TakeDamage(10);
+    }),
     new NetworkEntity(),
   ]
 });

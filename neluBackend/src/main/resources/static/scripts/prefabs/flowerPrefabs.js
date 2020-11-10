@@ -14,6 +14,7 @@ prefabFactory.AddPrototype("LifeFlower", new Vec2(1,1), new Vec2(0,0), false, ()
     new FlowerController(10).SetOnPickUp((obj)=>{
       obj.flowerController.player.playerController.GainLife(20);
     }),
+    new NetworkEntity(),
   ]
 });
 
@@ -32,6 +33,7 @@ prefabFactory.AddPrototype("LifeFlowerBig", new Vec2(1,1), new Vec2(0,0), false,
     new FlowerController(10).SetOnPickUp((obj)=>{
       obj.flowerController.player.playerController.GainLife(30);
     }),
+    new NetworkEntity(),
   ]
 });
 
@@ -50,6 +52,7 @@ prefabFactory.AddPrototype("FireFlower", new Vec2(1,1), new Vec2(0,0), false, ()
     new FlowerController(10).SetOnPickUp((obj)=>{
       obj.flowerController.player.playerController.ActivateFirePower();
     }),
+    new NetworkEntity(),
   ]
 });
 
