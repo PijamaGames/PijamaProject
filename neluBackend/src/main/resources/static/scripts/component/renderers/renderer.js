@@ -16,6 +16,7 @@ class Renderer extends Component{
     this.numTiles = numTiles;
     this.vertical = vertical;
     this.tint = new Float32Array([1,1,1,alpha]);
+    this.realTint=new Float32Array(this.tint);
     this.button = false;
   }
 
@@ -29,6 +30,11 @@ class Renderer extends Component{
   SetActive(active){
     if(!active){
       Renderer.hoverSet.delete(this);
+      if(this.button){
+        this.pressed = false;
+        this.down = false;
+        this.up = false;
+      }
     }
   }
 
@@ -73,16 +79,23 @@ class Renderer extends Component{
         if(input.mouseLeftDown){
           if(this.downFunc != null)
             this.downFunc(this);
-
+          this.MultiplyTint(0.8);
           this.pressed = true;
         } else if(input.mouseLeftUp){
           this.pressed = false;
+          this.SetTint(this.realTint[0],this.realTint[1],this.realTint[2]);
           if(this.upFunc!=null){
             this.upFunc(this);
           }
         }
       }
     }
+  }
+
+  MultiplyTint(dark){
+    this.tint[0]*=dark;
+    this.tint[1]*=dark;
+    this.tint[2]*=dark;
   }
 
   SetDownFunc(downFunc){
@@ -111,7 +124,6 @@ class Renderer extends Component{
   }
 
   GiveFunctionality(ignoreTouchMove = false){
-
     this.button = true;
     //this.down = false;
     this.pressed = false;
