@@ -1,7 +1,7 @@
 prefabFactory.AddPrototype("GalleryText", new Vec2(4.0,2), new Vec2(0.5,1.0), false, ()=>{
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.3),
-    new TextBox(null, "Galería","Gallery", new Vec2(0.3,0.1), true),
+    new TextBox(null, "Galería","Gallery", new Vec2(0.3,0.07), true),
   ]
 });
 prefabFactory.AddPrototype("GoToGallery", new Vec2(5.5,2), new Vec2(1.0,0.0), false, ()=>{
@@ -17,7 +17,7 @@ prefabFactory.AddPrototype("GoToGallery", new Vec2(5.5,2), new Vec2(1.0,0.0), fa
       obj.gameobj.SetScene(manager.scene);
       //obj.gameobj.SetActive(false);
     }),
-    new TextBox(null, "Ver galería","Show gallery", new Vec2(0.3,0.1), true),
+    new TextBox(null, "Ver galería","Show gallery", new Vec2(0.3,0.07), true),
   ]
 });
 
@@ -39,7 +39,7 @@ prefabFactory.AddPrototype("CopyBytecode", new Vec2(6.5,2), new Vec2(0.0,0.0), f
 
       //obj.gameobj.SetActive(false);
     }),
-    new TextBox(null, "Copiar escena","Copy scene", new Vec2(0.3,0.1), true),
+    new TextBox(null, "Copiar escena","Copy scene", new Vec2(0.3,0.07), true),
   ]
 });
 
@@ -52,6 +52,6 @@ prefabFactory.AddPrototype("GameFromGallery", new Vec2(5.5,2), new Vec2(0.5,0.0)
     }).SetUpFunc((obj)=>{
       manager.LoadScene(mapEditor.currentScene);
     }),
-    new TextBox(null, "Volver","Return", new Vec2(0.3,0.1), true),
+    new TextBox(null, "Volver","Return", new Vec2(0.3,0.07), true),
   ]
 });

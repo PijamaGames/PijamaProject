@@ -331,7 +331,8 @@ function GetPublicRoom(msg) {
       button = roomButtons[i];
     }
     publicRooms.push(room);
-    button.value = "Escenario "+msg["enviroment"+i]+"\t"+room;
+
+    button.value = manager.english?("Level "+msg["enviroment"+i]+"\t"+room):("Nivel "+msg["enviroment"+i]+"\t"+room);
     button.onclick = Onclick(room, msg["enviroment"+i],msg["lighting"+i]);
   }
 

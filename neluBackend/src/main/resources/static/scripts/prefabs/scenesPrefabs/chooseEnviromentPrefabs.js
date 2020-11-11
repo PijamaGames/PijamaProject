@@ -1,7 +1,7 @@
 prefabFactory.AddPrototype("SelectionTitle", new Vec2(17,2), new Vec2(0.5,0.5), false, ()=>{
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7),
-    new TextBox(null, "Selecciona un escenario","Choose an enviroment", new Vec2(0.6,0.1), true),
+    new TextBox(null, "Diseña tu nivel","Design your level", new Vec2(0.6,0.07), true),
   ]
 });
 prefabFactory.AddPrototype("RoomFromChoosing", new Vec2(4,2), new Vec2(0.5,0.0), false, ()=>{
@@ -20,7 +20,7 @@ prefabFactory.AddPrototype("RoomFromChoosing", new Vec2(4,2), new Vec2(0.5,0.0),
         private: manager.privateRoom,
       });
     }),
-    new TextBox(null, "Empezar","Start", new Vec2(0.3,0.1), true),
+    new TextBox(null, "Empezar","Start", new Vec2(0.3,0.07), true),
   ]
 });
 
@@ -34,7 +34,7 @@ prefabFactory.AddPrototype("LobbyFromChoosing", new Vec2(4,2), new Vec2(0.5,0.0)
     }).SetUpFunc(()=>{
       manager.LoadScene("lobby");
     }),
-    new TextBox(null, "Volver","Return", new Vec2(0.3,0.1), true),
+    new TextBox(null, "Volver","Return", new Vec2(0.3,0.07), true),
   ]
 });
 
@@ -114,7 +114,7 @@ prefabFactory.AddPrototype("PrivacityOption", new Vec2(4,2), new Vec2(0.5,0.0), 
         manager.privateRoom=true;
       }
     }),
-    new TextBox(null, "Pública","Public", new Vec2(0.3,0.1), true),
+    new TextBox(null, "Pública","Public", new Vec2(0.3,0.07), true),
     new CustomBehaviour().SetOnDestroy((obj)=>{
       manager.privateRoom = false;
     })

@@ -16,26 +16,26 @@ prefabFactory.AddPrototype("PauseFromSingleGame", new Vec2(1.5,1.5), new Vec2(0.
       manager.lastGame="singleGame";
       input.HideVirtualInputs(true);
     }),
-    new TextBox(null, "=","Pause", new Vec2(0.3,0.1), true),
+    new TextBox(null, "=","Pause", new Vec2(0.3,0.07), true),
   ]
 });
 
 prefabFactory.AddPrototype("SingleLifeText", new Vec2(3,1), new Vec2(0.0,1.0), false, ()=>{
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5),
-    new TextBox("LifeText", "XHP","XHP", new Vec2(0.3,0.1), true),
+    new TextBox("LifeText", "XHP","XHP", new Vec2(0.3,0.07), true),
   ]
 });
 
 prefabFactory.AddPrototype("SingleTextBox", new Vec2(14,5), new Vec2(0.5,0.0), false, ()=>{
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5),
-    new TextBox(null, "","", new Vec2(0.8,0.3), false),
+    new TextBox(null, "","", new Vec2(0.8,0.07), false),
   ]
 });
 prefabFactory.AddPrototype("SingleNameText", new Vec2(4,1), new Vec2(0.5,0.0), false, ()=>{
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5),
-    new TextBox(null, "","", new Vec2(0.3,0.08), true),
+    new TextBox(null, "","", new Vec2(0.3,0.07), true),
   ]
 });

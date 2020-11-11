@@ -16,13 +16,19 @@ prefabFactory.AddPrototype("MenuFromStart", new Vec2(4,2), new Vec2(0.5,0.5), fa
       }
 
     }),
-    new TextBox(null, "Entrar","Entry", new Vec2(0.3,0.1), true),
+    new TextBox(null, "Entrar","Entry", new Vec2(0.3,0.07), true),
+  ]
+});
+
+prefabFactory.AddPrototype("GameTitle", new Vec2(), new Vec2(0.5,0.5), false, ()=>{
+  return [
+    new TextBox("gameTitle", "Nelu: Lotus Guardian","Nelu: Lotus Guardian", new Vec2(1,0.07), true),
   ]
 });
 
 prefabFactory.AddPrototype("introduceName", new Vec2(), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new TextBox("introduceNameText", "Introduce tu nombre","Introduce youre name", new Vec2(0.4,0.1), true),
+    new TextBox("introduceNameText", "Introduce tu nombre","Introduce your name", new Vec2(0.4,0.07), true),
   ]
 });
 
@@ -34,7 +40,7 @@ prefabFactory.AddPrototype("nameInputField", new Vec2(), new Vec2(0.5,0.5), fals
 
 prefabFactory.AddPrototype("wrongName", new Vec2(), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new TextBox("wrongName", "Usuario no disponible","User in use", new Vec2(0.4,0.1), true),
+    new TextBox("wrongName", "Usuario no disponible","User in use", new Vec2(0.4,0.07), true),
     new CustomBehaviour().SetOnCreate((obj)=>{
       obj.textBox.element.hidden = true;
       input.HideVirtualInputs(true);

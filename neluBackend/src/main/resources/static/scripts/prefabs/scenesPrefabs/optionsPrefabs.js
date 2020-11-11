@@ -13,7 +13,7 @@ prefabFactory.AddPrototype("MoreGraphics", new Vec2(2,2), new Vec2(0.5,0.5), fal
       manager.graphics.SetSettingsByNumber(config);
       ChangeQualityText(config);
     }),
-    new TextBox(null, "+","+", new Vec2(0.3,0.1), true),
+    new TextBox(null, "+","+", new Vec2(0.3,0.07), true),
   ]
 });
 
@@ -32,7 +32,7 @@ prefabFactory.AddPrototype("LessGraphics", new Vec2(2,2), new Vec2(0.5,0.5), fal
       manager.graphics.SetSettingsByNumber(config);
       ChangeQualityText(config);
     }),
-    new TextBox(null, "-","-", new Vec2(0.3,0.1), true),
+    new TextBox(null, "-","-", new Vec2(0.3,0.07), true),
   ]
 });
 prefabFactory.AddPrototype("GraphicsText", new Vec2(8,2), new Vec2(0.5,0.5), false, ()=>{
@@ -52,7 +52,7 @@ prefabFactory.AddPrototype("MenuFromOptions", new Vec2(4,2), new Vec2(0.5,0.0), 
       manager.LoadScene(manager.lastScene);
 
     }),
-    new TextBox("ReturnButtonOptions", "Volver","Return", new Vec2(0.3,0.1), true),
+    new TextBox("ReturnButtonOptions", "Volver","Return", new Vec2(0.3,0.07), true),
   ]
 });
 prefabFactory.AddPrototype("MoreVolume", new Vec2(2,2), new Vec2(0.5,0.5), false, ()=>{
@@ -70,7 +70,7 @@ prefabFactory.AddPrototype("MoreVolume", new Vec2(2,2), new Vec2(0.5,0.5), false
       }
       ChangeVolumeText();
     }),
-    new TextBox(null, "+","+", new Vec2(0.3,0.1), true),
+    new TextBox(null, "+","+", new Vec2(0.3,0.07), true),
   ]
 });
 
@@ -89,13 +89,13 @@ prefabFactory.AddPrototype("LessVolume", new Vec2(2,2), new Vec2(0.5,0.5), false
       }
       ChangeVolumeText();
     }),
-    new TextBox(null, "-","-", new Vec2(0.3,0.1), true),
+    new TextBox(null, "-","-", new Vec2(0.3,0.07), true),
   ]
 });
 prefabFactory.AddPrototype("VolumeText", new Vec2(8,2), new Vec2(0.5,0.5), false, ()=>{
   return [
     new ImageRenderer(new Vec2(7,4), new Vec2(8,2)),
-    new TextBox("VolumeTextOptions", "Volumen: "+(manager.musicVolume*100)+"%","Volume: "+(manager.musicVolume*100)+"%", new Vec2(0.3,0.1), true),
+    new TextBox("VolumeTextOptions", "Volumen: "+(manager.musicVolume*100)+"%","Volume: "+(manager.musicVolume*100)+"%", new Vec2(0.3,0.07), true),
   ]
 });
 prefabFactory.AddPrototype("Sound", new Vec2(2,2), new Vec2(0.5,0.5), false, ()=>{
@@ -120,7 +120,7 @@ prefabFactory.AddPrototype("LanguageText", new Vec2(4,2), new Vec2(0.5,0.5), fal
       ChangeVolumeText();
 
     }),
-    new TextBox("Language", "Inglés","Spanish", new Vec2(0.3,0.1), true),
+    new TextBox("Language", "Inglés","Spanish", new Vec2(0.3,0.07), true),
   ]
 });
 prefabFactory.AddPrototype("DificultyText", new Vec2(4,2), new Vec2(0.5,0.5), false, ()=>{
@@ -133,13 +133,13 @@ prefabFactory.AddPrototype("DificultyText", new Vec2(4,2), new Vec2(0.5,0.5), fa
     }).SetUpFunc(()=>{
       ChangeDificulty();
     }),
-    new TextBox("Dificulty", "Fácil","Easy", new Vec2(0.3,0.1), true),
+    new TextBox("Dificulty", "Fácil","Easy", new Vec2(0.3,0.07), true),
   ]
 });
 prefabFactory.AddPrototype("OptionsTitle", new Vec2(17,2), new Vec2(0.5,0.5), false, ()=>{
   return [
     new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7),
-    new TextBox("TitleTextOptions", "Configuración","Options", new Vec2(0.3,0.1), true),
+    new TextBox("TitleTextOptions", "Configuración","Options", new Vec2(0.3,0.07), true),
   ]
 });
 

@@ -6,19 +6,19 @@ body{
 
 /* width */
 ::-webkit-scrollbar {
- width: 20px;
+ width: 2vmin;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
  background: #cae68000;
- border-radius: 10px;
+ border-radius: 2vmin;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
  background: #546528;
- border-radius: 10px;
+ border-radius: 2vmin;
 }
 ::-webkit-scrollbar-corner{
   background: #cae68000;
@@ -43,12 +43,12 @@ div{
 input{
   display: block;
   width: 90%;
-  height: 6vmin;
+  height: 8vmin;
   font-family: "Pixel Play";
   font-size: 4vmin;
   text-align: left;
-  padding-left: 2.5vmin;
-  padding-right: 2.5vmin;
+  padding-left: 2vmin;
+  padding-right: 2vmin;
   padding-top: 0.5vmin;
   padding-bottom: 0.5vmin;
   margin-left: 3.5vmin;
@@ -117,6 +117,11 @@ input:focus{
   -ms-user-select: none;
   user-select: none;
   overflow-y: scroll;
+}
+
+#gameTitle{
+  color:white;
+  font-size: 12vmin;
 }
 
 #introduceNameText{
