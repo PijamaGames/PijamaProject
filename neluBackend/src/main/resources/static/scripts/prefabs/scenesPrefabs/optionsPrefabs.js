@@ -95,7 +95,7 @@ prefabFactory.AddPrototype("LessVolume", new Vec2(2,2), new Vec2(0.5,0.5), false
 prefabFactory.AddPrototype("VolumeText", new Vec2(8,2), new Vec2(0.5,0.5), false, ()=>{
   return [
     new ImageRenderer(new Vec2(7,4), new Vec2(8,2)),
-    new TextBox("VolumeTextOptions", "Volumen: "+manager.musicVolume,"Volume: "+ manager.musicVolume, new Vec2(0.3,0.1), true),
+    new TextBox("VolumeTextOptions", "Volumen: "+(manager.musicVolume*100)+"%","Volume: "+(manager.musicVolume*100)+"%", new Vec2(0.3,0.1), true),
   ]
 });
 prefabFactory.AddPrototype("Sound", new Vec2(2,2), new Vec2(0.5,0.5), false, ()=>{
@@ -120,7 +120,7 @@ prefabFactory.AddPrototype("LanguageText", new Vec2(4,2), new Vec2(0.5,0.5), fal
       ChangeVolumeText();
 
     }),
-    new TextBox("Language", "Español","Spanish", new Vec2(0.3,0.1), true),
+    new TextBox("Language", "Inglés","Spanish", new Vec2(0.3,0.1), true),
   ]
 });
 prefabFactory.AddPrototype("DificultyText", new Vec2(4,2), new Vec2(0.5,0.5), false, ()=>{
@@ -155,8 +155,8 @@ function ChangeLanguage(id,textEn,textSp){
 }
 function ChangeVolumeText(){
   var text=document.getElementById("VolumeTextOptions");
-  if(manager.english) text.innerHTML="Volume: "+manager.musicVolume;
-  else text.innerHTML="Volumen: "+manager.musicVolume;
+  if(manager.english) text.innerHTML="Volume: "+(manager.musicVolume*100)+"%";
+  else text.innerHTML="Volumen: "+(manager.musicVolume*100)+"%";
 }
 function ChangeQualityText(config){
   switch(config){
@@ -164,7 +164,7 @@ function ChangeQualityText(config){
     break;
     case 1: QualityMessage("low","baja");
     break;
-    case 2: QualityMessage("medium","mediana");
+    case 2: QualityMessage("medium","media");
     break;
     case 3: QualityMessage("high","alta");
     break;
