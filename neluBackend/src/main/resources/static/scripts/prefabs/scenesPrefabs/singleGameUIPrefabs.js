@@ -6,7 +6,7 @@ prefabFactory.AddPrototype("DialogSystem", new Vec2(), new Vec2(), false, ()=>{
 
 prefabFactory.AddPrototype("PauseFromSingleGame", new Vec2(1.5,1.5), new Vec2(0.0,1.0), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(7,12), new Vec2(1.5,1.5)).GiveFunctionality().SetHoverInFunc((obj)=>{
+    new ImageRenderer(new Vec2(11.5,12), new Vec2(1.5,1.5)).GiveFunctionality().SetHoverInFunc((obj)=>{
       obj.gameobj.renderer.MultiplyTint(0.8);
     }).SetHoverOutFunc((obj)=>{
       let tint=obj.gameobj.renderer.realTint;
@@ -16,26 +16,25 @@ prefabFactory.AddPrototype("PauseFromSingleGame", new Vec2(1.5,1.5), new Vec2(0.
       manager.lastGame="singleGame";
       input.HideVirtualInputs(true);
     }),
-    new TextBox(null, "=","Pause", new Vec2(0.3,0.07), true),
   ]
 });
 
-prefabFactory.AddPrototype("SingleLifeText", new Vec2(3,1), new Vec2(0.0,1.0), false, ()=>{
+prefabFactory.AddPrototype("SingleLifeText", new Vec2(3,1.5), new Vec2(0.0,1.0), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5),
+    new ImageRenderer(new Vec2(8.5,12), new Vec2(3,1.5)),
     new TextBox("LifeText", "XHP","XHP", new Vec2(0.3,0.07), true),
   ]
 });
 
 prefabFactory.AddPrototype("SingleTextBox", new Vec2(14,5), new Vec2(0.5,0.0), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5),
+    new ImageRenderer(new Vec2(0,16), new Vec2(14,5)),
     new TextBox(null, "","", new Vec2(0.8,0.07), false),
   ]
 });
-prefabFactory.AddPrototype("SingleNameText", new Vec2(4,1), new Vec2(0.5,0.0), false, ()=>{
+prefabFactory.AddPrototype("SingleNameText", new Vec2(4,2), new Vec2(0.5,0.0), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5),
+    new ImageRenderer(new Vec2(7,10), new Vec2(4,2)),
     new TextBox(null, "","", new Vec2(0.3,0.07), true),
   ]
 });

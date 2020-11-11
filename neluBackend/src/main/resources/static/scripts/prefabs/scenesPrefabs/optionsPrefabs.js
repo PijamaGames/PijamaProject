@@ -136,9 +136,9 @@ prefabFactory.AddPrototype("DificultyText", new Vec2(4,2), new Vec2(0.5,0.5), fa
     new TextBox("Dificulty", "Fácil","Easy", new Vec2(0.3,0.07), true),
   ]
 });
-prefabFactory.AddPrototype("OptionsTitle", new Vec2(17,2), new Vec2(0.5,0.5), false, ()=>{
+prefabFactory.AddPrototype("OptionsTitle", new Vec2(14,2), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7),
+    new ImageRenderer(new Vec2(0,21), new Vec2(14,2)),
     new TextBox("TitleTextOptions", "Configuración","Options", new Vec2(0.3,0.07), true),
   ]
 });

@@ -1,6 +1,6 @@
-prefabFactory.AddPrototype("PauseTitle", new Vec2(17,2), new Vec2(0.5,0.5), false, ()=>{
+prefabFactory.AddPrototype("PauseTitle", new Vec2(14,2), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7),
+    new ImageRenderer(new Vec2(0,21), new Vec2(14,2)),
     new TextBox(null, "Pausa","Pause", new Vec2(0.3,0.07), true),
   ]
 });
@@ -22,7 +22,7 @@ prefabFactory.AddPrototype("GameFromPause", new Vec2(8,2), new Vec2(0.5,0.5), fa
 
 prefabFactory.AddPrototype("OptionsFromPause", new Vec2(8,2), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(7,4), new Vec2(8,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
+    new ImageRenderer(new Vec2(15,0), new Vec2(8,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
       obj.gameobj.renderer.MultiplyTint(0.8);
     }).SetHoverOutFunc((obj)=>{
       let tint=obj.gameobj.renderer.realTint;

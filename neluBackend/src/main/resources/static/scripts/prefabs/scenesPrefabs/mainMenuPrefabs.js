@@ -1,6 +1,6 @@
-prefabFactory.AddPrototype("MenuTitle", new Vec2(17,2), new Vec2(0.5,0.5), false, ()=>{
+prefabFactory.AddPrototype("MenuTitle", new Vec2(14,2), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7),
+    new ImageRenderer(new Vec2(0,21), new Vec2(14,2)),
     new TextBox(null, "Menú","Menu", new Vec2(0.3,0.07), true),
   ]
 });
@@ -16,13 +16,13 @@ prefabFactory.AddPrototype("SingleGameFromMenu", new Vec2(8,2), new Vec2(0.5,0.5
       manager.LoadScene('singleGame');
       input.HideVirtualInputs(false);
     }),
-    new TextBox(null, "Aventura","Adventure", new Vec2(0.3,0.07), false),
+    new TextBox(null, "Aventura","Adventure", new Vec2(0.3,0.07), true),
   ]
 });
 
 prefabFactory.AddPrototype("OptionsFromMenu", new Vec2(8,2), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(7,4), new Vec2(8,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
+    new ImageRenderer(new Vec2(15,0), new Vec2(8,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
       obj.gameobj.renderer.MultiplyTint(0.8);
     }).SetHoverOutFunc((obj)=>{
       let tint=obj.gameobj.renderer.realTint;
@@ -31,7 +31,7 @@ prefabFactory.AddPrototype("OptionsFromMenu", new Vec2(8,2), new Vec2(0.5,0.5), 
       manager.LoadScene('optionMenu');
       manager.lastScene="mainMenu";
     }),
-    new TextBox(null, "Configuración","Options", new Vec2(0.3,0.07), false),
+    new TextBox(null, "Configuración","Options", new Vec2(0.3,0.07), true),
   ]
 });
 
@@ -45,6 +45,6 @@ prefabFactory.AddPrototype("MultiGameFromMenu", new Vec2(8,2), new Vec2(0.5,0.5)
     }).SetUpFunc(()=>{
       manager.LoadScene('lobby');
     }),
-    new TextBox(null, "Arena","Lobby", new Vec2(0.3,0.07), false),
+    new TextBox(null, "Arena","Lobby", new Vec2(0.3,0.07), true),
   ]
 });

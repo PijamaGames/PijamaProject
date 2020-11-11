@@ -27,6 +27,10 @@ class Renderer extends Component{
     }
   }
 
+  SetTile(tile){
+    this.tile=tile.Copy();
+  }
+
   OnSetActive(active){
     if(!active){
       Renderer.hoverSet.delete(this);

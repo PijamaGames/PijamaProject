@@ -1,12 +1,11 @@
-prefabFactory.AddPrototype("RoomTitle", new Vec2(17,2), new Vec2(0.5,0.5), false, ()=>{
+prefabFactory.AddPrototype("RoomTitle", new Vec2(14,2), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7),
+    new ImageRenderer(new Vec2(0,21), new Vec2(14,2)),
     new TextBox(null, "Sala de espera", "Room", new Vec2(0.6,0.07), true),
   ]
 });
 prefabFactory.AddPrototype("WaitingMessage", new Vec2(17,2), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.7),
     new TextBox("WaitingMessage", "Esperando a otro jugador...","Waiting some player...", new Vec2(1,0.07), true),
 
   ]

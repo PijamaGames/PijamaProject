@@ -130,6 +130,9 @@ input:focus{
 #wrongName{
   color:#cae680;
 }
+#WaitingMessage{
+  color:#cae680;
+}
 
 #UI{
   position: fixed;

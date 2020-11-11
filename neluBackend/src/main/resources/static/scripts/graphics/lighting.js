@@ -52,18 +52,21 @@ class Lighting{
     this.SetMorning();
   }
 
-  SwitchLight(){
+  SwitchLight(rend){
     switch(this.nextLight){
       case 1:
         this.currentLight=1;
+        rend.SetTile(new Vec2(7,13.5));
         this.nextLight=2;
       break;
       case 2:
         this.currentLight=2;
+        rend.SetTile(new Vec2(9,13.5));
         this.nextLight=3;
       break;
       case 3:
         this.currentLight=3;
+        rend.SetTile(new Vec2(11,13.5));
         this.nextLight=1;
       break;
     }
