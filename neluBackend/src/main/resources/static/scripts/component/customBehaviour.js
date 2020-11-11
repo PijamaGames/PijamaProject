@@ -44,6 +44,9 @@ class CustomBehaviour extends Component{
   SetGameobj(gameobj){
     this.gameobj = gameobj;
     this.gameobj.customBehaviour = this;
+  }
+
+  OnCreate(){
     if(this.onCreate) this.onCreate(this.gameobj);
   }
 }

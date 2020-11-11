@@ -7,29 +7,79 @@ class Rigidbody extends Component{
     this.type="rigidbody";
     this.force = new Vec2();
     this.velocity = new Vec2();
-
     manager.scene.rigidbodies.add(this);
+
+    this.overDist = false;
+  }
+
+  /*Update(){
+    this.CheckMaxDist();
+  }*/
+
+  CheckMaxDist(){
+    if(!this.gameobj.colliderGroup) return;
+    let maxDist = physics.rigidbodyMaxDist;
+    let dist = Vec2.Distance(this.gameobj.scene.camera.transform.GetWorldPos(), this.gameobj.transform.GetWorldCenter());
+    if(dist >= maxDist && !this.overDist){
+      this.overDist = true;
+      this.RemoveColliderGroupWithRb();
+    } else if(dist < maxDist && this.overDist){
+      this.overDist = false;
+      this.AddColliderGroupWithRb(this.gameobj.scene);
+    }
   }
 
   OnSetActive(active){
     if(active){
       manager.scene.rigidbodies.add(this);
+      this.CheckMaxDist();
+      //this.AddColliderGroupWithRb(this.gameobj.scene);
     } else {
       this.gameobj.scene.rigidbodies.delete(this);
+      this.CheckMaxDist();
+      //this.RemoveColliderGroupWithRb();
+    }
+  }
+
+  RemoveColliderGroupWithRb(){
+    if(this.gameobj.colliderGroup){
+      let index = this.gameobj.scene.colliderGroupsWithRb.indexOf(this.gameobj.colliderGroup);
+      if(index >= 0){
+        this.gameobj.scene.colliderGroupsWithRb.splice(index,1);
+      }
+      if(DEBUG){
+        let program = manager.graphics.programs.get('collider');
+        for(var i = 0; i < this.gameobj.colliderGroup.colliders.length; i++){
+          program.renderers.delete(this.gameobj.colliderGroup.colliders[i]);
+        }
+      }
+    }
+  }
+
+  AddColliderGroupWithRb(scene){
+    if(this.gameobj.colliderGroup){
+      let index = scene.colliderGroupsWithRb.indexOf(this);
+      if(index < 0){
+        scene.colliderGroupsWithRb.push(this.gameobj.colliderGroup);
+      }
+      if(DEBUG){
+        let program = manager.graphics.programs.get('collider');
+        for(var i = 0; i < this.gameobj.colliderGroup.colliders.length; i++){
+          program.renderers.add(this.gameobj.colliderGroup.colliders[i]);
+        }
+      }
     }
   }
 
   SetScene(scene){
     this.gameobj.scene.rigidbodies.delete(this);
     scene.rigidbodies.add(this);
+    this.RemoveColliderGroupWithRb();
+    this.AddColliderGroupWithRb(scene);
   }
 
   AddForce(dir){
     this.force.Add(dir);
-  }
-
-  Update(){
-
   }
 
   PrepareVelocity(){
@@ -56,7 +106,12 @@ class Rigidbody extends Component{
     this.gameobj.rigidbody = this;
   }
 
+  OnCreate(){
+    this.AddColliderGroupWithRb(this.gameobj.scene);
+  }
+
   Destroy(){
     this.gameobj.scene.rigidbodies.delete(this);
+    this.RemoveColliderGroupWithRb();
   }
 }
