@@ -41,13 +41,14 @@ class EnemyController extends Component {
     this.life=15;
     this.canTakeDamage = true;
     this.damageCooldown = 0.5;
+    this.damageTime = 0.0;
     this.damageForce = 10.0;
 
     this.recharge=true;
 
     this.aproachFPS=14;
 
-    this.damageTime = 0.0;
+
   }
 
   TakeDamage(damage, forced = false){

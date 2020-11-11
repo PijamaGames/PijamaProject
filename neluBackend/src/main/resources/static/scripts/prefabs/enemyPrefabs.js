@@ -1,24 +1,26 @@
 prefabFactory.AddPrototype("MonkeyEnemy", new Vec2(1, 1), new Vec2(0.5, 0.5), false, ()=>{
   return [
-    new ColliderGroup([new CircleCollider(new Vec2(0,-0.65), 0.35, false)]),
+    new ColliderGroup([new CircleCollider(new Vec2(0,-0.1), 0.2, false), new CircleCollider(new Vec2(0,0), 0.5, true)]),
     new SpriteRenderer('monkey_idle', new Vec2(0, 2),new Vec2(1,1), true, 8, [4,0,6,1,5,3,7,2], 14),
     new Rigidbody(0.5),
     new ShadowCaster(new Vec2(0,-0.75), 0.75),
     new EnemyController(2.0),
-    new Burnable(),
+    new Burnable().SetOnBurn((obj)=>{
+      obj.enemyController.TakeDamage(10, true);
+    }),
     new NetworkEntity(),
   ]
 });
 
 prefabFactory.AddPrototype("BeekeeperEnemy", new Vec2(2, 2), new Vec2(0.5, 0.5), false, ()=>{
   return [
-    new ColliderGroup([new CircleCollider(new Vec2(0,-0.65), 0.35, false)]),
+    new ColliderGroup([new CircleCollider(new Vec2(0,-0.6), 0.35, false), new CircleCollider(new Vec2(0,-0.3), 0.5, true)]),
     new SpriteRenderer('beekeeper_idle', new Vec2(0, 2),new Vec2(2,2), true, 8, [4,0,6,1,5,3,7,2], 14),
     new Rigidbody(0.5),
     new ShadowCaster(new Vec2(0,-0.75), 0.75),
     new BeekeeperController(1),
     new Burnable().SetOnBurn((obj)=>{
-      obj.enemyController.TakeDamage(10);
+      obj.enemyController.TakeDamage(10, true);
     }),
     new NetworkEntity(),
   ]
