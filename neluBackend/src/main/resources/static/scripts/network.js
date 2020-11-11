@@ -208,7 +208,9 @@ function InitWebSocket(onOpenCallback) {
 
   socket.onopen = () => {
     Log("WebSocket opened");
-    onOpenCallback();
+    if(onOpenCallback){
+      onOpenCallback();
+    }
   };
 
   socket.onclose = ()=>{
