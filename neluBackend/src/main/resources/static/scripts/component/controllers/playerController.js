@@ -8,14 +8,21 @@ class PlayerController extends Component {
     this.rawLeftAxis = new Vec2();
     this.lerpLeftAxis = 10.0;
     this.endAttackAnim=false;
+
+
     this.maxLife = 45;
-    this.life = 45;
+    this.life = 30;
+    this.canTakeDamage = true;
+    this.damageCooldown = 0.5;
+    this.damageTime = 0.0;
+
+
     this.combo = false;
     this.numCombo = 1;
     this.waitComboMaxTime = 0.05;
     this.waitComboTime = 0.0;
     this.attackDir = new Vec2();
-    this.attackImpulse = 20.0;
+    this.attackImpulse = 10.0;
     this.attack1Speed = 16;
     this.attack2Speed = 16;
     this.attack3Speed = 17;
@@ -67,6 +74,7 @@ class PlayerController extends Component {
   Update(){
     //Log("playerSpd: " + this.gameobj.rigidbody.velocity.mod);
     if(user && user.isClient) return;
+    if(!this.playerFSM.active) return;
     let leftAxis = input.GetLeftAxis();
     this.rawLeftAxis.Set(leftAxis.x, leftAxis.y);
     let axisDir = Vec2.Sub(this.rawLeftAxis, this.leftAxis);
@@ -85,6 +93,14 @@ class PlayerController extends Component {
       this.firePowerTime += manager.delta;
       if(this.firePowerTime > this.firePowerMaxTime){
         this.DeactivateFirePower();
+      }
+    }
+
+    if(!this.canTakeDamage && this.life > 0){
+      this.damageTime+=manager.delta;
+      if(this.damageTime > this.damageCooldown){
+        this.canTakeDamage = true;
+        this.gameobj.renderer.SetTint(1,1,1);
       }
     }
   }
@@ -137,18 +153,6 @@ class PlayerController extends Component {
         this.ThrowColibri();
       }
     }
-    /*if(input.GetAttackADDown()){
-      if(!this.colibriOrBees){
-        if(this.hasColibri){
-          this.ThrowColibri();
-        }
-      } else {
-        if(this.hasBees){
-          this.ThrowBees();
-        }
-      }
-    }*/
-
   }
 
   ThrowColibri(){
@@ -393,13 +397,21 @@ class PlayerController extends Component {
   }
 
   TakeDamage(damage){
-    this.life -= damage;
-    if(this.life < 0){
-      this.life = 0;
+    if(this.canTakeDamage){
+      this.life -= damage;
+      if(this.life <= 0){
+        this.life = 0;
+      } else if(damage > 0) {
+        this.gameobj.renderer.SetTint(1.0,0.0,0.0);
+        this.damageTime = 0.0;
+        this.canTakeDamage = false;
+      }
+
+      var text=document.getElementById("LifeText");
+      text.innerHTML=this.life + "HP";
+      //this.lifeText.textBox.SetText(this.life + "HP");
     }
-    var text=document.getElementById("LifeText");
-    text.innerHTML=this.life + "HP";
-    //this.lifeText.textBox.SetText(this.life + "HP");
+
   }
 
   GainLife(life){

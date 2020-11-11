@@ -6,19 +6,19 @@ body{
 
 /* width */
 ::-webkit-scrollbar {
- width: 20px;
+ width: 20vmin;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
  background: #cae68000;
- border-radius: 10px;
+ border-radius: 1vmin;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
  background: #546528;
- border-radius: 10px;
+ border-radius: 1vmin;
 }
 ::-webkit-scrollbar-corner{
   background: #cae68000;

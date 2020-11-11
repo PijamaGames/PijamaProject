@@ -3,7 +3,10 @@ class ColliderGroup extends Component{
     super();
     this.colliders=colliders;
     this.type="colliderGroup";
+  }
 
+  get firstCollider(){
+    return this.colliders[0];
   }
 
   SetScene(scene){
