@@ -6,7 +6,6 @@ Nelu 0 0 0
 Tree -3 6 0
 Tree 4 6 0
 Tree -5 -5 0
-Tree 2 -5 0
 WaterLeft -13 -12 0 1 18
 WaterLeft -13 6 0 1 18
 WaterRight -4 -12 0 1 30
@@ -108,11 +107,8 @@ Dirt12 19 -3 2 1 1
 Dirt 18 -9 2 1 3
 Dirt 13 -9 2 5 1
 Dirt 17 -8 2 1 1
-Rock 12 2 0 1 1
-Rock 13.462820053100586 0.7575349807739258 0 1 1
 LogVertical 9.418785095214844 3.3480606079101562 0 1 2
 LogHorizontal -1.3810853958129883 3.4566454887390137 0
-Tree 5 -5 0
 Bush 8 6 0
 Bush 3.974485397338867 7.054923057556152 0
 Bush 2.379474639892578 7.533041954040527 0
@@ -396,7 +392,6 @@ Dirt25 104 -30 2 1 6
 DirtWall2 100 -35 0
 Tree 73 -10 0
 Dirt 84 -35 2 5 6
-WaterTop 86 -36 0 29 1
 DryPlant 105 -24 0
 DryPlant 106 -24 0
 DryPlant 107 -24 0
@@ -564,7 +559,6 @@ Grass 158 -35 0 35 6
 Tree 117 -31 0
 Grass 117 -29 0 29 17
 WaterTop 144 -36 0 29 1
-WaterTop 173 -36 0 29 1
 Tree 121.22797393798828 -31.528182983398438 0
 BigLog 123 -33 0
 BigLog 128 -35 0
@@ -663,7 +657,6 @@ Nenuphar -9.367568016052246 1.338649034500122 0.05 1 1
 NenupharBig -10.297255516052246 2.4400103092193604 0.05 1 1
 NenupharBig -7.880067825317383 1.9281103610992432 0.05 1 1
 Grass 66 -43 0 22 31
-WaterBottom 86 -44 0 48 1
 Grass 88 -35 0 35 6
 Dirt23 102 -35 2 1 1
 Dirt22 100 -35 2 2 1
@@ -676,11 +669,8 @@ Dirt 89 -34 2 13 3
 Dirt 102 -33 2 1 3
 BoxColliderScalable 102 -35 0 1 3
 WaterBottom 134 -44 0 48 1
-Water 88 -43 0 32 7
 Water 120 -43 0 32 7
 Water 152 -43 0 32 7
-BoxColliderScalable -20 4 0 17 21
-BoxColliderScalable -20 -17 0 17 21
 BoxColliderScalable 19 3 0 3 4
 BoxColliderScalable 22 5 0 2 10
 Bush 22 4 0
@@ -758,12 +748,9 @@ Grass 176 -21 0 5 1
 DirtWall1 180 -21 0
 DirtWall1 181 -23 0
 DirtWall1 171 -23 0
-DirtWall3 184 -23 0
 DirtWall3 175 -21 0
 DirtWall3 175 -22 0
 DirtWall1 170 -20 0
-DirtWall2 182 -23 0
-DirtWall2 183 -23 0
 DirtWall2 172 -23 0
 DirtWall2 173 -23 0
 Grass 169 -23 0 6 7
@@ -774,17 +761,12 @@ Dirt25 174 -22 2 1 1
 Dirt21 171 -23 2 1 1
 Dirt21 170 -20 2 1 1
 Dirt22 172 -23 2 2 1
-Dirt22 182 -23 2 2 1
-Dirt23 184 -23 2 1 1
 Dirt21 181 -23 2 1 1
 Dirt21 180 -21 2 1 1
-Dirt25 184 -22 2 1 2
 Dirt24 181 -22 2 1 1
 Dirt24 171 -22 2 1 2
 Dirt 172 -21 2 3 1
 Dirt 172 -22 2 2 1
-Dirt 182 -22 2 2 1
-Dirt 181 -21 2 3 1
 Dirt25 175 -20 2 1 8
 Dirt28 175 -12 2 1 1
 Dirt 171 -20 2 4 8
@@ -809,31 +791,6 @@ DirtWall2 158 -16 0
 DirtWall2 157 -16 0
 Dirt 169 -17 2 2 2
 Dirt 157 -15 2 14 3
-DirtWall3 186 -18 0
-DirtWall3 187 -17 0
-DirtWall2 188 -16 0
-DirtWall2 189 -16 0
-DirtWall2 190 -16 0
-DirtWall2 191 -16 0
-DirtWall2 192 -16 0
-DirtWall2 193 -16 0
-DirtWall2 194 -16 0
-DirtWall2 195 -16 0
-DirtWall2 196 -16 0
-Dirt23 186 -18 2 1 1
-Dirt23 187 -17 2 1 1
-Dirt22 188 -16 2 14 1
-DirtWall2 197 -16 0
-DirtWall2 198 -16 0
-DirtWall2 199 -16 0
-DirtWall2 200 -16 0
-DirtWall2 201 -16 0
-DirtWall3 185 -20 0
-Dirt25 185 -19 2 1 1
-Dirt23 185 -20 2 1 1
-Dirt 185 -17 2 2 2
-Dirt 185 -18 2 1 1
-Dirt 187 -16 2 1 1
 Grass 188 -16 0 16 1
 Dirt27 167 -12 2 8 1
 Cave 183 3 0
@@ -1316,10 +1273,7 @@ DirtWall2 199 -7 0
 DirtWall2 200 -7 0
 DirtWall2 201 -7 0
 DirtWall2 202 -7 0
-DirtWall3 202 -16 0
 DirtWall1 206 -16 0
-Dirt23 202 -16 2 1 1
-Dirt25 202 -15 2 1 2
 Dirt27 187 -12 2 13 1
 Dirt28 200 -12 2 1 1
 Dirt28 202 -13 2 1 1
@@ -1394,10 +1348,163 @@ WaterBottomLeft 182 -45 0 1 1
 WaterTopRight 185 -41 0 1 1
 WaterOuterTopRight 183 -45 0 1 1
 WaterTopRight 186 -42 0 1 1
-WaterTopRight 187 -43 0 1 1
 WaterOuterBottomLeft 185 -42 0 1 1
-WaterOuterBottomLeft 186 -43 0 1 1
 WaterLeft 183 -51 0 1 6
-WaterRight 187 -51 0 1 8
-Water 184 -51 0 3 8
+Rock 20 2 0 1 1
+Rock 19.102203369140625 1.420636534690857 0 1 1
+Rock 19.69100570678711 1.9170244932174683 0 1 1
+Rock 19.102203369140625 0.9707845449447632 0 1 1
+Rock 19.783973693847656 0.0710814893245697 0 1 1
+BoxColliderScalable -20 -9 0 17 21
+WaterTop 86 -36 0 29 1
+Water 88 -43 0 32 7
+WaterBottom 86 -44 0 48 1
+WaterBottom 185 -40 0 1 1
+DirtWall2 185.9948272705078 -40.59475326538086 0
+Water 183 -44 0 1 1
+WaterRight 187 -52 0 1 8
+WaterTopRight 187 -44 0 1 1
+Water 184 -52 0 3 8
+WaterOuterBottomLeft 186 -44 0 1 1
+WaterRight 186 -43 0 1 1
+Water 184 -44 0 2 2
+Water 184 -42 0 1 1
+WaterTop 173 -36 0 19 1
+DirtWall1 186 -41 0
+Dirt1 186 -41 2 1 1
+WaterBottom 188 -40 0 2 1
+WaterOuterTopRight 190 -40 0 1 1
+WaterLeft 190 -41 0 1 1
+WaterBottomLeft 190 -42 0 1 1
+WaterOuterTopRight 191 -42 0 1 1
+WaterTopRight 192 -36 0 1 1
+Water 184 -39 0 8 3
+WaterOuterBottomLeft 192 -37 0 1 1
+WaterTopRight 193 -37 0 1 1
+WaterRight 193 -38 0 1 1
+WaterOuterBottomLeft 193 -39 0 1 1
+WaterTopRight 194 -39 0 1 1
+WaterRight 194 -40 0 1 1
+WaterOuterBottomLeft 194 -41 0 1 1
+WaterTopRight 195 -41 0 1 1
+WaterRight 195 -46 0 1 5
+Water 192 -47 0 3 6
+Water 191 -41 0 3 2
+Water 192 -39 0 1 2
+DirtWall1 182 -26 0
+DirtWall1 183 -29 0
+DirtWall1 184 -31 0
+DirtWall1 185 -32 0
+DirtWall1 187 -33 0
+DirtWall1 190 -34 0
+DirtWall3 194 -34 0
+DirtWall3 197 -33 0
+DirtWall3 199 -32 0
+DirtWall3 200 -30 0
+DirtWall3 201 -25 0
+DirtWall3 202 -19 0
+DirtWall2 198 -32 0
+DirtWall2 193 -34 0
+DirtWall2 192 -34 0
+DirtWall2 191 -34 0
+DirtWall2 189 -33 0
+DirtWall2 188 -33 0
+DirtWall2 186 -32 0
+Dirt22 188 -33 2 2 1
+Dirt23 194 -34 2 1 1
+Dirt23 202 -19 2 1 1
+Dirt25 202 -18 2 1 5
+Dirt23 201 -25 2 1 1
+Dirt23 200 -30 2 1 1
+Dirt23 199 -32 2 1 1
+Dirt23 197 -33 2 1 1
+Dirt21 182 -26 2 1 1
+Dirt21 183 -29 2 1 1
+Dirt21 184 -31 2 1 1
+Dirt21 185 -32 2 1 1
+Dirt21 187 -33 2 1 1
+Dirt21 190 -34 2 1 1
+Dirt22 191 -34 2 3 1
+Dirt22 195 -33 2 2 1
+Dirt22 198 -32 2 1 1
+Dirt24 182 -25 2 1 2
+Dirt24 183 -28 2 1 2
+Dirt24 184 -30 2 1 1
+Dirt25 201 -24 2 1 5
+Dirt25 200 -29 2 1 4
+Dirt22 186 -32 2 1 1
+Dirt 190 -24 2 5 9
+Dirt 185 -24 2 5 9
+Dirt17 181 -21 2 1 1
+Dirt17 182 -23 2 1 1
+Dirt17 183 -26 2 1 1
+Dirt17 184 -29 2 1 1
+Dirt17 185 -31 2 1 1
+Dirt17 187 -32 2 1 1
+Dirt 190 -33 2 5 9
+Dirt16 197 -32 2 1 1
+Dirt16 199 -31 2 1 1
+Dirt16 200 -25 2 1 1
+Dirt16 201 -19 2 1 1
+Dirt 195 -18 2 7 3
+Dirt 195 -32 2 2 14
+Dirt 185 -30 2 5 6
+Dirt 197 -31 2 2 13
+Dirt 199 -24 2 2 6
+Dirt 199 -30 2 1 6
+Dirt 188 -32 2 2 2
+Dirt 186 -31 2 2 1
+Dirt 182 -22 2 3 2
+Dirt 183 -25 2 2 3
+Dirt 184 -28 2 1 3
+Dirt28 189 -41 2 1 1
+Dirt25 189 -42 2 1 1
+Dirt11 189 -43 2 1 1
+Dirt28 190 -43 2 1 1
+Dirt 188 -42 2 1 1
+Grass 201 -48 0 1 2
+Dirt27 187 -41 2 2 1
+Dirt24 187 -42 2 1 1
+Dirt21 187 -43 2 1 1
+DirtWall1 187 -43 0
+Dirt17 188 -43 2 1 1
+Dirt25 190 -51 2 1 8
+Dirt 189 -51 2 1 8
+Dirt24 188 -51 2 1 8
+WaterOuterBottomLeft 195 -47 0 1 1
+WaterTopRight 196 -47 0 1 1
+WaterOuterBottomLeft 196 -48 0 1 1
+WaterTopRight 197 -48 0 1 1
+WaterOuterBottomLeft 197 -49 0 1 1
+WaterTopRight 199 -49 0 1 1
+WaterOuterBottomLeft 199 -50 0 1 1
+WaterTop 198 -49 0 1 1
+DirtWall2 195 -33 0
+Cave 196 -33 0
+Grass 193 -36 0 3 1
+Grass 194 -38 0 2 2
+Grass 195 -40 0 1 2
+Grass 196 -45 0 17 10
+WaterLeft 191 -47 0 1 5
+WaterTop 200 -50 0 10 1
+WaterBottomLeft 191 -48 0 1 1
+WaterOuterTopRight 192 -48 0 1 1
+WaterBottomLeft 192 -50 0 1 1
+WaterBottomLeft 193 -51 0 1 1
+WaterOuterTopRight 193 -50 0 1 1
+WaterBottomLeft 194 -52 0 1 1
+WaterOuterTopRight 194 -51 0 1 1
+WaterBottom 195 -52 0 1 1
+WaterBottomLeft 196 -53 0 1 1
+WaterOuterTopRight 196 -52 0 1 1
+WaterBottom 197 -53 0 1 1
+WaterBottomLeft 198 -54 0 1 1
+WaterOuterTopRight 198 -53 0 1 1
+WaterBottom 199 -54 0 12 1
+WaterLeft 192 -49 0 1 1
+Water 193 -48 0 3 1
+Water 193 -49 0 4 1
+Water 194 -50 0 5 1
+Water 197 -52 0 2 1
+Water 195 -51 0 4 1
 `
