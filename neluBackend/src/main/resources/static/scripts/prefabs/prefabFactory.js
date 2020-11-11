@@ -18,6 +18,12 @@ class PrefabFactory{
     });
   }
 
+  ClearCounts(){
+    for(var [key, value] of this.prefabMapper){
+      value.count = 0;
+    }
+  }
+
   HasPrototype(type){
     return this.prefabMapper.has(type);
   }

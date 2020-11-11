@@ -96,7 +96,7 @@ class Manager {
 
     setTimeout(function(){
       that.GameLoop(that);
-    }, (1/that.targetFPS)*1000);
+    }, (1/that.targetFPS)*1000 - (Date.now()-this.ms));
 
     /*window.requestAnimationFrame(function() {
       that.GameLoop(that);

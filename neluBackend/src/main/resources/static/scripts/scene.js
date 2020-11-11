@@ -87,6 +87,7 @@ class Scene{
 
   LoadByteCode(){
     Log("Loading bytecode of " + this.name);
+    prefabFactory.ClearCounts();
     var lines = this.bytecode.match(/[^\r\n]+/g);
     var elements;
     var func;

@@ -52,6 +52,7 @@ class EnemyController extends Component {
   }
 
   TakeDamage(damage, forced = false){
+    if(user && user.isClient) return;
     if(this.canTakeDamage || forced){
       this.life -= damage;
       this.canTakeDamage = false;

@@ -35,7 +35,6 @@ prefabFactory.AddPrototype("neluFire", new Vec2(2,2), new Vec2(0.5,0.5), false, 
       const turbulence = 0.2;
       pct += Math.random()*turbulence;
       obj.lightSource.strength = pct;
-      Log("pct: " + pct);
     })
   ]
 });

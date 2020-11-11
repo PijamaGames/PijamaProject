@@ -21,6 +21,12 @@ class Gameobj {
     this.AddComponents(components);
   }
 
+  OnCreate(){
+    for(var [key, component] of this.components){
+      component.OnCreate();
+    }
+  }
+
   get active(){
     return this.selfActive && this.parentActive && manager.scene == this.scene;
   }

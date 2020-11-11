@@ -9,6 +9,9 @@ class Physics {
 
     this.stepPCT = 1.0 / this.steps;
     this.repulsion = 45.0/this.steps;
+    this.timer = 0.0;
+    this.fpsCount = 0;
+    this.timeCount = 0.0;
   }
 
   SetSteps(steps){
@@ -18,6 +21,18 @@ class Physics {
   }
 
   Update() {
+    if(DEBUG){
+      this.timer += manager.delta;
+      var init = Date.now();
+      this.fpsCount += 1;
+      if(this.timer >= 1.0){
+        Log("FPS: "+this.fpsCount+" Average physics time per frame: " + Math.round(this.timeCount / this.fpsCount) + " ms");
+        this.fpsCount = 0;
+        this.timeCount = 0;
+        this.timer = 0;
+      }
+    }
+
     if(user && user.isClient) return;
     for (var rb of manager.scene.rigidbodies) {
       rb.PrepareVelocity();
@@ -25,6 +40,10 @@ class Physics {
     for (var i = 0; i < this.steps; i++) {
       this.PerformStep();
     }
+    if(DEBUG){
+      this.timeCount += (Date.now()-init);
+    }
+
   }
 
   PerformStep() {

@@ -14,7 +14,11 @@ class Component{
   }
 
   OnSetActive(active){
-    
+
+  }
+
+  OnCreate(){
+
   }
 
   SetScene(scene){
