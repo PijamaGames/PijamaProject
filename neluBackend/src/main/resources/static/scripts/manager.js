@@ -253,7 +253,7 @@ class Manager {
   }
 
   OnChange(){
-    if(socket!=null) socket.close();
+    if(socket!=null && user && (user.isHost || user.isClient)) socket.close();
   }
 
   ExitFullScreen(callback = function(){}) {

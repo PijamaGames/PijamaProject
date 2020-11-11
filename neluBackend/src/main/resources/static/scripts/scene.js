@@ -5,7 +5,9 @@ class Scene{
     this.gameobjs = new Map();
     this.staticGameobjs = new Map();
     this.buttons = new Set();
+    this.colliderGroupsSet = new Set();
     this.colliderGroups= [];
+    this.colliderGroupsWithRb = [];
     this.rigidbodies = new Set();
     this.players = new Set();
     this.enemies = new Set();

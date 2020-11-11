@@ -19,6 +19,7 @@ class Gameobj {
     else t = new Transform();
     this.SetComponent(t);
     this.AddComponents(components);
+    this.OnCreate();
   }
 
   OnCreate(){

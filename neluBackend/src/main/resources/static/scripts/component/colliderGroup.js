@@ -3,6 +3,7 @@ class ColliderGroup extends Component{
     super();
     this.colliders=colliders;
     this.type="colliderGroup";
+    this.overDist = false;
   }
 
   get firstCollider(){
@@ -10,14 +11,85 @@ class ColliderGroup extends Component{
   }
 
   SetScene(scene){
-    let index = this.gameobj.scene.gameobjs.indexOf(this);
-    this.gameobj.scene.colliderGroups.splice(index,1);
-    scene.colliderGroups.push(this);
+    /*let index = this.gameobj.scene.colliderGroups.indexOf(this);
+    if(index >= 0){
+      this.gameobj.scene.colliderGroups.splice(index,1);
+      scene.colliderGroups.push(this);
+    }*/
+    this.RemoveColliderGroup();
+    this.AddColliderGroup(scene);
+
+    if(!this.gameobj.rigidbody){
+      this.gameobj.scene.colliderGroupsSet.delete(this);
+      scene.colliderGroupsSet.add(this);
+    }
+  }
+
+  CheckMaxDist(){
+    //if(!this.gameobj.colliderGroup) return;
+    let maxDist = physics.staticMaxDist;
+    let dist = Vec2.Distance(this.gameobj.scene.camera.transform.GetWorldPos(), this.gameobj.transform.GetWorldCenter());
+    if(dist >= maxDist && !this.overDist){
+      this.overDist = true;
+      this.RemoveColliderGroup();
+    } else if(dist < maxDist && this.overDist){
+      this.overDist = false;
+      this.AddColliderGroup(this.gameobj.scene);
+    }
+  }
+
+  AddColliderGroup(scene){
+    if(!this.gameobj.rigidbody){
+      let index = scene.colliderGroups.indexOf(this);
+      if(index < 0){
+        scene.colliderGroups.push(this);
+      }
+      if(DEBUG_PHYSICS){
+        let program = manager.graphics.programs.get('collider');
+        for(var i = 0; i < this.colliders.length; i++){
+          program.renderers.add(this.colliders[i]);
+        }
+      }
+    }
+  }
+
+  RemoveColliderGroup(){
+    if(!this.gameobj.rigidbody){
+      let index = this.gameobj.scene.colliderGroups.indexOf(this);
+      if(index >= 0){
+        this.gameobj.scene.colliderGroups.splice(index,1);
+      }
+      if(DEBUG_PHYSICS){
+        let program = manager.graphics.programs.get('collider');
+        for(var i = 0; i < this.colliders.length; i++){
+          program.renderers.delete(this.colliders[i]);
+        }
+      }
+    }
+  }
+
+  OnSetActive(active){
+    if(active){
+      //this.AddColliderGroup(this.gameobj.scene);
+      if(!this.gameobj.rigidbody){
+        this.gameobj.scene.colliderGroupsSet.add(this);
+      }
+    } else {
+      //this.RemoveColliderGroup();
+      if(!this.gameobj.rigidbody){
+        this.gameobj.scene.colliderGroupsSet.delete(this);
+      }
+    }
   }
 
   Destroy(){
-    let index = this.gameobj.scene.colliderGroups.indexOf(this);
-    this.gameobj.scene.colliderGroups.splice(index,1);
+    /*let index = this.gameobj.scene.colliderGroups.indexOf(this);
+    this.gameobj.scene.colliderGroups.splice(index,1);*/
+    this.RemoveColliderGroup();
+
+    if(!this.gameobj.rigidbody){
+      this.gameobj.scene.colliderGroupsSet.delete(this);
+    }
 
     let program = manager.graphics.programs.get('collider');
     for(var i = 0; i < this.colliders.length; i++){
@@ -26,21 +98,25 @@ class ColliderGroup extends Component{
   }
 
   SetGameobj(gameobj){
-    /*if(!(gameobj.transform.height > 0.0)){*/
-      for (var c of this.colliders){
-        c.colliderGroup = this;
-      }
+    for (var c of this.colliders){
+      c.colliderGroup = this;
+    }
 
-      this.gameobj = gameobj;
-      this.gameobj.scene.colliderGroups.push(this);
-      this.gameobj.colliderGroup = this;
+    this.gameobj = gameobj;
+    //this.gameobj.scene.colliderGroups.push(this);
+    this.gameobj.colliderGroup = this;
 
-      //if(DEBUG_VISUAL){
-        let program = manager.graphics.programs.get('collider');
-        for(var i = 0; i < this.colliders.length; i++){
-          program.renderers.add(this.colliders[i]);
-        }
-      //}
-    /*}*/
+
+    let program = manager.graphics.programs.get('collider');
+    for(var i = 0; i < this.colliders.length; i++){
+      program.renderers.add(this.colliders[i]);
+    }
+  }
+
+  OnCreate(){
+    this.AddColliderGroup(this.gameobj.scene);
+    if(!this.gameobj.rigidbody){
+      this.gameobj.scene.colliderGroupsSet.add(this);
+    }
   }
 }
