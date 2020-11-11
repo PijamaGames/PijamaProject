@@ -724,7 +724,6 @@ BoxColliderScalable 67 -1 0 19 5
 BoxColliderScalable 67 -4 0 1 3
 BoxColliderScalable 68 -3 0 2 2
 Tree 66.63507080078125 -3.144113540649414 0
-BoxColliderScalable 72 -2 0 2 1
 BoxColliderScalable 70 -2 0 1 1
 BoxColliderScalable 75 -2 0 2 1
 BoxColliderScalable 78 -2 0 2 1
@@ -1004,13 +1003,9 @@ BigLogPackLiana 181 5 0
 LianaLeft 182 6 0
 LianaLeft 182 7 0
 LianaLeft 182.00494384765625 6.495860576629639 0
-DirtWall3 182 8 0
 DirtWall2 181 7 0
 Dirt4 181 7 2 1 1
-Dirt23 182 8 2 1 1
 Dirt14 181 8 2 1 1
-Dirt22 187 3 2 5 1
-Dirt2 182 3 2 5 1
 DirtWall2 184 3 0
 Dirt2 170 3 2 4 1
 Puddle 173 7 0
@@ -1215,7 +1210,6 @@ Dirt21 156 25 2 1 1
 Dirt21 157 24 2 1 1
 Dirt26 158 20 2 1 1
 Dirt22 149 26 2 7 1
-Dirt22 158 24 2 1 1
 DirtWall2 158 24 0
 Dirt17 156 3 2 1 1
 Dirt 156 4 2 1 2
@@ -1228,6 +1222,110 @@ Rock 173.22238159179688 -30.556312561035156 0.05 1 1
 Rock 173.9506378173828 -31.487041473388672 0.05 1 1
 Rock 175.14373779296875 -31.812795639038086 0.05 1 1
 Dirt16 166 3 2 1 1
-Dirt 166 4 2 3 5
 Dirt16 169 8 2 1 1
+BoxColliderScalable 72 -2 0 2 1
+Dirt 140 27 2 18 8
+Dirt24 139 22 2 1 11
+Dirt24 139 33 2 1 11
+Dirt 140 35 2 18 8
+Grass 132 34 0 14 23
+Dirt 140 23 2 6 4
+Dirt16 146 24 2 1 1
+Dirt16 147 25 2 1 1
+Dirt16 148 26 2 1 1
+Dirt 146 25 2 1 2
+Dirt 147 26 2 1 1
+Dirt17 156 26 2 1 1
+Dirt17 157 25 2 1 1
+Dirt28 166 20 2 1 1
+Dirt27 159 20 2 7 1
+Dirt 159 9 2 7 11
+Dirt22 158 24 2 9 1
+Dirt23 167 24 2 1 1
+DirtWall3 167 24 0
+DirtWall2 159 24 0
+DirtWall2 160 24 0
+DirtWall2 161 24 0
+DirtWall2 162 24 0
+DirtWall2 163 24 0
+DirtWall2 164 24 0
+DirtWall2 165 24 0
+DirtWall2 166 24 0
+Dirt 158 27 2 18 8
+Dirt 158 25 2 9 2
+Dirt 157 26 2 1 1
+BoxColliderScalable 169 26 0 6 4
+Dirt 158 35 2 18 8
+Dirt 176 35 2 18 8
+Dirt 176 27 2 18 8
+DirtWall3 168 25 0
+Dirt23 168 25 2 1 1
+DirtWall2 169 26 0
+DirtWall2 171 26 0
+DirtWall2 170 26 0
+DirtWall2 172 26 0
+Dirt 166 4 2 3 5
+Dirt22 169 26 2 18 1
+Dirt24 189 6 2 1 18
+DirtWall1 188 24 0
+DirtWall1 187 25 0
+Dirt21 188 24 2 1 1
+Dirt21 187 25 2 1 1
+DirtWall2 173 26 0
+DirtWall2 174 26 0
+DirtWall2 175 26 0
+DirtWall2 176 26 0
+DirtWall2 177 26 0
+DirtWall2 178 26 0
+DirtWall2 179 26 0
+DirtWall2 180 26 0
+DirtWall2 181 26 0
+DirtWall2 182 26 0
+DirtWall2 183 26 0
+DirtWall2 184 26 0
+DirtWall2 185 26 0
+DirtWall2 186 26 0
+Dirt17 188 25 2 1 1
+Dirt17 189 24 2 1 1
+Dirt 189 25 2 1 1
+Dirt26 186 4 2 1 1
+Dirt2 182 3 2 4 1
+Dirt22 186 3 2 6 1
+Dirt26 187 5 2 1 1
+Dirt27 188 5 2 1 1
+Dirt25 166 14 2 1 6
+DirtWall3 185 8 0
+DirtWall2 182 8 0
+DirtWall2 183 8 0
+DirtWall2 184 8 0
+Dirt12 187 4 2 1 1
+Dirt12 189 5 2 1 1
+Dirt28 168 12 2 1 1
+Dirt28 167 13 2 1 1
+Dirt11 168 11 2 1 1
+Dirt11 166 13 2 1 1
+Dirt 166 9 2 2 3
+Dirt11 167 12 2 1 1
+Dirt 166 12 2 1 1
+Dirt28 185 11 2 1 1
+Dirt25 185 9 2 1 2
+Dirt23 185 8 2 1 1
+Dirt27 169 11 2 16 1
+Dirt22 182 8 2 3 1
+Dirt 168 9 2 17 2
+Sand 159 17 0 40 21
+Dirt 190 4 2 3 15
+Dirt 190 19 2 3 8
+Dirt 188 26 2 2 1
+Dirt17 187 26 2 1 1
+Dirt 193 19 2 18 8
+Dirt 193 11 2 18 8
+Dirt 193 3 2 18 8
+Dirt 193 -5 2 18 8
+Dirt 194 27 2 18 8
+Dirt 194 35 2 18 8
+Dirt16 167 25 2 1 1
+Dirt16 168 26 2 1 1
+Dirt 167 26 2 1 1
+Dirt 188 4 2 2 1
 `
