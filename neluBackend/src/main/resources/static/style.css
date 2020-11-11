@@ -6,31 +6,19 @@ body{
 
 /* width */
 ::-webkit-scrollbar {
-<<<<<<< HEAD
  width: 2vmin;
-=======
- width: 20vmin;
->>>>>>> 762f0f5fa6df21f60a86af4462132c315788eaab
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
  background: #cae68000;
-<<<<<<< HEAD
  border-radius: 2vmin;
-=======
- border-radius: 1vmin;
->>>>>>> 762f0f5fa6df21f60a86af4462132c315788eaab
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
  background: #546528;
-<<<<<<< HEAD
  border-radius: 2vmin;
-=======
- border-radius: 1vmin;
->>>>>>> 762f0f5fa6df21f60a86af4462132c315788eaab
 }
 ::-webkit-scrollbar-corner{
   background: #cae68000;

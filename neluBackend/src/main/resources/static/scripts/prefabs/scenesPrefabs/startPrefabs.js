@@ -7,6 +7,7 @@ prefabFactory.AddPrototype("MenuFromStart", new Vec2(4,2), new Vec2(0.5,0.5), fa
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       var nombreUsuario= document.getElementById("userName").value;
+      Log(nombreUsuario);
       nombreUsuario=nombreUsuario.trim();
       if(nombreUsuario!=""){
         SendWebSocketMsg({
@@ -35,6 +36,10 @@ prefabFactory.AddPrototype("introduceName", new Vec2(), new Vec2(0.5,0.5), false
 prefabFactory.AddPrototype("nameInputField", new Vec2(), new Vec2(0.5,0.5), false, ()=>{
   return [
     new InputField("userName","","", new Vec2(0.4,0.1)),
+    new CustomBehaviour().SetOnCreate(()=>{
+      var inputField=document.getElementById("userName");
+      if (user) inputField.value=user.name;
+    }),
   ]
 });
 

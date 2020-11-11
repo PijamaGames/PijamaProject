@@ -214,6 +214,7 @@ function InitWebSocket(onOpenCallback) {
   socket.onclose = ()=>{
     Log("Websocket closed");
     if(user && user != null){
+      manager.LoadScene('focusLost');
       user.isHost = false;
       user.isClient = false;
     }

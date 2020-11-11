@@ -109,7 +109,7 @@ class Manager {
       InitWebSocket(()=>{
         that.graphics.LoadResources();
         that.AddInputs();
-
+        that.CheckFocusLost();
         if(EDITOR_MODE){
           mapEditor = new MapEditor();
         }
@@ -237,6 +237,23 @@ class Manager {
         return false;
       });
     }
+  }
+
+  CheckFocusLost(){
+    var hidden = "hidden";
+
+     if (hidden in document)
+       document.addEventListener("visibilitychange", this.OnChange);
+     else if ((hidden = "mozHidden") in document)
+       document.addEventListener("mozvisibilitychange", this.OnChange);
+     else if ((hidden = "webkitHidden") in document)
+       document.addEventListener("webkitvisibilitychange", this.OnChange);
+     else if ((hidden = "msHidden") in document)
+       document.addEventListener("msvisibilitychange", this.OnChange);
+  }
+
+  OnChange(){
+    if(socket!=null) socket.close();
   }
 
   ExitFullScreen(callback = function(){}) {

@@ -238,7 +238,6 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 			outMsg.put("controlPoint", user.getControlPoint());
 			outMsg.put("points", user.getPoints());
 		}
-
 		return outMsg;
 	}
 

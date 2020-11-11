@@ -35,7 +35,34 @@ var shaderURLs = [ //name, url
 
 var soundsURLs=[
   ['sound','resources/sound.mp3'],
-  ['sound2','resources/sound2.mp3']
+  ['sound2','resources/sound2.mp3'],
+  ["beesSound",'resources/sound/Abejas.mp3'],
+  ["hummingbirdSound",'resources/sound/Colibri_volar.mp3'],
+  ["comboSound",'resources/sound/Combo_Nelu.mp3'],
+  ["healSound",'resources/sound/Curar.mp3'],
+  ["dashSound",'resources/sound/Dash.mp3'],
+  ["dialogSound",'resources/sound/Dialogo.mp3'],
+  ["hitsSound",'resources/sound/Efecto_golpes.mp3'],
+  ["fireSound",'resources/sound/Fuego.mp3'],
+  ["fireSkillSound",'resources/sound/Habilidad_Fuego.mp3'],
+  ["throwMissileSound",'resources/sound/Lanzar_Proyectil.mp3'],
+  ["monkeyDamageSound",'resources/sound/Monkey_damage.mp3'],
+  ["screamingMonkeySound",'resources/sound/Mono_chillando.mp3'],
+  ["moveObjectSound",'resources/sound/Mover_Objeto.mp3'],
+  ["riverSound",'resources/sound/Rio_corriente.mp3'],
+  ["breakObjectSound1",'resources/sound/Romper_Objeto_1.mp3'],
+  ["breakObjectSound2",'resources/sound/Romper_Objeto_2.mp3'],
+  ["breakObjectSound3",'resources/sound/Romper_Objeto_3.mp3'],
+  ["poweupFireSound",'resources/sound/Song_Powerup_Fuego.mp3'],
+  ["UISound1",'resources/sound/UI_1.mp3'],
+  ["UISound2",'resources/sound/UI_2.mp3'],
+  /*["beesSound",'resources/sound/Abejas.mp3'],
+  ["beesSound",'resources/sound/Abejas.mp3'],
+  ["beesSound",'resources/sound/Abejas.mp3'],
+  ["beesSound",'resources/sound/Abejas.mp3'],
+  ["beesSound",'resources/sound/Abejas.mp3'],
+  ["beesSound",'resources/sound/Abejas.mp3'],
+  ["beesSound",'resources/sound/Abejas.mp3'],*/
 ];
 
 var resources;
