@@ -112,9 +112,13 @@ prefabFactory.AddPrototype("LanguageText", new Vec2(4,2), new Vec2(0.5,0.5), fal
       let tint=obj.gameobj.renderer.realTint;
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
+
       manager.SetEnglish(!manager.english);
       if(manager.easy) ChangeLanguage("Dificulty","Easy","Fácil");
       else ChangeLanguage("Dificulty","Hard","Difícil");
+      ChangeQualityText(manager.graphics.currentConfig);
+      ChangeVolumeText();
+
     }),
     new TextBox("Language", "Español","Spanish", new Vec2(0.3,0.1), true),
   ]
@@ -138,6 +142,7 @@ prefabFactory.AddPrototype("OptionsTitle", new Vec2(17,2), new Vec2(0.5,0.5), fa
     new TextBox("TitleTextOptions", "Configuración","Options", new Vec2(0.3,0.1), true),
   ]
 });
+
 function ChangeDificulty(){
   let text=document.getElementById("Dificulty");
   manager.easy=!manager.easy;
