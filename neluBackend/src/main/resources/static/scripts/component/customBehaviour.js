@@ -8,7 +8,7 @@ class CustomBehaviour extends Component{
     if(this.onDestroy) this.onDestroy(this.gameobj);
   }
 
-  SetActive(active){
+  OnSetActive(active){
     if(active){
       if(this.onEnable) this.onEnable(this.gameobj);
     } else {

@@ -52,6 +52,15 @@ prefabFactory.AddPrototype("FireFlower", new Vec2(1,1), new Vec2(0,0), false, ()
     new FlowerController(10).SetOnPickUp((obj)=>{
       obj.flowerController.player.playerController.ActivateFirePower();
     }),
+    new LightSource(8.0, 1.5, 0.8),
+    new CustomBehaviour().SetOnUpdate((obj)=>{
+      let target = obj.flowerController.used ? 0.0 : 8.0;
+      let l = obj.lightSource;
+      let lerp = 4.0 * manager.delta;
+      l.ratio = l.ratio * (1.0-lerp) + target * lerp;
+      const turbulence = 0.05;
+      l.ratio += Math.random()*turbulence*target;
+    }),
     new NetworkEntity(),
   ]
 });

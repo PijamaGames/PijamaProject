@@ -53,7 +53,7 @@ class PlayerController extends Component {
     this.firePowerMaxTime = 20;
     this.firePowerTime = 0.0;
     this.fire = null;
-    this.fireDisplacement = 2.0;
+    this.fireDisplacement = 1.2;
     this.fireImpulse = 5.0;
   }
 
@@ -392,7 +392,8 @@ class PlayerController extends Component {
     this.fire.renderer.SetDirection(this.gameobj.renderer.dir);
     this.fire.renderer.tile.x = 0;
     this.fire.transform.SetWorldPosition(Vec2.Add(this.gameobj.transform.GetWorldFloor(), Vec2.Norm(this.gameobj.renderer.dir).Scale(this.fireDisplacement)));
-    let force = Vec2.Scale(this.gameobj.renderer.dir, this.fireImpulse);
+    let force = Vec2.Norm(this.gameobj.renderer.dir).Scale(this.fireImpulse);
+    this.fire.rigidbody.velocity.Set(0,0);
     this.fire.rigidbody.force.Set(force.x, force.y);
   }
 

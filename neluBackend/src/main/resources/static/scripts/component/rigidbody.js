@@ -11,6 +11,14 @@ class Rigidbody extends Component{
     manager.scene.rigidbodies.add(this);
   }
 
+  OnSetActive(active){
+    if(active){
+      manager.scene.rigidbodies.add(this);
+    } else {
+      this.gameobj.scene.rigidbodies.delete(this);
+    }
+  }
+
   SetScene(scene){
     this.gameobj.scene.rigidbodies.delete(this);
     scene.rigidbodies.add(this);

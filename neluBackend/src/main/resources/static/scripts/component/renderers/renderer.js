@@ -27,7 +27,7 @@ class Renderer extends Component{
     }
   }
 
-  SetActive(active){
+  OnSetActive(active){
     if(!active){
       Renderer.hoverSet.delete(this);
       if(this.button){

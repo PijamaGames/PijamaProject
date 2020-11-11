@@ -6,20 +6,26 @@ class LightSource extends Component{
   }
 
   Destroy(){
-    this.gameobj.lights.delete(this);
+    //this.gameobj.lights.delete(this);
     lighting.lightSources.delete(this);
   }
 
-  Update(){
-
+  OnSetActive(active){
+    Log("SETTING LIGHT ACTIVE");
+    if(!active){
+      lighting.lightSources.delete(this);
+    } else {
+      lighting.lightSources.add(this);
+    }
   }
 
   SetGameobj(gameobj){
     this.gameobj = gameobj;
-    if(!this.gameobj.lights)
-      this.gameobj.lights = new Set();
+    this.gameobj.lightSource = this;
+    /*if(!this.gameobj.lights)
+      this.gameobj.lights = new Set();*/
 
-    this.gameobj.lights.add(this);
+    //this.gameobj.lights.add(this);
     lighting.lightSources.add(this);
   }
 

@@ -17,13 +17,50 @@ prefabFactory.AddPrototype("BoxColliderScalable", new Vec2(1, 1), new Vec2(0,0),
   ]
 });
 
-prefabFactory.AddPrototype("Box", new Vec2(2, 2), new Vec2(0,0), false, ()=>{
+prefabFactory.AddPrototype("DryPlant", new Vec2(1,1), new Vec2(0,0), false, ()=>{
+  return [
+    new Renderer(new Vec2(5,2), new Vec2(1,1), true),
+    new ColliderGroup([new BoxCollider(new Vec2(0,0), 1.0, 1.0, false)]),
+    new Burnable().SetOnEndBurn((obj)=>obj.colliderGroup.firstCollider.isTrigger = true),
+  ]
+});
+
+prefabFactory.AddPrototype("Rock", new Vec2(1,1), new Vec2(0,0), true, ()=>{
+  return [
+    new ColliderGroup([new CircleCollider(new Vec2(0,0), 0.5, false)]),
+    new Rigidbody(0.5),
+    new Renderer(new Vec2(5,0), new Vec2(1,1), false),
+  ]
+});
+
+prefabFactory.AddPrototype("RockHole", new Vec2(1,1), new Vec2(0,0), true, ()=>{
+  return [
+    new Renderer(new Vec2(6,0), new Vec2(1,1), false, 1.0 ,['color', 'depth', 'mask']),
+    new ColliderGroup([new BoxCollider(new Vec2(0,0), 1.0, 1.0, false), new BoxCollider(new Vec2(0,0), 1.0, 1.0, true, (obj, self)=>{
+      if(self.filled) return;
+      if(obj.type == "Rock"){
+        obj.Destroy();
+        self.renderer.tile.x = 7;
+        self.colliderGroup.firstCollider.isTrigger = true;
+      }
+    })]),
+    new CustomBehaviour().SetOnCreate((obj)=>obj.filled = false)
+  ]
+});
+
+prefabFactory.AddPrototype("RockHoleFilled", new Vec2(1,1), new Vec2(0,0), true, ()=>{
+  return [
+    new Renderer(new Vec2(7,0), new Vec2(1,1), false, 1.0 ,['color', 'depth', 'mask']),
+  ]
+});
+
+/*prefabFactory.AddPrototype("Box", new Vec2(2, 2), new Vec2(0,0), false, ()=>{
   return [
     new Rigidbody(0.9, false),
     new Renderer(new Vec2(), new Vec2(2,2), true),
     new ColliderGroup([new BoxCollider(new Vec2(0.0,-0.65), 2.0, 0.5)]),
   ]
-});
+});*/
 
 prefabFactory.AddPrototype("Grass", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
@@ -55,24 +92,6 @@ prefabFactory.AddPrototype("NenupharBig", new Vec2(1,1), new Vec2(0,0), true, ()
   ]
 });
 
-prefabFactory.AddPrototype("Rock", new Vec2(1,1), new Vec2(0,0), true, ()=>{
-  return [
-    new Renderer(new Vec2(5,0), new Vec2(1,1), false),
-  ]
-});
-
-prefabFactory.AddPrototype("RockHole", new Vec2(1,1), new Vec2(0,0), true, ()=>{
-  return [
-    new Renderer(new Vec2(6,0), new Vec2(1,1), false, 1.0 ,['color', 'depth', 'mask']),
-  ]
-});
-
-prefabFactory.AddPrototype("RockHoleFilled", new Vec2(1,1), new Vec2(0,0), true, ()=>{
-  return [
-    new Renderer(new Vec2(7,0), new Vec2(1,1), false, 1.0 ,['color', 'depth', 'mask']),
-  ]
-});
-
 prefabFactory.AddPrototype("BindWeed", new Vec2(1,2), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(8,0), new Vec2(1,2), false),
@@ -94,12 +113,6 @@ prefabFactory.AddPrototype("Tent", new Vec2(3,3), new Vec2(0,0), true, ()=>{
 prefabFactory.AddPrototype("LogHorizontal", new Vec2(2,1), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(3,2), new Vec2(2,1), true),
-  ]
-});
-
-prefabFactory.AddPrototype("DryPlant", new Vec2(1,1), new Vec2(0,0), true, ()=>{
-  return [
-    new Renderer(new Vec2(5,2), new Vec2(1,1), true),
   ]
 });
 
