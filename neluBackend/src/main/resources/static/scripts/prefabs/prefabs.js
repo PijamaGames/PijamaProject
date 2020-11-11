@@ -160,13 +160,13 @@ prefabFactory.AddPrototype("CampTop1", new Vec2(1,1), new Vec2(0,0), true, ()=>{
 
 prefabFactory.AddPrototype("CampTop2", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
-    new Renderer(new Vec2(5,5), new Vec2(1,1), true),
+    new Renderer(new Vec2(5,5), new Vec2(1,1), false),
   ]
 });
 
 prefabFactory.AddPrototype("CampTop3", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
-    new Renderer(new Vec2(6,5), new Vec2(1,1), true),
+    new Renderer(new Vec2(6,5), new Vec2(1,1), false),
   ]
 });
 

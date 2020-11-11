@@ -23,7 +23,7 @@ class Physics {
   }
 
   Update() {
-    if(DEBUG){
+    if(DEBUG_PHYSICS){
       this.timer += manager.delta;
       var init = Date.now();
       this.fpsCount += 1;
@@ -48,7 +48,7 @@ class Physics {
     for (var i = 0; i < this.steps; i++) {
       this.PerformStep();
     }
-    if(DEBUG){
+    if(DEBUG_PHYSICS){
       this.timeCount += (Date.now()-init);
     }
 
@@ -92,7 +92,9 @@ class Physics {
       }
     }
 
-    Log("StaticNum: "+ groups.length + " | RbNum: " + groupsWithRb.length + " | StaticIter: " + resolveColNotRb + " | RbIter: " + resolveColWithRb);
+    if(DEBUG_PHYSICS){
+      Log("StaticNum: "+ groups.length + " | RbNum: " + groupsWithRb.length + " | StaticIter: " + resolveColNotRb + " | RbIter: " + resolveColWithRb);
+    }
 
     for (var rb of manager.scene.rigidbodies) {
       rb.UpdatePhysics();

@@ -47,7 +47,7 @@ class Rigidbody extends Component{
       if(index >= 0){
         this.gameobj.scene.colliderGroupsWithRb.splice(index,1);
       }
-      if(DEBUG){
+      if(DEBUG_PHYSICS){
         let program = manager.graphics.programs.get('collider');
         for(var i = 0; i < this.gameobj.colliderGroup.colliders.length; i++){
           program.renderers.delete(this.gameobj.colliderGroup.colliders[i]);
@@ -62,7 +62,7 @@ class Rigidbody extends Component{
       if(index < 0){
         scene.colliderGroupsWithRb.push(this.gameobj.colliderGroup);
       }
-      if(DEBUG){
+      if(DEBUG_PHYSICS){
         let program = manager.graphics.programs.get('collider');
         for(var i = 0; i < this.gameobj.colliderGroup.colliders.length; i++){
           program.renderers.add(this.gameobj.colliderGroup.colliders[i]);

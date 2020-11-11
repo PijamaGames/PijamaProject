@@ -44,7 +44,7 @@ class ColliderGroup extends Component{
       if(index < 0){
         scene.colliderGroups.push(this);
       }
-      if(DEBUG){
+      if(DEBUG_PHYSICS){
         let program = manager.graphics.programs.get('collider');
         for(var i = 0; i < this.colliders.length; i++){
           program.renderers.add(this.colliders[i]);
@@ -59,7 +59,7 @@ class ColliderGroup extends Component{
       if(index >= 0){
         this.gameobj.scene.colliderGroups.splice(index,1);
       }
-      if(DEBUG){
+      if(DEBUG_PHYSICS){
         let program = manager.graphics.programs.get('collider');
         for(var i = 0; i < this.colliders.length; i++){
           program.renderers.delete(this.colliders[i]);
