@@ -377,7 +377,7 @@ class Graphics {
   }
 
   CreateParallaxLayers(){
-    this.parallax.AddLayer(new Vec2(0.0,0.0), -5, new Vec2(1.5,1.5), 'parallax1');
+    this.parallax.AddLayer(new Vec2(0.0,0.0), -5, new Vec2(1.0,1.0), 'parallax1');
   }
 
   CreateFrameBuffers() {
