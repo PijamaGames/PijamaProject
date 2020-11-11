@@ -16,7 +16,7 @@ prefabFactory.AddPrototype("SingleGameFromMenu", new Vec2(8,2), new Vec2(0.5,0.5
       manager.LoadScene('singleGame');
       input.HideVirtualInputs(false);
     }),
-    new TextBox(null, "Aventura","Adventure", new Vec2(0.3,0.1), false),
+    new TextBox(null, "Aventura","Adventure", new Vec2(0.3,0.07), false),
   ]
 });
 
@@ -31,7 +31,7 @@ prefabFactory.AddPrototype("OptionsFromMenu", new Vec2(8,2), new Vec2(0.5,0.5), 
       manager.LoadScene('optionMenu');
       manager.lastScene="mainMenu";
     }),
-    new TextBox(null, "Configuración","Options", new Vec2(0.3,0.1), true),
+    new TextBox(null, "Configuración","Options", new Vec2(0.3,0.1), false),
   ]
 });
 

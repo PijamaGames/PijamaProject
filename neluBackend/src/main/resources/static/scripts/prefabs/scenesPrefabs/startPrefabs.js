@@ -22,7 +22,7 @@ prefabFactory.AddPrototype("MenuFromStart", new Vec2(4,2), new Vec2(0.5,0.5), fa
 
 prefabFactory.AddPrototype("introduceName", new Vec2(), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new TextBox(null, "Introduce tu nombre","Introduce youre name", new Vec2(0.4,0.1), true),
+    new TextBox("introduceNameText", "Introduce tu nombre","Introduce youre name", new Vec2(0.4,0.1), true),
   ]
 });
 

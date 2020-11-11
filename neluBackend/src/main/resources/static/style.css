@@ -3,6 +3,27 @@ body{
   margin: 0;
   padding: 0;
 }
+
+/* width */
+::-webkit-scrollbar {
+ width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+ background: #cae68000;
+ border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+ background: #546528;
+ border-radius: 10px;
+}
+::-webkit-scrollbar-corner{
+  background: #cae68000;
+}
+
 p{
   padding-left: 2vmin;
   padding-right: 2vmin;
@@ -16,6 +37,8 @@ div{
   margin-left: 2vmin;
   margin-right: 2vmin;
   border:2vmin;
+  color:#546528;
+
 }
 input{
   display: block;
@@ -24,11 +47,28 @@ input{
   font-family: "Pixel Play";
   font-size: 4vmin;
   text-align: left;
-  padding-left: 2vmin;
-  padding-right: 2vmin;
-  margin-left: 2vmin;
-  margin-right: 2vmin;
-  border:2vmin;
+  padding-left: 2.5vmin;
+  padding-right: 2.5vmin;
+  padding-top: 0.5vmin;
+  padding-bottom: 0.5vmin;
+  margin-left: 3.5vmin;
+  margin-right: 2.5vmin;
+  outline: none;
+  border-radius:3vmin;
+  background-color: #cae680;
+  color:#546528;
+  border: 1vmin;
+  border-style: solid;
+  border-color: #cae680;
+  box-sizing: border-box;
+}
+
+input:focus{
+  border: 1vmin;
+  border-style: solid;
+  border-color: #80bf00;
+  outline: none;
+  border-radius:3vmin;
 }
 
 .game_input{
@@ -36,19 +76,19 @@ input{
   position: absolute;
   font-family: "Pixel Play";
   font-size: 5vmin;
-  margin:0;
-  padding-left: 2vmin;
+  /*margin:0;*/
+  /*padding-left: 2vmin;
   padding-right: 2vmin;
-  margin-left: 2vmin;
-  margin-right: 2vmin;
+  margin-left: 2.5vmin;
+  margin-right: 2.5vmin;*/
   left:0;
   top:0;
-  border:0;
 }
 
 .game_text{
   z-index: 1000;
   position: absolute;
+  color: #546528;
   font-family: "Pixel Play";
   font-size: 5vmin;
   margin:0;
@@ -77,6 +117,13 @@ input{
   -ms-user-select: none;
   user-select: none;
   overflow-y: scroll;
+}
+
+#introduceNameText{
+  color:#cae680;
+}
+#wrongName{
+  color:#cae680;
 }
 
 #UI{
