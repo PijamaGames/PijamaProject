@@ -1,11 +1,6 @@
 var physics;
 class Physics {
   constructor() {
-    /*if(input.isDesktop){
-      this.steps = 20;
-    } else {
-      this.steps = 1;
-    }*/
     this.steps = 1;
     this.stepPCT = 1.0 / this.steps;
     this.rawRepusltion = 45.0;

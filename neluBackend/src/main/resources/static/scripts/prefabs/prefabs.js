@@ -8,11 +8,7 @@ prefabFactory.AddPrototype("BoxColliderScalable", new Vec2(1, 1), new Vec2(0,0),
       obj.colliderGroup.colliders[0].scale.Set(obj.transform.scale.x, obj.transform.scale.y);
       obj.colliderGroup.colliders[0].width = obj.transform.scale.x;
       obj.colliderGroup.colliders[0].height = obj.transform.scale.y;
-      if(EDITOR_MODE){
-        obj.renderer.tile.x = 5;
-      } else {
-        obj.renderer.tile.x = 6;
-      }
+      obj.renderer.tile.x = EDITOR_MODE ? 5 : 6;
     }),
   ]
 });

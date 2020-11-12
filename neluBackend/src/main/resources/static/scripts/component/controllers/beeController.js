@@ -2,6 +2,7 @@ class BeeController extends Component{
   constructor(){
     super();
     //this.target = null;
+    this.type = "beeController";
     this.speed = 2.0;
     this.randomNess = 7.0;
     this.player = null;
