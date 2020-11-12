@@ -2,7 +2,7 @@
 const DEBUG = true;
 var DEBUG_VISUAL = true;
 const EDITOR_MODE = true;
-const DEBUG_PHYSICS = true;
+const DEBUG_PHYSICS = false;
 
 var timesCalled = 0.0;
 var timesComputed = 0.0;

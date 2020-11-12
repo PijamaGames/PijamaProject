@@ -17,9 +17,24 @@ prefabFactory.AddPrototype("MonkeySpawner", new Vec2(1,1), new Vec2(0.5,0.5), fa
   return [
     new Renderer(new Vec2(6, 13), new Vec2(1,1), false),
     new Spawner("MonkeyEnemy", 10),
-    /*new CustomBehaviour().SetOnUpdate((obj)=>{
-      obj.renderer.tile.x = EDITOR_MODE ? 5 : 6;
-    }),*/
+    new CustomBehaviour().SetOnUpdate((obj)=>{
+      obj.renderer.tile.x = DEBUG_VISUAL ? 6 : 5;
+    }),
+  ]
+});
+
+prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), false, ()=>{
+  return [
+    new Renderer(new Vec2(6, 13), new Vec2(1,1), false),
+    new BattleController(),
+    new ColliderGroup([new CircleCollider(new Vec2(), 3.0, true, (obj, self)=>{
+      if(obj.playerController){
+        self.battleController.Start();
+      }
+    })]),
+    new CustomBehaviour().SetOnUpdate((obj)=>{
+      obj.renderer.tile.x = DEBUG_VISUAL ? 6 : 5;
+    }),
   ]
 });
 

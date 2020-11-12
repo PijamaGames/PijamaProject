@@ -1,4 +1,7 @@
 class Spawner extends Component{
+
+  //static refs = new Map();
+
   constructor(prefab, count){
     super();
     this.type = "spawner";
@@ -7,7 +10,16 @@ class Spawner extends Component{
     this.distToSpawn = 5.0;
     this.count = count;
     this.onEndSpawn = function(){};
+    this.spawnEvent = new EventDispatcher();
+    this.endSpawnEvent = new EventDispatcher();
+    this.ended = false;
+    this.started = false;
   }
+
+  /*get key(){
+    let wp = this.gameobj.transform.GetWorldPos();
+    return ""+wp.x+" "+wp.y;
+  }*/
 
   SetOnEndSpawn(func){
     this.onEndSpawn = func;
@@ -15,6 +27,8 @@ class Spawner extends Component{
   }
 
   Update(){
+    if(this.ended) return;
+    if(!this.started) return;
     if(this.time >= this.coolDown){
       if(this.InDistance()){
         this.Spawn();
@@ -31,12 +45,16 @@ class Spawner extends Component{
   }
 
   EndSpawn(){
+    this.endSpawnEvent.Dispatch();
     this.onEndSpawn(this.gameobj);
-    this.gameobj.Destroy();
+    //Spawner.refs.delete(this.key, this);
+    this.ended = true;
+    //this.gameobj.Destroy();
   }
 
   Spawn(){
     Log("spawn");
+    this.spawnEvent.Dispatch();
     prefabFactory.CreateObj("MonkeyEnemy", this.gameobj.transform.GetWorldCenter());
     this.time = 0.0;
     this.count-=1;
@@ -49,5 +67,6 @@ class Spawner extends Component{
   SetGameobj(gameobj){
     this.gameobj = gameobj;
     this.gameobj.spawner = this;
+    //Spawner.refs.add(this.key, this);
   }
 }

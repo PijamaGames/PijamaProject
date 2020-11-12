@@ -11,7 +11,7 @@ prefabFactory.AddPrototype("LifeFlower", new Vec2(1,1), new Vec2(0,0), false, ()
     new Interactive().SetOnInteract((obj)=>{
       obj.flowerController.PickUp();
     }),
-    new FlowerController(10).SetOnPickUp((obj)=>{
+    new FlowerController(10, true).SetOnPickUp((obj)=>{
       obj.flowerController.player.playerController.GainLife(20);
     }),
     new NetworkEntity(),

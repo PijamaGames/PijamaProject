@@ -141,7 +141,6 @@ class Manager {
   }
 
   SetInMenu(bool){
-    bool=false;
     this.inMenu=bool;
     if(bool) this.menuSound.PlayAll();
     else this.menuSound.PauseAll();

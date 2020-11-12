@@ -1,4 +1,5 @@
 var BC_Gallery = `
+BattleManager 0 -3 0
 MonkeySpawner -5 0 0
 MonkeyEnemy -3 0 0
 BeekeeperEnemy -3 3 0
