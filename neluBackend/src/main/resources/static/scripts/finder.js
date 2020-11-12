@@ -6,9 +6,11 @@ class Finder {
 
   FindObjectsWithBytecode(bytecode = ""){
     let objs = [];
-    var lines = this.bytecode.match(/[^\r\n]+/g);
+    var lines = bytecode.match(/[^\r\n]+/g);
+    Log(lines);
+    if(lines == null) return objs;
     let obj;
-    for(line of lines){
+    for(let line of lines){
       obj = this.FindObjectWithBytecode(line);
       if(obj != null){
         objs.push(obj);
@@ -18,13 +20,52 @@ class Finder {
   }
 
   FindObjectWithBytecode(bytecode = ""){
+    if(bytecode == "") return null;
     let found = null;
-    for (var [key, obj] of manager.scene.gameobjs) {
-      if (obj.bytecode.Equals(bytecode)) {
+    Log(bytecode);
+    bytecode = bytecode.split(" ");
+    let elems = [];
+    for(let e of bytecode){
+      if(e != ""){
+        elems.push(e);
+      }
+    }
+    Log(elems);
+    let type = elems[0];
+    let pos = new Vec2(elems[1], elems[2]);
+    let height = elems[3];
+    let scale = new Vec2(elems[4], elems[5]);
+    let objs = this.FindObjectsByType(type);
+    for(let obj of objs){
+      if(obj.transform.GetWorldPos().Equals(pos)){
+        if(obj.transform.height == height){
+          if(elems[4]){
+            if(obj.transform.scale.Equals(scale)){
+              Log("found");
+              found = obj;
+              return found;
+            }
+          } else {
+            Log("found");
+            found = obj;
+            return found;
+          }
+        }
+      }
+    }
+    Log("not found");
+    //let str = elems.join(" ");
+    //Log("str: " + str);
+    /*for (var [key, obj] of manager.scene.gameobjs) {
+
+      //Log(("obj: "+obj.bytecode + " byt: " + bytecode + " comp: " + obj.bytecode == bytecode));
+      //Log(obj.bytecode + " " + str);
+      if (obj.bytecode === str) {
+        Log("found");
         found = obj;
         return found;
       }
-    }
+    }*/
     return found;
   }
 

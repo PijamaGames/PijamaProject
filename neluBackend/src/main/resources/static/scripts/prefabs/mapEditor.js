@@ -42,7 +42,7 @@ class MapEditor {
         Log(input.mouseGridPosition.toString("MOUSE GRID POS: "));
       }
       if(input.GetKeyDown("KeyR")){
-        Log(that.selected.transform.GetWorldPos().toString("OVERLAP OBJ POS: "));
+        Log("OBJ: " + that.selected.bytecode);
       }
       that.CheckOverlappedObjs();
     }).SetExitFunc(()=>{

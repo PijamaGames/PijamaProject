@@ -6,7 +6,7 @@ class Battle{
   }
 
   ProcessRefs(){
-    let spawner;
+    /*let spawner;
     for(let ref of this.spawnerRefs){
       spawner = Spawner.refs.get(ref);
       if(spawner){
@@ -14,7 +14,7 @@ class Battle{
       } else {
         Log("SPAWNER NOT FOUND: " + ref);
       }
-    }
+    }*/
     this.spawners = finder.FindObjectsWithBytecode(this.spawnerRefs);
     this.startEnableObjs = finder.FindObjectsWithBytecode(this.startEnable);
     for(let obj of this.startEnableObjs){
@@ -26,17 +26,23 @@ class Battle{
       obj.SetActive(false);
     }
     this.endDisableObjs = finder.FindObjectsWithBytecode(this.endDisable);
+    Log("REFS:");
+    Log(this.spawners);
+    Log(this.startEnableObjs);
+    Log(this.startDisableObjs);
+    Log(this.endEnableObjs);
+    Log(this.endDisableObjs);
   }
 
   MustStart(){
     let player = manager.scene.players.values().next().value;
-    return Vec2.Distance(this.pos, player.GetWorldCenter()) < this.dist;
+    return Vec2.Distance(this.pos, player.transform.GetWorldCenter()) < this.dist;
   }
 
   MustEnd(){
-    allSpawnersEnded = true;
+    let allSpawnersEnded = true;
     for(var spawner of this.spawners){
-      if(!spawner.ended){
+      if(!spawner.spawner.ended){
         allSpawnersEnded = false;
       }
     }
@@ -44,6 +50,7 @@ class Battle{
   }
 
   Start(){
+    Log("battle " + this.id + "started");
     for(let spawner of this.spawners){
       spawner.spawner.started = true;
     }
@@ -57,6 +64,7 @@ class Battle{
   }
 
   End(){
+    Log("battle " + this.id + "ended");
     for(let obj of this.endEnableObjs){
       obj.SetActive(true);
     }

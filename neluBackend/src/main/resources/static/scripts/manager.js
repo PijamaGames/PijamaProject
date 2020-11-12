@@ -202,6 +202,9 @@ class Manager {
       this.scene.WakeUp();
       Log("WakeUp: "+this.scene.name);
     } else {
+      if(sceneName != "gallery"){
+        prefabFactory.ClearCounts();
+      }
       this.scene.LoadByteCode();
       this.scene.GenerateCam();
       Log("Loaded: "+this.scene.name);

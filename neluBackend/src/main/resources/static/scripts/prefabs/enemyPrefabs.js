@@ -16,7 +16,7 @@ prefabFactory.AddPrototype("MonkeyEnemy", new Vec2(1, 1), new Vec2(0.5, 0.5), fa
 prefabFactory.AddPrototype("MonkeySpawner", new Vec2(1,1), new Vec2(0.5,0.5), false, ()=>{
   return [
     new Renderer(new Vec2(6, 13), new Vec2(1,1), false),
-    new Spawner("MonkeyEnemy", 10),
+    new Spawner("MonkeyEnemy", 1),
     new CustomBehaviour().SetOnUpdate((obj)=>{
       obj.renderer.tile.x = DEBUG_VISUAL ? 6 : 5;
     }),
@@ -26,7 +26,16 @@ prefabFactory.AddPrototype("MonkeySpawner", new Vec2(1,1), new Vec2(0.5,0.5), fa
 prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), false, ()=>{
   return [
     new Renderer(new Vec2(6, 13), new Vec2(1,1), false),
-    new BattleController(),
+    new BattleController([
+      new Battle("1", new Vec2(57, -10), 4.0, `
+      MonkeySpawner 57.526912689208984 -8.514242172241211 0 1 1
+      MonkeySpawner 54.53714370727539 -8.560779571533203 0 1 1
+      `,`
+      BindWeed 49 -9 0 1 2
+      `,``,``,`
+      BindWeed 67 -9 0 1 2
+      `)
+    ]),
     new ColliderGroup([new CircleCollider(new Vec2(), 3.0, true, (obj, self)=>{
       if(obj.playerController){
         self.battleController.Start();
