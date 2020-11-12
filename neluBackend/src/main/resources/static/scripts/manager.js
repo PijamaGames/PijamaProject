@@ -18,6 +18,10 @@ class Manager {
     this.choosenEnviroment=1;
     this.privateRoom=false;
     this.changeLanguageEvent=new EventDispatcher();
+    this.changeInMenuEvent=new EventDispatcher();
+    this.menuSound;
+    this.singleGameMusic;
+    this.inMenu;
   }
 
   SetEnglish(english){
@@ -109,6 +113,7 @@ class Manager {
       InitWebSocket(()=>{
         that.graphics.LoadResources();
         that.AddInputs();
+        that.AddMenuSound();
         that.CheckFocusLost();
         if(EDITOR_MODE){
           mapEditor = new MapEditor();
@@ -126,6 +131,20 @@ class Manager {
         that.GameLoop(that);
       });
     });
+  }
+
+  AddMenuSound(){
+    this.menuSound=new AudioSource(["menuSound"]);
+    this.singleGameMusic=new AudioSource(["levelSound"]);
+    this.changeInMenuEvent.AddListener(this,()=>this.SetInMenu());
+    //this.menuSound.PlayAll();
+  }
+
+  SetInMenu(bool){
+    bool=false;
+    this.inMenu=bool;
+    if(bool) this.menuSound.PlayAll();
+    else this.menuSound.PauseAll();
   }
 
   AddInputs() {

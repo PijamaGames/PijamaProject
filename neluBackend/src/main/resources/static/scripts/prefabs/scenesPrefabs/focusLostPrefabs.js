@@ -14,8 +14,12 @@ prefabFactory.AddPrototype("StartFromFocusLost", new Vec2(8,2), new Vec2(0.5,0.5
         obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       InitWebSocket();
+      manager.SetInMenu(false);
       manager.LoadScene("start");
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox(null, "Reconectar","Reconnect", new Vec2(0.3,0.07), true),
+    new AudioSource(["UISound1"]),
   ]
 });

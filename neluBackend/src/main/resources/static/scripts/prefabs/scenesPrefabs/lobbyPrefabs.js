@@ -7,12 +7,15 @@ prefabFactory.AddPrototype("Create", new Vec2(4,2), new Vec2(0.5,0.0), false, ()
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       manager.LoadScene("chooseEnviroment");
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox(null, "Crear","Create", new Vec2(0.3,0.07), true),
     new CustomBehaviour().SetOnCreate(()=>{
       user.isHost=false;
       user.isClient=false;
-    })
+    }),
+    new AudioSource(["UISound1"]),
   ]
 });
 
@@ -36,8 +39,11 @@ prefabFactory.AddPrototype("SelectRoom", new Vec2(1.5,1.5), new Vec2(0.5,0.5), f
         event:"JOIN_ROOM",
         hostName: room,
       })
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox(null, "Ir","Go", new Vec2(0.3,0.07), true),
+    new AudioSource(["UISound1"]),
   ]
 });
 
@@ -50,8 +56,11 @@ prefabFactory.AddPrototype("MenuFromLobby", new Vec2(4,2), new Vec2(0.5,0.0), fa
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       manager.LoadScene("mainMenu");
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox(null, "Menú","Menu", new Vec2(0.3,0.07), true),
+    new AudioSource(["UISound1"]),
   ]
 });
 
@@ -93,7 +102,7 @@ prefabFactory.AddPrototype("RoomsButtonBox", new Vec2(7,7), new Vec2(0.5,0.5), f
       let numButtons = roomButtons.length
       roomButtons.splice(0, numButtons);
       roomButtons = [];
-    })
+    }),
   ]
 });
 prefabFactory.AddPrototype("RoomsText", new Vec2(7,2), new Vec2(0.5,0.5), false, ()=>{

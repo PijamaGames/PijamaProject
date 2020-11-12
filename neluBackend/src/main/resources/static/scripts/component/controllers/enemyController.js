@@ -44,16 +44,23 @@ class EnemyController extends Component {
     this.damageTime = 0.0;
     this.damageForce = 10.0;
 
-    this.recharge=true;
+    this.isMonkey=true;
 
     this.aproachFPS=14;
 
+  }
 
+  PlayMonkeySound(sound){
+    this.gameobj.audioSource.Play(sound);
+  }
+  PauseMonkeySound(sound){
+    this.gameobj.audioSource.Pause(sound);
   }
 
   TakeDamage(damage, forced = false){
     if(user && user.isClient) return;
     if(this.canTakeDamage || forced){
+      if (this.isMonkey) this.PlayMonkeySound("monkeyDamageSound");
       this.life -= damage;
       this.canTakeDamage = false;
       this.gameobj.renderer.SetTint(1.0,0.0,0.0);
@@ -152,11 +159,15 @@ class EnemyController extends Component {
     }).SetStartFunc(()=>{
       that.CheckShortestWay();
       that.gameobj.renderer.SetAnimation('enemyRun');
+      if (that.isMonkey) that.PlayMonkeySound("screamingMonkeySound");
 
     }).SetUpdateFunc(()=>{
       that.CheckShortestWay();
       that.EnemyMove();
 
+    }).SetExitFunc(()=>{
+      Log("MONOOOOOOOOOOOO")
+      if (that.isMonkey) that.PauseMonkeySound("screamingMonkeySound");
     }).SetEdges([
       new Edge('patrol').AddCondition(()=> that.FindClosestPlayer(that.detectionRange) == null || that.target.playerController.life<=0),
       new Edge('attackAD').AddCondition(()=>that.FindClosestPlayer(that.attackADRange) != null && this.target.playerController.life>0 && (!manager.easy || (user && user.isHost))),
@@ -177,6 +188,7 @@ class EnemyController extends Component {
       let target=that.FindClosestPlayer(that.attackADRange);
       this.SetAnimDir(target);
       if(this.contTimeAD>=this.resetADAttackTime && target != null){
+        this.PlayMonkeySound("throwMissileSound");
         this.PoolPop(target);
         this.contTimeAD=0;
       }
@@ -185,7 +197,7 @@ class EnemyController extends Component {
       new Edge('approachPlayer').AddCondition(()=>(that.FindClosestPlayer(that.attackADRange) == null || that.target.playerController.life<=0) && (that.endAttackADAnim || that.FindClosestPlayer(that.detectionRange) != null)),
       new Edge('attackCAC').AddCondition(()=>that.FindClosestPlayer(that.attackCACRange) != null && this.target.playerController.life>0 && that.endAttackADAnim),
       new Edge('dead').AddCondition(()=> that.life<=0 && that.endAttackADAnim),
-      new Edge('recharge').AddCondition(()=> that.contTimeAD<that.resetADAttackTime && that.endAttackADAnim && that.recharge),
+      new Edge('recharge').AddCondition(()=> that.contTimeAD<that.resetADAttackTime && that.endAttackADAnim && that.isMonkey),
     ]);
 
     let attackCACNode = new Node('attackCAC').SetOnCreate(()=>{

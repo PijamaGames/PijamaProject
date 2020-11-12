@@ -10,7 +10,10 @@ prefabFactory.AddPrototype("PauseFromMultiGame", new Vec2(1.5,1.5), new Vec2(0.0
       ShowButtons(false, ["MultiLifeText","Chronometer","PauseFromMultiGame"]);
       manager.lastGame="multiGame";
       if(!input.isDesktop) input.HideVirtualInputs(true);
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
+    new AudioSource(["UISound1"]),
   ]
 });
 
@@ -44,7 +47,9 @@ prefabFactory.AddPrototype("Chronometer", new Vec2(3,1.5), new Vec2(0.0,1.0), fa
           //user.SetUserWinner(true);
         }
       }
-    })
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
+    }),
   ]
 });
 prefabFactory.AddPrototype("ChangeEnemy", new Vec2(8,2), new Vec2(0.5,0.0), false, ()=>{
@@ -69,11 +74,14 @@ prefabFactory.AddPrototype("ChangeEnemy", new Vec2(8,2), new Vec2(0.5,0.0), fals
       }
       obj.gameobj.scene.masterController.enemyType=enemyType;
 
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox("changeEnemyBtn", "Enemigo: mono","Enemy: monkey", new Vec2(0.5,0.07), true),
     new CustomBehaviour().SetOnCreate((obj)=>{
       if(user.isHost) obj.SetActive(false);
     }),
+    new AudioSource(["UISound1"]),
   ]
 });
 
@@ -84,6 +92,7 @@ prefabFactory.AddPrototype("PauseTitleMultiGame", new Vec2(14,2), new Vec2(0.5,0
     new ImageRenderer(new Vec2(0,21), new Vec2(14,2)),
     new TextBox(null, "Pausa","Pause", new Vec2(0.3,0.07), true),
     new CustomBehaviour().SetOnCreate((obj)=> obj.SetActive(false)),
+    new AudioSource(["UISound1"]),
   ]
 });
 
@@ -98,9 +107,12 @@ prefabFactory.AddPrototype("GameFromPauseMultiGame", new Vec2(8,2), new Vec2(0.5
       ShowButtons(false, ["PauseTitleMultiGame", "GameFromPauseMultiGame","MenuFromPauseMultiGame"]);
       ShowButtons(true, ["MultiLifeText","Chronometer","PauseFromMultiGame","MultiTextBox"]);
       if(!input.isDesktop) input.HideVirtualInputs(false);
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox(null, "Volver al juego","Return to game", new Vec2(0.3,0.07), true),
     new CustomBehaviour().SetOnCreate((obj)=> obj.SetActive(false)),
+    new AudioSource(["UISound1"]),
   ]
 });
 
@@ -119,9 +131,12 @@ prefabFactory.AddPrototype("MenuFromPauseMultiGame", new Vec2(8,2), new Vec2(0.5
         event:backendEvents.LEAVE_ROOM,
       })
 
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox(null, "Menú","Menu", new Vec2(0.3,0.07), true),
     new CustomBehaviour().SetOnCreate((obj)=> obj.SetActive(false)),
+    new AudioSource(["UISound1"]),
   ]
 });
 

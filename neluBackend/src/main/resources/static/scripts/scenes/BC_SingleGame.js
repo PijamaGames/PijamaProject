@@ -2,6 +2,7 @@ var BC_SingleGame = `
 PauseFromSingleGame 0.1 -0.07 0
 SingleLifeText 0.5 -0.07 0
 DialogSystem 0 0 0
+SingleGameMusic 0 0 0
 Nelu 0 0 0
 Tree -3 6 0
 Tree 4 6 0

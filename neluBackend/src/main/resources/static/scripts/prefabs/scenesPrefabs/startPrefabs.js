@@ -16,8 +16,11 @@ prefabFactory.AddPrototype("MenuFromStart", new Vec2(4,2), new Vec2(0.5,0.5), fa
         });
       }
 
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox(null, "Entrar","Entry", new Vec2(0.3,0.07), true),
+    new AudioSource(["UISound1"]),
   ]
 });
 
@@ -42,6 +45,12 @@ prefabFactory.AddPrototype("nameInputField", new Vec2(), new Vec2(0.5,0.5), fals
     }),
   ]
 });
+
+/*prefabFactory.AddPrototype("MenuMusic", new Vec2(), new Vec2(0.5,0.5), false, ()=>{
+  return [
+    new AudioSource(["menuSound"]),
+  ]
+});*/
 
 prefabFactory.AddPrototype("wrongName", new Vec2(), new Vec2(0.5,0.5), false, ()=>{
   return [

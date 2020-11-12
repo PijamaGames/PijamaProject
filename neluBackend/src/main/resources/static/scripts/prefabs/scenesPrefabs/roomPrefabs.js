@@ -21,9 +21,12 @@ prefabFactory.AddPrototype("MultiGameFromRoom", new Vec2(4,2), new Vec2(0.5,0.0)
       SendWebSocketMsg({
         event:backendEvents.START_GAME
       });
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox(null, "Comenzar","Start", new Vec2(0.3,0.07), true),
-    new CustomBehaviour().SetOnCreate((obj)=>obj.SetActive(false))
+    new CustomBehaviour().SetOnCreate((obj)=>obj.SetActive(false)),
+    new AudioSource(["UISound1"]),
   ]
 });
 prefabFactory.AddPrototype("ChoosingFromRoom", new Vec2(4,2), new Vec2(0.5,0.0), false, ()=>{
@@ -43,7 +46,10 @@ prefabFactory.AddPrototype("ChoosingFromRoom", new Vec2(4,2), new Vec2(0.5,0.0),
       else
         manager.LoadScene("lobby");
 
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox(null, "Volver","Return", new Vec2(0.3,0.07), true),
+    new AudioSource(["UISound1"]),
   ]
 });

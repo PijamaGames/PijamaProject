@@ -383,6 +383,8 @@ class PlayerController extends Component {
       manager.LoadScene("connectionFailed");
       if(!input.isDesktop) input.HideVirtualInputs(true);
       var text=document.getElementById("ConnectionTitle");
+      manager.singleGameMusic.PauseAll();
+      manager.SetInMenu(true);
       text.innerHTML=manager.english? "Game over":"Fin del juego";
     }
   }

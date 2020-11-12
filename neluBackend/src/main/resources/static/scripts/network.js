@@ -261,6 +261,7 @@ function InitWebSocket(onOpenCallback) {
 
 function StartGame(msg){
   manager.LoadScene("multiGame");
+  manager.SetInMenu(false);
   gameStarted = true;
 
   if(user.isHost){
@@ -278,6 +279,7 @@ function EndGame(msg){
   //manager.LoadScene("connectionFailed");
   //var text=document.getElementById("ConnectionTitle");
   user.SetUserWinner(msg.hostWinner == user.isHost);
+  manager.SetInMenu(true);
 
 }
 
@@ -354,6 +356,7 @@ function Onclick(room,enviroment,light){
 }
 
 function ConnectionLost(msg) {
+  manager.SetInMenu(true);
   if(gameStarted || user.isClient){
     manager.LoadScene("connectionFailed");
     if(user.isHost && !input.isDesktop) input.HideVirtualInputs(true);
@@ -369,6 +372,8 @@ function Login(msg) {
   var inputField = document.getElementById("userName");
   if (msg.userAvaible && inputField.value != "") {
     new User(inputField.value, msg.points, msg.controlPoint);
+    manager.menuSound.LoopAll(true);
+    manager.SetInMenu(true);
     manager.LoadScene("mainMenu");
     Log("user avaible");
   } else if (inputField.value != "") {

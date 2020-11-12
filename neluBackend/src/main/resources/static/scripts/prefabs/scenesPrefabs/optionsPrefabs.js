@@ -12,8 +12,11 @@ prefabFactory.AddPrototype("MoreGraphics", new Vec2(2,2), new Vec2(0.5,0.5), fal
       }
       manager.graphics.SetSettingsByNumber(config);
       ChangeQualityText(config);
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox(null, "+","+", new Vec2(0.3,0.07), true),
+    new AudioSource(["UISound1"]),
   ]
 });
 
@@ -31,8 +34,11 @@ prefabFactory.AddPrototype("LessGraphics", new Vec2(2,2), new Vec2(0.5,0.5), fal
       }
       manager.graphics.SetSettingsByNumber(config);
       ChangeQualityText(config);
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox(null, "-","-", new Vec2(0.3,0.07), true),
+    new AudioSource(["UISound1"]),
   ]
 });
 prefabFactory.AddPrototype("GraphicsText", new Vec2(8,2), new Vec2(0.5,0.5), false, ()=>{
@@ -51,8 +57,11 @@ prefabFactory.AddPrototype("MenuFromOptions", new Vec2(4,2), new Vec2(0.5,0.0), 
     }).SetUpFunc(()=>{
       manager.LoadScene(manager.lastScene);
 
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox("ReturnButtonOptions", "Volver","Return", new Vec2(0.3,0.07), true),
+    new AudioSource(["UISound1"]),
   ]
 });
 prefabFactory.AddPrototype("MoreVolume", new Vec2(2,2), new Vec2(0.5,0.5), false, ()=>{
@@ -69,8 +78,11 @@ prefabFactory.AddPrototype("MoreVolume", new Vec2(2,2), new Vec2(0.5,0.5), false
         manager.musicVolume = 1.0;
       }
       ChangeVolumeText();
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox(null, "+","+", new Vec2(0.3,0.07), true),
+    new AudioSource(["UISound1"]),
   ]
 });
 
@@ -88,19 +100,17 @@ prefabFactory.AddPrototype("LessVolume", new Vec2(2,2), new Vec2(0.5,0.5), false
         manager.musicVolume=0;
       }
       ChangeVolumeText();
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox(null, "-","-", new Vec2(0.3,0.07), true),
+    new AudioSource(["UISound1"]),
   ]
 });
 prefabFactory.AddPrototype("VolumeText", new Vec2(8,2), new Vec2(0.5,0.5), false, ()=>{
   return [
     new ImageRenderer(new Vec2(7,4), new Vec2(8,2)),
     new TextBox("VolumeTextOptions", "Volumen: "+(manager.musicVolume*100)+"%","Volume: "+(manager.musicVolume*100)+"%", new Vec2(0.3,0.07), true),
-  ]
-});
-prefabFactory.AddPrototype("Sound", new Vec2(2,2), new Vec2(0.5,0.5), false, ()=>{
-  return [
-    new AudioSource(["sound","sound2"], "sound")
   ]
 });
 
@@ -119,8 +129,11 @@ prefabFactory.AddPrototype("LanguageText", new Vec2(4,2), new Vec2(0.5,0.5), fal
       ChangeQualityText(manager.graphics.currentConfig);
       ChangeVolumeText();
 
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox("Language", "Inglés","Spanish", new Vec2(0.3,0.07), true),
+    new AudioSource(["UISound1"]),
   ]
 });
 prefabFactory.AddPrototype("DificultyText", new Vec2(4,2), new Vec2(0.5,0.5), false, ()=>{
@@ -132,14 +145,18 @@ prefabFactory.AddPrototype("DificultyText", new Vec2(4,2), new Vec2(0.5,0.5), fa
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       ChangeDificulty();
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox("Dificulty", "Fácil","Easy", new Vec2(0.3,0.07), true),
+    new AudioSource(["UISound1"]),
   ]
 });
 prefabFactory.AddPrototype("OptionsTitle", new Vec2(14,2), new Vec2(0.5,0.5), false, ()=>{
   return [
     new ImageRenderer(new Vec2(0,21), new Vec2(14,2)),
     new TextBox("TitleTextOptions", "Configuración","Options", new Vec2(0.3,0.07), true),
+    new AudioSource(["UISound1"]),
   ]
 });
 

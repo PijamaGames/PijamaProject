@@ -14,9 +14,14 @@ prefabFactory.AddPrototype("GameFromPause", new Vec2(8,2), new Vec2(0.5,0.5), fa
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       manager.LoadScene("singleGame");
+      manager.SetInMenu(false);
       input.HideVirtualInputs(false);
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
+      manager.singleGameMusic.PlayAll();
     }),
     new TextBox(null, "Volver al juego","Return to game", new Vec2(0.3,0.07), true),
+    new AudioSource(["UISound1"]),
   ]
 });
 
@@ -30,8 +35,11 @@ prefabFactory.AddPrototype("OptionsFromPause", new Vec2(8,2), new Vec2(0.5,0.5),
     }).SetUpFunc(()=>{
       manager.LoadScene('optionMenu');
       manager.lastScene="pause";
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox(null, "Configuración","Options", new Vec2(0.3,0.07), true),
+    new AudioSource(["UISound1"]),
   ]
 });
 
@@ -48,7 +56,10 @@ prefabFactory.AddPrototype("MenuFromPause", new Vec2(8,2), new Vec2(0.5,0.5), fa
         event:backendEvents.LEAVE_ROOM,
       })
 
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox(null, "Menú","Menu", new Vec2(0.3,0.07), true),
+    new AudioSource(["UISound1"]),
   ]
 });

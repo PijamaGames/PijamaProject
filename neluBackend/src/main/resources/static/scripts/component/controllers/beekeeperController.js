@@ -26,7 +26,7 @@ class BeekeeperController extends EnemyController {
 
     this.aproachFPS=14;
 
-    this.recharge=false;
+    this.isMonkey=false;
 
     this.life=25;
   }

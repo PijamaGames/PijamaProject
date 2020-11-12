@@ -16,8 +16,11 @@ prefabFactory.AddPrototype("GoToGallery", new Vec2(5.5,2), new Vec2(1.0,0.0), fa
       manager.LoadScene("gallery", true);
       obj.gameobj.SetScene(manager.scene);
       //obj.gameobj.SetActive(false);
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox(null, "Ver galería","Show gallery", new Vec2(0.3,0.07), true),
+    new AudioSource(["UISound1"]),
   ]
 });
 
@@ -38,8 +41,11 @@ prefabFactory.AddPrototype("CopyBytecode", new Vec2(6.5,2), new Vec2(0.0,0.0), f
 
 
       //obj.gameobj.SetActive(false);
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox(null, "Copiar escena","Copy scene", new Vec2(0.3,0.07), true),
+    new AudioSource(["UISound1"]),
   ]
 });
 
@@ -51,7 +57,10 @@ prefabFactory.AddPrototype("GameFromGallery", new Vec2(5.5,2), new Vec2(0.5,0.0)
       obj.gameobj.transform.scale.Scale(1.0/1.1);
     }).SetUpFunc((obj)=>{
       manager.LoadScene(mapEditor.currentScene);
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox(null, "Volver","Return", new Vec2(0.3,0.07), true),
+    new AudioSource(["UISound1"]),
   ]
 });

@@ -13,9 +13,14 @@ prefabFactory.AddPrototype("PauseFromSingleGame", new Vec2(1.5,1.5), new Vec2(0.
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       manager.LoadScene("pause",true);
+      manager.SetInMenu(true);
       manager.lastGame="singleGame";
       input.HideVirtualInputs(true);
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
+      manager.singleGameMusic.PauseAll();
     }),
+    new AudioSource(["UISound1"]),
   ]
 });
 

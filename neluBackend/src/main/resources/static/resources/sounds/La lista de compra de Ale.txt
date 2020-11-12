@@ -156,9 +156,16 @@ así que cuando acabe vuelves a poner la canción que corresponda en ese momento
 SONIDOS EN DUDA/ NO INCLUIDOS
 -Muerte Nelu
 -Daño Nelu
--Colocar enemigo
+-Colocar enemigo (algo rollo ping)
 -Andar
 -Humano daño /muerte
+-Humano ataca CAC
+-HUmano lanza insecticida
+-Manzana choca con humano
+-Musica para el multigame
 
  SONIDOS QUE A ALE NO LE GUSTEN / NECESITAN UNA REFORMA (*añade los sonidos aquí y te los edito/ hago durante las clases de hoy)
-
+-Efecto golpes (primer golpe)
+-Musica del menu debe ser loopeable
+-Necesito que me ajustes todos los sonidos para que tengan el mismo volumen, porq hacerlo por codigo es una locura
+-mono_chillando quitar la parte de gritos agudos

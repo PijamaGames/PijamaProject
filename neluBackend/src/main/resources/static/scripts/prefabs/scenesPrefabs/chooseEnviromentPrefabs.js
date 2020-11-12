@@ -19,7 +19,10 @@ prefabFactory.AddPrototype("RoomFromChoosing", new Vec2(4,2), new Vec2(0.5,0.0),
         lighting: lighting.currentLight,
         private: manager.privateRoom,
       });
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
+    new AudioSource(["UISound1"]),
     new TextBox(null, "Empezar","Start", new Vec2(0.3,0.07), true),
   ]
 });
@@ -33,7 +36,10 @@ prefabFactory.AddPrototype("LobbyFromChoosing", new Vec2(4,2), new Vec2(0.5,0.0)
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       manager.LoadScene("lobby");
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
+    new AudioSource(["UISound1"]),
     new TextBox(null, "Volver","Return", new Vec2(0.3,0.07), true),
   ]
 });
@@ -47,7 +53,10 @@ prefabFactory.AddPrototype("Option1", new Vec2(6,4), new Vec2(0.5,0.0), false, (
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       manager.choosenEnviroment=1;
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
+    new AudioSource(["UISound1"]),
   ]
 });
 prefabFactory.AddPrototype("Option2", new Vec2(6,4), new Vec2(0.5,0.0), false, ()=>{
@@ -59,7 +68,10 @@ prefabFactory.AddPrototype("Option2", new Vec2(6,4), new Vec2(0.5,0.0), false, (
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       manager.choosenEnviroment=2;
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
+    new AudioSource(["UISound1"]),
   ]
 });
 prefabFactory.AddPrototype("Option3", new Vec2(6,4), new Vec2(0.5,0.0), false, ()=>{
@@ -71,7 +83,10 @@ prefabFactory.AddPrototype("Option3", new Vec2(6,4), new Vec2(0.5,0.0), false, (
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       manager.choosenEnviroment=3;
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
+    new AudioSource(["UISound1"]),
   ]
 });
 prefabFactory.AddPrototype("Option4", new Vec2(6,4), new Vec2(0.5,0.0), false, ()=>{
@@ -83,7 +98,10 @@ prefabFactory.AddPrototype("Option4", new Vec2(6,4), new Vec2(0.5,0.0), false, (
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       manager.choosenEnviroment=4;
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
+    new AudioSource(["UISound1"]),
   ]
 });
 prefabFactory.AddPrototype("Lighting", new Vec2(2,2), new Vec2(0.5,0.5), false, ()=>{
@@ -96,7 +114,10 @@ prefabFactory.AddPrototype("Lighting", new Vec2(2,2), new Vec2(0.5,0.5), false, 
     }).SetUpFunc((obj)=>{
       lighting.SwitchLight(obj.gameobj.renderer);
       lighting.SetCurrentLight(lighting.currentLight);
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
+    new AudioSource(["UISound1"]),
   ]
 });
 prefabFactory.AddPrototype("PrivacityOption", new Vec2(4,2), new Vec2(0.5,0.0), false, ()=>{
@@ -117,10 +138,13 @@ prefabFactory.AddPrototype("PrivacityOption", new Vec2(4,2), new Vec2(0.5,0.0), 
         else obj.gameobj.textBox.SetText("Privada");
         manager.privateRoom=true;
       }
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox(null, "Pública","Public", new Vec2(0.3,0.07), true),
     new CustomBehaviour().SetOnDestroy((obj)=>{
       manager.privateRoom = false;
-    })
+    }),
+    new AudioSource(["UISound1"]),
   ]
 });
