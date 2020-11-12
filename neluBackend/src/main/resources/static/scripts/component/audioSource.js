@@ -3,13 +3,19 @@ class AudioSource extends Component{
     super();
     this.type="AudioSource";
     this.sounds= new Map();
+    this.ids=new Map();
     for (name of names){
       var soundurl=new Howl({ src:[resources.sounds.get(name)]});
       this.sounds.set(name, soundurl);
     }
+
     if(soundOnAwake!=null)
       this.Play(soundOnAwake);
   }
+
+  Destroy(){
+  }
+
   Update(){
     this.ChangeVolAll(manager.musicVolume);
   }
@@ -17,16 +23,19 @@ class AudioSource extends Component{
   SetGameobj(gameobj){
     this.gameobj = gameobj;
     this.gameobj.audioSource = this;
+
   }
 
   Play(name){
-    this.sounds.get(name).play();
+    let id=this.sounds.get(name).play();
+    this.ids.set(name,id);
   }
 
   PlayAll(){
+    let id;
     for (var [key,value] of this.sounds){
-
-      this.sounds.get(key).play();
+      id=this.sounds.get(key).play();
+      this.ids.set(name,id);
     }
   }
 
@@ -52,12 +61,15 @@ class AudioSource extends Component{
   }
 
   ChangeVol(name,num){
-    this.sounds.get(name).volume(num);
+    let id=this.ids.get(name);
+    this.sounds.get(name).volume(num, id);
   }
 
   ChangeVolAll(num){
+    let id;
     for (var [key,value] of this.sounds){
-      this.sounds.get(key).volume(num);
+      id=this.ids.get(name);
+      this.sounds.get(key).volume(num,id);
     }
   }
 

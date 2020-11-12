@@ -9,7 +9,7 @@ class Manager {
     this.delta = 0.0;
     this.ms = null;
     this.targetFPS = 60;
-    this.musicVolume=1.0;
+    this.maxVolume=1.0;
     this.english=false;
     this.easy=true;
     finder = new Finder();
@@ -22,6 +22,18 @@ class Manager {
     this.menuSound;
     this.singleGameMusic;
     this.inMenu;
+  }
+
+  VolumeFromDistance(pos1, pos2){
+    let sub=Sub(pos1,pos2);
+    let d=sub.Mod();
+    let vol=this.maxVolume/d;
+
+  }
+
+  SetVolume(vol){
+    this.maxVolume=vol;
+    Howler.volume(vol);
   }
 
   SetEnglish(english){
