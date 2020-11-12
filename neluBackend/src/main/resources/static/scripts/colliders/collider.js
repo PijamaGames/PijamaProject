@@ -128,8 +128,8 @@ class Collider {
       dir = (this == circle ? dir.Opposite() : dir).Scale(0.05);
       let rb = this.colliderGroup.gameobj.rigidbody;
       if(rb){
-        let spd = rb.velocity.Opposite().Scale(0.05);
-        const rbInfluence = 0.5;
+        let spd = rb.velocity.Opposite().Scale(0.2);
+        const rbInfluence = 0.6;
         dir = Vec2.Add(spd.Scale(rbInfluence), dir.Scale(1.0-rbInfluence));
       }
       return dir;

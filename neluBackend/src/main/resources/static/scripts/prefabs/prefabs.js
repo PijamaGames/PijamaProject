@@ -9,9 +9,9 @@ prefabFactory.AddPrototype("BoxColliderScalable", new Vec2(1, 1), new Vec2(0,0),
       obj.colliderGroup.colliders[0].width = obj.transform.scale.x;
       obj.colliderGroup.colliders[0].height = obj.transform.scale.y;
       if(EDITOR_MODE){
-        obj.renderer.tile.x = 6;
-      } else {
         obj.renderer.tile.x = 5;
+      } else {
+        obj.renderer.tile.x = 6;
       }
     }),
   ]
@@ -63,8 +63,34 @@ prefabFactory.AddPrototype("RockHole", new Vec2(1,1), new Vec2(0,0), true, ()=>{
 
 prefabFactory.AddPrototype("WoodStick", new Vec2(1,2), new Vec2(0,0), true, ()=>{
   return [
+    new ColliderGroup([new BoxCollider(new Vec2(0.0,-0.5), 1.0,1.0, false), new BoxCollider(new Vec2(0.0,-0.5), 1.0,1.0, true, (obj, self)=>{
+      if(obj.type == "neluParticles"){
+        self.destructible.Destruct();
+      }
+    })]),
     new Renderer(new Vec2(6,3), new Vec2(1,2), true),
-    new AudioSource(["breakObjectSound3"])
+    new AudioSource(["breakObjectSound3"]),
+    new Destructible().SetOnDestruct((obj)=>{
+      let b = Barrier.GetClosestBarrier(obj.transform.GetWorldCenter());
+      if(b != null){
+        b.Release();
+      }
+      Log("destruct");
+    }),
+  ]
+});
+
+prefabFactory.AddPrototype("BigLogPack", new Vec2(1,5), new Vec2(0,0), true, ()=>{
+  return [
+    new Renderer(new Vec2(8,6), new Vec2(1,5), true),
+    new Barrier(2),
+    new ColliderGroup([new BoxCollider(new Vec2(0.5,-0.5), 2.0, 3.5, false)]),
+  ]
+});
+
+prefabFactory.AddPrototype("BigLogPackLiana", new Vec2(1,5), new Vec2(0,0), true, ()=>{
+  return [
+    new Renderer(new Vec2(8,11), new Vec2(1,5), true),
   ]
 });
 
@@ -611,18 +637,6 @@ prefabFactory.AddPrototype("Dirt27", new Vec2(1,1), new Vec2(0,0), true, ()=>{
 prefabFactory.AddPrototype("Dirt28", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(2,15), new Vec2(1,1), false),
-  ]
-});
-
-prefabFactory.AddPrototype("BigLogPack", new Vec2(1,5), new Vec2(0,0), true, ()=>{
-  return [
-    new Renderer(new Vec2(8,6), new Vec2(1,5), true),
-  ]
-});
-
-prefabFactory.AddPrototype("BigLogPackLiana", new Vec2(1,5), new Vec2(0,0), true, ()=>{
-  return [
-    new Renderer(new Vec2(8,11), new Vec2(1,5), true),
   ]
 });
 

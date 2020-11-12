@@ -10,6 +10,14 @@ class ColliderGroup extends Component{
     return this.colliders[0];
   }
 
+  get isTrigger(){
+    let t = false;
+    for(let c of this.colliders){
+      if(c.isTrigger) t = true;
+    }
+    return t;
+  }
+
   SetScene(scene){
     /*let index = this.gameobj.scene.colliderGroups.indexOf(this);
     if(index >= 0){
@@ -44,6 +52,9 @@ class ColliderGroup extends Component{
       if(index < 0){
         scene.colliderGroups.push(this);
       }
+      if(this.isTrigger){
+        scene.triggers.add(this);
+      }
       if(DEBUG_PHYSICS){
         let program = manager.graphics.programs.get('collider');
         for(var i = 0; i < this.colliders.length; i++){
@@ -58,6 +69,9 @@ class ColliderGroup extends Component{
       let index = this.gameobj.scene.colliderGroups.indexOf(this);
       if(index >= 0){
         this.gameobj.scene.colliderGroups.splice(index,1);
+      }
+      if(this.isTrigger){
+        this.gameobj.scene.triggers.delete(this);
       }
       if(DEBUG_PHYSICS){
         let program = manager.graphics.programs.get('collider');

@@ -1,5 +1,5 @@
 class Interactive extends Component {
-  constructor(radius, displacement = new Vec2(1,1)){
+  constructor(radius = 3.0, displacement = new Vec2(1,1)){
     super();
     this.type = "interactive";
     this.radius = radius;

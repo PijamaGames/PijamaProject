@@ -130,6 +130,16 @@ class Vec2 {
     return new Vec2(v.x*s, v.y*s);
   }
 
+  Pow(p){
+    this.x = Math.pow(this.x, p);
+    this.y = Math.pow(this.y, p);
+    return this;
+  }
+
+  static Pow(v, p){
+    return new Vec2(v.x, v.y).Pow(p);
+  }
+
   static Dot(v1,v2){
     return v1.x*v2.x+v1.y*v2.y;
   }

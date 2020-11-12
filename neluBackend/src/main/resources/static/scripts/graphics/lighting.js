@@ -90,7 +90,7 @@ class Lighting{
     )
   }
 
-  SetBloom(threshold = 4.0, blur = 0.01, strength = 0.5){
+  SetBloom(threshold = 3.1, blur = 0.015, strength = 0.7){
     this.bloomStrength = strength;
     this.bloomThreshold = threshold;
     this.bloomBlur = blur;
@@ -136,7 +136,7 @@ class Lighting{
     this.SetAmbientLight(0.2,0.2,0.4);
     this.SetLightBlurChannels(0.25,3.0);
     this.SetClouds(new Vec2(-0.5,-1), 0.1, 0.85,0.1);
-    this.SetFog(0.8,0.8,1.0,0.85,0.95, 0.0, 0.08);
+    this.SetFog(0.8,0.8,1.0,0.85,0.95, 0.0, 0.05);
     this.SetBloom();
     Log("Morning lighting")
   }
@@ -171,7 +171,7 @@ class Lighting{
     this.SetLightBlurChannels(0.2,3.0);
     this.SetClouds(new Vec2(0.05,-1), 0.15, -0.2, 0.3);
     this.SetFog(0.9,0.8,0.8,0.9,1.0, 0.0, 0.05);
-    this.SetBloom(3.1,0.007,0.45);
+    this.SetBloom(3.0,0.01,0.7);
     Log("Afternoon lighting");
   }
 
@@ -187,8 +187,8 @@ class Lighting{
     this.SetAmbientLight(0.3,0.3,0.4);
     this.SetLightBlurChannels(0.3,3.0);
     this.SetClouds(new Vec2(-0.2,1), 0.05, 1.0, 0.2);
-    this.SetFog(0.5,0.5,0.8,0.9,0.95, 0.0, 0.35);
-    this.SetBloom(3.0,0.007,0.6);
+    this.SetFog(0.5,0.5,0.8,0.9,0.95, 0.1, 0.32);
+    this.SetBloom(2.5,0.01,0.8);
     Log("Night lighting");
   }
 

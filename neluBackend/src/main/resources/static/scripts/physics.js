@@ -1,25 +1,28 @@
 var physics;
 class Physics {
   constructor() {
-    if(input.isDesktop){
-      this.steps = 1;
+    /*if(input.isDesktop){
+      this.steps = 20;
     } else {
       this.steps = 1;
-    }
-
+    }*/
+    this.steps = 1;
     this.stepPCT = 1.0 / this.steps;
-    this.repulsion = 45.0/this.steps;
+    this.rawRepusltion = 45.0;
+    this.repulsion = this.rawRepusltion/this.steps;
     this.timer = 0.0;
     this.fpsCount = 0;
     this.timeCount = 0.0;
     this.rigidbodyMaxDist = 8.0;
     this.staticMaxDist = 20.0;
+
   }
 
   SetSteps(steps){
     this.steps = steps;
     this.stepPCT = 1.0 / this.steps;
-    this.repulsion = 45.0/this.steps;
+    this.repulsion = this.rawRepusltion/this.steps;
+    Log("PHYSICS STEPS: "+this.steps);
   }
 
   Update() {
@@ -32,7 +35,9 @@ class Physics {
         this.fpsCount = 0;
         this.timeCount = 0;
         this.timer = 0;
+        this.logStep = true;
       }
+
     }
 
     if(user && user.isClient) return;
@@ -50,6 +55,7 @@ class Physics {
     }
     if(DEBUG_PHYSICS){
       this.timeCount += (Date.now()-init);
+      this.logStep = false;
     }
 
   }
@@ -59,15 +65,21 @@ class Physics {
     let cg2;
     let groups = manager.scene.colliderGroups;
     let groupsWithRb = manager.scene.colliderGroupsWithRb;
+    let triggers = manager.scene.triggers;
 
     if(DEBUG_VISUAL){
-      for(var cg of groups){
-        for(var c of cg.colliders){
+      for(let cg of groups){
+        for(let c of cg.colliders){
           c.SetTint(0.0,1.0,0.0,c.tint[3]);
         }
       }
-      for(var cg of groupsWithRb){
-        for(var c of cg.colliders){
+      for(let cg of groupsWithRb){
+        for(let c of cg.colliders){
+          c.SetTint(0.0,1.0,0.0,c.tint[3]);
+        }
+      }
+      for(let cg of triggers){
+        for(let c of cg.colliders){
           c.SetTint(0.0,1.0,0.0,c.tint[3]);
         }
       }
@@ -78,6 +90,11 @@ class Physics {
       for(var j = 0; j < groupsWithRb.length; j++){
         cg2 = groupsWithRb[j];
         this.ResolveColliderGroups(cg1,cg2);
+        resolveColNotRb+=1;
+      }
+      for(let t of triggers){
+        cg2 = t;
+        this.ResolveColliderGroups(cg1, cg2);
         resolveColNotRb+=1;
       }
     }
@@ -92,8 +109,8 @@ class Physics {
       }
     }
 
-    if(DEBUG_PHYSICS){
-      Log("StaticNum: "+ groups.length + " | RbNum: " + groupsWithRb.length + " | StaticIter: " + resolveColNotRb + " | RbIter: " + resolveColWithRb);
+    if(DEBUG_PHYSICS && this.logStep){
+      Log("StaticNum: "+ groups.length + " | RbNum: " + groupsWithRb.length + " | Triggers: " + triggers.size + " | StaticIter: " + resolveColNotRb + " | RbIter: " + resolveColWithRb);
     }
 
     for (var rb of manager.scene.rigidbodies) {

@@ -7,6 +7,7 @@ class Scene{
     this.buttons = new Set();
     this.colliderGroupsSet = new Set();
     this.colliderGroups= [];
+    this.triggers = new Set();
     this.colliderGroupsWithRb = [];
     this.rigidbodies = new Set();
     this.players = new Set();
