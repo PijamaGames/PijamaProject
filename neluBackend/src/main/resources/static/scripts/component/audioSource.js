@@ -1,6 +1,7 @@
 class AudioSource extends Component{
   constructor(names=[], soundOnAwake=null){
     super();
+    this.type="AudioSource";
     this.sounds= new Map();
     for (name of names){
       var soundurl=new Howl({ src:[resources.sounds.get(name)]});

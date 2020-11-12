@@ -1,9 +1,11 @@
 class Destructible extends Component{
-  constructor(life = 1){
+  constructor(life = 1, damageSound, destructSound){
     super();
     this.onDestruct = function(){};
     this.onTakeDamage = function(){};
     this.life = life;
+    this.damageSound=damageSound;
+    this.destructSound=destructSound;
   }
 
   SetOnDestruct(func){
@@ -21,11 +23,13 @@ class Destructible extends Component{
     if(this.life <= 0){
       this.Destruct();
     } else {
+      this.gameobj.audioSource.Play(this.damageSound);
       this.onTakeDamage(this.gameobj);
     }
   }
 
   Destruct(){
+    this.gameobj.audioSource.Play(this.destructSound);
     this.onDestruct(this.gameobj);
     this.gameobj.Destroy();
   }
