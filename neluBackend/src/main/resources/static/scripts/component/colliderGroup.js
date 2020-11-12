@@ -24,6 +24,9 @@ class ColliderGroup extends Component{
       this.gameobj.scene.colliderGroups.splice(index,1);
       scene.colliderGroups.push(this);
     }*/
+    for(var c of this.colliders){
+      c.ExitAllTriggers();
+    }
     this.RemoveColliderGroup();
     this.AddColliderGroup(scene);
 
@@ -90,6 +93,9 @@ class ColliderGroup extends Component{
       }
     } else {
       //this.RemoveColliderGroup();
+      for(var c of this.colliders){
+        c.ExitAllTriggers();
+      }
       if(!this.gameobj.rigidbody){
         this.gameobj.scene.colliderGroupsSet.delete(this);
       }

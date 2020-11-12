@@ -53,7 +53,22 @@ class Collider {
         this.objsInsideTrigger.delete(c2Key);
       }
     }
+  }
 
+  CheckNonActiveTriggers(){
+    for(var [key, c] of this.objsInsideTrigger){
+      if(!c.active){
+        this.OnTriggerExit(c.gameobj, this.gameobj);
+        this.objsInsideTrigger.delete(key);
+      }
+    }
+  }
+
+  ExitAllTriggers(){
+    for(var [key, c] of this.objsInsideTrigger){
+      this.OnTriggerExit(c.gameobj, this.gameobj);
+      this.objsInsideTrigger.delete(key);
+    }
   }
 
   CheckCollision(c2){

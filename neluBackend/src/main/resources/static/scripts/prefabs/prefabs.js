@@ -63,14 +63,17 @@ prefabFactory.AddPrototype("RockHole", new Vec2(1,1), new Vec2(0,0), true, ()=>{
 
 prefabFactory.AddPrototype("WoodStick", new Vec2(1,2), new Vec2(0,0), true, ()=>{
   return [
-    new ColliderGroup([new BoxCollider(new Vec2(0.0,-0.5), 1.0,1.0, false), new BoxCollider(new Vec2(0.0,-0.5), 1.0,1.0, true, (obj, self)=>{
+    new ColliderGroup([new BoxCollider(new Vec2(-0.1,-0.5), 1.0,1.0, false), new BoxCollider(new Vec2(-0.1,-0.5), 1.0,1.0, true, (obj, self)=>{
       if(obj.type == "neluParticles"){
-        self.destructible.Destruct();
+        self.destructible.TakeDamage();
       }
     })]),
     new Renderer(new Vec2(6,3), new Vec2(1,2), true),
     new AudioSource(["breakObjectSound3"]),
-    new Destructible().SetOnDestruct((obj)=>{
+    new Destructible(3).SetOnTakeDamage((obj)=>{
+      //añadir sonido
+      Log("take damage");
+    }).SetOnDestruct((obj)=>{
       let b = Barrier.GetClosestBarrier(obj.transform.GetWorldCenter());
       if(b != null){
         b.Release();

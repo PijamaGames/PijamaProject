@@ -15,7 +15,6 @@ class Physics {
     this.timeCount = 0.0;
     this.rigidbodyMaxDist = 8.0;
     this.staticMaxDist = 20.0;
-
   }
 
   SetSteps(steps){
@@ -94,6 +93,7 @@ class Physics {
       }
       for(let t of triggers){
         cg2 = t;
+        if(cg1 == cg2) continue;
         this.ResolveColliderGroups(cg1, cg2);
         resolveColNotRb+=1;
       }
@@ -106,6 +106,14 @@ class Physics {
         cg2 = groupsWithRb[j];
         this.ResolveColliderGroups(cg1,cg2);
         resolveColWithRb+=1;
+      }
+    }
+
+    for(var t of triggers){
+      for(let c of t.colliders){
+        if(c.isTrigger){
+          c.CheckNonActiveTriggers();
+        }
       }
     }
 
