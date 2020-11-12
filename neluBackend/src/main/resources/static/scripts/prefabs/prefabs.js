@@ -9,11 +9,22 @@ prefabFactory.AddPrototype("BoxColliderScalable", new Vec2(1, 1), new Vec2(0,0),
       obj.colliderGroup.colliders[0].width = obj.transform.scale.x;
       obj.colliderGroup.colliders[0].height = obj.transform.scale.y;
       if(EDITOR_MODE){
-        obj.renderer.tile.x = 5;
-      } else {
         obj.renderer.tile.x = 6;
+      } else {
+        obj.renderer.tile.x = 5;
       }
     }),
+  ]
+});
+
+prefabFactory.AddPrototype("RiverSoundPrefab", new Vec2(1,1), new Vec2(0,0), false, ()=>{
+  return [
+    new Renderer(new Vec2(6,13), new Vec2(1,1), true),
+    new AudioSource(["riverSound"]),
+    new CustomBehaviour().SetOnUpdate((obj)=>{
+      obj.renderer.tile.x=EDITOR_MODE? 7: 5;
+      obj.renderer.tile.y=EDITOR_MODE? 3: 13;
+    })
   ]
 });
 
@@ -22,6 +33,7 @@ prefabFactory.AddPrototype("DryPlant", new Vec2(1,1), new Vec2(0,0), false, ()=>
     new Renderer(new Vec2(5,2), new Vec2(1,1), true),
     new ColliderGroup([new BoxCollider(new Vec2(0,0), 1.0, 1.0, false)]),
     new Burnable().SetOnEndBurn((obj)=>obj.colliderGroup.firstCollider.isTrigger = true),
+    new AudioSource(["fireSound"]),
   ]
 });
 
@@ -30,6 +42,7 @@ prefabFactory.AddPrototype("Rock", new Vec2(1,1), new Vec2(0,0), true, ()=>{
     new ColliderGroup([new CircleCollider(new Vec2(0,0), 0.5, false)]),
     new Rigidbody(0.5),
     new Renderer(new Vec2(5,0), new Vec2(1,1), false),
+    new AudioSource(["moveObjectSound"]),
   ]
 });
 
@@ -51,6 +64,7 @@ prefabFactory.AddPrototype("RockHole", new Vec2(1,1), new Vec2(0,0), true, ()=>{
 prefabFactory.AddPrototype("WoodStick", new Vec2(1,2), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(6,3), new Vec2(1,2), true),
+    new AudioSource(["breakObjectSound3"])
   ]
 });
 
@@ -118,7 +132,10 @@ prefabFactory.AddPrototype("Tent", new Vec2(3,3), new Vec2(0,0), true, ()=>{
 
 prefabFactory.AddPrototype("LogHorizontal", new Vec2(2,1), new Vec2(0,0), true, ()=>{
   return [
+    new ColliderGroup([new BoxCollider(new Vec2(0,0), 2, 1 , false)]),
+    new Rigidbody(0.5),
     new Renderer(new Vec2(3,2), new Vec2(2,1), true),
+    new AudioSource(["moveObjectSound"]),
   ]
 });
 
@@ -137,18 +154,23 @@ prefabFactory.AddPrototype("Campfire", new Vec2(1,1), new Vec2(0,0), true, ()=>{
 prefabFactory.AddPrototype("LianaLeft", new Vec2(1,2), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(8,2), new Vec2(1,2), true),
+    new AudioSource(["moveObjectSound"]),
   ]
 });
 
 prefabFactory.AddPrototype("LianaRight", new Vec2(1,2), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(8,4), new Vec2(1,2), true),
+    new AudioSource(["breakObjectSound1"]),
   ]
 });
 
 prefabFactory.AddPrototype("LogVertical", new Vec2(1,2), new Vec2(0,0), true, ()=>{
   return [
+    new ColliderGroup([new CircleCollider(new Vec2(0,0), 1,2, false)]),
+    new Rigidbody(0.5),
     new Renderer(new Vec2(3,3), new Vec2(1,2), true),
+    new AudioSource(["breakObjectSound1"]),
   ]
 });
 

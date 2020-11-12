@@ -9,6 +9,7 @@ prefabFactory.AddPrototype("MonkeyEnemy", new Vec2(1, 1), new Vec2(0.5, 0.5), fa
       obj.enemyController.TakeDamage(10, true);
     }),
     new NetworkEntity(),
+    new AudioSource(["monkeyHouseSound", "screamingMonkeySound","monkeyDamageSound","throwMissileSound","fireSound"]),
   ]
 });
 
@@ -23,6 +24,7 @@ prefabFactory.AddPrototype("BeekeeperEnemy", new Vec2(2, 2), new Vec2(0.5, 0.5),
       obj.enemyController.TakeDamage(10, true);
     }),
     new NetworkEntity(),
+    new AudioSource(["fireSound"]),
   ]
 });
 

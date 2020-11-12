@@ -11,6 +11,7 @@ prefabFactory.AddPrototype("Nelu", new Vec2(2, 2), new Vec2(0.5, 0.5), false, ()
     new ShadowCaster(new Vec2(0,-0.75), 0.75),
     new PlayerController(),
     new NetworkEntity(),
+    new AudioSource(["comboSound","healSound","dashSound","poweupFireSound"]),
   ]
 });
 
@@ -25,6 +26,7 @@ prefabFactory.AddPrototype("Colibri", new Vec2(1,1), new Vec2(0.5,0.5), false, (
     new Rigidbody(0.2),
     new ColibriController(),
     new NetworkEntity(),
+    new AudioSource(["hummingbirdSound"]),
   ]
 });
 
@@ -35,5 +37,6 @@ prefabFactory.AddPrototype("Bee", new Vec2(1,1), new Vec2(0.5,0.5), false, ()=>{
     new Rigidbody(0.2),
     new BeeController(),
     new NetworkEntity(),
+    new AudioSource(["beesSound"]),
   ]
 });
