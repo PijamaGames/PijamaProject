@@ -55,6 +55,10 @@ class PlayerController extends Component {
     this.fire = null;
     this.fireDisplacement = 1.2;
     this.fireImpulse = 5.0;
+
+    this.allBeesDiedEvent=new EventDispatcher();
+    this.beeSourceSound;
+
   }
 
   SetScene(scene){
@@ -159,9 +163,15 @@ class PlayerController extends Component {
     if(Renderer.hoverSet && Renderer.hoverSet.size != 0) return;
     Log("THROW COLIBRI");
     this.hasColibri = false;
+    this.colibri.audioSource.PlayAll();
     this.colibri.SetActive(true);
     this.colibri.colibriController.SetLocalPosDir(input.GetRightAxis(this.gameobj));
     this.colibri.rigidbody.velocity.Set(this.gameobj.rigidbody.velocity.x, this.gameobj.rigidbody.velocity.y).Scale(2.5);
+  }
+
+  PauseSoundBees(){
+    this.beeSourceSound.audioSource.PauseAll();
+    Log("escuchando");
   }
 
   ThrowBees(){
@@ -170,6 +180,9 @@ class PlayerController extends Component {
     if(this.beesTarget != null){
       Log("THROW " + this.numBees +" BEES");
       let wp = this.gameobj.transform.GetWorldFloor();
+      this.beeSourceSound=this.beesPool[0];
+      this.beeSourceSound.audioSource.PlayAll();
+      this.allBeesDiedEvent.AddListener(this,()=>this.PauseSoundBees());
       for(var i = 0; i < this.numBees; i++){
         let bee = this.BeePoolPop();
         bee.transform.SetWorldPosition(wp);
@@ -250,6 +263,7 @@ class PlayerController extends Component {
       //
       //that.particles.transform.SetLocalPosition(that.particlePosition);
     }).SetStartFunc(()=>{
+      that.gameobj.audioSource.Play("comboSound");
       that.gameobj.renderer.SetAnimation('attack1');
       that.particles.renderer.SetAnimation('attack1');
       that.particles.SetActive(true);
@@ -283,6 +297,7 @@ class PlayerController extends Component {
       that.particles.renderer.AddAnimation('attack2', 'nelu_particles2', that.attack2Speed, false);
 
     }).SetStartFunc(()=>{
+      that.gameobj.audioSource.Play("comboSound");
       that.gameobj.renderer.SetAnimation('attack2');
       that.particles.renderer.SetAnimation('attack2');
       that.particles.SetActive(true);
@@ -307,6 +322,7 @@ class PlayerController extends Component {
       that.particles.renderer.AddAnimation('attack3', 'nelu_particles3', that.attack3Speed, false);
 
     }).SetStartFunc(()=>{
+      that.gameobj.audioSource.Play("comboSound");
       that.gameobj.renderer.SetAnimation('attack3');
       that.particles.renderer.SetAnimation('attack3');
       that.particles.SetActive(true);
@@ -349,6 +365,7 @@ class PlayerController extends Component {
 
       //that.gameobj.rigidbody.force.Add(dir.Scale(that.dashImpulse));
       that.gameobj.renderer.paused = true;
+      that.gameobj.audioSource.Play("dashSound");
       //this.dashMaxTime = 0.2;
       this.dashTime = 0.0;
     }).SetUpdateFunc(()=>{
@@ -418,6 +435,7 @@ class PlayerController extends Component {
   }
 
   GainLife(life){
+    this.gameobj.audioSource.Play("healSound");
     this.life += life;
     if(this.life > this.maxLife){
       this.life = this.maxLife;
@@ -427,6 +445,7 @@ class PlayerController extends Component {
   }
 
   ActivateFirePower(){
+    this.gameobj.audioSource.Play("poweupFireSound");
     this.firePower = true;
     this.firePowerTime = 0.0;
 
@@ -434,6 +453,7 @@ class PlayerController extends Component {
   }
 
   DeactivateFirePower(){
+    this.gameobj.audioSource.Stop("poweupFireSound");
     this.firePower = false;
     Log("deactivate fire power");
   }
@@ -492,8 +512,13 @@ class PlayerController extends Component {
   }
 
   BeePoolAdd(obj){
+
     obj.beeController.lifeTime = 0.0;
     this.beesPool.push(obj);
+    if(this.beesPool.length==this.maxBees) {
+      this.allBeesDiedEvent.Dispatch();
+      Log("DESPACHANDO")
+    }
     obj.SetActive(false);
   }
 }

@@ -163,9 +163,15 @@ SONIDOS EN DUDA/ NO INCLUIDOS
 -HUmano lanza insecticida
 -Manzana choca con humano
 -Musica para el multigame
+-Cuando coja una flor
 
  SONIDOS QUE A ALE NO LE GUSTEN / NECESITAN UNA REFORMA (*añade los sonidos aquí y te los edito/ hago durante las clases de hoy)
 -Efecto golpes (primer golpe)
 -Musica del menu debe ser loopeable
--Necesito que me ajustes todos los sonidos para que tengan el mismo volumen, porq hacerlo por codigo es una locura
--mono_chillando quitar la parte de gritos agudos
+-mono_chillando quitar la parte de gritos agudos y que sea loopeable
+-sonido del colibrí no me gusta, creo q es mejor algo mas agudo como que píe o algo asi
+-sonido combo de nelu que sea como mucho de 1s, corta uno de los sonidos q suenan
+-Sonido del dash q sea algo q parezca mas de velocidad, mas agudo, y corto, que el sonido comience en el segundo 0, no a mitad(esto para todos)
+(ES IMPORTANTE QUE AUNQUE MODIFIQUES ESTOS SONIDOS, NO CAMBIES SU NOMBRE)
+(ES IMPORTANTE QUE TE ASEGURES DE QUE TODOS LOS SONIDOS EMPIEZAN EN EL SSEGUNDO 0)
+(ES IMPORTANTE QUE TODOS TENGAN EL MISMO VOLUMEN, PORQ SI NO SE ESCUCHA MUCHO UNO Y NADA EL RESTO)

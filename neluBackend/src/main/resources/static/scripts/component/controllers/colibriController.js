@@ -46,6 +46,7 @@ class ColibriController extends Component {
     this.gameobj.SetActive(false);
     this.player.playerController.hasColibri = true;
     this.comingBack = false;
+    this.gameobj.audioSource.PauseAll();
     this.gameobj.rigidbody.force.Set(0,0);
     this.gameobj.rigidbody.velocity.Set(0,0);
     this.lifeTime = 0.0;

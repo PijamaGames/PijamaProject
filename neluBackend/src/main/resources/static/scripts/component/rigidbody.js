@@ -96,7 +96,7 @@ class Rigidbody extends Component{
     let pct = physics.stepPCT;
     this.velocity.Add(this.force);
     let audio=this.gameobj.audioSource;
-    if(this.levelObject && !audio.Playing("moveObjectSound") && (this.force.x>0 || this.force.y>0))
+    if(this.levelObject && !audio.Playing("moveObjectSound") && (this.force.x!=0 || this.force.y!=0))
     {  this.gameobj.audioSource.Play("moveObjectSound");
     Log("hola");
     }
