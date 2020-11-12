@@ -13,6 +13,16 @@ prefabFactory.AddPrototype("MonkeyEnemy", new Vec2(1, 1), new Vec2(0.5, 0.5), fa
   ]
 });
 
+prefabFactory.AddPrototype("MonkeySpawner", new Vec2(1,1), new Vec2(0.5,0.5), false, ()=>{
+  return [
+    new Renderer(new Vec2(6, 13), new Vec2(1,1), false),
+    new Spawner("MonkeyEnemy", 10),
+    /*new CustomBehaviour().SetOnUpdate((obj)=>{
+      obj.renderer.tile.x = EDITOR_MODE ? 5 : 6;
+    }),*/
+  ]
+});
+
 prefabFactory.AddPrototype("BeekeeperEnemy", new Vec2(2, 2), new Vec2(0.5, 0.5), false, ()=>{
   return [
     new ColliderGroup([new CircleCollider(new Vec2(0,-0.6), 0.35, false), new CircleCollider(new Vec2(0,-0.3), 0.5, true)]),

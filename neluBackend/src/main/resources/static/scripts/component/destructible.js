@@ -1,6 +1,7 @@
 class Destructible extends Component{
   constructor(life = 1, damageSound, destructSound){
     super();
+    this.type = "destructible";
     this.onDestruct = function(){};
     this.onTakeDamage = function(){};
     this.life = life;

@@ -1,4 +1,5 @@
 var BC_Gallery = `
+MonkeySpawner -5 0 0
 MonkeyEnemy -3 0 0
 BeekeeperEnemy -3 3 0
 BoxColliderScalable -1 1 0
