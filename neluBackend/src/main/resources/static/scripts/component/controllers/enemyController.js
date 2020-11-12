@@ -48,6 +48,8 @@ class EnemyController extends Component {
 
     this.aproachFPS=14;
 
+    this.onDeadCallBack = new function(){};
+
   }
 
   PlayMonkeySound(sound){
@@ -230,6 +232,7 @@ class EnemyController extends Component {
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('enemyDead');
       that.gameobj.renderer.endAnimEvent.AddListener(this, ()=>that.gameobj.Destroy(), true);
+      that.onDeadCallBack();
     });
 
     this.enemyFSM = new FSM([patrolNode, approachPlayerNode, attackADNode, attackCACNode, rechargeNode, deadNode]).Start('patrol');

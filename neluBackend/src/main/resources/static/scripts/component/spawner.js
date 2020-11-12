@@ -1,6 +1,7 @@
 class Spawner extends Component{
 
   //static refs = new Map();
+  static enemyCount = 0;
 
   constructor(prefab, count){
     super();
@@ -55,7 +56,11 @@ class Spawner extends Component{
   Spawn(){
     Log("spawn");
     this.spawnEvent.Dispatch();
-    prefabFactory.CreateObj("MonkeyEnemy", this.gameobj.transform.GetWorldCenter());
+    let obj = prefabFactory.CreateObj("MonkeyEnemy", this.gameobj.transform.GetWorldCenter());
+    obj.enemyController.onDeadCallBack = ()=>{
+      Spawner.enemyCount-=1;
+    }
+    Spawner.enemyCount+=1;
     this.time = 0.0;
     this.count-=1;
 

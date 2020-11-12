@@ -1,6 +1,6 @@
 class Battle{
-  constructor(id, pos, dist, spawnerRefs='', startEnable = '', startDisable = '', endEnable = '', endDisable = ''){
-    Object.assign(this, {id,pos, dist, spawnerRefs, startEnable, startDisable, endEnable, endDisable});
+  constructor(id, autoStart, pos, dist, spawnerRefs='', startEnable = '', startDisable = '', endEnable = '', endDisable = ''){
+    Object.assign(this, {id,autoStart,pos, dist, spawnerRefs, startEnable, startDisable, endEnable, endDisable});
     this.started = false;
     this.ended = false;
   }
@@ -46,7 +46,7 @@ class Battle{
         allSpawnersEnded = false;
       }
     }
-    return allSpawnersEnded && manager.scene.enemies.size == 0;
+    return allSpawnersEnded && /*manager.scene.enemies.size*/Spawner.enemyCount == 0;
   }
 
   Start(){
@@ -81,6 +81,10 @@ class BattleController extends Component{
     this.type = "battleController";
     this.started = false;
     this.battles = battles;
+    this.battleMap = new Map();
+    for(let b of this.battles){
+      this.battleMap.set(b.id, b);
+    }
   }
 
   CheckBattle(battle){
@@ -112,6 +116,13 @@ class BattleController extends Component{
       for(var battle of this.battles){
         battle.ProcessRefs();
       }
+    }
+  }
+
+  StartBattle(id){
+    let b = this.battleMap.get(id);
+    if(b && b!=null){
+      b.Start();
     }
   }
 

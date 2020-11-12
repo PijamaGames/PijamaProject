@@ -13,7 +13,7 @@ prefabFactory.AddPrototype("MonkeyEnemy", new Vec2(1, 1), new Vec2(0.5, 0.5), fa
   ]
 });
 
-prefabFactory.AddPrototype("MonkeySpawner", new Vec2(1,1), new Vec2(0.5,0.5), false, ()=>{
+prefabFactory.AddPrototype("MonkeySpawner", new Vec2(1,1), new Vec2(0.0,0.0), false, ()=>{
   return [
     new Renderer(new Vec2(6, 13), new Vec2(1,1), false),
     new Spawner("MonkeyEnemy", 1),
@@ -23,11 +23,13 @@ prefabFactory.AddPrototype("MonkeySpawner", new Vec2(1,1), new Vec2(0.5,0.5), fa
   ]
 });
 
+
 prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), false, ()=>{
   return [
     new Renderer(new Vec2(6, 13), new Vec2(1,1), false),
     new BattleController([
-      new Battle("1", new Vec2(57, -10), 4.0, `
+      //constructor(id, autoStart, pos, dist, spawnerRefs='', startEnable = '', startDisable = '', endEnable = '', endDisable = ''){
+      new Battle("1", true, new Vec2(57, -10), 4.0, `
       MonkeySpawner 57.526912689208984 -8.514242172241211 0 1 1
       MonkeySpawner 54.53714370727539 -8.560779571533203 0 1 1
       `,`
