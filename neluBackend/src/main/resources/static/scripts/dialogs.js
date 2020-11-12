@@ -1,5 +1,75 @@
 var dialogLevel1XML = `
 <root>
+<dialog>
+    <id>t_movimiento</id>
+    <text>
+          <name>
+            <es>Tutorial</es>
+            <en>Tutorial</en>
+          </name>
+          <message>
+              <es>Usa [W] [A] [S] [D] para moverte</es>
+              <en>Use [W] [A] [S] [D] to move around</en>
+          </message>
+    </text> 
+  </dialog>
+
+  <dialog>
+    <id>t_ataque</id>
+    <text>
+          <name>
+            <es>Tutorial</es>
+            <en>Tutorial</en>
+          </name>
+          <message>
+              <es>Usa [Espacio] para atacar</es>
+              <en>Press [Space] to attack</en>
+          </message>
+    </text> 
+  </dialog>
+
+  <dialog>
+    <id>t_dash</id>
+    <text>
+          <name>
+            <es>Tutorial</es>
+            <en>Tutorial</en>
+          </name>
+          <message>
+              <es>Usa [Shift Izquierdo] para esquivar</es>
+              <en>Press [Left Shift] to dash</en>
+          </message>
+    </text> 
+  </dialog>
+
+  <dialog>
+    <id>t_colibri</id>
+    <text>
+          <name>
+            <es>Tutorial</es>
+            <en>Tutorial</en>
+          </name>
+          <message>
+              <es>Usa [Click Izquierdo] para lanzar a Tico</es>
+              <en>[Left Click] to throw Tico</en>
+          </message>
+    </text> 
+  </dialog>
+
+  <dialog>
+    <id>t_colibri</id>
+    <text>
+          <name>
+            <es>Tutorial</es>
+            <en>Tutorial</en>
+          </name>
+          <message>
+              <es>Usa [Q] para lanzar abejas</es>
+              <en>Press[Q] to throw bees</en>
+          </message>
+    </text> 
+  </dialog>
+
 	<dialog>
 		<id>interludio_1</id>
 		<text>
