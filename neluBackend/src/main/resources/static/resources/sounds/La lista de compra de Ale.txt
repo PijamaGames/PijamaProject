@@ -161,9 +161,8 @@ SONIDOS EN DUDA/ NO INCLUIDOS
 -Humano daño /muerte
 -Humano ataca CAC
 -HUmano lanza insecticida
--Manzana choca con humano
 -Musica para el multigame
--Cuando coja una flor
+
 
  SONIDOS QUE A ALE NO LE GUSTEN / NECESITAN UNA REFORMA (*añade los sonidos aquí y te los edito/ hago durante las clases de hoy)
 -Efecto golpes (primer golpe)
@@ -173,5 +172,14 @@ SONIDOS EN DUDA/ NO INCLUIDOS
 -sonido combo de nelu que sea como mucho de 1s, corta uno de los sonidos q suenan
 -Sonido del dash q sea algo q parezca mas de velocidad, mas agudo, y corto, que el sonido comience en el segundo 0, no a mitad(esto para todos)
 (ES IMPORTANTE QUE AUNQUE MODIFIQUES ESTOS SONIDOS, NO CAMBIES SU NOMBRE)
-(ES IMPORTANTE QUE TE ASEGURES DE QUE TODOS LOS SONIDOS EMPIEZAN EN EL SSEGUNDO 0)
+(ES IMPORTANTE QUE TE ASEGURES DE QUE TODOS LOS SONIDOS EMPIEZAN EN EL SEGUNDO 0)
 (ES IMPORTANTE QUE TODOS TENGAN EL MISMO VOLUMEN, PORQ SI NO SE ESCUCHA MUCHO UNO Y NADA EL RESTO)
+
+
+Sonidos actualizados en 0 seg
+Mover objeto
+Combo Nelu
+Lanzar Proyectil
+Efecto golpes (Completado)
+Musica Menu (completado)
+Mono chillando (Completado)
