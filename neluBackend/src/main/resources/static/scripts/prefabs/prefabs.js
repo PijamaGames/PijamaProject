@@ -48,6 +48,12 @@ prefabFactory.AddPrototype("RockHole", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   ]
 });
 
+prefabFactory.AddPrototype("WoodStick", new Vec2(1,2), new Vec2(0,0), true, ()=>{
+  return [
+    new Renderer(new Vec2(6,3), new Vec2(1,2), true),
+  ]
+});
+
 prefabFactory.AddPrototype("RockHoleFilled", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(7,0), new Vec2(1,1), false, 1.0 ,['color', 'depth', 'mask']),
@@ -167,12 +173,6 @@ prefabFactory.AddPrototype("CampTop2", new Vec2(1,1), new Vec2(0,0), true, ()=>{
 prefabFactory.AddPrototype("CampTop3", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(6,5), new Vec2(1,1), false),
-  ]
-});
-
-prefabFactory.AddPrototype("WoodStick", new Vec2(1,2), new Vec2(0,0), true, ()=>{
-  return [
-    new Renderer(new Vec2(6,3), new Vec2(1,2), true),
   ]
 });
 
