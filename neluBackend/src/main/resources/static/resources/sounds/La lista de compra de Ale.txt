@@ -1,0 +1,164 @@
+Antes que nada, te recuerdo que como productor de sonido soy vuestro esclavo personal y cada sonido que a los dioses de la programación no les guste serán 5 latigazos
+por mi parte y luego una posterior correción/ edición del sonido. Os recuerdo también que no tengo un estudio de sonido así que algunos sonidos estan hechos lo mejor posible.
+
+PD: No os voy a rehacer el sonido del mono ni aunque me pagueis.
+
+
+SONIDOS
+Mono (chillido)
+Archivo de sonido: Mono_Chillando.mp3
+Descripción: Una sucesión de aullidos de mono donde progresivamente se enfada. Este archivo es muy largo, en principio se debería usar cuando los monos
+se enfaden por algo. Si quieres puedo recortarlo para que sean dos o 3 chillidos en vez de 12 para que sea más usable en el sentido que pueda usarse cuando aparece un mono.
+
+Mono (chillido daño)
+Archivo de sonido: Monkey_damage.mp3
+Descripción: Este chillido es de internet ya que no sabía imitar un chillido de mono recibiendo daño sin decir auuu así que este usalo o como sonido cuando el sonido reciba
+daño o como sonido de muerte de mono o ambos (te dejo a ti testear si es divertido o no escuchar a 3 monos recibir daño chillando :D )
+
+Sonido de lanzar objeto
+Archivo: Lanzar_Proyectil.mp3 (TirarObjeto.wav no le hagas caso porque es el mismo sonido y encima es wav asi que pesa más)
+	
+Descripción: Pense que este sonido hacía falta cuando los monos lanzaban las manzanas así que puedes probar si queda bien o si debería modificarlo. 
+
+Sonido de golpe (varios)
+Archivo: Efecto_golpes.mp3
+Descripción: Son 21 segundos de puro efecto de golpes. Como queríais muchos sonidos distintos, hice bastantes juntos para que luego alguien escuchara y eligiera los que
+más le convencieran. Como parece que esa es tu tarea, puedes o decirme que sonidos te convencen (o los que menos te disgustan si odias todos) y te los puedo recortar o 
+si tienes control de que parte del archivo suena pues te lo dejo a ti. (Siempre puedes decirme que haga sonidos si no te convence no te preocupes). 
+
+Sonido para el combo (Nelu)
+Archivo: Combo_Nelu.mp3
+Descripción: * ME ACABO DE DAR CUENTA DE QUE ESTE SONIDO SE ESCUCHA AL PRINCIPIO EL AUDIO ORIGEN (Mi preciosa voz) Y LUEGO EDITADO*
+Este sonido es para el combo de Nelu, así que simplemente comentame si prefieres que suene los 3 sonidos juntos o prefieres cada sonido del combo por separado (editarlo
+te lo tengo que editar para quitar ese sonido del principio).
+ 
+
+Sonido para el colibrí lanzarlo 
+Archivo: Colibri_volar.mp3
+Descripción: Este sonido tiene 2 versiones, la lenta y la rápida (tu me dices cual prefieres y te recorto esa versión). Como no se que cojones hace un colibri y ni siquiera
+me imagino el colibri piando mientras ataca, es el revoloteo de sus preciosas alas (o se intenta).
+
+Sonido para las abejas
+Archivo:Abejas.mp3 (sorprendente a que sí)
+Descripción: Este sonido simula un enjambre de abejas (CON ZUMBIDOS INDIVIDUALES COMO ABEJAS). Tiene un sonido base de enjambre de internet y luego varias abejas individuales
+por mi. Si quieres, puedo mover las abejas individuales para que algunas de ellas acaben antes de que acabe el sonido (simulando que cada vez hay menos)
+SI necesitas que el sonido dure lo mismo que el tiempo que esta las abejas fuera comentamelo y te lo modifico (tendrías que especeficarme cuanto dura). 
+
+Sonido para romper un objeto
+Archivo:Romper_Objeto_1.mp3
+	Romper_Objeto_2.mp3
+	Romper_Objeto_3.mp3
+Descripción: Te he dejado 3 distintos para que elijas el que más te haga ilusión cada vez que se rompa un objeto. Si desgraciadamente no fueran de tu agrado, no me importaría
+buscar más (no he hecho este sonido ya que no me gustaría romper algo para grabar ese sonido) 
+
+Sonido para mover un objeto
+Archivo: Mover_Objeto.mp3
+Descripción: Es el sonido de un objeto arrastrándose por un terreno de tierra/arena (muy contento con este sonido te mato si quieres otro distinto). Esto usalo para que 
+cada vez que un objeto se mueva por el personaje haga este sonido (o al menos las rocas que son más pesadas). 
+
+Sonido de agua
+Archivo: Rio_corriente.mp3
+Descripción: Pues ya sabes hija, cuando se vea el rio o Nelu este cerca puede sonar para que sea más realista la INMERSION Y EXPERIENCIA URJC.
+No sabría decirte en que momento suena, se que al principio esta, pero como debería ser algo que suene cuando Nelu este cerca tendra que ser un sonido que suene progresivamente
+dependiendo de la distancia al rio? Tu eres la programadora, implementa este sonido con el criterio que tu prefieras, yo te concedo mis bendiciones.
+
+Sonido de fuego
+Archivo: Habilidad_Fuego.mp3
+Descripción: Este sonido esta medio en fase de test por que como recientemente se cambio la habilidad de nelu, no se si va a servir. (Basicamente, el sonido del principio debería
+sonar cuando Nelu spawnea el fuego y el resto es el fuego siendo fuego, pero como ahora es una bola de fuego pues no se si tiene sentido el sonido y debe modificarse, tu
+me comentas). Aparte debería al menos servirte para cuando algo se prenda (como el obstaculo quemable).
+Si te hiciera falta un sonido aparte de solo fuego quemando algo te lo puedo editar. 
+
+Sonido de interfaz (seleccionar)
+Archivo: UI_1
+	 UI_2
+Descripción: Dos sonidos distintos pa cada cosa que hagas en el menu. Si no te gusta alguno o necesitas alguno más/ distinto comentamelo.
+
+Sonido de dialogo:
+Archivo: Dialogo.mp3 (Seguro que necesitas una lista?)
+Descripción: Sonido extremadamente corto. Esta pensado para que llames a este sonido mientras se escribe dialogo por la pantalla (A no ser que seais muy listos y hayais
+hecho que el texto aparezca de una que entonces este sonido no tendría sentido). Si no puedes loopearlo y prefieres un sonido largo (digamos 10 segundos) y tu lo cortas
+cuando deje de salir texto, te lo puedo proporcionar.
+ 
+
+Sonido de andar
+Archivo: No existe
+Descripción: No creo que Nelu deba hacer sonido al andar, aún así, si piensas que esto es totalmente incorrecto y que debería sonar, comentamelo y así te tendre que hacer mínimo
+2 sonidos (un sonido de andar por hierba y otro por tierra/suelo).  
+
+Sonido de dash
+Archivo: Dash.mp3
+Descripción: Nelu hace dash po nelu suena así. Si no te gusta siempre puedes acceder a mi hoja de reclamaciones llamado telegram 
+
+Sonido de pausa
+Archivo: Los de antes
+Descripción: Te he dado 2 sonidos de UI, creo que alguno te servira vamos. SI la reina del piso requiere otro sonido totalmente distinto e inovador, quien sere yo para
+llevarle la contraria 
+
+Sonido de colocar enemigo (modo arena)
+Archivo: Estoy en debate
+Descripción: No se si prefieres un sonido genérico (En plan, como un ding o algo así) o si prefieres que cada tropa haga su sonido característico al colocarla 
+(el mono pues un sonido de mono y el humano sonido de humano) Como eres la que esta colocando sonidos, tu decides 
+
+Sonido de cortar
+Archivo: Combo_Nelu.mp3
+Descripción: Creo que el primer sonido del combo puede también servir para cortar. Si no te convence puedo hacer otro distinto más corte afilado pero te recuerdo que este
+sonido solo debería sonar cuando un COLIBRI corta unas lianas. 
+
+Sonido de curar
+Archivo: Curar.mp3
+Descripción: Creo que este te lo puedo dejar a ti, Alejandra Holmes 
+
+Sonido de Nelu cuando recibe daño
+Archivo: TEnemos que hablar
+Descripción: Nelu emite sonido? Hago un gemido? Hago el sonido de una planta? Sonido genérico de daño? Ya me diras tu que sonido tiene que hacer nelu cuando recibe daño.
+Supongo que cuando haga el del humano, puedo buscar inspiración en juegos donde el daño no se interpreta con sonido del personaje (como mario y tal) y proporcionarte un archivo.
+ 
+
+Sonido de muerte mono /Nelu:
+Archivo: Con el mono ya te lo he dado antes y con Nelu estoy en el mismo dilema que al recibir daño.
+
+
+MUSICA
+Creo que estan bien llamados pero bueno
+
+Musica para el menu
+Archivo: Música_Menu.mp3
+Descripción: Música muy alegre, me gusta mucho el efecto psicológico que va a tener en el jugador ya que parece una aventura family friendly
+pero en el momento que escuche a un mono pegar un tremendo chillido bien perrón va a replantearse su existencia y probablemente nos denuncie.
+
+Música para el nivel 1 (de 1)
+Archivo: Música_Nivel1.mp3
+Descripción: Esta música suena cada vez que no haya enemigos en el nivel 1 ANTES DE LLEGAR a la fortaleza de los monos. 
+
+Música para combates
+Archivo: Música_Pelea.mp3
+Descripción: Esta música debe sonar cada vez que haya monos (para que pegarlos sea divertido ya que la música de fondo es divertida :D)
+Cuando muera el último sucio simio de esa zona, haz un fade out y vuelves a poner la música de nivel 1
+
+Música para la fortaleza de los monos
+Archivo: Música_Fortaleza.mp3
+Descripción: Esta música es un poco más tensa, para que el jugador sepa que se esta metiendo donde no le llaman (y ya se habra acostumbrado a pegar palizas
+a los monos así que no necesita música positiva para reducir trauma). Aqui te dejo libertad creativa de si dejar esta canción siempre sonando o que cuando
+haya monos pues cambies a la de pelea de monos
+
+Música para cinematicas:
+Archivo:Música_Cinematica.mp3
+Descripción: Si en algun momento de vuestra vida los programadores quisieran hacer una cinemática donde un mono hace algo malvado, esta es la canción
+pa usar. Esta aquí solo para cinemáticas, como no sabía en su momento si habría o no, pues la seleccione por si acaso
+
+Música para cuando se use la flor de Fuego:
+Archivo: Song_Powerup_Fuego
+Descripción: Esta canción tiene prioridad absoluta. Da igual que haya 300 monos, esta cancion empieza en el momento que se toca la flor y tiene su propio fade out
+así que cuando acabe vuelves a poner la canción que corresponda en ese momento.
+
+
+SONIDOS EN DUDA/ NO INCLUIDOS
+-Muerte Nelu
+-Daño Nelu
+-Colocar enemigo
+-Andar
+-Humano daño /muerte
+
+ SONIDOS QUE A ALE NO LE GUSTEN / NECESITAN UNA REFORMA (*añade los sonidos aquí y te los edito/ hago durante las clases de hoy)
+
