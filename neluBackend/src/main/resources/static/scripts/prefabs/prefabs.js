@@ -8,10 +8,10 @@ prefabFactory.AddPrototype("BoxColliderScalable", new Vec2(1, 1), new Vec2(0,0),
       obj.colliderGroup.colliders[0].scale.Set(obj.transform.scale.x, obj.transform.scale.y);
       obj.colliderGroup.colliders[0].width = obj.transform.scale.x;
       obj.colliderGroup.colliders[0].height = obj.transform.scale.y;
-      if(EDITOR_MODE){
-        obj.renderer.tile.x = 5;
-      } else {
+      if(DEBUG_VISUAL){
         obj.renderer.tile.x = 6;
+      } else {
+        obj.renderer.tile.x = 5;
       }
     }),
   ]
@@ -22,8 +22,8 @@ prefabFactory.AddPrototype("RiverSoundPrefab", new Vec2(1,1), new Vec2(0,0), fal
     new Renderer(new Vec2(6,13), new Vec2(1,1), true),
     new AudioSource(["riverSound"]),
     new CustomBehaviour().SetOnUpdate((obj)=>{
-      obj.renderer.tile.x=EDITOR_MODE? 7: 5;
-      obj.renderer.tile.y=EDITOR_MODE? 3: 13;
+      obj.renderer.tile.x=DEBUG_VISUAL? 7: 5;
+      obj.renderer.tile.y=DEBUG_VISUAL? 3: 13;
     })
   ]
 });

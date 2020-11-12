@@ -24,6 +24,7 @@ class MapEditor {
     var selectNode = new Node("select").SetStartFunc(()=>{
       that.currentScene = manager.scene.name;
       that.bytecodeText.value = manager.scene.bytecode;
+
       //Log("BYTECODE: "+manager.scene.bytecode);
 
       if(that.goToGalleryObj != null){
@@ -37,6 +38,12 @@ class MapEditor {
         that.copyBytecodeObj = prefabFactory.CreateObj("CopyBytecode", new Vec2(0.25,0.1));
       }
     }).SetUpdateFunc(() => {
+      if(input.GetKeyDown("KeyE")){
+        Log(input.mouseGridPosition.toString("MOUSE GRID POS: "));
+      }
+      if(input.GetKeyDown("KeyR")){
+        Log(that.selected.transform.GetWorldPos().toString("OVERLAP OBJ POS: "));
+      }
       that.CheckOverlappedObjs();
     }).SetExitFunc(()=>{
       if(that.goToGalleryObj != null){
@@ -214,7 +221,7 @@ class MapEditor {
     let dist;
     for (let obj of objs) {
       if (obj.renderer) {
-        if (obj.renderer.isUI) {
+        if (obj.renderer.isUI || (obj.type != "BoxColliderScalable" && input.GetKeyPressed("KeyZ"))) {
           continue;
         } else {
           dist = obj.transform.Distance(input.mouseWorldPosition);

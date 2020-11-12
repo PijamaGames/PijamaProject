@@ -4,6 +4,30 @@ class Finder {
 
   }
 
+  FindObjectsWithBytecode(bytecode = ""){
+    let objs = [];
+    var lines = this.bytecode.match(/[^\r\n]+/g);
+    let obj;
+    for(line of lines){
+      obj = this.FindObjectWithBytecode(line);
+      if(obj != null){
+        objs.push(obj);
+      }
+    }
+    return objs;
+  }
+
+  FindObjectWithBytecode(bytecode = ""){
+    let found = null;
+    for (var [key, obj] of manager.scene.gameobjs) {
+      if (obj.bytecode.Equals(bytecode)) {
+        found = obj;
+        return found;
+      }
+    }
+    return found;
+  }
+
   FindComponents(type) {
     let components = [];
     for (var [key, obj] of manager.scene.gameobjs) {

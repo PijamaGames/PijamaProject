@@ -1,11 +1,12 @@
 class FlowerController extends Component {
-  constructor(coolDown){
+  constructor(coolDown, oneUse = false){
     super();
     this.type = "flowerController";
     this.onPickUp = function(){};
     this.used = false;
     this.coolDown = coolDown;
     this.time = 0.0;
+    this.oneUse = oneUse;
   }
 
   get player(){
@@ -13,7 +14,7 @@ class FlowerController extends Component {
   }
 
   Update(){
-    if(this.used){
+    if(this.used && !this.oneUse){
       this.time += manager.delta;
       //Log("time: " + this.time + " of: " + this.coolDown);
       if(this.time > this.coolDown){
