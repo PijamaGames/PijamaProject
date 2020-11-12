@@ -132,7 +132,7 @@ prefabFactory.AddPrototype("Tent", new Vec2(3,3), new Vec2(0,0), true, ()=>{
 
 prefabFactory.AddPrototype("LogHorizontal", new Vec2(2,1), new Vec2(0,0), true, ()=>{
   return [
-    new ColliderGroup([new BoxCollider(new Vec2(0,0), 2, 1 , false)]),
+    new ColliderGroup([new BoxCollider(new Vec2(0,-0.1), 1.8, 0.7 , false)]),
     new Rigidbody(0.5),
     new Renderer(new Vec2(3,2), new Vec2(2,1), true),
     new AudioSource(["moveObjectSound"]),
@@ -167,7 +167,7 @@ prefabFactory.AddPrototype("LianaRight", new Vec2(1,2), new Vec2(0,0), true, ()=
 
 prefabFactory.AddPrototype("LogVertical", new Vec2(1,2), new Vec2(0,0), true, ()=>{
   return [
-    new ColliderGroup([new CircleCollider(new Vec2(0,0), 1,2, false)]),
+    new ColliderGroup([new BoxCollider(new Vec2(0.05,-0.15), 0.6, 1.6, false)]),
     new Rigidbody(0.5),
     new Renderer(new Vec2(3,3), new Vec2(1,2), true),
     new AudioSource(["breakObjectSound1"]),
