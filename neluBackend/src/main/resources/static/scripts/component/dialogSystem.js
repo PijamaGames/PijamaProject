@@ -15,13 +15,14 @@ class DialogSystem extends Component {
 
   Update(){
     if(input.GetKeyDown("KeyC")){
-      this.InitDialog("testDialog");
+      this.InitDialog("interludio_1");
     }
     this.fsm.Update();
   }
 
   InitDialog(id){
     //this.dialogId = id;
+    Log(this.dialogs);
     let dialog = this.dialogs.get(id);
     if(!dialog || dialog == null){
       Log("dialog " + id + "does not exist in this xml");
@@ -96,18 +97,20 @@ class DialogSystem extends Component {
   }
 
   FormatDialogs(rawDialogs){
-    if(!Array.isArray(rawDialogs)){
+    /*if(!Array.isArray(rawDialogs)){
       rawDialogs = [rawDialogs];
-    }
+    }*/
+    Log("DIALOGS");
+    rawDialogs = rawDialogs.dialog;
     Log(rawDialogs);
     this.dialogs = new Map();
     for(var d of rawDialogs){
       let texts = [];
-      if(!d.dialog.text) continue;
-      if(!Array.isArray(d.dialog.text)){
-        d.dialog.text = [d.dialog.text];
+      //if(!d.dialog.text) continue;
+      if(!Array.isArray(d.text)){
+        d.text = [d.text];
       }
-      for(var t of d.dialog.text){
+      for(var t of d.text){
         texts.push({
           //focus: t.focus.value,
           name : {
@@ -120,9 +123,9 @@ class DialogSystem extends Component {
           }
         })
       }
-      this.dialogs.set(d.dialog.id.value, {
+      this.dialogs.set(d.id.value, {
         texts: texts,
-      })
+      });
     }
     Log(this.dialogs);
     return this.dialogs;

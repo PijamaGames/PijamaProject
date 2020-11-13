@@ -1,6 +1,6 @@
 "use strict;"
 const DEBUG = true;
-var DEBUG_VISUAL = true;
+var DEBUG_VISUAL = false;
 const EDITOR_MODE = true;
 const DEBUG_PHYSICS = false;
 
