@@ -8,8 +8,8 @@ class Physics {
     this.timer = 0.0;
     this.fpsCount = 0;
     this.timeCount = 0.0;
-    this.rigidbodyMaxDist = 8.0;
-    this.staticMaxDist = 20.0;
+    this.rigidbodyMaxDist = 7.9;
+    this.staticMaxDist = 18.0;
   }
 
   SetSteps(steps){

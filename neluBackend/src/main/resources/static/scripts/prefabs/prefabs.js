@@ -192,7 +192,7 @@ prefabFactory.AddPrototype("Campfire", new Vec2(1,1), new Vec2(0,0), true, ()=>{
 prefabFactory.AddPrototype("LianaLeft", new Vec2(1,2), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(8,2), new Vec2(1,2), true),
-    new ColliderGroup([new CircleCollider(new Vec2(0.0,0.0), 0.3, true, (obj, self)=>{
+    new ColliderGroup([new CircleCollider(new Vec2(0.0,-0.2), 0.3, true, (obj, self)=>{
       if(obj.colibriController){
         self.destructible.TakeDamage();
       }
@@ -214,7 +214,7 @@ prefabFactory.AddPrototype("LianaLeft", new Vec2(1,2), new Vec2(0,0), true, ()=>
 prefabFactory.AddPrototype("LianaRight", new Vec2(1,2), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(8,4), new Vec2(1,2), true),
-    new ColliderGroup([new CircleCollider(new Vec2(0.0,0.0), 0.3, true, (obj, self)=>{
+    new ColliderGroup([new CircleCollider(new Vec2(0.0,-0.2), 0.3, true, (obj, self)=>{
       if(obj.colibriController){
         self.destructible.TakeDamage();
       }

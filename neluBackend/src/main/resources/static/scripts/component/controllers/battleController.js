@@ -86,7 +86,6 @@ class Battle extends AbstractEvent{
       }
     }
     let aux = allSpawnersEnded;
-    Log("Must end: " + aux);
     return aux;
   }
 
