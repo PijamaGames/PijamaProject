@@ -147,6 +147,7 @@ prefabFactory.AddPrototype("NenupharBig", new Vec2(1,1), new Vec2(0,0), true, ()
 prefabFactory.AddPrototype("BindWeed", new Vec2(1,2), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(8,0), new Vec2(1,2), false),
+    new ColliderGroup([new BoxCollider(new Vec2(0.0,0.0), 1.0, 2.0)]),
   ]
 });
 
@@ -239,7 +240,8 @@ prefabFactory.AddPrototype("CampTop3", new Vec2(1,1), new Vec2(0,0), true, ()=>{
 
 prefabFactory.AddPrototype("BigLog", new Vec2(1,3), new Vec2(0,0), true, ()=>{
   return [
-    new Renderer(new Vec2(7,3), new Vec2(1,3), true),
+    new Renderer(new Vec2(7,3), new Vec2(1,3), false),
+    new ColliderGroup([new BoxCollider(new Vec2(0.0,0), 1.0, 2.8, false)])
   ]
 });
 
