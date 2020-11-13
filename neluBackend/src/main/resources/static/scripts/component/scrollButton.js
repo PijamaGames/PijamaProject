@@ -10,6 +10,9 @@ class ScrollButton extends TextBox{
     if(this.id!=null){
       this.element.id=this.id;
     }
+    if(this.centered){
+      this.element.style.textAlign = "center";
+    }
 
     this.element.className +=  "game_scrollBox";
     var parent = document.getElementById("UI");

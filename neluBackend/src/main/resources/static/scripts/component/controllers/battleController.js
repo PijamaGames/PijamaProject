@@ -6,6 +6,7 @@ class AbstractEvent{
   }
 
   MustStart(){
+    if(!this.autoStart) return;
     let player = manager.scene.players.values().next().value;
     return Vec2.Distance(this.pos, player.transform.GetWorldCenter()) < this.dist;
   }
@@ -25,6 +26,7 @@ class ScriptedEvent extends AbstractEvent{
 
   Start(){
     if(!this.used || this.repeat){
+      Log("START SCRIPTED EVENT: "+this.id);
       this.onStart();
     }
   }

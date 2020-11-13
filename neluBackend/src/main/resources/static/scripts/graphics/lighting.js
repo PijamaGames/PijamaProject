@@ -49,7 +49,7 @@ class Lighting{
     this.bloomStrength = 0.5;
 
     this.currentLight=1;
-    this.nextLight=2;
+    this.nextLight=1;
 
     this.SetCurrentLight(1);
   }
@@ -68,7 +68,7 @@ class Lighting{
       break;
       case 3:
         this.currentLight=3;
-        rend.SetTile(new Vec2(9,13.5));
+        rend.SetTile(new Vec2(11,13.5));
         this.nextLight=1;
       break;
     }
@@ -161,6 +161,7 @@ class Lighting{
   }
 
   BeginTransition(targetLighting, time = 1.0){
+    if(this.transitioning) return;
     this.originalParams = this.SaveCurrentParams();
     let light = this.currentLight;
     this.targetLight = targetLighting;

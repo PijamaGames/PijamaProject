@@ -168,7 +168,6 @@ async function getRanking() {
   let response = await fetch(serverURL + "/users/ranking");
   let rankingInfo = await response.json();
   var ranking = document.getElementById("rankingText");
-  Log(rankingInfo);
   var text="";
   for (i=0; i<rankingInfo.length; i++){
     text+=rankingInfo[i].points+ " "+rankingInfo[i].id+"<br>";
@@ -260,7 +259,16 @@ function InitWebSocket(onOpenCallback) {
 
 
 function StartGame(msg){
-  manager.LoadScene("multiGame");
+  switch(manager.choosenEnviroment){
+    case 1: manager.LoadScene("multiGame1");
+      break;
+    case 2: manager.LoadScene("multiGame2");
+      break;
+    case 3: manager.LoadScene("multiGame3");
+      break;
+    case 4: manager.LoadScene("multiGame4");
+      break;
+  }
   manager.SetInMenu(false);
   gameStarted = true;
 
@@ -312,7 +320,7 @@ function JoinRoom(msg) {
       user.hostName=msg.room;
       text.innerHTML=manager.english? ("You've joined to "+user.hostName+" room"):("Te has unido a la sala de "+user.hostName);
       user.isClient=true;
-      manager.enviroment=msg.enviroment;
+      manager.choosenEnviroment=msg.enviroment;
       lighting.currentLight=msg.lighting;
       lighting.SetCurrentLight(msg.lighting);
 
