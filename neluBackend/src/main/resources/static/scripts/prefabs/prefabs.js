@@ -41,7 +41,7 @@ prefabFactory.AddPrototype("DryPlant", new Vec2(1,1), new Vec2(0,0), false, ()=>
 
 prefabFactory.AddPrototype("Rock", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
-    new ColliderGroup([new CircleCollider(new Vec2(0,0), 0.5, false)]),
+    new ColliderGroup([new BoxCollider(new Vec2(0,-0.1), 1.0,0.8, false)]),
     new Rigidbody(0.5,true),
     new Renderer(new Vec2(5,0), new Vec2(1,1), false),
     new AudioSource(["moveObjectSound"]),
@@ -57,6 +57,7 @@ prefabFactory.AddPrototype("RockHole", new Vec2(1,1), new Vec2(0,0), true, ()=>{
         obj.Destroy();
         self.renderer.tile.x = 7;
         self.colliderGroup.firstCollider.isTrigger = true;
+        self.filled = true;
       }
     })]),
     new CustomBehaviour().SetOnCreate((obj)=>obj.filled = false)
@@ -165,8 +166,11 @@ prefabFactory.AddPrototype("LogHorizontal", new Vec2(2,1), new Vec2(0,0), true, 
   return [
     new ColliderGroup([new BoxCollider(new Vec2(0,-0.1), 1.8, 0.7 , false)]),
     new Rigidbody(0.5,true),
-    new Renderer(new Vec2(3,2), new Vec2(2,1), true),
+    new Renderer(new Vec2(3,2), new Vec2(2,1), false),
     new AudioSource(["moveObjectSound"]),
+    new CustomBehaviour().SetOnCreate((obj)=>{
+      obj.transform.height+=0.05;
+    }),
   ]
 });
 
@@ -201,8 +205,11 @@ prefabFactory.AddPrototype("LogVertical", new Vec2(1,2), new Vec2(0,0), true, ()
   return [
     new ColliderGroup([new BoxCollider(new Vec2(0.05,-0.15), 0.6, 1.6, false)]),
     new Rigidbody(0.5,true),
-    new Renderer(new Vec2(3,3), new Vec2(1,2), true),
+    new Renderer(new Vec2(3,3), new Vec2(1,2), false),
     new AudioSource(["moveObjectSound"]),
+    new CustomBehaviour().SetOnCreate((obj)=>{
+      obj.transform.height+=0.3;
+    }),
   ]
 });
 

@@ -37,6 +37,9 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
       `,``,``,`
       BindWeed 67 -9 0 1 2
       `)
+    ], [
+      new ScriptedEvent("toMorning", true, new Vec2(178,-19), 3.0, true, ()=>lighting.BeginTransition(1, 1)),
+      new ScriptedEvent("toNight", true, new Vec2(178,-11), 3.0, true, ()=>lighting.BeginTransition(3, 1)),
     ]).SetOnStartBattle((obj)=>{
       obj.audioSource.PlayAll();
 
