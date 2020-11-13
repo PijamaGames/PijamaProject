@@ -97,9 +97,8 @@ class Rigidbody extends Component{
     this.velocity.Add(this.force);
     let audio=this.gameobj.audioSource;
     if(this.levelObject && !audio.Playing("moveObjectSound") && (this.force.x!=0 || this.force.y!=0))
-    {  this.gameobj.audioSource.Play("moveObjectSound");
-    Log("hola");
-    }
+      this.gameobj.audioSource.Play("moveObjectSound");
+
     this.force.Set(0,0);
 
     let newPos = this.gameobj.transform.GetWorldPos().Copy().Add(Vec2.Scale(this.velocity, manager.delta*pct));

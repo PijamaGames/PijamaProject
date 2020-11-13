@@ -34,7 +34,7 @@ prefabFactory.AddPrototype("SingleLifeText", new Vec2(3,1.5), new Vec2(0.0,1.0),
 prefabFactory.AddPrototype("SingleTextBox", new Vec2(14,5), new Vec2(0.5,0.0), false, ()=>{
   return [
     new ImageRenderer(new Vec2(0,16), new Vec2(14,5)),
-    new TextBox(null, "","", new Vec2(0.8,0.07), false),
+    new TextBox(null, "","", new Vec2(0.8,0.25), false),
   ]
 });
 prefabFactory.AddPrototype("SingleNameText", new Vec2(4,2), new Vec2(0.5,0.0), false, ()=>{

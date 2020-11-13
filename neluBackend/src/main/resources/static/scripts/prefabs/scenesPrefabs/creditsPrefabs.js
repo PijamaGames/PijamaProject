@@ -68,10 +68,10 @@ function GetCreditsText(){
   text+="ANSIMUZ<br>";
   text+="SANCTUMPIXEL<br>";
   text+="KEVIN MACLEOD<br>";
-  //METER LAS EMPRESAS QUE HAN CONTACTADO CON JUANMA Y LAS COSAS DE IVAN
-  text+="KEVIN MACLEOD<br>";
-  text+="KEVIN MACLEOD<br>";
-  text+="KEVIN MACLEOD<br>";
+  text+="IWIGIA<br>";
+  text+="WWF(UK)<br>";
+  text+="RAINFOREST FOUNDATION US<br>";
+  //FALTAN LOS CREDITOS DE LAS COSAS DE IVAN DE MODELOS Y TEXTURAS
 
   credits.innerHTML=text;
 }

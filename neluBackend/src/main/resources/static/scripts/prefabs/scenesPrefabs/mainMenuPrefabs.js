@@ -56,7 +56,6 @@ prefabFactory.AddPrototype("OptionsFromMenu", new Vec2(8,2), new Vec2(0.5,0.5), 
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();
     }),
-    new TextBox(null, "Configuración","Options", new Vec2(0.3,0.07), true),
     new AudioSource(["UISound1"]),
   ]
 });
