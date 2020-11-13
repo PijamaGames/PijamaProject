@@ -85,14 +85,28 @@ class BattleController extends Component{
     for(let b of this.battles){
       this.battleMap.set(b.id, b);
     }
+    this.onStartBattle = function(){};
+    this.onEndBattle = function(){};
+  }
+
+  SetOnStartBattle(func){
+    this.onStartBattle = func;
+    return this;
+  }
+
+  SetOnEndBattle(func){
+    this.onEndBattle = func;
+    return this;
   }
 
   CheckBattle(battle){
     if(!battle.ended){
       if(!battle.started && battle.MustStart()){
         battle.Start();
+        this.onStartBattle(this.gameobj);
       } else if(battle.started && battle.MustEnd()){
         battle.End();
+        this.onEndBattle(this.gameobj);
       }
     }
   }

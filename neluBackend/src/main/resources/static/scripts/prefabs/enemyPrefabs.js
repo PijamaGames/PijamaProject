@@ -37,7 +37,11 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
       `,``,``,`
       BindWeed 67 -9 0 1 2
       `)
-    ]),
+    ]).SetOnStartBattle((obj)=>{
+
+    }).SetOnEndBattle((obj)=>{
+
+    }),
     new ColliderGroup([new CircleCollider(new Vec2(), 3.0, true, (obj, self)=>{
       if(obj.playerController){
         self.battleController.Start();

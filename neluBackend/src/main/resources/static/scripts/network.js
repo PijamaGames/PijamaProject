@@ -266,7 +266,7 @@ function StartGame(msg){
 
   if(user.isHost){
     if(!input.isDesktop) input.HideVirtualInputs(false);
-    prefabFactory.CreateObj("Nelu");
+    //prefabFactory.CreateObj("Nelu");
     StartSendEntitiesLoop();
   } else {
     Log("creating master");

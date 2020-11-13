@@ -27,8 +27,8 @@ class PlayerController extends Component {
     this.attack2Speed = 16;
     this.attack3Speed = 17;
     this.dieSpeed = 12;
-    this.dashImpulse = 10.0;
-    this.dashMaxTime = 0.1;
+    this.dashImpulse = 4.0;
+    this.dashMaxTime = 0.25;
     this.dashTime = 0.0;
     this.dashMaxCooldown = 0.4;
     this.dashCooldown = this.dashMaxCooldown;

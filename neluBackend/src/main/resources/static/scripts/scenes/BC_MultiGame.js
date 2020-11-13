@@ -7,4 +7,5 @@ GameFromPauseMultiGame 0 0.18 0
 MenuFromPauseMultiGame 0 0.0 0
 PauseTitleMultiGame 0 0.4 0
 FireFlower 2 0 0
+Nelu 5 0 0
 `
