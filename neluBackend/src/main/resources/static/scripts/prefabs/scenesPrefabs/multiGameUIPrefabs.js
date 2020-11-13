@@ -47,8 +47,6 @@ prefabFactory.AddPrototype("Chronometer", new Vec2(3,1.5), new Vec2(0.0,1.0), fa
           //user.SetUserWinner(true);
         }
       }
-    }).SetDownFunc((obj)=>{
-      obj.gameobj.audioSource.PlayAll();
     }),
   ]
 });
