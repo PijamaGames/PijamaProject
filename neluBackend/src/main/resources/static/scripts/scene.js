@@ -40,7 +40,6 @@ class Scene{
   }
 
   Update(){
-
     for(let [key, gameobj] of this.gameobjs){
       gameobj.Update();
     }

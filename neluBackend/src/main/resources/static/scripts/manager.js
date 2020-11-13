@@ -217,8 +217,8 @@ class Manager {
       if(sceneName != "gallery"){
         prefabFactory.ClearCounts();
       }
-      this.scene.LoadByteCode();
       this.scene.GenerateCam();
+      this.scene.LoadByteCode();
       Log("Loaded: "+this.scene.name);
     }
     if(Renderer.hoverSet){

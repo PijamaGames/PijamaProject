@@ -212,12 +212,19 @@ class PlayerController extends Component {
     return closest;
   }
 
+  OnCreate(){
+    //Log("center: " + this.gameobj.transform.GetWorldCenter().toString());
+    //Log(this.gameobj.scene.name);
+    this.gameobj.scene.camera.transform.SetWorldPosition(this.gameobj.transform.GetWorldCenter().Copy());
+    //Log(this.gameobj.scene.camera.transform.GetWorldPos().toString("camPos:"));
+  }
+
   CreateFSM(){
     var that = this;
 
     let idleNode = new Node('idle').SetOnCreate(()=>{
       that.gameobj.renderer.AddAnimation('idle', 'nelu_idle', 5);
-      manager.scene.camera.transform.SetWorldPosition(that.gameobj.transform.GetWorldCenter().Copy());
+      //manager.scene.camera.transform.SetWorldPosition(that.gameobj.transform.GetWorldCenter().Copy());
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('idle');
       manager.scene.camera.camera.target = that.gameobj.transform.GetWorldCenter().Copy();

@@ -36,6 +36,7 @@ class Lighting{
     this.currentLightSource = null;
     this.renderPointLights = true;
 
+    //Clouds
     this.cloudDisplacement = new Vec2();
     this.cloudDir = new Vec2(-0.1,-0.1);
     this.cloudMinIntensity = 0.3;
@@ -49,7 +50,8 @@ class Lighting{
 
     this.currentLight=1;
     this.nextLight=2;
-    this.SetMorning();
+
+    this.SwitchLight(1);
   }
 
   SwitchLight(rend){
@@ -72,7 +74,7 @@ class Lighting{
     }
   }
 
-  SetCurrentLight(light) {
+  /*SetCurrentLight(light) {
     switch(light){
       case 1: this.SetMorning();
       break;
@@ -81,6 +83,45 @@ class Lighting{
       case 3: this.SetNight();
       break;
     }
+  }*/
+
+  Lerp(a,b,l){
+    return a*(1.0-l)+b*l;
+  }
+
+  BlendParams(src, dst, lerp){
+    /*sunTemperature:this.sunTemperature,
+    shadowBlur:this.shadowBlur,
+    shadowExtraBlur:this.shadowExtraBlur,
+    shadowStrength:this.shadowStrength,
+    shadowLength:this.shadowLength,
+    shadowBlurE0:this.shadowBlurE0,
+    shadowBlurE1:this.shadowBlurE1,
+    ambientLight:new Float32Array(this.ambientLight),
+    lightBlurChannels:new Float32Array(this.lightBlurChannels),
+    cloudDir:this.cloudDir.Copy(),
+    cloudMinIntensity:this.cloudMinIntensity,
+    cloudSize:this.cloudSize,
+    fogColor:new Float32Array(this.fogColor),
+    fogEdges:this.fogEdges.Copy(),
+    fogClamp:this.fogClamp.Copy(),
+    bloomThreshold:this.bloomThreshold,
+    bloomBlur:this.bloomBlur,
+    bloomStrength:this.bloomStrength,*/
+    this.sunTemperature = this.Lerp(src.sunTemperature, dst.sunTemperature, lerp);
+    this.shadowBlur = this.Lerp(src.shadowBlur, dst.shadowBlur, lerp);
+    this.shadowExtraBlur = this.Lerp(src.shadowExtraBlur, dst.shadowExtraBlur, lerp);
+    this.shadowStrength = this.Lerp(src.shadowStrength, dst.shadowStrength, lerp);
+    this.shadowLength = this.Lerp(src.shadowLength, dst.shadowLength, lerp);
+    this.shadowBlurE0 = this.Lerp(src.shadowBlurE0, dst.shadowBlurE0, lerp);
+    this.shadowBlurE1 = this.Lerp(src.shadowBlurE1, dst.shadowBlurE1, lerp);
+    this.ambientLight[0] = this.Lerp(src.ambientLight[0], src.ambientLight[0], lerp);
+    this.ambientLight[1] = this.Lerp(src.ambientLight[1], src.ambientLight[1], lerp);
+    this.ambientLight[2] = this.Lerp(src.ambientLight[2], src.ambientLight[2], lerp);
+    this.lightBlurChannels[0] = this.Lerp(src.lightBlurChannels[0], dst.lightBlurChannels[0], lerp);
+    this.lightBlurChannels[1] = this.Lerp(src.lightBlurChannels[1], dst.lightBlurChannels[1], lerp);
+    this.lightBlurChannels[2] = this.Lerp(src.lightBlurChannels[2], dst.lightBlurChannels[2], lerp);
+
   }
 
   Update(){
@@ -88,6 +129,17 @@ class Lighting{
       this.cloudDisplacement.x+this.cloudDir.x*manager.delta,
       this.cloudDisplacement.y+this.cloudDir.y*manager.delta
     )
+    if(this.transitioning){
+      this.time+=manager.delta;
+      if(this.time < this.transitionTime){
+        let lerp = this.time / this.transitionTime;
+        lerp = lerp * lerp * (3.0-2.0*lerp);
+        this.BlendParams(this.originalParams, this.targetParams, lerp);
+      } else {
+        this.transitioning = false;
+        this.SwitchLight(this.targetLight);
+      }
+    }
   }
 
   SetBloom(threshold = 3.1, blur = 0.015, strength = 0.7){
@@ -106,20 +158,56 @@ class Lighting{
     this.cloudSize = cloudSize;
   }
 
+  BeginTransition(targetLighting, time = 1.0){
+    this.originalParams = this.SaveCurrentParams();
+    let light = this.currentLight;
+    this.targetLight = targetLighting;
+    this.SwitchLight(targetLighting);
+    this.targetParams = this.SaveCurrentParams();
+    this.SwitchLight(light);
+    this.transitioning = true;
+    this.transitionTime = time;
+    this.time = 0.0;
+  }
+
+  SaveCurrentParams(){
+    var params = {
+      sunTemperature:this.sunTemperature,
+      shadowBlur:this.shadowBlur,
+      shadowExtraBlur:this.shadowExtraBlur,
+      shadowStrength:this.shadowStrength,
+      shadowLength:this.shadowLength,
+      shadowBlurE0:this.shadowBlurE0,
+      shadowBlurE1:this.shadowBlurE1,
+      ambientLight:new Float32Array(this.ambientLight),
+      lightBlurChannels:new Float32Array(this.lightBlurChannels),
+      cloudDir:this.cloudDir.Copy(),
+      cloudMinIntensity:this.cloudMinIntensity,
+      cloudSize:this.cloudSize,
+      fogColor:new Float32Array(this.fogColor),
+      fogEdges:this.fogEdges.Copy(),
+      fogClamp:this.fogClamp.Copy(),
+      bloomThreshold:this.bloomThreshold,
+      bloomBlur:this.bloomBlur,
+      bloomStrength:this.bloomStrength,
+    }
+    return params;
+  }
+
   SetDefaultSun(){
     this.renderPointLights = false;
-    this.shadowBlur = 0.2;
-    this.shadowBlurE0 = 0.075;
-    this.shadowBlurE1 = 0.85;
-    this.shadowStrength = 2.5;
-    this.shadowLength = /*-0.5*//*3.0*/-0.3;
-    this.minShadowLength = -5.0;
-    this.verticalShadowStrength = 0.12;
-    this.shadowBlurE0 = 0.075;
-    this.shadowBlurE1 = 0.85;
-    this.SetAmbientLight(0.2, 0.2, 0.6);
-    this.SetLightBlurChannels(0.2,3.0);
-    this.SetClouds();
+    this.sunTemperature = 0.48;
+    this.shadowBlur = 0.15;
+    this.shadowExtraBlur = 0.003;
+    this.shadowStrength = 2.8;
+    this.shadowLength = 1.2;
+    this.sunStrength = 0.8;
+    this.shadowBlurE0 = 0.1;
+    this.shadowBlurE1 = 1.0;
+    this.SetAmbientLight(0.2,0.2,0.4);
+    this.SetLightBlurChannels(0.25,3.0);
+    this.SetClouds(new Vec2(-0.5,-1), 0.1, 0.85,0.1);
+    this.SetFog(0.8,0.8,1.0,0.85,0.95, 0.0, 0.05);
     this.SetBloom();
   }
 
@@ -141,7 +229,7 @@ class Lighting{
     Log("Morning lighting")
   }
 
-  SetNoon(){
+  /*SetNoon(){
     this.renderPointLights = false;
     this.sunTemperature = 0.55;
     this.shadowBlur = 0.1;
@@ -156,7 +244,7 @@ class Lighting{
     this.SetFog(1.0,1.0,1.0,0.9,0.95, 0.0, 0.1);
     this.SetBloom(5.0,0.01,0.3);
     Log("Noon lighting");
-  }
+  }*/
 
   SetAfterNoon(){
     this.renderPointLights = false;

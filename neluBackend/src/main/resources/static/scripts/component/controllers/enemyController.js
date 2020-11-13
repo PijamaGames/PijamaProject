@@ -48,7 +48,7 @@ class EnemyController extends Component {
 
     this.aproachFPS=14;
 
-    this.onDeadCallBack = new function(){};
+    this.onDeadCallBack = function(){};
 
   }
 
