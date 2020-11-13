@@ -85,7 +85,9 @@ class Battle extends AbstractEvent{
         allSpawnersEnded = false;
       }
     }
-    return allSpawnersEnded && /*manager.scene.enemies.size*/Spawner.enemyCount == 0;
+    let aux = allSpawnersEnded;
+    Log("Must end: " + aux);
+    return aux;
   }
 
   Start(){

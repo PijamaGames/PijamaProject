@@ -4,7 +4,7 @@ prefabFactory.AddPrototype("MonkeyEnemy", new Vec2(1, 1), new Vec2(0.5, 0.5), fa
     new SpriteRenderer('monkey_idle', new Vec2(0, 2),new Vec2(1,1), true, 8, [4,0,6,1,5,3,7,2], 14),
     new Rigidbody(0.5),
     //new ShadowCaster(new Vec2(0,-0.75), 0.75),
-    new EnemyController(2.0),
+    new EnemyController(1.0),
     new Burnable().SetOnBurn((obj)=>{
       obj.enemyController.TakeDamage(10, true);
     }),
@@ -181,7 +181,7 @@ prefabFactory.AddPrototype("BeekeeperEnemy", new Vec2(2, 2), new Vec2(0.5, 0.5),
     new SpriteRenderer('beekeeper_idle', new Vec2(0, 2),new Vec2(2,2), true, 8, [4,0,6,1,5,3,7,2], 14),
     new Rigidbody(0.5),
     //new ShadowCaster(new Vec2(0,-0.75), 0.75),
-    new BeekeeperController(1),
+    new BeekeeperController(0.7),
     new Burnable().SetOnBurn((obj)=>{
       obj.enemyController.TakeDamage(10, true);
     }),

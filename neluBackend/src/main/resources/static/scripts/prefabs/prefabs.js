@@ -43,7 +43,7 @@ prefabFactory.AddPrototype("Rock", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
     new ColliderGroup([new BoxCollider(new Vec2(0,-0.1), 1.0,0.8, false)]),
     new Rigidbody(0.5,true),
-    new Renderer(new Vec2(5,0), new Vec2(1,1), false),
+    new Renderer(new Vec2(5,0), new Vec2(1,1), true),
     new AudioSource(["moveObjectSound"]),
   ]
 });

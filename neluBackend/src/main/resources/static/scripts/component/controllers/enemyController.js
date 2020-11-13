@@ -42,13 +42,14 @@ class EnemyController extends Component {
     this.canTakeDamage = true;
     this.damageCooldown = 0.5;
     this.damageTime = 0.0;
-    this.damageForce = 2.0;
+    this.damageForce = 1.0;
 
     this.isMonkey=true;
 
     this.aproachFPS=14;
 
     this.onDeadCallBack = function(){};
+    //this.onDeadEvent = new EventDispatcher();
 
   }
 
@@ -276,6 +277,7 @@ class EnemyController extends Component {
   }
 
   Destroy(){
+    //this.onDeadEvent.Dispatch();
     this.gameobj.scene.enemies.delete(this.gameobj);
     for(let apple of this.allApples){
       apple.Destroy();
