@@ -27,6 +27,7 @@ function Main(){
   manager.AddScene(new Scene("connectionFailed", BC_ConnectionFailed));
   manager.AddScene(new Scene("focusLost", BC_FocusLost));
   manager.AddScene(new Scene("credits", BC_Credits));
+  manager.AddScene(new Scene("controls", BC_Controls));
   manager.Start('start');
 }
 
