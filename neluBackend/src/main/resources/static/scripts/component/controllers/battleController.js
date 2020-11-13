@@ -16,7 +16,7 @@ class AbstractEvent{
 }
 
 class ScriptedEvent extends AbstractEvent{
-  constructor(id, autoStart, pos, dist, repeat, onStart = funcion(){}){
+  constructor(id, autoStart, pos, dist, repeat, onStart = function(){}){
     super(id, autoStart, pos, dist);
     this.repeat = repeat;
     this.onStart = onStart;
@@ -30,7 +30,7 @@ class ScriptedEvent extends AbstractEvent{
   }
 }
 
-class Battlee extends AbstractEvent{
+class Battle extends AbstractEvent{
   constructor(id, autoStart, pos, dist, spawnerRefs='', startEnable = '', startDisable = '', endEnable = '', endDisable = ''){
     super(id, autoStart, pos, dist);
     Object.assign(this, {spawnerRefs, startEnable, startDisable, endEnable, endDisable});
