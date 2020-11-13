@@ -168,7 +168,6 @@ class EnemyController extends Component {
       that.EnemyMove();
 
     }).SetExitFunc(()=>{
-      Log("MONOOOOOOOOOOOO")
       if (that.isMonkey) that.PauseMonkeySound("screamingMonkeySound");
     }).SetEdges([
       new Edge('patrol').AddCondition(()=> that.FindClosestPlayer(that.detectionRange) == null || that.target.playerController.life<=0),
@@ -190,7 +189,7 @@ class EnemyController extends Component {
       let target=that.FindClosestPlayer(that.attackADRange);
       this.SetAnimDir(target);
       if(this.contTimeAD>=this.resetADAttackTime && target != null){
-        this.PlayMonkeySound("throwMissileSound");
+        if(this.isMonkey) this.PlayMonkeySound("throwMissileSound");
         this.PoolPop(target);
         this.contTimeAD=0;
       }

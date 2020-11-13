@@ -9,7 +9,7 @@ prefabFactory.AddPrototype("MonkeyEnemy", new Vec2(1, 1), new Vec2(0.5, 0.5), fa
       obj.enemyController.TakeDamage(10, true);
     }),
     new NetworkEntity(),
-    new AudioSource(["monkeyHouseSound", "screamingMonkeySound","monkeyDamageSound","throwMissileSound","fireSound"]),
+    new AudioSource(["screamingMonkeySound","monkeyDamageSound","throwMissileSound","fireSound"]),
   ]
 });
 
@@ -50,6 +50,7 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
     new CustomBehaviour().SetOnUpdate((obj)=>{
       obj.renderer.tile.x = DEBUG_VISUAL ? 6 : 5;
     }),
+    new AudioSource(["monkeyHouseSound"]),
   ]
 });
 
