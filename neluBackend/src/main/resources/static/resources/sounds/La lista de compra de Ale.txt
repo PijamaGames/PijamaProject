@@ -176,10 +176,21 @@ SONIDOS EN DUDA/ NO INCLUIDOS
 (ES IMPORTANTE QUE TODOS TENGAN EL MISMO VOLUMEN, PORQ SI NO SE ESCUCHA MUCHO UNO Y NADA EL RESTO)
 
 
-Sonidos actualizados en 0 seg
+Sonidos actualizados en 0 seg (Los que no aparecen ya lo estaban)
 Mover objeto
-Combo Nelu
+Combo Nelu (Separado)
 Lanzar Proyectil
 Efecto golpes (Completado)
 Musica Menu (completado)
 Mono chillando (Completado)
+
+Sonidos puesto al mismo nivel (Los que no aparecen ya estan) TODOS LOS SONIDOS HECHOS
+Combo Nelu
+Colibri
+Dash
+Canción Barca
+Muerte Nelu
+Nelu Daño
+Tropa Suelta
+HUMANO TODO
+falta musica arena
