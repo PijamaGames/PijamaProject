@@ -453,6 +453,7 @@ class PlayerController extends Component {
 
   ActivateFirePower(){
     this.gameobj.audioSource.Play("poweupFireSound");
+    manager.singleGameMusic.PauseAll();
     this.firePower = true;
     this.firePowerTime = 0.0;
 
@@ -461,6 +462,7 @@ class PlayerController extends Component {
 
   DeactivateFirePower(){
     this.gameobj.audioSource.Stop("poweupFireSound");
+    manager.singleGameMusic.PlayAll();
     this.firePower = false;
     Log("deactivate fire power");
   }

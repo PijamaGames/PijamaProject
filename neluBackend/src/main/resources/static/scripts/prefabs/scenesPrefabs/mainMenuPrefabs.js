@@ -59,3 +59,20 @@ prefabFactory.AddPrototype("MultiGameFromMenu", new Vec2(8,2), new Vec2(0.5,0.5)
     new AudioSource(["UISound1"]),
   ]
 });
+
+prefabFactory.AddPrototype("CreditsFromMenu", new Vec2(8,2), new Vec2(0.5,0.5), false, ()=>{
+  return [
+    new ImageRenderer(new Vec2(7,4), new Vec2(8,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
+      obj.gameobj.renderer.MultiplyTint(0.8);
+    }).SetHoverOutFunc((obj)=>{
+      let tint=obj.gameobj.renderer.realTint;
+      obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
+    }).SetUpFunc(()=>{
+      manager.LoadScene('credits');
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
+    }),
+    new TextBox(null, "Créditos","Credits", new Vec2(0.3,0.07), true),
+    new AudioSource(["UISound1"]),
+  ]
+});

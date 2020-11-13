@@ -11,13 +11,23 @@ class AudioSource extends Component{
 
     if(soundOnAwake!=null)
       this.Play(soundOnAwake);
+    this.maxDistance=10;
+    this.minDistance=0;
+    this.volume;
   }
 
   Destroy(){
   }
 
   Update(){
-    this.ChangeVolAll(manager.musicVolume);
+    this.maxVol=manager.maxVolume;
+    let player = manager.scene.players.values().next().value;
+    if(player){
+      this.distance=Vec2.Distance(this.gameobj.transform.GetWorldCenter(),player.transform.GetWorldCenter());
+      let normDist=this.distance/this.maxDistance;
+      this.volume=((-Math.pow(normDist,3))+1)*this.maxVol;
+      this.ChangeVolAll(this.volume);
+    }
   }
 
   SetGameobj(gameobj){
