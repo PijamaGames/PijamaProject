@@ -118,6 +118,10 @@ prefabFactory.AddPrototype("Lighting", new Vec2(2,2), new Vec2(0.5,0.5), false, 
       obj.gameobj.audioSource.PlayAll();
     }),
     new AudioSource(["UISound1"]),
+    new CustomBehaviour().SetOnCreate((obj)=>{
+      lighting.nextLight=lighting.currentLight;
+      lighting.SwitchLight(obj.renderer);
+    }),
   ]
 });
 prefabFactory.AddPrototype("PrivacityOption", new Vec2(4,2), new Vec2(0.5,0.0), false, ()=>{

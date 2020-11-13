@@ -17,7 +17,10 @@ function Main(){
   manager.AddScene(new Scene("start", BC_Start));
   manager.AddScene(new Scene("pause", BC_Pause));
   manager.AddScene(new Scene("singleGame", BC_SingleGame));
-  manager.AddScene(new Scene("multiGame", BC_MultiGame));
+  manager.AddScene(new Scene("multiGame1", BC_MultiGame1));
+  manager.AddScene(new Scene("multiGame2", BC_MultiGame2));
+  manager.AddScene(new Scene("multiGame3", BC_MultiGame3));
+  manager.AddScene(new Scene("multiGame4", BC_MultiGame4));
   manager.AddScene(new Scene("lobby", BC_Lobby));
   manager.AddScene(new Scene("chooseEnviroment", BC_ChooseEnviroment));
   manager.AddScene(new Scene("room", BC_Room));
