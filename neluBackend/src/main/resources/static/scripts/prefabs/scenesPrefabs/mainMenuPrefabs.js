@@ -18,7 +18,7 @@ prefabFactory.AddPrototype("SingleGameFromMenu", new Vec2(8,2), new Vec2(0.5,0.5
       input.HideVirtualInputs(false);
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();
-      manager.singleGameMusic.PlayAll();
+      //manager.singleGameMusic.PlayAll();
     }),
     new TextBox(null, "Aventura","Adventure", new Vec2(0.3,0.07), true),
     new AudioSource(["UISound1"]),
@@ -27,7 +27,7 @@ prefabFactory.AddPrototype("SingleGameFromMenu", new Vec2(8,2), new Vec2(0.5,0.5
 
 prefabFactory.AddPrototype("ControlsFromMenu", new Vec2(8,2), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(7,4), new Vec2(8,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
+    new ImageRenderer(new Vec2(15,0), new Vec2(8,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
       obj.gameobj.renderer.MultiplyTint(0.8);
     }).SetHoverOutFunc((obj)=>{
       let tint=obj.gameobj.renderer.realTint;
@@ -43,9 +43,9 @@ prefabFactory.AddPrototype("ControlsFromMenu", new Vec2(8,2), new Vec2(0.5,0.5),
   ]
 });
 
-prefabFactory.AddPrototype("OptionsFromMenu", new Vec2(8,2), new Vec2(0.5,0.5), false, ()=>{
+prefabFactory.AddPrototype("OptionsFromMenu", new Vec2(2,2), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(15,0), new Vec2(8,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
+    new ImageRenderer(new Vec2(14,6), new Vec2(2,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
       obj.gameobj.renderer.MultiplyTint(0.8);
     }).SetHoverOutFunc((obj)=>{
       let tint=obj.gameobj.renderer.realTint;
