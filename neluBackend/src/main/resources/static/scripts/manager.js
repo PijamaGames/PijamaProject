@@ -57,13 +57,13 @@ class Manager {
 
   DebugIteration(){
     if(input.GetKeyDown('KeyT'))
-      lighting.SetMorning();
+      lighting.BeginTransition(1, 3);
     if(input.GetKeyDown('KeyY'))
-      lighting.SetAfterNoon();
+      lighting.BeginTransition(2, 3);
     /*if(input.GetKeyDown('KeyY'))
       lighting.SetNoon();*/
     if(input.GetKeyDown('KeyH'))
-      lighting.SetNight();
+      lighting.BeginTransition(3, 3);
 
     if(input.GetKeyDown("KeyP"))
       DEBUG_VISUAL = !DEBUG_VISUAL;

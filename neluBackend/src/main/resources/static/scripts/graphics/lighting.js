@@ -51,7 +51,7 @@ class Lighting{
     this.currentLight=1;
     this.nextLight=2;
 
-    this.SwitchLight(1);
+    this.SetCurrentLight(1);
   }
 
   SwitchLight(rend){
@@ -68,13 +68,13 @@ class Lighting{
       break;
       case 3:
         this.currentLight=3;
-        rend.SetTile(new Vec2(11,13.5));
+        rend.SetTile(new Vec2(9,13.5));
         this.nextLight=1;
       break;
     }
   }
 
-  /*SetCurrentLight(light) {
+  SetCurrentLight(light) {
     switch(light){
       case 1: this.SetMorning();
       break;
@@ -83,45 +83,41 @@ class Lighting{
       case 3: this.SetNight();
       break;
     }
-  }*/
+  }
 
   Lerp(a,b,l){
     return a*(1.0-l)+b*l;
   }
 
   BlendParams(src, dst, lerp){
-    /*sunTemperature:this.sunTemperature,
-    shadowBlur:this.shadowBlur,
-    shadowExtraBlur:this.shadowExtraBlur,
-    shadowStrength:this.shadowStrength,
-    shadowLength:this.shadowLength,
-    shadowBlurE0:this.shadowBlurE0,
-    shadowBlurE1:this.shadowBlurE1,
-    ambientLight:new Float32Array(this.ambientLight),
-    lightBlurChannels:new Float32Array(this.lightBlurChannels),
-    cloudDir:this.cloudDir.Copy(),
-    cloudMinIntensity:this.cloudMinIntensity,
-    cloudSize:this.cloudSize,
-    fogColor:new Float32Array(this.fogColor),
-    fogEdges:this.fogEdges.Copy(),
-    fogClamp:this.fogClamp.Copy(),
-    bloomThreshold:this.bloomThreshold,
-    bloomBlur:this.bloomBlur,
-    bloomStrength:this.bloomStrength,*/
     this.sunTemperature = this.Lerp(src.sunTemperature, dst.sunTemperature, lerp);
+    this.sunStrength = this.Lerp(src.sunStrength, dst.sunStrength, lerp);
     this.shadowBlur = this.Lerp(src.shadowBlur, dst.shadowBlur, lerp);
     this.shadowExtraBlur = this.Lerp(src.shadowExtraBlur, dst.shadowExtraBlur, lerp);
     this.shadowStrength = this.Lerp(src.shadowStrength, dst.shadowStrength, lerp);
     this.shadowLength = this.Lerp(src.shadowLength, dst.shadowLength, lerp);
     this.shadowBlurE0 = this.Lerp(src.shadowBlurE0, dst.shadowBlurE0, lerp);
     this.shadowBlurE1 = this.Lerp(src.shadowBlurE1, dst.shadowBlurE1, lerp);
-    this.ambientLight[0] = this.Lerp(src.ambientLight[0], src.ambientLight[0], lerp);
-    this.ambientLight[1] = this.Lerp(src.ambientLight[1], src.ambientLight[1], lerp);
-    this.ambientLight[2] = this.Lerp(src.ambientLight[2], src.ambientLight[2], lerp);
+    this.ambientLight[0] = this.Lerp(src.ambientLight[0], dst.ambientLight[0], lerp);
+    this.ambientLight[1] = this.Lerp(src.ambientLight[1], dst.ambientLight[1], lerp);
+    this.ambientLight[2] = this.Lerp(src.ambientLight[2], dst.ambientLight[2], lerp);
     this.lightBlurChannels[0] = this.Lerp(src.lightBlurChannels[0], dst.lightBlurChannels[0], lerp);
     this.lightBlurChannels[1] = this.Lerp(src.lightBlurChannels[1], dst.lightBlurChannels[1], lerp);
     this.lightBlurChannels[2] = this.Lerp(src.lightBlurChannels[2], dst.lightBlurChannels[2], lerp);
-
+    this.cloudDir.x = this.Lerp(src.cloudDir.x, dst.cloudDir.x, lerp);
+    this.cloudDir.y = this.Lerp(src.cloudDir.y, dst.cloudDir.y, lerp);
+    this.cloudMinIntensity = this.Lerp(src.cloudMinIntensity, dst.cloudMinIntensity, lerp);
+    this.cloudSize = this.Lerp(src.cloudSize, dst.cloudSize, lerp);
+    this.fogColor[0] = this.Lerp(src.fogColor[0], dst.fogColor[0], lerp);
+    this.fogColor[1] = this.Lerp(src.fogColor[1], dst.fogColor[1], lerp);
+    this.fogColor[2] = this.Lerp(src.fogColor[2], dst.fogColor[2], lerp);
+    this.fogEdges.x = this.Lerp(src.fogEdges.x, dst.fogEdges.x, lerp);
+    this.fogEdges.y = this.Lerp(src.fogEdges.y, dst.fogEdges.y, lerp);
+    this.fogClamp.x = this.Lerp(src.fogClamp.x, dst.fogClamp.x, lerp);
+    this.fogClamp.y = this.Lerp(src.fogClamp.y, dst.fogClamp.y, lerp);
+    this.bloomThreshold = this.Lerp(src.bloomThreshold, dst.bloomThreshold, lerp);
+    this.bloomBlur = this.Lerp(src.bloomBlur, dst.bloomBlur, lerp);
+    this.bloomStrength = this.Lerp(src.bloomStrength, dst.bloomStrength, lerp);
   }
 
   Update(){
@@ -134,10 +130,16 @@ class Lighting{
       if(this.time < this.transitionTime){
         let lerp = this.time / this.transitionTime;
         lerp = lerp * lerp * (3.0-2.0*lerp);
+        Log("lerp:"+lerp);
         this.BlendParams(this.originalParams, this.targetParams, lerp);
       } else {
+        Log("END TRANSITION");
         this.transitioning = false;
-        this.SwitchLight(this.targetLight);
+        let params = this.SaveCurrentParams();
+        Log(params);
+        this.SetCurrentLight(this.targetLight);
+        params = this.SaveCurrentParams();
+        Log(params);
       }
     }
   }
@@ -162,9 +164,9 @@ class Lighting{
     this.originalParams = this.SaveCurrentParams();
     let light = this.currentLight;
     this.targetLight = targetLighting;
-    this.SwitchLight(targetLighting);
+    this.SetCurrentLight(targetLighting);
     this.targetParams = this.SaveCurrentParams();
-    this.SwitchLight(light);
+    this.SetCurrentLight(light);
     this.transitioning = true;
     this.transitionTime = time;
     this.time = 0.0;
@@ -177,6 +179,7 @@ class Lighting{
       shadowExtraBlur:this.shadowExtraBlur,
       shadowStrength:this.shadowStrength,
       shadowLength:this.shadowLength,
+      sunStrength:this.sunStrength,
       shadowBlurE0:this.shadowBlurE0,
       shadowBlurE1:this.shadowBlurE1,
       ambientLight:new Float32Array(this.ambientLight),
@@ -212,7 +215,7 @@ class Lighting{
   }
 
   SetMorning(){
-    this.renderPointLights = false;
+    //this.renderPointLights = false;
     this.sunTemperature = 0.48;
     this.shadowBlur = 0.15;
     this.shadowExtraBlur = 0.003;
@@ -247,7 +250,7 @@ class Lighting{
   }*/
 
   SetAfterNoon(){
-    this.renderPointLights = false;
+    //this.renderPointLights = false;
     this.sunTemperature = 0.7;
     this.shadowBlur = 0.07;
     this.shadowStrength = 2.35;
@@ -264,7 +267,7 @@ class Lighting{
   }
 
   SetNight(){
-    this.renderPointLights = true;
+    //this.renderPointLights = true;
     this.sunTemperature = 0.0;
     this.shadowBlur = 0.08/*0.0*/;
     this.shadowStrength = 1.0;

@@ -1,20 +1,44 @@
-class Battle{
-  constructor(id, autoStart, pos, dist, spawnerRefs='', startEnable = '', startDisable = '', endEnable = '', endDisable = ''){
-    Object.assign(this, {id,autoStart,pos, dist, spawnerRefs, startEnable, startDisable, endEnable, endDisable});
+class AbstractEvent{
+  constructor(id, autoStart, pos, dist){
+    Object.assign(this, {id,autoStart,pos, dist});
     this.started = false;
+    //this.ended = false;
+  }
+
+  MustStart(){
+    let player = manager.scene.players.values().next().value;
+    return Vec2.Distance(this.pos, player.transform.GetWorldCenter()) < this.dist;
+  }
+
+  Start(){
+
+  }
+}
+
+class ScriptedEvent extends AbstractEvent{
+  constructor(id, autoStart, pos, dist, repeat, onStart = funcion(){}){
+    super(id, autoStart, pos, dist);
+    this.repeat = repeat;
+    this.onStart = onStart;
+    this.used = false;
+  }
+
+  Start(){
+    if(!this.used || this.repeat){
+      this.onStart();
+    }
+  }
+}
+
+class Battlee extends AbstractEvent{
+  constructor(id, autoStart, pos, dist, spawnerRefs='', startEnable = '', startDisable = '', endEnable = '', endDisable = ''){
+    super(id, autoStart, pos, dist);
+    Object.assign(this, {spawnerRefs, startEnable, startDisable, endEnable, endDisable});
+    //this.started = false;
     this.ended = false;
   }
 
   ProcessRefs(){
-    /*let spawner;
-    for(let ref of this.spawnerRefs){
-      spawner = Spawner.refs.get(ref);
-      if(spawner){
-        this.spawners.push(spawner);
-      } else {
-        Log("SPAWNER NOT FOUND: " + ref);
-      }
-    }*/
     this.spawners = finder.FindObjectsWithBytecode(this.spawnerRefs);
     this.startEnableObjs = finder.FindObjectsWithBytecode(this.startEnable);
     for(let obj of this.startEnableObjs){
@@ -26,7 +50,7 @@ class Battle{
       obj.SetActive(false);
     }
     this.endDisableObjs = finder.FindObjectsWithBytecode(this.endDisable);
-    Log("REFS:");
+    Log("BATTLE "+this.id+" REFS:");
     Log(this.spawners);
     Log(this.startEnableObjs);
     Log(this.startDisableObjs);
@@ -34,10 +58,10 @@ class Battle{
     Log(this.endDisableObjs);
   }
 
-  MustStart(){
+  /*MustStart(){
     let player = manager.scene.players.values().next().value;
     return Vec2.Distance(this.pos, player.transform.GetWorldCenter()) < this.dist;
-  }
+  }*/
 
   MustEnd(){
     let allSpawnersEnded = true;
@@ -76,14 +100,19 @@ class Battle{
 }
 
 class BattleController extends Component{
-  constructor(battles = []){
+  constructor(battles = [], events = []){
     super();
     this.type = "battleController";
     this.started = false;
     this.battles = battles;
+    this.events = events;
     this.battleMap = new Map();
+    this.eventMap = new Map();
     for(let b of this.battles){
       this.battleMap.set(b.id, b);
+    }
+    for(let e of this.events){
+      this.eventMap.set(e.id, e);
     }
     this.onStartBattle = function(){};
     this.onEndBattle = function(){};
@@ -111,10 +140,19 @@ class BattleController extends Component{
     }
   }
 
+  CheckEvent(e){
+    if(e.MustStart()){
+      e.Start();
+    }
+  }
+
   Update(){
     if(this.started){
       for(var battle of this.battles){
         this.CheckBattle(battle);
+      }
+      for(var e of this.events){
+        this.CheckEvent(e);
       }
     }
   }
