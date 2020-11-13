@@ -3,12 +3,12 @@ class Spawner extends Component{
   //static refs = new Map();
   static enemyCount = 0;
 
-  constructor(prefab, count){
+  constructor(prefab, count, cooldown = 3.0){
     super();
     this.type = "spawner";
     this.coolDown = 3.0;
-    this.time = 0.0;
-    this.distToSpawn = 5.0;
+    this.time = this.coolDown*0.7;
+    this.distToSpawn = 100.0;
     this.count = count;
     this.onEndSpawn = function(){};
     this.spawnEvent = new EventDispatcher();

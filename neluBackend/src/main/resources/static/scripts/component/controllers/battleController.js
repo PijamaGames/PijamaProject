@@ -26,6 +26,7 @@ class ScriptedEvent extends AbstractEvent{
 
   Start(){
     if(!this.used || this.repeat){
+      this.used = true;
       Log("START SCRIPTED EVENT: "+this.id);
       this.onStart();
     }
@@ -38,6 +39,18 @@ class Battle extends AbstractEvent{
     Object.assign(this, {spawnerRefs, startEnable, startDisable, endEnable, endDisable});
     //this.started = false;
     this.ended = false;
+    this.onEndFunc = function(){};
+    this.onStartFunc = function(){};
+  }
+
+  SetOnStart(func){
+    this.onStartFunc = func;
+    return this;
+  }
+
+  SetOnEnd(func){
+    this.onEndFunc = func;
+    return this;
   }
 
   ProcessRefs(){
@@ -83,10 +96,17 @@ class Battle extends AbstractEvent{
     for(let obj of this.startEnableObjs){
       obj.SetActive(true);
     }
+    for(let obj of this.endEnableObjs){
+      obj.SetActive(false);
+    }
     for(let obj of this.startDisableObjs){
       obj.SetActive(false);
     }
+    for(let obj of this.endDisableObjs){
+      obj.SetActive(true);
+    }
     this.started = true;
+    this.onStartFunc();
   }
 
   End(){
@@ -94,10 +114,17 @@ class Battle extends AbstractEvent{
     for(let obj of this.endEnableObjs){
       obj.SetActive(true);
     }
+    /*for(let obj of this.startEnableObjs){
+      obj.SetActive(true);
+    }
+    for(let obj of this.startDisableObjs){
+      obj.SetActive(false);
+    }*/
     for(let obj of this.endDisableObjs){
       obj.SetActive(false);
     }
     this.ended = true;
+    this.onEndFunc();
   }
 }
 
@@ -118,6 +145,11 @@ class BattleController extends Component{
     }
     this.onStartBattle = function(){};
     this.onEndBattle = function(){};
+  }
+
+  AddEvent(e){
+    this.events.push(e);
+    this.battleMap.set(e.id, e);
   }
 
   SetOnStartBattle(func){
@@ -177,6 +209,13 @@ class BattleController extends Component{
     let b = this.battleMap.get(id);
     if(b && b!=null){
       b.Start();
+    }
+  }
+
+  StartEvent(id){
+    let e = this.eventMap.get(id);
+    if(e && e!=null){
+      e.Start();
     }
   }
 

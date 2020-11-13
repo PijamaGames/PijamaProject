@@ -130,7 +130,6 @@ class Lighting{
       if(this.time < this.transitionTime){
         let lerp = this.time / this.transitionTime;
         lerp = lerp * lerp * (3.0-2.0*lerp);
-        Log("lerp:"+lerp);
         this.BlendParams(this.originalParams, this.targetParams, lerp);
       } else {
         Log("END TRANSITION");
