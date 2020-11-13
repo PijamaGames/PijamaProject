@@ -10,8 +10,8 @@ class PlayerController extends Component {
     this.endAttackAnim=false;
 
 
-    this.maxLife = 45;
-    this.life = 30;
+    this.maxLife = 800;
+    this.life = 800;
     this.canTakeDamage = true;
     this.damageCooldown = 0.5;
     this.damageTime = 0.0;

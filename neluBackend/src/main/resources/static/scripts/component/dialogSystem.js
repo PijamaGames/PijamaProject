@@ -1,3 +1,4 @@
+var dialogSystem;
 class DialogSystem extends Component {
   constructor(xml){
     super();
@@ -14,9 +15,9 @@ class DialogSystem extends Component {
   }
 
   Update(){
-    if(input.GetKeyDown("KeyC")){
+    /*if(input.GetKeyDown("KeyC")){
       this.InitDialog("interludio_1");
-    }
+    }*/
     this.fsm.Update();
   }
 
@@ -93,7 +94,7 @@ class DialogSystem extends Component {
     this.textName.SetActive(false);
 
     this.CreateFSM();
-
+    dialogSystem = this;
   }
 
   FormatDialogs(rawDialogs){

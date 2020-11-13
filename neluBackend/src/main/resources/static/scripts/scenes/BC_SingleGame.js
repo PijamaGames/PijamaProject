@@ -1,9 +1,12 @@
 var BC_SingleGame = `
+BindWeed 67 -12 0.5 1 2
+BindWeed 67 -10 0.5 1 2
+BindWeed 67 -11 0.5 1 2
 PauseFromSingleGame 0.1 -0.07 0
 SingleLifeText 0.5 -0.07 0
 DialogSystem 0 0 0
 SingleGameMusic 0 0 0
-Nelu 0 0 0
+Nelu 0 2 0
 DecoTree -3 6 0
 DecoTree 4 6 0
 DecoTree -5 -5 0
@@ -205,8 +208,6 @@ DirtWall2 56 -8 0
 DirtWall2 53 -8 0
 DirtWall2 58 -8 0
 Dirt21 52 -8 2 1 1
-BindWeed 67 -10 0 1 2
-BindWeed 67 -9 0 1 2
 Dirt22 53 -8 2 6 1
 Dirt23 59 -8 2 1 1
 Dirt24 52 -7 2 1 6
@@ -383,7 +384,7 @@ DecoTree 88.31275939941406 -10.656164169311523 0
 DecoTree 94 -10 0
 DecoTree 91.02102661132812 -10.206313133239746 0
 LogVertical 92 -13 0.05 1 2
-FireFlower 100 -14 0
+FireFlowerBattle 100 -14 0
 Campfire 95 -14 0.05 1 1
 Campfire 98 -13 0.05 1 1
 Campfire 97 -17 0.05 1 1
@@ -485,7 +486,7 @@ DecoTree 117 -31 0
 Grass 117 -29 0 29 17
 WaterTop 144 -36 0 29 1
 DecoTree 121.22797393798828 -31.528182983398438 0
-BigLog 128 -35 0
+BigLog 128 -35 0.1
 DecoTree 125 -31 0
 DryPlant 136 -35 0
 DryPlant 136 -34 0
@@ -592,9 +593,6 @@ DecoTree 61.319278717041016 -14.385807037353516 0
 DecoTree 73.58930969238281 -19.62569808959961 0
 DecoTree 79.61410522460938 -18.291950225830078 0
 DecoTree 66.63507080078125 -3.144113540649414 0
-BindWeed 85 -13 0.05 1 2
-BindWeed 85 -14 0.05 1 2
-BindWeed 85 -15 0.05 1 2
 DecoTree 85.1075439453125 -11.556352615356445 0
 DirtWall3 105 -10 0
 DirtWall3 106 -9 0
@@ -761,10 +759,6 @@ DirtWall2 173.99778747558594 3.5145840644836426 0
 Dirt27 181 -12 2 5 1
 Dirt24 180 -20 2 1 8
 Dirt26 180 -12 2 1 1
-BindWeed 179 -12 0.5 1 2
-BindWeed 178 -12 0.5 1 2
-BindWeed 177 -12 0.5 1 2
-BindWeed 176 -12 0.5 1 2
 RockHole 167 0 0.05 1 1
 RockHole 167 -1 0.05 1 1
 RockHole 167 -2 0.05 1 1
@@ -859,7 +853,6 @@ Dirt26 156 -3 2 1 1
 Dirt26 155 -5 2 1 1
 Sand 148 -4 0 9 9
 Nest1 152 0 0
-BindWeed 157 1 0.05 1 2
 Dirt27 157 -3 2 9 1
 Dirt24 156 -4 2 1 1
 Dirt12 156 -5 2 1 1
@@ -1003,11 +996,11 @@ Sand 146 24 0 13 5
 Dirt 140 8 2 6 15
 Dirt24 139 11 2 1 11
 Dirt 144 3 2 4 1
-BigLog 147 12 0
-BigLog 148 10 0
-BigLog 148 13 0
-BigLog 149 11 0
-BigLog 147 15 0
+BigLog 147 12 0.1
+BigLog 148 10 0.1
+BigLog 148 13 0.1
+BigLog 149 11 0.1
+BigLog 147 15 0.1
 LogHorizontal 154 25 0
 LogHorizontal 155 24 0
 LogHorizontal 156 23 0
@@ -1678,13 +1671,10 @@ BoxColliderScalable 101 -38 0 41 3
 BoxColliderScalable 142 -38 0 41 3
 BoxColliderScalable 88 -10 0 29 4
 BoxColliderScalable 114 -23 0 4 13
-BattleManager 0.25 0.25 0 1 1
 Water -12 -11 0 8 18
 BoxColliderScalable 110 -31 0 17 8
 BoxColliderScalable 127 -31 0 17 8
-BindWeed 166 0 0.05 1 2
 Dirt23 166 1 2 1 1
-BindWeed 166 -1 0.05 1 2
 BoxColliderScalable 144 -31 0 17 8
 DirtWall3 174 -23 0
 Grass 169 -23 0 7 5
@@ -1709,31 +1699,31 @@ BoxColliderScalable 161 -31 0 12 3
 BoxColliderScalable 166 -28 0 8 3
 BoxColliderScalable 145 8 0 8 2
 BoxColliderScalable 144 -4 0 5 12
-MonkeySpawner 54 -9 0 1 1
-MonkeySpawner 57 -9 0 1 1
-MonkeySpawner 71 -3 0 1 1
-MonkeySpawner 74 -3 0 1 1
-MonkeySpawner 77 -3 0 1 1
-MonkeySpawner 80 -3 0 1 1
-MonkeySpawner 100 -11 0 1 1
-MonkeySpawner 101 -11 0 1 1
-MonkeySpawner 102 -11 0 1 1
-MonkeySpawner 103 -11 0 1 1
-MonkeySpawner 104 -11 0 1 1
-MonkeySpawner 168 2 0.05 1 1
-MonkeySpawner 170 2 0.05 1 1
-MonkeySpawner 172 2 0.05 1 1
-MonkeySpawner 183 2 0.05 1 1
-MonkeySpawner 185 2 0.05 1 1
-MonkeySpawner 187 2 0.05 1 1
-MonkeySpawner 170 25 0.05 1 1
-MonkeySpawner 172 25 0.05 1 1
-MonkeySpawner 174 25 0.05 1 1
-MonkeySpawner 176 25 0.05 1 1
-MonkeySpawner 179 25 0.05 1 1
-MonkeySpawner 181 25 0.05 1 1
-MonkeySpawner 183 25 0.05 1 1
-MonkeySpawner 185 25 0.05 1 1
+MonkeySpawner1 54 -9 0 1 1
+MonkeySpawner1 57 -9 0 1 1
+MonkeySpawner2 71 -3 0 1 1
+MonkeySpawner2 74 -3 0 1 1
+MonkeySpawner2 77 -3 0 1 1
+MonkeySpawner2 80 -3 0 1 1
+MonkeySpawner1 100 -11 0 1 1
+MonkeySpawner1 101 -11 0 1 1
+MonkeySpawner1 102 -11 0 1 1
+MonkeySpawner1 103 -11 0 1 1
+MonkeySpawner1 104 -11 0 1 1
+MonkeySpawner3 168 2 0.05 1 1
+MonkeySpawner3 170 2 0.05 1 1
+MonkeySpawner3 172 2 0.05 1 1
+MonkeySpawner3 183 2 0.05 1 1
+MonkeySpawner3 185 2 0.05 1 1
+MonkeySpawner3 187 2 0.05 1 1
+MonkeySpawner2 170 25 0.05 1 1
+MonkeySpawner2 172 25 0.05 1 1
+MonkeySpawner2 174 25 0.05 1 1
+MonkeySpawner2 176 25 0.05 1 1
+MonkeySpawner2 179 25 0.05 1 1
+MonkeySpawner2 181 25 0.05 1 1
+MonkeySpawner2 183 25 0.05 1 1
+MonkeySpawner2 185 25 0.05 1 1
 CampTop2 182 15 0.05 2 1
 CampTop2 182 17 0.05 2 1
 CampTop2 182 19 0.05 2 1
@@ -1798,7 +1788,7 @@ CampTop1 182 18 0.05
 CampTop1 183 18 0.05
 CampTop1 183 20 0.05
 CampTop1 182 20 0.05
-BigLog 122 -33 0
+BigLog 122 -33 0.1
 BoxColliderScalable 158 10 0 9 12
 BoxColliderScalable 138 10 0 9 16
 BoxColliderScalable 144 26 0 13 6
@@ -1848,4 +1838,19 @@ BoxColliderScalable 149 6 0 1 2
 BoxColliderScalable 150 7 0 1 1
 BoxColliderScalable 154 6 0 2 1
 BoxColliderScalable 155 7 0 1 1
+BindWeed 45 -12 0.5 1 2
+BindWeed 45 -11 0.5 1 2
+BindWeed 85 -16 0.5 1 2
+BindWeed 85 -15 0.5 1 2
+BindWeed 85 -14 0.5 1 2
+BigLog 176 -19 0.1
+BigLog 177 -19 0.1
+BigLog 178 -19 0.1
+BigLog 179 -19 0.1
+BindWeed 186 11 0.05 1 2
+BindWeed 187 11 0.05 1 2
+BindWeed 188 11 0.05 1 2
+BindWeed 166 22 0.05 1 2
+BindWeed 166 23 0.05 1 2
+BattleManager 0.25 1.25 0 1 1
 `
