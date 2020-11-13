@@ -4,7 +4,7 @@ class BeekeeperController extends EnemyController {
     super(speed);
     this.type = "beekeeperController";
 
-    this.detectionRange = 10.0;
+    this.detectionRange = 18.0;
     this.attackADRange = 3.0;
     this.attackCACRange = 1.5;
 

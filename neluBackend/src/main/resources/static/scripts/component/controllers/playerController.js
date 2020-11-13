@@ -386,6 +386,9 @@ class PlayerController extends Component {
       new Edge('idle').AddCondition(()=>manager.scene.paused),
       new Edge('idle').AddCondition(()=>that.rawLeftAxis.mod < 0.05 && that.dashTime > that.dashMaxTime),
       new Edge('run').AddCondition(()=>that.rawLeftAxis.mod > 0.05 && that.dashTime > that.dashMaxTime),
+      new Edge('attack1').AddCondition(()=>{
+        return input.GetAttackCACDown() && that.canAttack && !manager.scene.paused
+      }),
     ]);
 
     let dieNode = new Node("die").SetOnCreate(()=>{
