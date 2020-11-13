@@ -15,7 +15,7 @@ var dialogLevel1XML = `
   </dialog>
 
   <dialog>
-    <id>t_ataque</id>
+    <id>t_ataque_dash</id>
     <text>
           <name>
             <es>Tutorial</es>
@@ -26,10 +26,7 @@ var dialogLevel1XML = `
               <en>Press [Space] to attack</en>
           </message>
     </text> 
-  </dialog>
 
-  <dialog>
-    <id>t_dash</id>
     <text>
           <name>
             <es>Tutorial</es>
@@ -37,7 +34,7 @@ var dialogLevel1XML = `
           </name>
           <message>
               <es>Usa [Shift Izquierdo] para esquivar</es>
-              <en>Press [Left Shift] to dash</en>
+              <en>[Left Shift] to dash</en>
           </message>
     </text> 
   </dialog>
