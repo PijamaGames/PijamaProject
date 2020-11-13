@@ -417,8 +417,8 @@ var dialogLevel1XML = `
         			<en>Alliacea</en>
       			</name>
       			<message>
-        			<es>Nelu pudo echar un vistazo al ave antes de que se perdiera entre los pasillos de madera.</es>
-        			<en>Nelu took a glimpse of the bird moments before it got lost between the labyrinthine wooden corridors.</en>
+        			<es>Nelu pudo echar un vistazo al ave antes de que se perdiera entre los pasillos de roca.</es>
+        			<en>Nelu took a glimpse of the bird moments before it got lost between the labyrinthine stone corridors.</en>
       			</message>
 		</text>
 
