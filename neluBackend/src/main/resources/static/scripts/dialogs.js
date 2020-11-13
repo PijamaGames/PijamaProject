@@ -57,7 +57,7 @@ var dialogLevel1XML = `
   </dialog>
 
   <dialog>
-    <id>t_colibri</id>
+    <id>t_abejas</id>
     <text>
           <name>
             <es>Tutorial</es>
