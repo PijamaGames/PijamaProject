@@ -485,7 +485,6 @@ DecoTree 117 -31 0
 Grass 117 -29 0 29 17
 WaterTop 144 -36 0 29 1
 DecoTree 121.22797393798828 -31.528182983398438 0
-BigLog 123 -33 0
 BigLog 128 -35 0
 DecoTree 125 -31 0
 DryPlant 136 -35 0
@@ -503,18 +502,9 @@ DecoTree 154.18319702148438 -31.300052642822266 0
 DecoTree 158.6302032470703 -31.501708984375 0
 DecoTree 162.47291564941406 -31.0983943939209 0
 DecoTree 165.85153198242188 -31.61402702331543 0
-DecoTree 168.7955322265625 -31.195199966430664 0
-DecoTree 171 -28 0
-DecoTree 172 -25 0
-DecoTree 175.42013549804688 -31.468978881835938 0
-DecoTree 177 -33 0
-DecoTree 178 -35 0
-DecoTree 176 -28 0
-DecoTree 177 -25 0
 WaterLeft -13 -26 0 1 14
 Water -12 7 0 8 18
 Water -12 -26 0 8 15
-Water -12 -11 0 8 18
 Nenuphar -9.651144027709961 6.246647357940674 0.05 1 1
 Nenuphar -11.572498321533203 4.757483005523682 0.05 1 1
 Nenuphar -5.26611852645874 5.408992767333984 0.05 1 1
@@ -636,7 +626,6 @@ DirtWall3 175 -22 0
 DirtWall1 170 -20 0
 DirtWall2 172 -23 0
 DirtWall2 173 -23 0
-Grass 169 -23 0 6 7
 Grass 176 -23 0 5 2
 Dirt23 175 -21 2 1 1
 Dirt23 174 -23 2 1 1
@@ -682,7 +671,6 @@ DirtWall3 174 3 0
 Dirt21 181 3 2 1 1
 Dirt25 166 -11 2 1 8
 Dirt28 166 -3 2 1 1
-Dirt23 166 1 2 1 1
 Dirt25 166 2 2 1 1
 DirtWall2 169 3 0
 DirtWall2 167 3 0
@@ -865,7 +853,6 @@ Dirt21 148 -14 2 1 1
 DirtWall2 152 -15 0
 DirtWall2 149 -14 0
 Dirt22 155 -16 2 13 1
-Dirt22 151 -15 2 6 1
 Dirt22 149 -14 2 1 1
 Sand 157 -3 0 9 5
 Dirt26 156 -3 2 1 1
@@ -873,8 +860,6 @@ Dirt26 155 -5 2 1 1
 Sand 148 -4 0 9 9
 Nest1 152 0 0
 BindWeed 157 1 0.05 1 2
-BindWeed 157 0 0.05 1 2
-BindWeed 157 -1 0.05 1 2
 Dirt27 157 -3 2 9 1
 Dirt24 156 -4 2 1 1
 Dirt12 156 -5 2 1 1
@@ -1211,9 +1196,7 @@ Cave 176 26 0
 Cave 172 26 0
 Cave 170 26 0
 DecoTree 203 -20 0
-DecoTree 200 -23 0
 DecoTree 203 -26 0
-DecoTree 200 -29 0
 DecoTree 203 -33 0
 WaterOuterTopLeft 184 -40 0 1 1
 WaterOuterTopRight 182 -44 0 1 1
@@ -1307,7 +1290,6 @@ Dirt17 185 -31 2 1 1
 Dirt17 187 -32 2 1 1
 Dirt 190 -33 2 5 9
 Dirt16 197 -32 2 1 1
-Dirt16 199 -31 2 1 1
 Dirt16 200 -25 2 1 1
 Dirt16 201 -19 2 1 1
 Dirt 195 -18 2 7 3
@@ -1516,10 +1498,6 @@ Grass 226 -25 0 2 2
 Grass 227 -23 0 1 2
 Grass 229 -17 0 17 6
 WaterRight 228 -17 0 1 6
-DecoTree 195 -48 0
-DecoTree 213 -48 0
-DecoTree 200 -49 0
-DecoTree 208 -49 0
 WaterTopRight 197 -48 0 1 1
 WaterTopRight 196 -47 0 1 1
 Dirt 189 -57 2 2 6
@@ -1700,5 +1678,174 @@ BoxColliderScalable 101 -38 0 41 3
 BoxColliderScalable 142 -38 0 41 3
 BoxColliderScalable 88 -10 0 29 4
 BoxColliderScalable 114 -23 0 4 13
-BoxColliderScalable 110 -29 0 7 6
+BattleManager 0.25 0.25 0 1 1
+Water -12 -11 0 8 18
+BoxColliderScalable 110 -31 0 17 8
+BoxColliderScalable 127 -31 0 17 8
+BindWeed 166 0 0.05 1 2
+Dirt23 166 1 2 1 1
+BindWeed 166 -1 0.05 1 2
+BoxColliderScalable 144 -31 0 17 8
+DirtWall3 174 -23 0
+Grass 169 -23 0 7 5
+DecoTree 171 -24 0
+DecoTree 178 -24 0
+DecoTree 170 -27 0
+DecoTree 169.177734375 -30.236297607421875 0
+DecoTree 176.1842041015625 -31.291425704956055 0
+DecoTree 181.56089782714844 -34.59550857543945 0
+DecoTree 177.37730407714844 -34.347312927246094 0
+BoxColliderScalable 167 -22 0 9 12
+BoxColliderScalable 180 -35 0 9 12
+DecoTree 177 -27 0
+BoxColliderScalable 180 -23 0 9 13
+BoxColliderScalable 156 -13 0 11 12
+Dirt22 151 -15 2 3 1
+Dirt 154 -15 2 3 1
+BoxColliderScalable 147 -8 0 9 4
+BoxColliderScalable 156 1 0 11 9
+BoxColliderScalable 167 -25 0 8 3
+BoxColliderScalable 161 -31 0 12 3
+BoxColliderScalable 166 -28 0 8 3
+BoxColliderScalable 145 8 0 8 2
+BoxColliderScalable 144 -4 0 5 12
+MonkeySpawner 54 -9 0 1 1
+MonkeySpawner 57 -9 0 1 1
+MonkeySpawner 71 -3 0 1 1
+MonkeySpawner 74 -3 0 1 1
+MonkeySpawner 77 -3 0 1 1
+MonkeySpawner 80 -3 0 1 1
+MonkeySpawner 100 -11 0 1 1
+MonkeySpawner 101 -11 0 1 1
+MonkeySpawner 102 -11 0 1 1
+MonkeySpawner 103 -11 0 1 1
+MonkeySpawner 104 -11 0 1 1
+MonkeySpawner 168 2 0.05 1 1
+MonkeySpawner 170 2 0.05 1 1
+MonkeySpawner 172 2 0.05 1 1
+MonkeySpawner 183 2 0.05 1 1
+MonkeySpawner 185 2 0.05 1 1
+MonkeySpawner 187 2 0.05 1 1
+MonkeySpawner 170 25 0.05 1 1
+MonkeySpawner 172 25 0.05 1 1
+MonkeySpawner 174 25 0.05 1 1
+MonkeySpawner 176 25 0.05 1 1
+MonkeySpawner 179 25 0.05 1 1
+MonkeySpawner 181 25 0.05 1 1
+MonkeySpawner 183 25 0.05 1 1
+MonkeySpawner 185 25 0.05 1 1
+CampTop2 182 15 0.05 2 1
+CampTop2 182 17 0.05 2 1
+CampTop2 182 19 0.05 2 1
+CampTop2 177 15 0.05 2 1
+CampTop2 177 17 0.05 2 1
+CampTop2 177 19 0.05 2 1
+CampTop2 174 15 0.05 2 1
+CampTop2 174 17 0.05 2 1
+CampTop2 174 19 0.05 2 1
+CampTop2 169 15 0.05 2 1
+CampTop2 169 17 0.05 2 1
+CampTop2 169 19 0.05 2 1
+CampTop2 169 21 0.05 2 1
+CampTop2 174 21 0.05 2 1
+CampTop2 177 21 0.05 2 1
+CampTop2 182 21 0.05 2 1
+Nest 168.9560089111328 15.074907302856445 0.05
+Nest 168.97149658203125 17.10699462890625 0.05
+Nest 168.9560089111328 19.123571395874023 0.05
+Nest 169.0024871826172 21.124635696411133 0.05
+Nest 175.10743713378906 21.171173095703125 0.05
+Nest 175.09194946289062 19.170108795166016 0.05
+Nest 175.0454559326172 17.09148406982422 0.05
+Nest 175.01446533203125 15.121443748474121 0.05
+Nest 176.997802734375 21.15566062927246 0.05
+Nest 177.02879333496094 19.15459632873535 0.05
+Nest 176.93582153320312 17.138019561767578 0.05
+Nest 177.0133056640625 15.105931282043457 0.05
+Nest 183.040771484375 15.105931282043457 0.05
+Nest 183.08724975585938 17.06045913696289 0.05
+Nest 183.08724975585938 19.092548370361328 0.05
+Nest 183.08724975585938 21.093612670898438 0.05
+CampTop1 169 14 0.05
+CampTop1 170 14 0.05
+CampTop1 169 16 0.05
+CampTop1 170 16 0.05
+CampTop1 169 18 0.05
+CampTop1 170 18 0.05
+CampTop1 169 20 0.05
+CampTop1 170 20 0.05
+CampTop1 174 20 0.05
+CampTop1 175 20 0.05
+CampTop1 174 18 0.05
+CampTop1 175 18 0.05
+CampTop1 174 16 0.05
+CampTop1 175 16 0.05
+CampTop1 174 14 0.05
+CampTop1 175 14 0.05
+CampTop1 178 20 0.05
+CampTop1 177 20 0.05
+CampTop1 177 18 0.05
+CampTop1 178 18 0.05
+CampTop1 178 16 0.05
+CampTop1 177 16 0.05
+CampTop1 177 14 0.05
+CampTop1 178 14 0.05
+CampTop1 182 14 0.05
+CampTop1 183 14 0.05
+CampTop1 183 16 0.05
+CampTop1 182 16 0.05
+CampTop1 182 18 0.05
+CampTop1 183 18 0.05
+CampTop1 183 20 0.05
+CampTop1 182 20 0.05
+BigLog 122 -33 0
+BoxColliderScalable 158 10 0 9 12
+BoxColliderScalable 138 10 0 9 16
+BoxColliderScalable 144 26 0 13 6
+BoxColliderScalable 157 24 0 11 5
+BoxColliderScalable 189 7 0 9 22
+BoxColliderScalable 168 26 0 21 5
+BoxColliderScalable 167 8 0 19 5
+BoxColliderScalable 167 3 0 8 2
+BoxColliderScalable 167 5 0 3 3
+BoxColliderScalable 181 3 0 11 2
+BoxColliderScalable 192 -4 0 6 9
+BoxColliderScalable 186 -7 0 26 2
+BoxColliderScalable 206 -33 0 7 26
+DecoTree 199.63587951660156 -22.311538696289062 0
+BoxColliderScalable 201 -28 0 2 17
+DecoTree 199.38235473632812 -28.426063537597656 0
+BoxColliderScalable 189 -14 0 12 4
+BoxColliderScalable 196 -30 0 5 4
+Dirt16 199 -31 2 1 1
+DecoTree 196.36952209472656 -32.99702835083008 0
+BoxColliderScalable 194 -33 0 6 3
+BoxColliderScalable 189 -35 0 5 4
+BoxColliderScalable 194 -34 0 1 1
+BoxColliderScalable 213 -33 0 10 4
+BoxColliderScalable 191 -51 0 5 11
+BoxColliderScalable 189 -40 0 6 2
+BoxColliderScalable 188 -38 0 6 3
+DecoTree 194.2992706298828 -47.092342376708984 0
+BoxColliderScalable 196 -52 0 2 6
+BoxColliderScalable 218 -47 0 1 1
+BoxColliderScalable 219 -48 0 6 15
+BoxColliderScalable 198 -53 0 2 5
+BoxColliderScalable 200 -53 0 16 4
+BoxColliderScalable 215 -49 0 4 2
+DecoTree 212.41880798339844 -48.064414978027344 0
+Tree 205.8478546142578 -48.92395782470703 0
+Tree 198.98997497558594 -48.97886276245117 0
+Tree 215.4849395751953 -44.353553771972656 0
+Tree 215.7018585205078 -36.78423309326172 0
+Tree 192.50164794921875 -39.90493392944336 0
+DecoTree 190.10592651367188 -35.58958435058594 0
+BoxColliderScalable 186 -8 0 1 1
+BoxColliderScalable 149 -4 0 1 1
+BoxColliderScalable 155 -4 0 1 1
+BoxColliderScalable 152 4 0 4 2
+BoxColliderScalable 149 6 0 1 2
+BoxColliderScalable 150 7 0 1 1
+BoxColliderScalable 154 6 0 2 1
+BoxColliderScalable 155 7 0 1 1
 `
