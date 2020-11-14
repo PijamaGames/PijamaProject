@@ -183,6 +183,8 @@ function SendWebSocketMsg(msg) {
 function ReceiveEnemy(msg){
   let obj;
   Log("ENEMY TYPE: " + msg.type);
+  let sound=finder.FindObjectsByType("PauseFromMultiGame");
+  sound[0].audioSource.Play("putEnemy");
   switch(msg.type){
     case 0:
       obj = prefabFactory.CreateObj("MonkeyEnemy", new Vec2(msg.positionX, msg.positionY));

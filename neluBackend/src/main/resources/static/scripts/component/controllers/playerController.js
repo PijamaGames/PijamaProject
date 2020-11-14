@@ -470,6 +470,8 @@ class PlayerController extends Component {
   }
 
   ActivateFirePower(){
+    if(this.gameobj.audioSource.Playing("poweupFireSound"))
+      this.gameobj.audioSource.Stop("poweupFireSound");
     this.gameobj.audioSource.Play("poweupFireSound");
     manager.singleGameMusic.PauseAll();
     this.firePower = true;
