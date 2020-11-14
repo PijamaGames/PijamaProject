@@ -404,9 +404,10 @@ class PlayerController extends Component {
     ]);
 
     let dieNode = new Node("die").SetOnCreate(()=>{
-      this.gameobj.audioSource.Play("neluDied");
+
       that.gameobj.renderer.AddAnimation('die', 'nelu_die', that.dieSpeed, false);
     }).SetStartFunc(()=>{
+      this.gameobj.audioSource.Play("neluDied");
       that.gameobj.renderer.SetAnimation('die');
       that.gameobj.renderer.endAnimEvent.AddListener(this, ()=>{
         that.PlayerDead();
@@ -441,7 +442,7 @@ class PlayerController extends Component {
 
   TakeDamage(damage){
     if(this.canTakeDamage){
-      this.gameobj.audioSource.Play("neluDamage");
+      if (this.gameobj.audioSource)this.gameobj.audioSource.Play("neluDamage");
       this.life -= damage;
       if(this.life <= 0){
         this.life = 0;

@@ -36,7 +36,7 @@ var shaderURLs = [ //name, url
 var soundsURLs=[
   ["beesSound",'resources/sounds/Abejas.mp3'],
   ["hummingbirdSound",'resources/sounds/Colibri_2.mp3'],
-  ["comboSound1",'resources/sounds/Combo_Nelu_1.mp3'],
+  ["comboSound1",'resources/sounds/Combo_Nelu.mp3'],
   ["comboSound2",'resources/sounds/Combo_Nelu_2.mp3'],
   ["comboSound3",'resources/sounds/Combo_Nelu_3.mp3'],
   ["healSound",'resources/sounds/Curar.mp3'],
@@ -45,7 +45,7 @@ var soundsURLs=[
   ["hitsSoundX",'resources/sounds/Efecto_golpes.mp3'],
   ["fireSound",'resources/sounds/Fuego.mp3'],
   ["throwMissileSound",'resources/sounds/Lanzar_Proyectil.mp3'],
-  ["monkeyDamageSound",'resources/sounds/Monkey_daño.mp3'],
+  ["monkeyDamageSound",'resources/sounds/Monkey_damage.mp3'],
   ["screamingMonkeySound",'resources/sounds/Mono_chillando.mp3'],
   ["moveObjectSound",'resources/sounds/Mover_Objeto.mp3'],
   ["riverSound",'resources/sounds/Rio_corriente.mp3'],
@@ -65,7 +65,7 @@ var soundsURLs=[
   ["beekeeperRun",'resources/sounds/Humano_Rango_Ataque.mp3'],
   ["beekeeperDamage",'resources/sounds/Humano_Danio.mp3'],
   ["neluDied",'resources/sounds/Muerte_Nelu.mp3'],
-  ["neluDamage",'resources/sounds/Nelu_Daño.mp3'],
+  ["neluDamage",'resources/sounds/Nelu_Danio.mp3'],
 
 
 
