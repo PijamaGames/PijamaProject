@@ -800,7 +800,7 @@ class Graphics {
       //new UniformTex('colorTex', ()=>uiTileMap),
 
       new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
-      new Uniform1f('anchorXScalse', ()=>canvas.width / manager.graphics.res.x),
+      new Uniform1f('anchorXScale', ()=>canvas.width / manager.graphics.res.x),
       new Uniform1f('aspectRatio', ()=> manager.graphics.res.x/ manager.graphics.res.y),
     ]);
     uiProgram.SetObjUniforms([
