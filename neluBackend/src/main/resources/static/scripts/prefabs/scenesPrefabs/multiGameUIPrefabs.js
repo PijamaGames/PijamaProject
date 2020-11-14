@@ -13,7 +13,7 @@ prefabFactory.AddPrototype("PauseFromMultiGame", new Vec2(1.5,1.5), new Vec2(0.0
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();
     }),
-    new AudioSource(["UISound1","putEnemy"]),
+    new AudioSource(["UISound1","putEnemy","arenaMusic"]),
   ]
 });
 
