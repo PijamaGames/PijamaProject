@@ -97,6 +97,7 @@ function ReturnGame(newScene){
 function ExitGame(sleep){
   let music=finder.FindComponents("AudioSource");
   if(sleep){
+    Log("EXIT GAME SLEEP");
     manager.menuSound.PlayAll();
     manager.singleGameMusic.PauseAll();
     for(var m of music){
@@ -104,7 +105,7 @@ function ExitGame(sleep){
     }
   }
   else{
-    Log("POR AQUI")
+    Log("EXIT GAME NOT SLEEP");
     manager.singleGameMusic.StopAll();
     for(var m of music){
       m.StopAll();
