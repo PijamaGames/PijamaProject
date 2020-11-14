@@ -25,9 +25,9 @@ function Main(){
   }).SetOnWakeUp((scene)=>{
     ReturnGame();
   }).SetOnSleep(()=>{
-    ExitGame();
+    ExitGame(true);
   }).SetOnUnload(()=>{
-    ExitGame();
+    ExitGame(false);
   }));
   manager.AddScene(new Scene("cutScene1", BC_CutScene1).SetOnLoad(()=>{
     let obj=finder.FindObjectsByType("CutScene1");
@@ -47,6 +47,8 @@ function Main(){
   }).SetOnUnload(()=>{
     let obj=finder.FindObjectsByType("CutScene3");
     obj[0].audioSource.Stop("kinematicSound");
+  }).SetOnUnload(()=>{
+    manager.menuSound.PlayAll();
   }));
   manager.AddScene(new Scene("multiGame1", BC_MultiGame1).SetOnLoad(()=>{
     if(user.isHost) input.HideVirtualInputs(false);
@@ -89,8 +91,22 @@ function ReturnGame(){
   manager.SetInMenu(false);
 }
 
-function ExitGame(){
-  manager.singleGameMusic.StopAll();
+function ExitGame(sleep){
+  let music=finder.FindComponents("AudioSource");
+  if(sleep){
+    manager.menuSound.PlayAll();
+    manager.singleGameMusic.PauseAll();
+    for(var m of music){
+      m.PauseAll();
+    }
+  }
+  else{
+    manager.singleGameMusic.StopAll();
+    for(var m of music){
+      m.StopAll();
+    }
+  }
   input.HideVirtualInputs(true);
   manager.SetInMenu(true);
+
 }

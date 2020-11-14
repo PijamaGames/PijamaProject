@@ -23,6 +23,36 @@ function FinishCutScene(obj){
   manager.graphics.config.bloom = obj.bloom;
 }
 
+prefabFactory.AddPrototype("SkipCutscene1", new Vec2(4,2), new Vec2(0.5,0), false, ()=>{
+  return [
+    new ImageRenderer(new Vec2(7,10), new Vec2(4,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
+      obj.gameobj.renderer.MultiplyTint(0.8);
+    }).SetHoverOutFunc((obj)=>{
+      let tint=obj.gameobj.renderer.realTint;
+      obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
+    }).SetUpFunc(()=>{
+      manager.scene.camera.camera.FadeOut(2, ()=>manager.LoadScene("singleGame"));
+    }),
+    new AudioSource(["UISound1"]),
+    new TextBox(null, "Saltar","Skip", new Vec2(0.3,0.07), true),
+  ]
+});
+
+prefabFactory.AddPrototype("SkipCutscene2", new Vec2(4,2), new Vec2(0.5,0), false, ()=>{
+  return [
+    new ImageRenderer(new Vec2(7,10), new Vec2(4,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
+      obj.gameobj.renderer.MultiplyTint(0.8);
+    }).SetHoverOutFunc((obj)=>{
+      let tint=obj.gameobj.renderer.realTint;
+      obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
+    }).SetUpFunc(()=>{
+      manager.scene.camera.camera.FadeOut(2, ()=>manager.LoadScene("credits"));
+    }),
+    new AudioSource(["UISound1"]),
+    new TextBox(null, "Saltar","Skip", new Vec2(0.3,0.07), true),
+  ]
+});
+
 prefabFactory.AddPrototype("CutScene1", new Vec2(20,15), new Vec2(0.5,0.5), false, ()=>{
   return [
       new DialogSystem(dialogLevel1XML).SetOnNextText((obj)=>{
@@ -93,6 +123,10 @@ prefabFactory.AddPrototype("DialogSystem", new Vec2(), new Vec2(), false, ()=>{
       }).SetOnDialogEnd("cap1_fin", ()=>{
         manager.scene.camera.camera.FadeOut(2.0, ()=>manager.LoadScene("cutScene2"));
         //lighting.BeginTransition(2);
+      }).SetOnAnyDialogStart(()=>{
+        input.HideVirtualInputs(true);
+      }).SetOnAnyDialogEnd(()=>{
+        input.HideVirtualInputs(false);
       }),
       new AudioSource(["dialogSound"]),
   ];
@@ -108,9 +142,6 @@ prefabFactory.AddPrototype("PauseFromSingleGame", new Vec2(1.5,1.5), new Vec2(0.
     }).SetUpFunc(()=>{
       manager.LoadScene("pause",true);
       manager.lastGame="singleGame";
-    }).SetDownFunc((obj)=>{
-      obj.gameobj.audioSource.PlayAll();
-      manager.singleGameMusic.PauseAll();
     }),
     new AudioSource(["UISound1"]),
   ]
