@@ -25,6 +25,8 @@ function Main(){
     //scene.camera.camera.FadeIn(2.0);
   }));
   manager.AddScene(new Scene("cutScene1", BC_CutScene1));
+  manager.AddScene(new Scene("cutScene2", BC_CutScene2));
+  manager.AddScene(new Scene("cutScene3", BC_CutScene3));
   manager.AddScene(new Scene("multiGame1", BC_MultiGame1));
   manager.AddScene(new Scene("multiGame2", BC_MultiGame2));
   manager.AddScene(new Scene("multiGame3", BC_MultiGame3));

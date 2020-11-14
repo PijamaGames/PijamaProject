@@ -1,3 +1,26 @@
+function PrepareCutScene(obj){
+  dialogSystem.textBox.transform.SetWorldPosition(new Vec2(0,0.72));
+  dialogSystem.textName.transform.SetWorldPosition(new Vec2(-0.3, 0.92));
+  dialogSystem.textBox.renderer.SetAlpha(0.15);
+  dialogSystem.textName.renderer.SetAlpha(0.15);
+  dialogSystem.textBox.textBox.element.style.color = "#000000";
+  dialogSystem.textName.textBox.element.style.color ="#000000";
+  dialogSystem.textBox.renderer.tile.Set(16,6);
+  dialogSystem.textBox.renderer.numTiles.Set(1,1);
+  dialogSystem.textName.renderer.tile.Set(16,6);
+  dialogSystem.textName.renderer.numTiles.Set(1,1);
+  dialogSystem.textName.transform.scale.y = 1.0;
+  obj.color = manager.graphics.colorsPerChannel;
+  manager.graphics.colorsPerChannel = 255.0;
+  obj.bloom = manager.graphics.config.bloom;
+  manager.graphics.config.bloom = false;
+}
+
+function FinishCutScene(obj){
+  manager.graphics.colorsPerChannel = obj.color;
+  manager.graphics.config.bloom = obj.bloom;
+}
+
 prefabFactory.AddPrototype("CutScene1", new Vec2(20,15), new Vec2(0.5,0.5), false, ()=>{
   return [
       new DialogSystem(dialogLevel1XML).SetOnNextText((obj)=>{
@@ -11,25 +34,52 @@ prefabFactory.AddPrototype("CutScene1", new Vec2(20,15), new Vec2(0.5,0.5), fals
       new CustomBehaviour().SetOnCreate((obj)=>{
         //dialogSystem.InitDialog("t_movimiento");
         lighting.SetCurrentLight(1);
-        dialogSystem.textBox.transform.SetWorldPosition(new Vec2(0,0.72));
-        dialogSystem.textName.transform.SetWorldPosition(new Vec2(-0.3, 0.92));
-        dialogSystem.textBox.renderer.SetAlpha(0.15);
-        dialogSystem.textName.renderer.SetAlpha(0.15);
-        dialogSystem.textBox.textBox.element.style.color = "#000000";
-        dialogSystem.textName.textBox.element.style.color ="#000000";
-        dialogSystem.textBox.renderer.tile.Set(16,6);
-        dialogSystem.textBox.renderer.numTiles.Set(1,1);
-        dialogSystem.textName.renderer.tile.Set(16,6);
-        dialogSystem.textName.renderer.numTiles.Set(1,1);
-        dialogSystem.textName.transform.scale.y = 1.0;
-        obj.color = manager.graphics.colorsPerChannel;
-        manager.graphics.colorsPerChannel = 255.0;
-        obj.bloom = manager.graphics.config.bloom;
-        manager.graphics.config.bloom = false;
+        PrepareCutScene(obj);
         manager.scene.camera.camera.FadeIn(3.0, ()=>dialogSystem.InitDialog("interludio_1"));
       }).SetOnDestroy((obj)=>{
-        manager.graphics.colorsPerChannel = obj.color;
-        manager.graphics.config.bloom = obj.bloom;
+        FinishCutScene(obj);
+      }),
+  ];
+});
+
+prefabFactory.AddPrototype("CutScene2", new Vec2(20,15), new Vec2(0.5,0.5), false, ()=>{
+  return [
+      new DialogSystem(dialogLevel1XML).SetOnNextText((obj)=>{
+        obj.gameobj.audioSource.PlayAll();
+      }).SetOnDialogEnd("interludio_2", ()=>{
+        //lighting.BeginTransition(2);
+        manager.scene.camera.camera.FadeOut(2, ()=>manager.LoadScene("cutScene3"));
+      }),
+      new AudioSource(["dialogSound"]),
+      new VideoRenderer("cutScene2", new Vec2(20,15), 8,false, 16),
+      new CustomBehaviour().SetOnCreate((obj)=>{
+        //dialogSystem.InitDialog("t_movimiento");
+        lighting.SetCurrentLight(3);
+        PrepareCutScene(obj);
+        manager.scene.camera.camera.FadeIn(3.0, ()=>dialogSystem.InitDialog("interludio_2"));
+      }).SetOnDestroy((obj)=>{
+        FinishCutScene(obj);
+      }),
+  ];
+});
+
+prefabFactory.AddPrototype("CutScene3", new Vec2(20,15), new Vec2(0.5,0.5), false, ()=>{
+  return [
+      new DialogSystem(dialogLevel1XML).SetOnNextText((obj)=>{
+        obj.gameobj.audioSource.PlayAll();
+      }).SetOnDialogEnd("interludio_3", ()=>{
+        //lighting.BeginTransition(2);
+        manager.scene.camera.camera.FadeOut(2, ()=>manager.LoadScene("credits"));
+      }),
+      new AudioSource(["dialogSound"]),
+      new VideoRenderer("cutScene1", new Vec2(20,15), 8,false, 16),
+      new CustomBehaviour().SetOnCreate((obj)=>{
+        //dialogSystem.InitDialog("t_movimiento");
+        lighting.SetCurrentLight(3);
+        PrepareCutScene(obj);
+        manager.scene.camera.camera.FadeIn(3.0, ()=>dialogSystem.InitDialog("interludio_3"));
+      }).SetOnDestroy((obj)=>{
+        FinishCutScene(obj);
       }),
   ];
 });
@@ -38,7 +88,8 @@ prefabFactory.AddPrototype("DialogSystem", new Vec2(), new Vec2(), false, ()=>{
   return [
       new DialogSystem(dialogLevel1XML).SetOnNextText((obj)=>{
         obj.gameobj.audioSource.PlayAll();
-      }).SetOnDialogEnd("t_movimiento", ()=>{
+      }).SetOnDialogEnd("cap1_fin", ()=>{
+        manager.scene.camera.camera.FadeOut(2.0, ()=>manager.LoadScene("cutScene2"));
         //lighting.BeginTransition(2);
       }),
       new AudioSource(["dialogSound"]),
