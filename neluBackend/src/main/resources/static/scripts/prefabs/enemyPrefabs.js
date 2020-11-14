@@ -152,7 +152,10 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
       new ScriptedEvent("cap1_colibri_fortaleza", true, new Vec2(177,-18), 5.0, false, ()=>dialogSystem.InitDialog("cap1_colibri_fortaleza")),
       new ScriptedEvent("cap1_colibri_fin_pelea", true, new Vec2(152,1), 2.5, false, ()=>{
         dialogSystem.InitDialog("cap1_colibri_fin_pelea");
-        battleController.AddEvent(new ScriptedEvent("t_colibri", true, new Vec2(151,5), 1.7, false, ()=>dialogSystem.InitDialog("t_colibri")));
+        battleController.AddEvent(new ScriptedEvent("t_colibri", true, new Vec2(151,5), 1.7, false, ()=>{
+          dialogSystem.InitDialog("t_colibri");
+          manager.scene.canUseColibri = true;
+        }));
       }),
       new ScriptedEvent("cap1_fin", true, new Vec2(208,-40), 5.0, false, ()=>dialogSystem.InitDialog("cap1_fin")),
 
