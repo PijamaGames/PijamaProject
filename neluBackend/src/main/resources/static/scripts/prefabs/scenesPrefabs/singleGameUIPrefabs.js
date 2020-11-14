@@ -155,12 +155,18 @@ prefabFactory.AddPrototype("PauseFromSingleGame", new Vec2(1.5,1.5), new Vec2(0.
   ]
 });
 
-prefabFactory.AddPrototype("SingleLifeText", new Vec2(3,1.5), new Vec2(0.0,1.0), false, ()=>{
+prefabFactory.AddPrototype("LifeUnitUI", new Vec2(1,1), new Vec2(0.0,1.0), false, ()=>{
+  return [
+    new ImageRenderer(new Vec2(17,6), new Vec2(1,1)),
+  ]
+});
+
+/*prefabFactory.AddPrototype("SingleLifeText", new Vec2(3,1.5), new Vec2(0.0,1.0), false, ()=>{
   return [
     new ImageRenderer(new Vec2(8.5,12), new Vec2(3,1.5)),
     new TextBox("LifeText", "XHP","XHP", new Vec2(0.3,0.07), true,false),
   ]
-});
+});*/
 
 prefabFactory.AddPrototype("SingleTextBox", new Vec2(14,5), new Vec2(0.5,0.0), false, ()=>{
   return [

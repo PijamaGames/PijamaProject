@@ -9,7 +9,7 @@ class PlayerController extends Component {
     this.lerpLeftAxis = 10.0;
     this.endAttackAnim=false;
 
-    this.maxLife = 45;
+    this.maxLife = 50;
     this.life = 30;
     this.canTakeDamage = true;
     this.damageCooldown = 0.5;
@@ -63,6 +63,11 @@ class PlayerController extends Component {
   SetScene(scene){
     this.gameobj.scene.players.delete(this.gameobj);
     scene.players.add(this.gameobj);
+    if(this.lifeUnits){
+      for(let obj of this.lifeUnits){
+        obj.SetScene(scene);
+      }
+    }
   }
 
   Destroy(){
@@ -71,6 +76,12 @@ class PlayerController extends Component {
     this.colibri.Destroy();
     for(var bee of this.allBees){
       bee.Destroy();
+    }
+
+    if(this.lifeUnits){
+      for(let obj of this.lifeUnits){
+        obj.Destroy();
+      }
     }
   }
 
@@ -430,7 +441,7 @@ class PlayerController extends Component {
 
   MakeFirePower(){
     this.fire.SetActive(true);
-    this.fire.renderer.SetDirection(this.gameobj.renderer.dir);
+    this.fire.renderer.StDirection(this.gameobj.renderer.dir);
     this.fire.renderer.tile.x = 0;
     this.fire.transform.SetWorldPosition(Vec2.Add(this.gameobj.transform.GetWorldFloor(), Vec2.Norm(this.gameobj.renderer.dir).Scale(this.fireDisplacement)));
     let force = Vec2.Norm(this.gameobj.renderer.dir).Scale(this.fireImpulse);
@@ -449,12 +460,29 @@ class PlayerController extends Component {
         this.damageTime = 0.0;
         this.canTakeDamage = false;
       }
+      this.AdjustLifeUnits();
 
-      var text=document.getElementById("LifeText");
-      text.innerHTML=this.life + "HP";
+      //var text=document.getElementById("LifeText");
+      //text.innerHTML=this.life + "HP";
       //this.lifeText.textBox.SetText(this.life + "HP");
     }
 
+  }
+
+  AdjustLifeUnits(){
+    if(this.lifeUnits){
+      let pct;
+      for(var i = 0; i < this.lifeUnits.length; i++){
+        pct = this.life - i*10;
+        if(pct <0.1){
+          this.lifeUnits[i].renderer.tile.x = 17;
+        } else if(pct > 9.9){
+          this.lifeUnits[i].renderer.tile.x = 19;
+        } else {
+          this.lifeUnits[i].renderer.tile.x = 18;
+        }
+      }
+    }
   }
 
   GainLife(life){
@@ -463,8 +491,10 @@ class PlayerController extends Component {
     if(this.life > this.maxLife){
       this.life = this.maxLife;
     }
-    var text=document.getElementById("LifeText");
-    text.innerHTML=this.life + "HP";
+    this.AdjustLifeUnits();
+
+    //var text=document.getElementById("LifeText");
+    //text.innerHTML=this.life + "HP";
   }
 
   ActivateFirePower(){
@@ -515,10 +545,23 @@ class PlayerController extends Component {
     this.CreateFSM();
     manager.scene.players.add(this.gameobj);
 
-
+    if(!(user && user.isClient)){
+      this.CreateLifeUnitUI();
+    }
 
     //this.lifeText = prefabFactory.CreateObj("lifeText", new Vec2(0.15,-0.1));
     this.TakeDamage(0);
+  }
+
+  CreateLifeUnitUI(){
+    let displacement = 0.08;
+    let start = 0.2;
+    this.lifeUnits = [];
+    let obj;
+    for(var i = 0; i < 5; i++){
+      obj = prefabFactory.CreateObj("LifeUnitUI", new Vec2(start+displacement*i, -0.07));
+      this.lifeUnits.push(obj);
+    }
   }
 
   FillBeePool(){

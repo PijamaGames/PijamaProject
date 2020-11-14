@@ -1,7 +1,13 @@
-prefabFactory.AddPrototype("InteractBox", new Vec2(1,1), new Vec2(0.5,0.5), false, ()=>{
+prefabFactory.AddPrototype("InteractBox", new Vec2(1.5,1.5), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(50,0), new Vec2(1,1), 0.5).GiveFunctionality(),
-    new TextBox(null, "E", "E", new Vec2(0.3,0.1), true),
+    new ImageRenderer(new Vec2(7,12), new Vec2(1.5,1.5), 0.8).GiveFunctionality(),
+    new TextBox(null, "E", "E", new Vec2(0.3,0.07), true),
+    new CustomBehaviour().SetOnCreate((obj)=>{
+      if(!input.isDesktop){
+        obj.textBox.SetText("");
+        obj.renderer.tile.Set(13,12);
+      }
+    })
   ]
 });
 
