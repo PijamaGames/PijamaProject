@@ -207,6 +207,10 @@ class Renderer extends Component{
     this.tint[3] = a;
   }
 
+  SetAlpha(a){
+    this.tint[3] = a;
+  }
+
   SetGameobj(gameobj){
     this.gameobj = gameobj;
     this.gameobj.renderer = this;

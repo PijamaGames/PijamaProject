@@ -3,12 +3,20 @@ prefabFactory.AddPrototype("CutScene1", new Vec2(20,15), new Vec2(0.5,0.5), fals
       new DialogSystem(dialogLevel1XML).SetOnNextText((obj)=>{
         obj.gameobj.audioSource.PlayAll();
       }).SetOnDialogEnd("t_movimiento", ()=>{
-        lighting.BeginTransition(2);
+        //lighting.BeginTransition(2);
+        manager.LoadScene("singleGame");
       }),
       new AudioSource(["dialogSound"]),
-      new VideoRenderer("cutScene1", new Vec2(20,15), 1,false, 16),
+      new VideoRenderer("cutScene1", new Vec2(20,15), 12,false, 16),
       new CustomBehaviour().SetOnCreate(()=>{
         dialogSystem.InitDialog("t_movimiento");
+        lighting.SetCurrentLight(1);
+        dialogSystem.textBox.transform.SetWorldPosition(new Vec2(0,0.7));
+        dialogSystem.textName.transform.SetWorldPosition(new Vec2(-0.3, 0.9));
+        dialogSystem.textBox.renderer.SetAlpha(0.0);
+        dialogSystem.textName.renderer.SetAlpha(0.0);
+        dialogSystem.textBox.textBox.element.style.color = "#000000";
+        dialogSystem.textName.textBox.element.style.color ="#000000";
       }),
   ];
 });
@@ -18,7 +26,7 @@ prefabFactory.AddPrototype("DialogSystem", new Vec2(), new Vec2(), false, ()=>{
       new DialogSystem(dialogLevel1XML).SetOnNextText((obj)=>{
         obj.gameobj.audioSource.PlayAll();
       }).SetOnDialogEnd("t_movimiento", ()=>{
-        lighting.BeginTransition(2);
+        //lighting.BeginTransition(2);
       }),
       new AudioSource(["dialogSound"]),
   ];
