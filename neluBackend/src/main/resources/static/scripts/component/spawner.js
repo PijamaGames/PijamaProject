@@ -3,18 +3,19 @@ class Spawner extends Component{
   //static refs = new Map();
   static enemyCount = 0;
 
-  constructor(prefab, count){
+  constructor(prefab, count, cooldown = 3.0){
     super();
     this.type = "spawner";
     this.coolDown = 3.0;
-    this.time = 0.0;
-    this.distToSpawn = 5.0;
+    this.time = this.coolDown*0.7;
+    this.distToSpawn = 100.0;
     this.count = count;
     this.onEndSpawn = function(){};
     this.spawnEvent = new EventDispatcher();
     this.endSpawnEvent = new EventDispatcher();
     this.ended = false;
     this.started = false;
+    this.spawnedAlive = false;
   }
 
   /*get key(){
@@ -30,6 +31,8 @@ class Spawner extends Component{
   Update(){
     if(this.ended) return;
     if(!this.started) return;
+    if(this.spawnedAlive) return;
+    if(this.count <= 0) return;
     if(this.time >= this.coolDown){
       if(this.InDistance()){
         this.Spawn();
@@ -55,18 +58,26 @@ class Spawner extends Component{
 
   Spawn(){
     Log("spawn");
-    this.spawnEvent.Dispatch();
-    let obj = prefabFactory.CreateObj("MonkeyEnemy", this.gameobj.transform.GetWorldCenter());
-    obj.enemyController.onDeadCallBack = ()=>{
-      Spawner.enemyCount-=1;
-    }
-    Spawner.enemyCount+=1;
     this.time = 0.0;
     this.count-=1;
-
-    if(this.count <= 0){
-      this.EndSpawn();
+    this.spawnedAlive = true;
+    this.spawnEvent.Dispatch();
+    let obj = prefabFactory.CreateObj("MonkeyEnemy", this.gameobj.transform.GetWorldCenter());
+    obj.enemyController.detectionRange = 50.0;
+    var that = this;
+    obj.enemyController.onDeadCallBack = ()=>{
+      //Spawner.enemyCount-=1;
+      that.spawnedAlive = false;
+      if(that.count <= 0){
+        that.EndSpawn();
+      }
     }
+
+
+
+    /*if(this.count <= 0){
+      this.EndSpawn();
+    }*/
   }
 
   SetGameobj(gameobj){

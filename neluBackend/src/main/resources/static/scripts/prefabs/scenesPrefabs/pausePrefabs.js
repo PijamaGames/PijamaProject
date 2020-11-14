@@ -14,11 +14,8 @@ prefabFactory.AddPrototype("GameFromPause", new Vec2(8,2), new Vec2(0.5,0.5), fa
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       manager.LoadScene("singleGame");
-      manager.SetInMenu(false);
-      input.HideVirtualInputs(false);
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();
-      manager.singleGameMusic.PlayAll();
     }),
     new TextBox(null, "Volver al juego","Return to game", new Vec2(0.3,0.07), true),
     new AudioSource(["UISound1"]),

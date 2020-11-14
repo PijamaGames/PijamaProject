@@ -35,11 +35,13 @@ var shaderURLs = [ //name, url
 
 var soundsURLs=[
   ["beesSound",'resources/sounds/Abejas.mp3'],
-  ["hummingbirdSound",'resources/sounds/Colibri_volar.mp3'],
-  ["comboSound",'resources/sounds/Combo_Nelu.mp3'],
+  ["hummingbirdSound",'resources/sounds/Colibri_2.mp3'],
+  ["comboSound1",'resources/sounds/Combo_Nelu.mp3'],
+  ["comboSound2",'resources/sounds/Combo_Nelu_2.mp3'],
+  ["comboSound3",'resources/sounds/Combo_Nelu_3.mp3'],
   ["healSound",'resources/sounds/Curar.mp3'],
   ["dashSound",'resources/sounds/Dash.mp3'],
-  ["dialogSoundX",'resources/sounds/Dialogo.mp3'],
+  ["dialogSound",'resources/sounds/Dialogo.mp3'],
   ["hitsSoundX",'resources/sounds/Efecto_golpes.mp3'],
   ["fireSound",'resources/sounds/Fuego.mp3'],
   ["throwMissileSound",'resources/sounds/Lanzar_Proyectil.mp3'],
@@ -52,12 +54,19 @@ var soundsURLs=[
   ["breakObjectSound3",'resources/sounds/Romper_Objeto_3.mp3'],
   ["poweupFireSound",'resources/sounds/Song_Powerup_Fuego.mp3'],
   ["UISound1",'resources/sounds/UI_1.mp3'],
-  ["UISound2X",'resources/sounds/UI_2.mp3'],
-  ["kinematicSoundX",'resources/sounds/musica_cinematica.mp3'],
-  ["monkeyHouseSound",'resources/sounds/musica_Fortaleza_Monos.mp3'],
+  ["kinematicSound",'resources/sounds/musica_Barco.mp3'],
+  ["monkeyHouseSound",'resources/sounds/musica_Pelea_Mono.mp3'],
   ["menuSound",'resources/sounds/musica_menu.mp3'],
   ["levelSound",'resources/sounds/musica_Nivel1.mp3'],
-  ["fightSoundX",'resources/sounds/musica_Pelea.mp3'],
+  ["beekeeperAttack",'resources/sounds/Humano_Rango_Ataque.mp3'],
+  ["beekeeperDied",'resources/sounds/Humano_Muere.mp3'],
+  ["beekeeperDamage",'resources/sounds/Humano_Danio.mp3'],
+  ["neluDied",'resources/sounds/Muerte_Nelu.mp3'],
+  ["neluDamage",'resources/sounds/Nelu_Danio.mp3'],
+  ["putEnemy",'resources/sounds/Tropa_Soltar_3.mp3'],
+
+
+
 ];
 
 var resources;

@@ -4,13 +4,60 @@ class Camera extends Component {
     this.type = "camera";
     this.colorFilter = new Float32Array([1, 1, 1, 1]);
     this.brightness = 1.15;
+    this.maxBrightness = this.brightness;
     this.contrast = 1.1;
 
     this.target = new Vec2();
     this.speed = speed;
+    this.fading = false;
+    this.onEndTransition = function(){};
+  }
+
+  FadeOut(time, func=function(){}, fromDefault = true){
+    if(fromDefault){
+      this.brightness = this.maxBrightness;
+    }
+    this.originalBrightness = this.brightness;
+    this.targetBrightness = 0.0;
+    this.maxTime = time;
+    this.time = 0.0;
+    this.fading = true;
+    this.onEndTransition = func;
+  }
+
+  FadeIn(time,func=function(){}, fromDefault = true){
+    if(fromDefault){
+      this.brightness = 0.0;
+    }
+    this.originalBrightness = this.brightness;
+    this.targetBrightness = this.maxBrightness;
+    this.maxTime = time;
+    this.time = 0.0;
+    this.fading = true;
+    this.onEndTransition = func;
   }
 
   Update() {
+    this.brightness += 0.1 * input.GetKeyDownF("KeyO");
+    this.brightness -= 0.1 * input.GetKeyDownF("KeyL");
+
+    if(this.fading){
+      this.time += manager.delta;
+      if(this.time >= this.maxTime){
+        this.fading = false;
+        this.transitioning = false;
+        this.brightness = this.targetBrightness;
+        this.onEndTransition();
+      } else {
+        let lerp = this.time / this.maxTime;
+        if(lerp > 1.0){
+          lerp = 1.0;
+        }
+        lerp = lerp*lerp*(3.0-2.0*lerp);
+        this.brightness = this.originalBrightness * (1.0-lerp) + this.targetBrightness * lerp;
+      }
+    }
+
     if(user && user.isClient) return;
     this.UpdateCam(manager.delta);
   }

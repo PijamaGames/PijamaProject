@@ -11,7 +11,7 @@ var dialogLevel1XML = `
               <es>Usa [W] [A] [S] [D] para moverte</es>
               <en>Use [W] [A] [S] [D] to move around</en>
           </message>
-    </text> 
+    </text>
   </dialog>
 
   <dialog>
@@ -25,7 +25,7 @@ var dialogLevel1XML = `
               <es>Usa [Espacio] para atacar</es>
               <en>Press [Space] to attack</en>
           </message>
-    </text> 
+    </text>
 
     <text>
           <name>
@@ -36,7 +36,7 @@ var dialogLevel1XML = `
               <es>Usa [Shift Izquierdo] para esquivar</es>
               <en>[Left Shift] to dash</en>
           </message>
-    </text> 
+    </text>
   </dialog>
 
   <dialog>
@@ -50,7 +50,7 @@ var dialogLevel1XML = `
               <es>Usa [Click Izquierdo] para lanzar a Tico</es>
               <en>[Left Click] to throw Tico</en>
           </message>
-    </text> 
+    </text>
   </dialog>
 
   <dialog>
@@ -64,13 +64,13 @@ var dialogLevel1XML = `
               <es>Usa [Q] para lanzar abejas</es>
               <en>Press[Q] to throw bees</en>
           </message>
-    </text> 
+    </text>
   </dialog>
 
 	<dialog>
 		<id>interludio_1</id>
 		<text>
-      			 
+
 			<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -82,7 +82,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 			<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -94,7 +94,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 			<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -106,7 +106,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 			<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -118,7 +118,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 			<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -130,7 +130,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 			<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -142,7 +142,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 			<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -154,7 +154,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 			<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -166,7 +166,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 			<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -178,7 +178,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 			<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -190,7 +190,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 			<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -202,7 +202,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 			<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -214,7 +214,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 			<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -229,7 +229,7 @@ var dialogLevel1XML = `
 	<dialog>
 		<id>cap1_intro_nelu</id>
 		<text>
-      			 
+
 			<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -241,7 +241,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 			<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -251,11 +251,11 @@ var dialogLevel1XML = `
         			<en>Navigating the amazon rainforest is no easy task, but oh, if only you could see how Nelu did it.</en>
       			</message>
 		</text>
-	
 
-	
+
+
 		<text>
-      			 
+
 			<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -267,7 +267,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 			<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -279,7 +279,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 			<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -291,7 +291,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 			<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -303,7 +303,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 			<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -315,7 +315,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 			<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -330,7 +330,7 @@ var dialogLevel1XML = `
 	<dialog>
 		<id>cap1_intro_monos</id>
 		<text>
-      			 
+
 			<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -345,7 +345,7 @@ var dialogLevel1XML = `
 	<dialog>
 		<id>cap1_nelu_nido</id>
 		<text>
-      			 
+
 			<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -357,7 +357,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 			<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -369,7 +369,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 			<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -384,7 +384,7 @@ var dialogLevel1XML = `
 	<dialog>
 		<id>cap1_intro_colibri</id>
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -396,7 +396,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -411,7 +411,7 @@ var dialogLevel1XML = `
 	<dialog>
 		<id>cap1_colibri_fortaleza</id>
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -423,7 +423,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -438,7 +438,7 @@ var dialogLevel1XML = `
 	<dialog>
 		<id>cap1_colibri_inicio_pelea</id>
 		<text>
-      			 
+
 				<name>
         			<es>Colibrí</es>
         			<en>Hummingbird</en>
@@ -450,7 +450,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Colibrí</es>
         			<en>Hummingbird</en>
@@ -462,7 +462,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Colibrí</es>
         			<en>Hummingbird</en>
@@ -474,7 +474,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Colibrí</es>
         			<en>Hummingbird</en>
@@ -489,7 +489,7 @@ var dialogLevel1XML = `
 	<dialog>
 		<id>cap1_colibri_fin_pelea</id>
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -501,7 +501,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -513,7 +513,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -525,7 +525,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Tico</es>
         			<en>Tico</en>
@@ -540,7 +540,7 @@ var dialogLevel1XML = `
 	<dialog>
 		<id>cap1_fin</id>
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -552,7 +552,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -564,7 +564,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -576,7 +576,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -588,7 +588,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -600,7 +600,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -612,7 +612,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -624,7 +624,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -636,7 +636,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -648,7 +648,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -660,7 +660,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -672,7 +672,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -684,7 +684,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -699,7 +699,7 @@ var dialogLevel1XML = `
 	<dialog>
 		<id>interludio_2</id>
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -711,7 +711,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -723,7 +723,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -735,7 +735,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Barquera</es>
         			<en>Rower</en>
@@ -747,7 +747,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -759,7 +759,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -771,7 +771,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Barquera</es>
         			<en>Rower</en>
@@ -783,7 +783,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -795,7 +795,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -807,7 +807,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -819,7 +819,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -834,7 +834,7 @@ var dialogLevel1XML = `
 	<dialog>
 		<id>interludio_3</id>
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -846,7 +846,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -858,7 +858,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -870,7 +870,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -882,7 +882,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Barquera</es>
         			<en>Rower</en>
@@ -894,7 +894,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -906,7 +906,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -918,7 +918,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -930,7 +930,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -942,7 +942,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -954,7 +954,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Barquera</es>
         			<en>Rower</en>
@@ -966,7 +966,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -978,7 +978,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -990,7 +990,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -1002,7 +1002,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -1014,7 +1014,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -1026,7 +1026,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -1038,7 +1038,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -1050,7 +1050,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -1062,7 +1062,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -1074,7 +1074,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -1086,7 +1086,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -1098,7 +1098,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -1110,7 +1110,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -1122,7 +1122,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -1134,7 +1134,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -1146,7 +1146,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Barquera</es>
         			<en>Rower</en>
@@ -1158,7 +1158,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -1170,7 +1170,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -1182,7 +1182,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -1194,7 +1194,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -1206,7 +1206,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -1218,7 +1218,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -1230,7 +1230,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -1242,7 +1242,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -1254,7 +1254,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -1266,7 +1266,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -1278,7 +1278,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -1290,7 +1290,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -1302,7 +1302,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -1314,7 +1314,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
@@ -1326,7 +1326,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -1338,7 +1338,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -1350,7 +1350,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Phoro</es>
         			<en>Phoro</en>
@@ -1362,7 +1362,7 @@ var dialogLevel1XML = `
 		</text>
 
 		<text>
-      			 
+
 				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>

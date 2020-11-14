@@ -6,9 +6,23 @@ prefabFactory.AddPrototype("Tree", new Vec2(6,6), new Vec2(0.0, 0.0), false, ()=
   ]
 });
 
+prefabFactory.AddPrototype("TreeStatic", new Vec2(6,6), new Vec2(0.0, 0.0), true, ()=>{
+  return [
+    new Renderer(new Vec2(9,0), new Vec2(6,6), true),
+  ]
+});
+
 prefabFactory.AddPrototype("DecoTree", new Vec2(6,6), new Vec2(0.0, 0.0), false, ()=>{
   return [
     new SpriteRenderer('tree', new Vec2(0, 0),new Vec2(6,6), true, 1, [0], 8, true),
+  ]
+});
+
+prefabFactory.AddPrototype("BushStatic", new Vec2(2,2), new Vec2(0.0, 0.0), false, ()=>{
+  return [
+    //new ColliderGroup([new CircleCollider(new Vec2(0.0,0.0), 0.5, true)]),
+    new Renderer(new Vec2(9,6), new Vec2(2,2), true),
+    //new Burnable(),
   ]
 });
 

@@ -1,5 +1,5 @@
 class TextBox extends Component{
-  constructor(id, spanishText, englishText, scale, centered){
+  constructor(id, spanishText, englishText, scale, centered,change=true){
     super();
     this.type = "textBox";
     this.element = null;
@@ -9,6 +9,7 @@ class TextBox extends Component{
     this.centered=centered;
     this.isInputField=false;
     this.id = id;
+    this.change=change;
   }
 
   ChangeTextLanguage(){
@@ -22,10 +23,14 @@ class TextBox extends Component{
   Destroy(){
     this.element.parentNode.removeChild(this.element);
     this.gameobj.scene.domElements.delete(this);
-    this.listener.Remove();
+    if(this.change) this.listener.Remove();
   }
 
   Update(){
+    if(manager.scene.camera.camera.fading){
+      this.element.style.opacity = manager.scene.camera.camera.brightness/manager.scene.camera.camera.maxBrightness;
+    }
+
     this.ElementResponsive();
   }
 
@@ -36,7 +41,7 @@ class TextBox extends Component{
     this.CreateElement();
     this.gameobj.scene.domElements.add(this);
     var that=this;
-    this.listener=manager.changeLanguageEvent.AddListener(this,()=>that.ChangeTextLanguage());
+    if(this.change) this.listener=manager.changeLanguageEvent.AddListener(this,()=>that.ChangeTextLanguage());
   }
 
   CreateElement(){

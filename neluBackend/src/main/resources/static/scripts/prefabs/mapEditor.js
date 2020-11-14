@@ -111,7 +111,7 @@ class MapEditor {
         Log("BYTECODE: "+manager.scene.bytecode);
       }),
       new Edge("delete").AddCondition(()=>input.GetKeyDown("KeyX")),
-      new Edge("scale").AddCondition(()=>input.GetKeyDown("Space") && !that.selected.renderer.vertical),
+      new Edge("scale").AddCondition(()=>input.GetKeyDown("Space") /*&& !that.selected.renderer.vertical*/),
     ]);
 
     var scaleNode = new Node("scale").SetStartFunc(()=>{
@@ -119,10 +119,15 @@ class MapEditor {
       that.lastScale = that.selected.transform.scale.Copy();
       //canvas.requestPointerLock();
     }).SetUpdateFunc(()=>{
-      that.selected.transform.scale.Set(
-        Math.floor(Math.abs(input.mouseWorldPosition.x-that.lastMousePos.x)*this.scaleFactor+1),
-        Math.floor(Math.abs(input.mouseWorldPosition.y-that.lastMousePos.y)*this.scaleFactor+1)
-      );
+      if(!that.selected.renderer.vertical){
+        that.selected.transform.scale.Set(
+          Math.floor(Math.abs(input.mouseWorldPosition.x-that.lastMousePos.x)*this.scaleFactor+1),
+          Math.floor(Math.abs(input.mouseWorldPosition.y-that.lastMousePos.y)*this.scaleFactor+1)
+        );
+      } else {
+        that.selected.transform.scale.x = (Math.floor(Math.abs(input.mouseWorldPosition.x-that.lastMousePos.x))+1)*that.selected.renderer.numTiles.x;
+      }
+
     }).SetExitFunc(()=>{
       //document.exitPointerLock();
     }).SetEdges([

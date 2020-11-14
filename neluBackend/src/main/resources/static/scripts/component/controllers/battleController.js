@@ -26,6 +26,7 @@ class ScriptedEvent extends AbstractEvent{
 
   Start(){
     if(!this.used || this.repeat){
+      this.used = true;
       Log("START SCRIPTED EVENT: "+this.id);
       this.onStart();
     }
@@ -38,6 +39,18 @@ class Battle extends AbstractEvent{
     Object.assign(this, {spawnerRefs, startEnable, startDisable, endEnable, endDisable});
     //this.started = false;
     this.ended = false;
+    this.onEndFunc = function(){};
+    this.onStartFunc = function(){};
+  }
+
+  SetOnStart(func){
+    this.onStartFunc = func;
+    return this;
+  }
+
+  SetOnEnd(func){
+    this.onEndFunc = func;
+    return this;
   }
 
   ProcessRefs(){
@@ -72,7 +85,8 @@ class Battle extends AbstractEvent{
         allSpawnersEnded = false;
       }
     }
-    return allSpawnersEnded && /*manager.scene.enemies.size*/Spawner.enemyCount == 0;
+    let aux = allSpawnersEnded;
+    return aux;
   }
 
   Start(){
@@ -83,10 +97,17 @@ class Battle extends AbstractEvent{
     for(let obj of this.startEnableObjs){
       obj.SetActive(true);
     }
+    for(let obj of this.endEnableObjs){
+      obj.SetActive(false);
+    }
     for(let obj of this.startDisableObjs){
       obj.SetActive(false);
     }
+    for(let obj of this.endDisableObjs){
+      obj.SetActive(true);
+    }
     this.started = true;
+    this.onStartFunc();
   }
 
   End(){
@@ -94,16 +115,24 @@ class Battle extends AbstractEvent{
     for(let obj of this.endEnableObjs){
       obj.SetActive(true);
     }
+    /*for(let obj of this.startEnableObjs){
+      obj.SetActive(true);
+    }
+    for(let obj of this.startDisableObjs){
+      obj.SetActive(false);
+    }*/
     for(let obj of this.endDisableObjs){
       obj.SetActive(false);
     }
     this.ended = true;
+    this.onEndFunc();
   }
 }
 
 class BattleController extends Component{
   constructor(battles = [], events = []){
     super();
+    battleController = this;
     this.type = "battleController";
     this.started = false;
     this.battles = battles;
@@ -118,6 +147,11 @@ class BattleController extends Component{
     }
     this.onStartBattle = function(){};
     this.onEndBattle = function(){};
+  }
+
+  AddEvent(e){
+    this.events.push(e);
+    this.battleMap.set(e.id, e);
   }
 
   SetOnStartBattle(func){
@@ -180,10 +214,16 @@ class BattleController extends Component{
     }
   }
 
+  StartEvent(id){
+    let e = this.eventMap.get(id);
+    if(e && e!=null){
+      e.Start();
+    }
+  }
+
   SetGameobj(gameobj){
     this.gameobj = gameobj;
     this.gameobj.battleController = this;
-    battleController = this;
   }
 }
 var battleController = null;

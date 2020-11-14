@@ -9,25 +9,24 @@ class PlayerController extends Component {
     this.lerpLeftAxis = 10.0;
     this.endAttackAnim=false;
 
-
     this.maxLife = 45;
     this.life = 30;
     this.canTakeDamage = true;
     this.damageCooldown = 0.5;
     this.damageTime = 0.0;
 
-
     this.combo = false;
     this.numCombo = 1;
     this.waitComboMaxTime = 0.05;
     this.waitComboTime = 0.0;
     this.attackDir = new Vec2();
-    this.attackImpulse = 10.0;
+    this.attackImpulse = 1.0;
     this.attack1Speed = 16;
     this.attack2Speed = 16;
     this.attack3Speed = 17;
     this.dieSpeed = 12;
-    this.dashImpulse = 4.0;
+    this.dashImpulse = 3.5;
+    this.dashInitImpulse = 2.0;
     this.dashMaxTime = 0.25;
     this.dashTime = 0.0;
     this.dashMaxCooldown = 0.4;
@@ -45,12 +44,12 @@ class PlayerController extends Component {
     this.allBees = [];
     this.maxBees = 20;
     this.numBees = this.maxBees;
-    this.beeBirthMaxTime = 1.0;
+    this.beeBirthMaxTime = 0.33;
     this.beeBirthTime = 0.0;
     this.beesTarget = null;
 
     this.firePower = false;
-    this.firePowerMaxTime = 20;
+    this.firePowerMaxTime = 10;
     this.firePowerTime = 0.0;
     this.fire = null;
     this.fireDisplacement = 1.2;
@@ -160,6 +159,7 @@ class PlayerController extends Component {
   }
 
   ThrowColibri(){
+    if(!this.gameobj.scene.canUseColibri) return;
     if(Renderer.hoverSet && Renderer.hoverSet.size != 0) return;
     Log("THROW COLIBRI");
     this.hasColibri = false;
@@ -171,10 +171,11 @@ class PlayerController extends Component {
 
   PauseSoundBees(){
     this.beeSourceSound.audioSource.PauseAll();
-    Log("escuchando");
+    //Log("escuchando");
   }
 
   ThrowBees(){
+    if(!this.gameobj.scene.canUseBees) return;
     if(Renderer.hoverSet && Renderer.hoverSet.size != 0) return;
     this.beesTarget = this.GetBeesTarget();
     if(this.beesTarget != null){
@@ -270,14 +271,15 @@ class PlayerController extends Component {
       //
       //that.particles.transform.SetLocalPosition(that.particlePosition);
     }).SetStartFunc(()=>{
-      that.gameobj.audioSource.Play("comboSound");
+      that.gameobj.audioSource.Play("comboSound1");
       that.gameobj.renderer.SetAnimation('attack1');
       that.particles.renderer.SetAnimation('attack1');
       that.particles.SetActive(true);
       that.endAttackAnim=false;
       that.gameobj.renderer.endAnimEvent.AddListener(that, ()=>that.endAttackAnim=true,true);
       that.attackDir = that.gameobj.renderer.dir.Copy();
-      that.gameobj.rigidbody.force.Add(Vec2.Scale(that.attackDir, that.attackImpulse));
+      //that.gameobj.rigidbody.force.Add(Vec2.Scale(that.attackDir, that.attackImpulse));
+      that.particles.renderer.SetDirection(that.attackDir);
       //that.combo = false;
 
       let displacement = Vec2.Norm(that.attackDir).Scale(that.particleDisplacement+0.5*Math.abs(that.attackDir.x));
@@ -288,8 +290,7 @@ class PlayerController extends Component {
       }
 
     }).SetUpdateFunc(()=>{
-      //METER LO Q HACE MIENTRAS ATACA
-      //that.combo = that.combo || input.GetAttackCACDown();
+      that.gameobj.rigidbody.force.Add(Vec2.Scale(that.attackDir, this.attackImpulse));
     }).SetExitFunc(()=>{
       that.numCombo = 2;
       that.particles.SetActive(false);
@@ -304,17 +305,20 @@ class PlayerController extends Component {
       that.particles.renderer.AddAnimation('attack2', 'nelu_particles2', that.attack2Speed, false);
 
     }).SetStartFunc(()=>{
-      that.gameobj.audioSource.Play("comboSound");
+      that.gameobj.audioSource.Play("comboSound2");
       that.gameobj.renderer.SetAnimation('attack2');
       that.particles.renderer.SetAnimation('attack2');
       that.particles.SetActive(true);
       that.endAttackAnim=false;
+      that.attackDir = that.gameobj.renderer.dir.Copy();
       that.gameobj.renderer.endAnimEvent.AddListener(that, ()=>that.endAttackAnim=true,true);
-      that.gameobj.rigidbody.force.Add(Vec2.Scale(that.attackDir, that.attackImpulse));
+      //that.gameobj.rigidbody.force.Add(Vec2.Scale(that.attackDir, that.attackImpulse));
+      let displacement = Vec2.Norm(that.attackDir).Scale(that.particleDisplacement+0.5*Math.abs(that.attackDir.x));
+      that.particles.transform.SetLocalPosition(Vec2.Add(that.particlePosition, displacement));
       that.combo = false;
+      that.particles.renderer.SetDirection(that.attackDir);
     }).SetUpdateFunc(()=>{
-      //METER LO Q HACE MIENTRAS ATACA
-      //this.combo = this.combo || input.GetAttackCACDown();
+      that.gameobj.rigidbody.force.Add(Vec2.Scale(that.attackDir, this.attackImpulse));
     }).SetExitFunc(()=>{
       that.numCombo = 3;
       that.particles.SetActive(false);
@@ -329,17 +333,21 @@ class PlayerController extends Component {
       that.particles.renderer.AddAnimation('attack3', 'nelu_particles3', that.attack3Speed, false);
 
     }).SetStartFunc(()=>{
-      that.gameobj.audioSource.Play("comboSound");
+      that.gameobj.audioSource.Play("comboSound3");
       that.gameobj.renderer.SetAnimation('attack3');
       that.particles.renderer.SetAnimation('attack3');
       that.particles.SetActive(true);
-
+      that.attackDir = that.gameobj.renderer.dir.Copy();
       that.endAttackAnim=false;
       that.gameobj.renderer.endAnimEvent.AddListener(that, ()=>that.endAttackAnim=true,true);
-      that.gameobj.rigidbody.force.Add(Vec2.Scale(that.attackDir, this.attackImpulse));
+
       that.combo = false;
+      let displacement = Vec2.Norm(that.attackDir).Scale(that.particleDisplacement+0.5*Math.abs(that.attackDir.x));
+      that.particles.transform.SetLocalPosition(Vec2.Add(that.particlePosition, displacement));
+      that.particles.renderer.SetDirection(that.attackDir);
 
-
+    }).SetUpdateFunc(()=>{
+      that.gameobj.rigidbody.force.Add(Vec2.Scale(that.attackDir, this.attackImpulse));
     }).SetExitFunc(()=>{
       //that.combo = false;
       that.numCombo = 4;
@@ -357,6 +365,8 @@ class PlayerController extends Component {
     }).SetUpdateFunc(()=>{
       that.waitComboTime += manager.delta;
       that.combo = (that.combo || input.GetAttackCACDown()) && that.numCombo <= 3;
+      let axis = this.leftAxis.Copy();
+      this.gameobj.renderer.SetDirection(axis);
     }).SetEdges([
       new Edge('idle').AddCondition(()=>manager.scene.paused),
       new Edge('idle').AddCondition(()=>!that.combo && that.rawLeftAxis.mod < 0.05 && that.waitComboTime > that.waitComboMaxTime),
@@ -375,6 +385,8 @@ class PlayerController extends Component {
       that.gameobj.audioSource.Play("dashSound");
       //this.dashMaxTime = 0.2;
       this.dashTime = 0.0;
+      let dir = that.gameobj.renderer.dir.Copy();
+      that.gameobj.rigidbody.force.Add(dir.Scale(that.dashInitImpulse));
     }).SetUpdateFunc(()=>{
       this.dashTime += manager.delta;
       let dir = that.gameobj.renderer.dir.Copy();
@@ -386,11 +398,16 @@ class PlayerController extends Component {
       new Edge('idle').AddCondition(()=>manager.scene.paused),
       new Edge('idle').AddCondition(()=>that.rawLeftAxis.mod < 0.05 && that.dashTime > that.dashMaxTime),
       new Edge('run').AddCondition(()=>that.rawLeftAxis.mod > 0.05 && that.dashTime > that.dashMaxTime),
+      new Edge('attack1').AddCondition(()=>{
+        return input.GetAttackCACDown() && that.canAttack && !manager.scene.paused
+      }),
     ]);
 
     let dieNode = new Node("die").SetOnCreate(()=>{
+
       that.gameobj.renderer.AddAnimation('die', 'nelu_die', that.dieSpeed, false);
     }).SetStartFunc(()=>{
+      this.gameobj.audioSource.Play("neluDied");
       that.gameobj.renderer.SetAnimation('die');
       that.gameobj.renderer.endAnimEvent.AddListener(this, ()=>{
         that.PlayerDead();
@@ -405,10 +422,7 @@ class PlayerController extends Component {
       SendEndGame(false);
     } else {
       manager.LoadScene("connectionFailed");
-      if(!input.isDesktop) input.HideVirtualInputs(true);
       var text=document.getElementById("ConnectionTitle");
-      manager.singleGameMusic.PauseAll();
-      manager.SetInMenu(true);
       text.innerHTML=manager.english? "Game over":"Fin del juego";
     }
   }
@@ -425,6 +439,7 @@ class PlayerController extends Component {
 
   TakeDamage(damage){
     if(this.canTakeDamage){
+      if (this.gameobj.audioSource)this.gameobj.audioSource.Play("neluDamage");
       this.life -= damage;
       if(this.life <= 0){
         this.life = 0;
@@ -452,6 +467,8 @@ class PlayerController extends Component {
   }
 
   ActivateFirePower(){
+    if(this.gameobj.audioSource.Playing("poweupFireSound"))
+      this.gameobj.audioSource.Stop("poweupFireSound");
     this.gameobj.audioSource.Play("poweupFireSound");
     manager.singleGameMusic.PauseAll();
     this.firePower = true;
@@ -462,7 +479,10 @@ class PlayerController extends Component {
 
   DeactivateFirePower(){
     this.gameobj.audioSource.Stop("poweupFireSound");
-    manager.singleGameMusic.PlayAll();
+    if(!manager.singleGameMusic.Playing("levelSound")){
+      manager.singleGameMusic.LoopAll(true);
+      manager.singleGameMusic.PlayAll();
+    }
     this.firePower = false;
     Log("deactivate fire power");
   }
@@ -526,7 +546,7 @@ class PlayerController extends Component {
     this.beesPool.push(obj);
     if(this.beesPool.length==this.maxBees) {
       this.allBeesDiedEvent.Dispatch();
-      Log("DESPACHANDO")
+      //Log("DESPACHANDO");
     }
     obj.SetActive(false);
   }

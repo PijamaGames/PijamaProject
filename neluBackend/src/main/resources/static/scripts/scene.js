@@ -2,6 +2,10 @@ class Scene{
   constructor(name, bytecode = null){
     Object.assign(this, {name, bytecode});
     this.CleanByteCode();
+    this.onLoad = function(){};
+    this.onUnload = function(){};
+    this.onWakeUp = function(){};
+    this.onSleep = function(){};
     this.gameobjs = new Map();
     this.staticGameobjs = new Map();
     this.buttons = new Set();
@@ -18,6 +22,29 @@ class Scene{
     manager.scenes.set(this.name, this);
     this.masterController;
     this.GenerateCam();
+
+    this.canUseColibri = true;
+    this.canUseBees = true;
+  }
+
+  SetOnLoad(func){
+    this.onLoad = func;
+    return this;
+  }
+
+  SetOnUnload(func){
+    this.onUnload = func;
+    return this;
+  }
+
+  SetOnWakeUp(func){
+    this.onWakeUp = func;
+    return this;
+  }
+
+  SetOnSleep(func){
+    this.onSleep = func;
+    return this;
   }
 
   GenerateCam(){
@@ -28,12 +55,14 @@ class Scene{
   }
 
   Sleep(){
+    this.onSleep(this);
     for(var elem of this.domElements){
       elem.element.hidden = true;
     }
   }
 
   WakeUp(){
+    this.onWakeUp(this);
     for(var elem of this.domElements){
       elem.element.hidden = !elem.active;
     }
@@ -64,6 +93,7 @@ class Scene{
   }
 
   Unload(){
+    this.onUnload(this);
     for(let [key, gameobj] of this.gameobjs){
       gameobj.Destroy();
     }
@@ -117,6 +147,7 @@ class Scene{
         //func(pos, height, new Vec2(scaleX, scaleY));
       }
     }
+    this.onLoad(this);
     Log(this);
   }
 

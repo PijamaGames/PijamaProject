@@ -71,6 +71,14 @@ function GetCreditsText(){
   text+="IWIGIA<br>";
   text+="WWF(UK)<br>";
   text+="RAINFOREST FOUNDATION US<br>";
+  text+="UPKLYAK<br>";
+  text+="ALEKSANDER SHEVCHUK<br>";
+  text+="DECODIGO<br>";
+  text+="CCCC<br>";
+  text+="WIRESTOCK<br>";
+  text+="0MELAPICS<br>";
+  text+="MICHAEL<br>";
+
   //FALTAN LOS CREDITOS DE LAS COSAS DE IVAN DE MODELOS Y TEXTURAS
 
   credits.innerHTML=text;

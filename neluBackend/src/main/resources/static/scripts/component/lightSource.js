@@ -11,7 +11,6 @@ class LightSource extends Component{
   }
 
   OnSetActive(active){
-    Log("SETTING LIGHT ACTIVE");
     if(!active){
       lighting.lightSources.delete(this);
     } else {

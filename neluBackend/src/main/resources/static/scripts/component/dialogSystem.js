@@ -1,3 +1,4 @@
+var dialogSystem;
 class DialogSystem extends Component {
   constructor(xml){
     super();
@@ -11,12 +12,36 @@ class DialogSystem extends Component {
     this.currentText = null;
     this.currentDialogLength = 0;
     this.currentDialogCount = 0;
+    this.onNextText = function(){};
+    this.endDialogEvents = new Map();
+    this.onStartDialog = function(){};
+    this.onEndDialog = function(){};
+  }
+
+  SetOnAnyDialogStart(func){
+    this.onStartDialog = func;
+    return this;
+  }
+
+  SetOnAnyDialogEnd(func){
+    this.onEndDialog = func;
+    return this;
+  }
+
+  SetOnNextText(func){
+    this.onNextText = func;
+    return this;
+  }
+
+  SetOnDialogEnd(dialog, func){
+    this.endDialogEvents.set(dialog, func);
+    return this;
   }
 
   Update(){
-    if(input.GetKeyDown("KeyC")){
+    /*if(input.GetKeyDown("KeyC")){
       this.InitDialog("interludio_1");
-    }
+    }*/
     this.fsm.Update();
   }
 
@@ -29,6 +54,7 @@ class DialogSystem extends Component {
       return;
     }
     Log("init dialog");
+    this.onStartDialog();
     this.initDialog = true;
     this.currentDialog = dialog;
     this.currentDialogLength = this.currentDialog.texts.length;
@@ -62,19 +88,30 @@ class DialogSystem extends Component {
 
     let nextTextNode = new Node("nextText").SetStartFunc(()=>{
       Log("dialog system next text");
+      that.clickTrigger = false;
       that.currentText = that.currentDialog.texts[that.currentDialogCount];
       that.textBox.textBox.SetText(manager.english ? that.currentText.message.en : that.currentText.message.es);
       that.textName.textBox.SetText(manager.english ? that.currentText.name.en : that.currentText.name.es);
       that.currentDialogCount++;
+      that.onNextText(this);
     }).SetEdges([
       new Edge("nextText").AddCondition(()=>{
         return that.currentDialogCount < that.currentDialogLength &&
-        (input.GetKeyDown("Space", true) || input.mouseLeftDown)
+        (input.GetKeyDown("Space", true) || input.clicked)
       }),
       new Edge("disabled").AddCondition(()=>{
         return that.currentDialogCount >= that.currentDialogLength &&
-        (input.GetKeyDown("Space", true) || input.mouseLeftDown)
-      })
+        (input.GetKeyDown("Space", true) || input.clicked)
+      }).SetFunc(()=>{
+        that.clickTrigger = false;
+        Log("end dialog");
+        this.onEndDialog();
+        Log(dialogSystem.currentDialog);
+        if(dialogSystem.endDialogEvents.has(dialogSystem.currentDialog.id)){
+          Log("dialog end event");
+          dialogSystem.endDialogEvents.get(dialogSystem.currentDialog.id)();
+        }
+      }),
     ]);
 
     this.fsm = new FSM([enabledNode, disabledNode, nextTextNode]).Start("disabled");
@@ -93,7 +130,7 @@ class DialogSystem extends Component {
     this.textName.SetActive(false);
 
     this.CreateFSM();
-
+    dialogSystem = this;
   }
 
   FormatDialogs(rawDialogs){
@@ -124,6 +161,7 @@ class DialogSystem extends Component {
         })
       }
       this.dialogs.set(d.id.value, {
+        id:d.id.value,
         texts: texts,
       });
     }
