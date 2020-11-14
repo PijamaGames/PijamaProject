@@ -13,7 +13,7 @@ class EnemyController extends Component {
 
     this.lastPlayerPos = new Vec2();
 
-    this.detectionRange = 8.0;
+    this.detectionRange = 15.0;
     this.attackADRange = 4.0;
     this.attackCACRange = 1.5;
     this.target = null;
@@ -40,15 +40,16 @@ class EnemyController extends Component {
 
     this.life=15;
     this.canTakeDamage = true;
-    this.damageCooldown = 0.5;
+    this.damageCooldown = 0.2;
     this.damageTime = 0.0;
-    this.damageForce = 10.0;
+    this.damageForce = 1.0;
 
     this.isMonkey=true;
 
     this.aproachFPS=14;
 
     this.onDeadCallBack = function(){};
+    //this.onDeadEvent = new EventDispatcher();
 
   }
 
@@ -59,6 +60,10 @@ class EnemyController extends Component {
     this.gameobj.audioSource.Pause(sound);
   }
 
+  Push(){
+    this.gameobj.rigidbody.force.Add(Vec2.Scale(this.gameobj.renderer.dir, - this.damageForce));
+  }
+
   TakeDamage(damage, forced = false){
     if(user && user.isClient) return;
     if(this.canTakeDamage || forced){
@@ -66,7 +71,6 @@ class EnemyController extends Component {
       this.life -= damage;
       this.canTakeDamage = false;
       this.gameobj.renderer.SetTint(1.0,0.0,0.0);
-      this.gameobj.rigidbody.force.Add(Vec2.Scale(this.gameobj.renderer.dir, - this.damageForce));
       this.damageTime = 0.0;
       /*if(this.life > 0){
         setTimeout(()=>{
@@ -273,6 +277,7 @@ class EnemyController extends Component {
   }
 
   Destroy(){
+    //this.onDeadEvent.Dispatch();
     this.gameobj.scene.enemies.delete(this.gameobj);
     for(let apple of this.allApples){
       apple.Destroy();

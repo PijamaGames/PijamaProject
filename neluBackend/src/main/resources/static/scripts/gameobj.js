@@ -140,7 +140,7 @@ class Gameobj {
   }
 
   Destroy() {
-    console.log("deleting " + this.type);
+    //Log("deleting " + this.type);
 
     //Destroy _components
     for(var [key, component] of this.components){

@@ -10,7 +10,7 @@ class BeeController extends Component{
     this.threshold = 0.3;
     this.lifeTime = 0.0;
     this.maxLifeTime = 5.0;
-    this.damage = 1;
+    this.damage = 3;
   }
 
   get target(){

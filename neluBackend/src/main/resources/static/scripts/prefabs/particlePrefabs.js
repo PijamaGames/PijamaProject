@@ -1,7 +1,8 @@
 prefabFactory.AddPrototype("neluParticles", new Vec2(2, 2), new Vec2(0.5, 0.5), false, ()=>{
   return [
-    new ColliderGroup([new CircleCollider(new Vec2(0,0), 1.0, true, null, (obj)=>{
+    new ColliderGroup([new CircleCollider(new Vec2(0,0), 1.2, true, null, (obj)=>{
       if(obj.enemyController){
+        obj.enemyController.Push();
         obj.enemyController.TakeDamage(5);
       }
     })]),
@@ -16,7 +17,7 @@ prefabFactory.AddPrototype("neluParticles", new Vec2(2, 2), new Vec2(0.5, 0.5), 
 
 prefabFactory.AddPrototype("neluFire", new Vec2(2,2), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ColliderGroup([new CircleCollider(new Vec2(0,0), 0.35, true, null, (obj)=>{
+    new ColliderGroup([new CircleCollider(new Vec2(0,0), 1.0, true, null, (obj)=>{
       if(obj.burnable){
         obj.burnable.Burn();
       }

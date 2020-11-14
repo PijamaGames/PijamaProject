@@ -43,7 +43,7 @@ prefabFactory.AddPrototype("Rock", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
     new ColliderGroup([new BoxCollider(new Vec2(0,-0.1), 1.0,0.8, false)]),
     new Rigidbody(0.5,true),
-    new Renderer(new Vec2(5,0), new Vec2(1,1), false),
+    new Renderer(new Vec2(5,0), new Vec2(1,1), true),
     new AudioSource(["moveObjectSound"]),
   ]
 });
@@ -97,6 +97,8 @@ prefabFactory.AddPrototype("BigLogPack", new Vec2(1,5), new Vec2(0,0), true, ()=
 prefabFactory.AddPrototype("BigLogPackLiana", new Vec2(1,5), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(8,11), new Vec2(1,5), true),
+    new Barrier(3),
+    new ColliderGroup([new BoxCollider(new Vec2(0.5,-0.5), 2.0, 3.5, false)]),
   ]
 });
 
@@ -190,15 +192,44 @@ prefabFactory.AddPrototype("Campfire", new Vec2(1,1), new Vec2(0,0), true, ()=>{
 prefabFactory.AddPrototype("LianaLeft", new Vec2(1,2), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(8,2), new Vec2(1,2), true),
+    new ColliderGroup([new CircleCollider(new Vec2(0.0,-0.2), 0.3, true, (obj, self)=>{
+      if(obj.colibriController){
+        self.destructible.TakeDamage();
+      }
+    })]),
     new AudioSource(["breakObjectSound1"]),
-
+    new Destructible(1,"breakObjectSound1","breakObjectSound1").SetOnTakeDamage((obj)=>{
+      //añadir sonido
+      Log("take damage");
+    }).SetOnDestruct((obj)=>{
+      let b = Barrier.GetClosestBarrier(obj.transform.GetWorldCenter());
+      if(b != null){
+        b.Release();
+      }
+      Log("destruct");
+    }),
   ]
 });
 
 prefabFactory.AddPrototype("LianaRight", new Vec2(1,2), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(8,4), new Vec2(1,2), true),
+    new ColliderGroup([new CircleCollider(new Vec2(0.0,-0.2), 0.3, true, (obj, self)=>{
+      if(obj.colibriController){
+        self.destructible.TakeDamage();
+      }
+    })]),
     new AudioSource(["breakObjectSound1"]),
+    new Destructible(1,"breakObjectSound1","breakObjectSound1").SetOnTakeDamage((obj)=>{
+      //añadir sonido
+      Log("take damage");
+    }).SetOnDestruct((obj)=>{
+      let b = Barrier.GetClosestBarrier(obj.transform.GetWorldCenter());
+      if(b != null){
+        b.Release();
+      }
+      Log("destruct");
+    }),
   ]
 });
 
