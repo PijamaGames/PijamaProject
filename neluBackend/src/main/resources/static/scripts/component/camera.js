@@ -44,6 +44,7 @@ class Camera extends Component {
     if(this.fading){
       this.time += manager.delta;
       if(this.time >= this.maxTime){
+        this.fading = false;
         this.transitioning = false;
         this.brightness = this.targetBrightness;
         this.onEndTransition();

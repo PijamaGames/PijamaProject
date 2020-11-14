@@ -1,6 +1,6 @@
 function PrepareCutScene(obj){
   dialogSystem.textBox.transform.SetWorldPosition(new Vec2(0,0.72));
-  dialogSystem.textName.transform.SetWorldPosition(new Vec2(-0.3, 0.92));
+  dialogSystem.textName.transform.SetWorldPosition(new Vec2(-0.3, 0.88));
   dialogSystem.textBox.renderer.SetAlpha(/*0.15*/0.0);
   dialogSystem.textName.renderer.SetAlpha(/*0.15*/0.0);
   dialogSystem.textBox.textBox.element.style.color = "#FFFFFF";
@@ -15,6 +15,7 @@ function PrepareCutScene(obj){
   obj.bloom = manager.graphics.config.bloom;
   manager.graphics.config.bloom = false;
   dialogSystem.textBox.textBox.element.className += " strokeText";
+  dialogSystem.textName.textBox.element.className += " strokeText";
 }
 
 function FinishCutScene(obj){
@@ -55,7 +56,7 @@ prefabFactory.AddPrototype("CutScene2", new Vec2(20,15), new Vec2(0.5,0.5), fals
       new VideoRenderer("cutScene2", new Vec2(20,15), 8,false, 16),
       new CustomBehaviour().SetOnCreate((obj)=>{
         //dialogSystem.InitDialog("t_movimiento");
-        lighting.SetCurrentLight(3);
+        lighting.SetCurrentLight(1);
         PrepareCutScene(obj);
         manager.scene.camera.camera.FadeIn(3.0, ()=>dialogSystem.InitDialog("interludio_2"));
       }).SetOnDestroy((obj)=>{
@@ -76,7 +77,7 @@ prefabFactory.AddPrototype("CutScene3", new Vec2(20,15), new Vec2(0.5,0.5), fals
       new VideoRenderer("cutScene1", new Vec2(20,15), 8,false, 16),
       new CustomBehaviour().SetOnCreate((obj)=>{
         //dialogSystem.InitDialog("t_movimiento");
-        lighting.SetCurrentLight(3);
+        lighting.SetCurrentLight(1);
         PrepareCutScene(obj);
         manager.scene.camera.camera.FadeIn(3.0, ()=>dialogSystem.InitDialog("interludio_3"));
       }).SetOnDestroy((obj)=>{

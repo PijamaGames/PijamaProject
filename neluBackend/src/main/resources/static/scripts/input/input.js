@@ -30,6 +30,8 @@ class Input {
     this.touchStartEvent = new EventDispatcher();
     this.touchEndEvent = new EventDispatcher();
     this.clickEvent = new EventDispatcher();
+    this.clickEvent.AddListener(this, ()=>input.clicked = true);
+    this.clicked = false;
     //this.clickPosition = new Vec2();
     var that = this;
   }
@@ -194,9 +196,10 @@ class Input {
         //Log(touches);
         for(let t of touches){
           input.ongoingTouches.set(t.identifier, t);
-          this.lastTouch = t;
-          this.touchStartEvent.Dispatch();
-          this.clickEvent.Dispatch();
+          input.lastTouch = t;
+          input.touchStartEvent.Dispatch();
+          input.clickEvent.Dispatch();
+          //input.clicked = true;
           for(let [key,vi] of input.virtualInputs){
             if(vi.ScreenCoordInsideInput(t.clientX, t.clientY)){
               vi.AddTouch(t);
@@ -271,6 +274,8 @@ class Input {
 
     this.mouseLeftDown = false;
     this.mouseLeftUp = false;
+
+    this.clicked = false;
   }
 
   AddKey(key) {

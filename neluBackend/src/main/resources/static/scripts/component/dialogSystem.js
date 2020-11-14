@@ -75,6 +75,7 @@ class DialogSystem extends Component {
 
     let nextTextNode = new Node("nextText").SetStartFunc(()=>{
       Log("dialog system next text");
+      that.clickTrigger = false;
       that.currentText = that.currentDialog.texts[that.currentDialogCount];
       that.textBox.textBox.SetText(manager.english ? that.currentText.message.en : that.currentText.message.es);
       that.textName.textBox.SetText(manager.english ? that.currentText.name.en : that.currentText.name.es);
@@ -83,12 +84,13 @@ class DialogSystem extends Component {
     }).SetEdges([
       new Edge("nextText").AddCondition(()=>{
         return that.currentDialogCount < that.currentDialogLength &&
-        (input.GetKeyDown("Space", true) || input.mouseLeftDown)
+        (input.GetKeyDown("Space", true) || input.clicked)
       }),
       new Edge("disabled").AddCondition(()=>{
         return that.currentDialogCount >= that.currentDialogLength &&
-        (input.GetKeyDown("Space", true) || input.mouseLeftDown)
+        (input.GetKeyDown("Space", true) || input.clicked)
       }).SetFunc(()=>{
+        that.clickTrigger = false;
         Log("end dialog");
         Log(dialogSystem.currentDialog);
         if(dialogSystem.endDialogEvents.has(dialogSystem.currentDialog.id)){
