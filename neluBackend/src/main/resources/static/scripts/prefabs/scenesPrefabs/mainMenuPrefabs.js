@@ -39,7 +39,7 @@ prefabFactory.AddPrototype("ControlsFromMenu", new Vec2(8,2), new Vec2(0.5,0.5),
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();
     }),
-    new TextBox(null, "Controles","Control", new Vec2(0.3,0.07), true),
+    new TextBox(null, "Controles","Controls", new Vec2(0.3,0.07), true),
     new AudioSource(["UISound1"]),
   ]
 });

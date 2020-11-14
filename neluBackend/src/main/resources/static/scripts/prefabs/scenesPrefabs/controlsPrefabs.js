@@ -25,7 +25,7 @@ prefabFactory.AddPrototype("ControlsTitle", new Vec2(14,2), new Vec2(0.5,0.5), f
 });
 prefabFactory.AddPrototype("ControlsTextBox", new Vec2(14,9), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(0,23), new Vec2(14,9)),
+    new ImageRenderer(new Vec2(0,0), new Vec2(14,9)).SetTexture("controls"),
     new CustomBehaviour().SetOnCreate((obj)=>{
       ChangeControlImage(obj.renderer);
     }),
@@ -33,7 +33,7 @@ prefabFactory.AddPrototype("ControlsTextBox", new Vec2(14,9), new Vec2(0.5,0.5),
 });
 
 function ChangeControlImage(rend){
-  if(manager.english && input.isDesktop) rend.SetTile(new Vec2(14,0);
+  if(manager.english && input.isDesktop) rend.SetTile(new Vec2(14,0));
   else if(manager.english && !input.isDesktop) rend.SetTile(new Vec2(14,9));
   else if(!manager.english && input.isDesktop) rend.SetTile(new Vec2(0,0));
   else if(!manager.english && !input.isDesktop) rend.SetTile(new Vec2(0,9));
