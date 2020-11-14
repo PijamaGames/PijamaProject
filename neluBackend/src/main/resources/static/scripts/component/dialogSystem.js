@@ -18,12 +18,12 @@ class DialogSystem extends Component {
     this.onEndDialog = function(){};
   }
 
-  SetOnStartDialog(func){
+  SetOnAnyDialogStart(func){
     this.onStartDialog = func;
     return this;
   }
 
-  SetOnEndDialog(func){
+  SetOnAnyDialogEnd(func){
     this.onEndDialog = func;
     return this;
   }
