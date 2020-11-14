@@ -132,6 +132,7 @@ class Battle extends AbstractEvent{
 class BattleController extends Component{
   constructor(battles = [], events = []){
     super();
+    battleController = this;
     this.type = "battleController";
     this.started = false;
     this.battles = battles;
@@ -223,7 +224,6 @@ class BattleController extends Component{
   SetGameobj(gameobj){
     this.gameobj = gameobj;
     this.gameobj.battleController = this;
-    battleController = this;
   }
 }
 var battleController = null;

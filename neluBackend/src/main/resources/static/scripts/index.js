@@ -19,7 +19,10 @@ function Main(){
   manager.AddScene(new Scene("singleGame", BC_SingleGame).SetOnLoad((scene)=>{
     scene.canUseColibri = false;
     scene.canUseBees = false;
+    scene.camera.camera.FadeIn(2.0);
     lighting.SetCurrentLight(1);
+  }).SetOnWakeUp((scene)=>{
+    //scene.camera.camera.FadeIn(2.0);
   }));
   manager.AddScene(new Scene("cutScene1", BC_CutScene1));
   manager.AddScene(new Scene("multiGame1", BC_MultiGame1));

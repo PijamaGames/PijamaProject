@@ -2,21 +2,34 @@ prefabFactory.AddPrototype("CutScene1", new Vec2(20,15), new Vec2(0.5,0.5), fals
   return [
       new DialogSystem(dialogLevel1XML).SetOnNextText((obj)=>{
         obj.gameobj.audioSource.PlayAll();
-      }).SetOnDialogEnd("t_movimiento", ()=>{
+      }).SetOnDialogEnd("interludio_1", ()=>{
         //lighting.BeginTransition(2);
-        manager.LoadScene("singleGame");
+        manager.scene.camera.camera.FadeOut(2, ()=>manager.LoadScene("singleGame"));
       }),
       new AudioSource(["dialogSound"]),
-      new VideoRenderer("cutScene1", new Vec2(20,15), 12,false, 16),
-      new CustomBehaviour().SetOnCreate(()=>{
-        dialogSystem.InitDialog("t_movimiento");
+      new VideoRenderer("cutScene1", new Vec2(20,15), 8,false, 16),
+      new CustomBehaviour().SetOnCreate((obj)=>{
+        //dialogSystem.InitDialog("t_movimiento");
         lighting.SetCurrentLight(1);
-        dialogSystem.textBox.transform.SetWorldPosition(new Vec2(0,0.7));
-        dialogSystem.textName.transform.SetWorldPosition(new Vec2(-0.3, 0.9));
-        dialogSystem.textBox.renderer.SetAlpha(0.0);
-        dialogSystem.textName.renderer.SetAlpha(0.0);
+        dialogSystem.textBox.transform.SetWorldPosition(new Vec2(0,0.72));
+        dialogSystem.textName.transform.SetWorldPosition(new Vec2(-0.3, 0.92));
+        dialogSystem.textBox.renderer.SetAlpha(0.15);
+        dialogSystem.textName.renderer.SetAlpha(0.15);
         dialogSystem.textBox.textBox.element.style.color = "#000000";
         dialogSystem.textName.textBox.element.style.color ="#000000";
+        dialogSystem.textBox.renderer.tile.Set(16,6);
+        dialogSystem.textBox.renderer.numTiles.Set(1,1);
+        dialogSystem.textName.renderer.tile.Set(16,6);
+        dialogSystem.textName.renderer.numTiles.Set(1,1);
+        dialogSystem.textName.transform.scale.y = 1.0;
+        obj.color = manager.graphics.colorsPerChannel;
+        manager.graphics.colorsPerChannel = 255.0;
+        obj.bloom = manager.graphics.config.bloom;
+        manager.graphics.config.bloom = false;
+        manager.scene.camera.camera.FadeIn(3.0, ()=>dialogSystem.InitDialog("interludio_1"));
+      }).SetOnDestroy((obj)=>{
+        manager.graphics.colorsPerChannel = obj.color;
+        manager.graphics.config.bloom = obj.bloom;
       }),
   ];
 });

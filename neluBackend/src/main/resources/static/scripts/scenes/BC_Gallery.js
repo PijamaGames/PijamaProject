@@ -1,4 +1,6 @@
 var BC_Gallery = `
+TreeStatic 9 0 0
+BushStatic 9 6 0
 BattleManager 0 -3 0
 MonkeySpawner1 -9 0 0
 MonkeySpawner2 -8 0 0

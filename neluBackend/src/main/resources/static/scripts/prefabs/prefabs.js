@@ -34,7 +34,11 @@ prefabFactory.AddPrototype("DryPlant", new Vec2(1,1), new Vec2(0,0), false, ()=>
   return [
     new Renderer(new Vec2(5,2), new Vec2(1,1), true),
     new ColliderGroup([new BoxCollider(new Vec2(0,0), 1.0, 1.0, false)]),
-    new Burnable().SetOnEndBurn((obj)=>obj.colliderGroup.firstCollider.isTrigger = true),
+    new Burnable().SetOnEndBurn((obj)=>{
+      obj.colliderGroup.firstCollider.isTrigger = true;
+      obj.renderer.tile.Set(6,11);
+      obj.renderer.SetTint(1,1,1);
+    }),
     new AudioSource(["fireSound"]),
   ]
 });

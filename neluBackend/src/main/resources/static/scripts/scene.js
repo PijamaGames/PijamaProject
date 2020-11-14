@@ -4,6 +4,8 @@ class Scene{
     this.CleanByteCode();
     this.onLoad = function(){};
     this.onUnload = function(){};
+    this.onWakeUp = function(){};
+    this.onSleep = function(){};
     this.gameobjs = new Map();
     this.staticGameobjs = new Map();
     this.buttons = new Set();
@@ -35,6 +37,16 @@ class Scene{
     return this;
   }
 
+  SetOnWakeUp(func){
+    this.onWakeUp = func;
+    return this;
+  }
+
+  SetOnSleep(func){
+    this.onSleep = func;
+    return this;
+  }
+
   GenerateCam(){
     this.camera = /*this.AddGameobj(*/new Gameobj('camera',0, null, this, [
       new Camera(2.5),
@@ -43,12 +55,14 @@ class Scene{
   }
 
   Sleep(){
+    this.onSleep(this);
     for(var elem of this.domElements){
       elem.element.hidden = true;
     }
   }
 
   WakeUp(){
+    this.onWakeUp(this);
     for(var elem of this.domElements){
       elem.element.hidden = !elem.active;
     }

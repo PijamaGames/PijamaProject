@@ -37,7 +37,7 @@ class AudioSource extends Component{
         let normDist=this.distance/this.maxDistance;
         this.volume=((-Math.pow(normDist,3))+1)*this.maxVol;
         this.volume=this.volume<0?0:this.volume;
-        Log(this.volume);
+        //Log(this.volume);
         this.ChangeVolAll(this.volume);
 
         this.lastVol=this.volume;
