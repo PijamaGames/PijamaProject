@@ -186,7 +186,7 @@ prefabFactory.AddPrototype("BeekeeperEnemy", new Vec2(2, 2), new Vec2(0.5, 0.5),
       obj.enemyController.TakeDamage(10, true);
     }),
     new NetworkEntity(),
-    new AudioSource(["fireSound"]),
+    new AudioSource(["fireSound","beekeeperAttack","beekeeperDied","beekeeperRun","beekeeperDamage"]),
   ]
 });
 

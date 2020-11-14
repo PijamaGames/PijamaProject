@@ -270,7 +270,7 @@ class PlayerController extends Component {
       //
       //that.particles.transform.SetLocalPosition(that.particlePosition);
     }).SetStartFunc(()=>{
-      that.gameobj.audioSource.Play("comboSound");
+      that.gameobj.audioSource.Play("comboSound1");
       that.gameobj.renderer.SetAnimation('attack1');
       that.particles.renderer.SetAnimation('attack1');
       that.particles.SetActive(true);
@@ -304,7 +304,7 @@ class PlayerController extends Component {
       that.particles.renderer.AddAnimation('attack2', 'nelu_particles2', that.attack2Speed, false);
 
     }).SetStartFunc(()=>{
-      that.gameobj.audioSource.Play("comboSound");
+      that.gameobj.audioSource.Play("comboSound2");
       that.gameobj.renderer.SetAnimation('attack2');
       that.particles.renderer.SetAnimation('attack2');
       that.particles.SetActive(true);
@@ -329,7 +329,7 @@ class PlayerController extends Component {
       that.particles.renderer.AddAnimation('attack3', 'nelu_particles3', that.attack3Speed, false);
 
     }).SetStartFunc(()=>{
-      that.gameobj.audioSource.Play("comboSound");
+      that.gameobj.audioSource.Play("comboSound3");
       that.gameobj.renderer.SetAnimation('attack3');
       that.particles.renderer.SetAnimation('attack3');
       that.particles.SetActive(true);
@@ -389,6 +389,7 @@ class PlayerController extends Component {
     ]);
 
     let dieNode = new Node("die").SetOnCreate(()=>{
+      this.gameobj.audioSource.Play("neluDied");
       that.gameobj.renderer.AddAnimation('die', 'nelu_die', that.dieSpeed, false);
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('die');
@@ -425,6 +426,7 @@ class PlayerController extends Component {
 
   TakeDamage(damage){
     if(this.canTakeDamage){
+      this.gameobj.audioSource.Play("neluDamage");
       this.life -= damage;
       if(this.life <= 0){
         this.life = 0;

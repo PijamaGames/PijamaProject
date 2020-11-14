@@ -11,22 +11,27 @@ class AudioSource extends Component{
 
     if(soundOnAwake!=null)
       this.Play(soundOnAwake);
-    this.maxDistance=10;
+    this.maxDistance=15;
     this.minDistance=0;
     this.volume;
+    this.lastVol=0;
   }
 
   Destroy(){
   }
 
   Update(){
-    this.maxVol=manager.maxVolume;
     let player = manager.scene.players.values().next().value;
     if(player){
+      this.maxVol=manager.maxVolume;
       this.distance=Vec2.Distance(this.gameobj.transform.GetWorldCenter(),player.transform.GetWorldCenter());
       let normDist=this.distance/this.maxDistance;
       this.volume=((-Math.pow(normDist,3))+1)*this.maxVol;
-      this.ChangeVolAll(this.volume);
+      this.volume=this.volume<0?0:this.volume;
+      if(this.lastVol!=this.volume){
+        this.ChangeVolAll(this.volume);
+      }
+      this.lastVol=this.volume;
     }
   }
 
@@ -78,7 +83,7 @@ class AudioSource extends Component{
   ChangeVolAll(num){
     let id;
     for (var [key,value] of this.sounds){
-      id=this.ids.get(name);
+      id=this.ids.get(key);
       this.sounds.get(key).volume(num,id);
     }
   }
