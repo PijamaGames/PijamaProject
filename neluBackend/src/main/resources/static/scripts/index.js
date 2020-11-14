@@ -25,10 +25,8 @@ function Main(){
   }).SetOnWakeUp((scene)=>{
     ReturnGame(false);
   }).SetOnSleep(()=>{
-    Log("A dormir")
     ExitGame(true);
   }).SetOnUnload(()=>{
-    Log("hola")
     ExitGame(false);
   }));
   manager.AddScene(new Scene("cutScene1", BC_CutScene1).SetOnLoad(()=>{
@@ -102,16 +100,16 @@ function ExitGame(sleep){
     for(var m of music){
       m.PauseAll();
     }
+    manager.SetInMenu(true);
   }
   else{
-    Log("POR AQUI")
     manager.singleGameMusic.StopAll();
     for(var m of music){
       m.StopAll();
     }
   }
   input.HideVirtualInputs(true);
-  manager.SetInMenu(true);
+
 
 }
 
