@@ -840,7 +840,7 @@ var dialogLevel1XML = `
         			<en>Alliacea</en>
       			</name>
       			<message>
-        			<es>Creo que no hemos empezado con bien pie.</es>
+        			<es>Creo que no hemos empezado con buen pie.</es>
         			<en>I think we didn't start with the right foot.</en>
       			</message>
 		</text>
