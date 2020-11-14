@@ -68,6 +68,7 @@ class EnemyController extends Component {
     if(user && user.isClient) return;
     if(this.canTakeDamage || forced){
       if (this.isMonkey) this.PlayMonkeySound("monkeyDamageSound");
+      else this.PlayMonkeySound("beekeeperDamage");
       this.life -= damage;
       this.canTakeDamage = false;
       this.gameobj.renderer.SetTint(1.0,0.0,0.0);
@@ -167,12 +168,14 @@ class EnemyController extends Component {
       that.gameobj.renderer.SetAnimation('enemyRun');
       if (that.isMonkey) that.PlayMonkeySound("screamingMonkeySound");
 
+
     }).SetUpdateFunc(()=>{
       that.CheckShortestWay();
       that.EnemyMove();
 
     }).SetExitFunc(()=>{
       if (that.isMonkey) that.PauseMonkeySound("screamingMonkeySound");
+
     }).SetEdges([
       new Edge('patrol').AddCondition(()=> that.FindClosestPlayer(that.detectionRange) == null || that.target.playerController.life<=0),
       new Edge('attackAD').AddCondition(()=>that.FindClosestPlayer(that.attackADRange) != null && this.target.playerController.life>0 && (!manager.easy || (user && user.isHost))),
@@ -188,6 +191,10 @@ class EnemyController extends Component {
       that.endAttackADAnim=false;
       that.gameobj.renderer.endAnimEvent.AddListener(that, ()=>that.endAttackADAnim=true,true);
       this.contTimeAD=this.resetADAttackTime;
+      if(!this.isMonkey){
+        this.PlayMonkeySound("beekeeperAttack");
+        this.gameobj.audioSource.LoopAll(true);
+      }
 
     }).SetUpdateFunc(()=>{
       let target=that.FindClosestPlayer(that.attackADRange);
@@ -197,6 +204,9 @@ class EnemyController extends Component {
         this.PoolPop(target);
         this.contTimeAD=0;
       }
+
+    }).SetExitFunc(()=>{
+        if(!this.isMonkey)this.PauseMonkeySound("beekeeperAttack");
 
     }).SetEdges([
       new Edge('approachPlayer').AddCondition(()=>(that.FindClosestPlayer(that.attackADRange) == null || that.target.playerController.life<=0) && (that.endAttackADAnim || that.FindClosestPlayer(that.detectionRange) != null)),
@@ -224,19 +234,22 @@ class EnemyController extends Component {
       }
 
     }).SetEdges([
-      new Edge('approachPlayer').AddCondition(()=>(that.FindClosestPlayer(that.attackCACRange) == null || that.target.playerController.life<0) && (that.endAttackCACAnim || that.FindClosestPlayer(that.detectionRange) != null)),
+      new Edge('approachPlayer').AddCondition(()=>(that.FindClosestPlayer(that.attackCACRange) == null || that.target.playerController.life<0) && (that.endAttackCACAnim || that.FindClosestPlayer(that.detectionRange) != null || manager.easy)),
       new Edge('dead').AddCondition(()=> that.life<=0 && that.endAttackCACAnim),
-      new Edge('recharge').AddCondition(()=> that.contTimeCAC<that.resetCACAttackTime && that.endAttackCACAnim),
+      new Edge('recharge').AddCondition(()=> that.contTimeCAC<that.resetCACAttackTime && that.endAttackCACAnim && !manager.easy),
 
     ]);
 
     let deadNode = new Node('dead').SetOnCreate(()=>{
       that.gameobj.renderer.AddAnimation('enemyDead', this.dieAnim, 14);
     }).SetStartFunc(()=>{
+      that.PlayMonkeySound("beekeeperDied");
       that.gameobj.renderer.SetAnimation('enemyDead');
       that.gameobj.renderer.endAnimEvent.AddListener(this, ()=>that.gameobj.Destroy(), true);
       that.onDeadCallBack();
-    });
+    }).SetEdges([
+      new Edge('patrol').AddCondition(()=>true),
+    ]);
 
     this.enemyFSM = new FSM([patrolNode, approachPlayerNode, attackADNode, attackCACNode, rechargeNode, deadNode]).Start('patrol');
   }

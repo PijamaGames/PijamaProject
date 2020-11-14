@@ -9,7 +9,7 @@ prefabFactory.AddPrototype("MonkeyEnemy", new Vec2(1, 1), new Vec2(0.5, 0.5), fa
       obj.enemyController.TakeDamage(10, true);
     }),
     new NetworkEntity(),
-    new AudioSource(["screamingMonkeySound","monkeyDamageSound","throwMissileSound","fireSound"]),
+    new AudioSource(["screamingMonkeySound","monkeyDamageSound","beekeeperDied","throwMissileSound","fireSound"]),
   ]
 });
 
@@ -177,7 +177,7 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
     new CustomBehaviour().SetOnUpdate((obj)=>{
       obj.renderer.tile.x = DEBUG_VISUAL ? 6 : 5;
     }),
-    new AudioSource(["fireSound"]),
+    new AudioSource(["monkeyHouseSound"]),
   ]
 });
 
@@ -192,7 +192,7 @@ prefabFactory.AddPrototype("BeekeeperEnemy", new Vec2(2, 2), new Vec2(0.5, 0.5),
       obj.enemyController.TakeDamage(10, true);
     }),
     new NetworkEntity(),
-    new AudioSource(["fireSound","beekeeperAttack","beekeeperDied","beekeeperRun","beekeeperDamage"]),
+    new AudioSource(["fireSound","beekeeperAttack","beekeeperDied","beekeeperDamage"]),
   ]
 });
 

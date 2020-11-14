@@ -58,14 +58,12 @@ var soundsURLs=[
   ["monkeyHouseSound",'resources/sounds/musica_Pelea_Mono.mp3'],
   ["menuSound",'resources/sounds/musica_menu.mp3'],
   ["levelSound",'resources/sounds/musica_Nivel1.mp3'],
-
-  ["fightSoundX",'resources/sounds/musica_Pelea_Mono.mp3'],
-  ["beekeeperAttack",'resources/sounds/Humano_Ataca.mp3'],
+  ["beekeeperAttack",'resources/sounds/Humano_Rango_Ataque.mp3'],
   ["beekeeperDied",'resources/sounds/Humano_Muere.mp3'],
-  ["beekeeperRun",'resources/sounds/Humano_Rango_Ataque.mp3'],
   ["beekeeperDamage",'resources/sounds/Humano_Danio.mp3'],
   ["neluDied",'resources/sounds/Muerte_Nelu.mp3'],
   ["neluDamage",'resources/sounds/Nelu_Danio.mp3'],
+  ["putEnemy",'resources/sounds/Tropa_Soltar_3.mp3'],
 
 
 
