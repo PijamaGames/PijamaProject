@@ -160,7 +160,6 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
       new ScriptedEvent("cap1_fin", true, new Vec2(208,-40), 5.0, false, ()=>dialogSystem.InitDialog("cap1_fin")),
 
     ]).SetOnStartBattle((obj)=>{
-      Log(obj)
       if(manager.singleGameMusic.Playing("levelSound")){
         manager.singleGameMusic.PauseAll();
       }
@@ -168,7 +167,7 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
 
     }).SetOnEndBattle((obj)=>{
       if(!manager.singleGameMusic.Playing("levelSound")){
-        manager.singleGameMusic.LoopAll();
+        manager.singleGameMusic.LoopAll(true);
         manager.singleGameMusic.PlayAll();
       }
       obj.audioSource.StopAll();

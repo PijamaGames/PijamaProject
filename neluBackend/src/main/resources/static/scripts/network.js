@@ -275,7 +275,6 @@ function StartGame(msg){
   gameStarted = true;
 
   if(user.isHost){
-    if(!input.isDesktop) input.HideVirtualInputs(false);
     //prefabFactory.CreateObj("Nelu");
     StartSendEntitiesLoop();
   } else {
@@ -289,7 +288,6 @@ function EndGame(msg){
   //manager.LoadScene("connectionFailed");
   //var text=document.getElementById("ConnectionTitle");
   user.SetUserWinner(msg.hostWinner == user.isHost);
-  manager.SetInMenu(true);
 
 }
 
@@ -369,7 +367,6 @@ function ConnectionLost(msg) {
   manager.SetInMenu(true);
   if(gameStarted || user.isClient){
     manager.LoadScene("connectionFailed");
-    if(user.isHost && !input.isDesktop) input.HideVirtualInputs(true);
   } else if(user.isHost) {
     var text=document.getElementById("WaitingMessage");
     text.innerHTML=manager.english? "Waiting some player...":"Esperando a otro jugador...";

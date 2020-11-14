@@ -15,11 +15,9 @@ prefabFactory.AddPrototype("SingleGameFromMenu", new Vec2(8,2), new Vec2(0.5,0.5
     }).SetUpFunc(()=>{
       manager.LoadScene('cutScene1');
       manager.SetInMenu(false);
-      input.HideVirtualInputs(false);
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();
-      manager.singleGameMusic.LoopAll(true);
-      manager.singleGameMusic.PlayAll();
+
     }),
     new TextBox(null, "Aventura","Adventure", new Vec2(0.3,0.07), true),
     new AudioSource(["UISound1"]),

@@ -21,16 +21,53 @@ function Main(){
     scene.canUseBees = false;
     scene.camera.camera.FadeIn(2.0);
     lighting.SetCurrentLight(1);
+    ReturnGame();
   }).SetOnWakeUp((scene)=>{
-    //scene.camera.camera.FadeIn(2.0);
+    ReturnGame();
+  }).SetOnSleep(()=>{
+    ExitGame();
+  }).SetOnUnload(()=>{
+    ExitGame();
   }));
-  manager.AddScene(new Scene("cutScene1", BC_CutScene1));
-  manager.AddScene(new Scene("cutScene2", BC_CutScene2));
-  manager.AddScene(new Scene("cutScene3", BC_CutScene3));
-  manager.AddScene(new Scene("multiGame1", BC_MultiGame1));
-  manager.AddScene(new Scene("multiGame2", BC_MultiGame2));
-  manager.AddScene(new Scene("multiGame3", BC_MultiGame3));
-  manager.AddScene(new Scene("multiGame4", BC_MultiGame4));
+  manager.AddScene(new Scene("cutScene1", BC_CutScene1).SetOnLoad(()=>{
+    let obj=finder.FindObjectsByType("CutScene1");
+    obj[0].audioSource.Loop("kinematicSound",true);
+    obj[0].audioSource.Play("kinematicSound");
+
+  }).SetOnUnload(()=>{
+    let obj=finder.FindObjectsByType("CutScene1");
+    obj[0].audioSource.Stop("kinematicSound");
+  }));
+  manager.AddScene(new Scene("cutScene2", BC_CutScene2).SetOnLoad(()=>{
+    let obj=finder.FindObjectsByType("CutScene2");
+    obj[0].audioSource.Loop("kinematicSound",true);
+    obj[0].audioSource.Play("kinematicSound");
+  }));
+  manager.AddScene(new Scene("cutScene3", BC_CutScene3).SetOnLoad(()=>{
+  }).SetOnUnload(()=>{
+    let obj=finder.FindObjectsByType("CutScene3");
+    obj[0].audioSource.Stop("kinematicSound");
+  }));
+  manager.AddScene(new Scene("multiGame1", BC_MultiGame1).SetOnLoad(()=>{
+    if(user.isHost) input.HideVirtualInputs(false);
+  }).SetOnUnload(()=>{
+    if(user.isHost) input.HideVirtualInputs(true);
+  }));
+  manager.AddScene(new Scene("multiGame2", BC_MultiGame2).SetOnLoad(()=>{
+    if(user.isHost) input.HideVirtualInputs(false);
+  }).SetOnUnload(()=>{
+    if(user.isHost) input.HideVirtualInputs(true);
+  }));
+  manager.AddScene(new Scene("multiGame3", BC_MultiGame3).SetOnLoad(()=>{
+    if(user.isHost) input.HideVirtualInputs(false);
+  }).SetOnUnload(()=>{
+    if(user.isHost) input.HideVirtualInputs(true);
+  }));
+  manager.AddScene(new Scene("multiGame4", BC_MultiGame4).SetOnLoad(()=>{
+    if(user.isHost) input.HideVirtualInputs(false);
+  }).SetOnUnload(()=>{
+    if(user.isHost) input.HideVirtualInputs(true);
+  }));
   manager.AddScene(new Scene("lobby", BC_Lobby));
   manager.AddScene(new Scene("chooseEnviroment", BC_ChooseEnviroment));
   manager.AddScene(new Scene("room", BC_Room));
@@ -43,4 +80,17 @@ function Main(){
 
 function Log(text){
   if(DEBUG) console.log(text);
+}
+
+function ReturnGame(){
+  manager.singleGameMusic.LoopAll(true);
+  manager.singleGameMusic.PlayAll();
+  input.HideVirtualInputs(false);
+  manager.SetInMenu(false);
+}
+
+function ExitGame(){
+  manager.singleGameMusic.StopAll();
+  input.HideVirtualInputs(true);
+  manager.SetInMenu(true);
 }

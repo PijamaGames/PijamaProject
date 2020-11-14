@@ -54,7 +54,7 @@ var soundsURLs=[
   ["breakObjectSound3",'resources/sounds/Romper_Objeto_3.mp3'],
   ["poweupFireSound",'resources/sounds/Song_Powerup_Fuego.mp3'],
   ["UISound1",'resources/sounds/UI_1.mp3'],
-  ["kinematicSoundX",'resources/sounds/musica_Barco.mp3'],
+  ["kinematicSound",'resources/sounds/musica_Barco.mp3'],
   ["monkeyHouseSound",'resources/sounds/musica_Pelea_Mono.mp3'],
   ["menuSound",'resources/sounds/musica_menu.mp3'],
   ["levelSound",'resources/sounds/musica_Nivel1.mp3'],

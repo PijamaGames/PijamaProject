@@ -25,12 +25,12 @@ function FinishCutScene(obj){
 prefabFactory.AddPrototype("CutScene1", new Vec2(20,15), new Vec2(0.5,0.5), false, ()=>{
   return [
       new DialogSystem(dialogLevel1XML).SetOnNextText((obj)=>{
-        obj.gameobj.audioSource.PlayAll();
+        obj.gameobj.audioSource.Play("dialogSound");
       }).SetOnDialogEnd("interludio_1", ()=>{
         //lighting.BeginTransition(2);
         manager.scene.camera.camera.FadeOut(2, ()=>manager.LoadScene("singleGame"));
       }),
-      new AudioSource(["dialogSound"]),
+      new AudioSource(["dialogSound", "kinematicSound"]),
       new VideoRenderer("cutScene1", new Vec2(20,15), 8,false, 16),
       new CustomBehaviour().SetOnCreate((obj)=>{
         //dialogSystem.InitDialog("t_movimiento");
@@ -46,12 +46,12 @@ prefabFactory.AddPrototype("CutScene1", new Vec2(20,15), new Vec2(0.5,0.5), fals
 prefabFactory.AddPrototype("CutScene2", new Vec2(20,15), new Vec2(0.5,0.5), false, ()=>{
   return [
       new DialogSystem(dialogLevel1XML).SetOnNextText((obj)=>{
-        obj.gameobj.audioSource.PlayAll();
+        obj.gameobj.audioSource.Play("dialogSound");
       }).SetOnDialogEnd("interludio_2", ()=>{
         //lighting.BeginTransition(2);
         manager.scene.camera.camera.FadeOut(2, ()=>manager.LoadScene("cutScene3"));
       }),
-      new AudioSource(["dialogSound"]),
+      new AudioSource(["dialogSound", "kinematicSound"]),
       new VideoRenderer("cutScene2", new Vec2(20,15), 8,false, 16),
       new CustomBehaviour().SetOnCreate((obj)=>{
         //dialogSystem.InitDialog("t_movimiento");
@@ -67,12 +67,12 @@ prefabFactory.AddPrototype("CutScene2", new Vec2(20,15), new Vec2(0.5,0.5), fals
 prefabFactory.AddPrototype("CutScene3", new Vec2(20,15), new Vec2(0.5,0.5), false, ()=>{
   return [
       new DialogSystem(dialogLevel1XML).SetOnNextText((obj)=>{
-        obj.gameobj.audioSource.PlayAll();
+        obj.gameobj.audioSource.Play("dialogSound");
       }).SetOnDialogEnd("interludio_3", ()=>{
         //lighting.BeginTransition(2);
         manager.scene.camera.camera.FadeOut(2, ()=>manager.LoadScene("credits"));
       }),
-      new AudioSource(["dialogSound"]),
+      new AudioSource(["dialogSound", "kinematicSound"]),
       new VideoRenderer("cutScene1", new Vec2(20,15), 8,false, 16),
       new CustomBehaviour().SetOnCreate((obj)=>{
         //dialogSystem.InitDialog("t_movimiento");
@@ -106,9 +106,7 @@ prefabFactory.AddPrototype("PauseFromSingleGame", new Vec2(1.5,1.5), new Vec2(0.
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       manager.LoadScene("pause",true);
-      manager.SetInMenu(true);
       manager.lastGame="singleGame";
-      input.HideVirtualInputs(true);
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();
       manager.singleGameMusic.PauseAll();
