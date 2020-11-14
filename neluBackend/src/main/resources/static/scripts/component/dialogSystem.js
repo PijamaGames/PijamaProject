@@ -13,10 +13,16 @@ class DialogSystem extends Component {
     this.currentDialogLength = 0;
     this.currentDialogCount = 0;
     this.onNextText = function(){};
+    this.endDialogEvents = new Map();
   }
 
   SetOnNextText(func){
     this.onNextText = func;
+    return this;
+  }
+
+  SetOnDialogEnd(dialog, func){
+    this.endDialogEvents.set(dialog, func);
     return this;
   }
 
@@ -82,7 +88,14 @@ class DialogSystem extends Component {
       new Edge("disabled").AddCondition(()=>{
         return that.currentDialogCount >= that.currentDialogLength &&
         (input.GetKeyDown("Space", true) || input.mouseLeftDown)
-      })
+      }).SetFunc(()=>{
+        Log("end dialog");
+        Log(dialogSystem.currentDialog);
+        if(dialogSystem.endDialogEvents.has(dialogSystem.currentDialog.id)){
+          Log("dialog end event");
+          dialogSystem.endDialogEvents.get(dialogSystem.currentDialog.id)();
+        }
+      }),
     ]);
 
     this.fsm = new FSM([enabledNode, disabledNode, nextTextNode]).Start("disabled");
@@ -132,6 +145,7 @@ class DialogSystem extends Component {
         })
       }
       this.dialogs.set(d.id.value, {
+        id:d.id.value,
         texts: texts,
       });
     }

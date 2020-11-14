@@ -5,6 +5,11 @@ class ImageRenderer extends Renderer{
     //Object.assign(this,{});
   }
 
+  SetTexture(tex){
+    this.texture = resources.textures.get(tex);
+    return this;
+  }
+
   CheckInputInside(position){
     position = input.ScreenToCanvas(position);
     //position = input.CanvasToWorld(position);

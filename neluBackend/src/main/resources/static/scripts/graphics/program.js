@@ -16,10 +16,10 @@ class Program{
     if(postProcess){
       this.renderers.add('postProcess');
     }
-    if(isUI){
-      this.uiTileMap = resources.textures.get('uiTileMap');
-      this.fontTileMap = resources.textures.get('fontTileMap');
-    }
+    //if(isUI){
+      //this.uiTileMap = resources.textures.get('uiTileMap');
+      //this.fontTileMap = resources.textures.get('fontTileMap');
+    //}
     this.useTexCoords = useTexCoords;
 
     manager.graphics.SetBuffers(this);
@@ -164,14 +164,14 @@ class Program{
     this.Use();
     let texUnitOffset = this.LoadUniforms();
 
-    var that = this;
-    this.colorTex.getValue = function(){
+    //var that = this;
+    /*this.colorTex.getValue = function(){
       return that.uiTileMap;
-    };
+    };*/
 
-    this.tileMapResDIVtileSize.getValue = function(){
+    /*this.tileMapResDIVtileSize.getValue = function(){
       return new Vec2(that.uiTileMap.width / tileSize, that.uiTileMap.height / tileSize);
-    };
+    };*/
     this.LoadUniforms();
     for(let renderer of this.renderers){
       if((renderer.active && renderer.gameobj.scene == manager.scene) || this.isPostProcess){

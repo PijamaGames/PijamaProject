@@ -2,7 +2,7 @@
 const DEBUG = true;
 var DEBUG_VISUAL = false;
 const EDITOR_MODE = true;
-const DEBUG_PHYSICS = true;
+const DEBUG_PHYSICS = false;
 
 var timesCalled = 0.0;
 var timesComputed = 0.0;
@@ -19,7 +19,9 @@ function Main(){
   manager.AddScene(new Scene("singleGame", BC_SingleGame).SetOnLoad((scene)=>{
     scene.canUseColibri = false;
     scene.canUseBees = false;
+    lighting.SetCurrentLight(1);
   }));
+  manager.AddScene(new Scene("cutScene1", BC_CutScene1));
   manager.AddScene(new Scene("multiGame1", BC_MultiGame1));
   manager.AddScene(new Scene("multiGame2", BC_MultiGame2));
   manager.AddScene(new Scene("multiGame3", BC_MultiGame3));

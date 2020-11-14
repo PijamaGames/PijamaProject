@@ -797,13 +797,14 @@ class Graphics {
     var uiTileMap = resources.textures.get('uiTileMap');
     let uiProgram = new Program('UI', 'vs_UI', 'fs_UI', true, false, true);
     uiProgram.SetUniforms([
-      new UniformTex('colorTex', ()=>uiTileMap),
+      //new UniformTex('colorTex', ()=>uiTileMap),
       new Uniform2f('tileMapResDIVtileSize', () => new Vec2(uiTileMap.width / tileSize, uiTileMap.height / tileSize)),
       new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
-      new Uniform1f('anchorXScale', ()=>canvas.width / manager.graphics.res.x),
+      new Uniform1f('anchorXScalse', ()=>canvas.width / manager.graphics.res.x),
       new Uniform1f('aspectRatio', ()=> manager.graphics.res.x/ manager.graphics.res.y),
     ]);
     uiProgram.SetObjUniforms([
+      new UniformTex('colorTex', (obj)=>(obj.texture ? obj.texture : uiTileMap)),
       new Uniform2f('numTiles', (obj) => obj.numTiles),
       new Uniform4f('tint', (obj) => obj.tint),
       new Uniform2f('tile', (obj) => obj.tile),
