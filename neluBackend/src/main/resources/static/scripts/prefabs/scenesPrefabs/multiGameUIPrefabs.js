@@ -17,14 +17,7 @@ prefabFactory.AddPrototype("PauseFromMultiGame", new Vec2(1.5,1.5), new Vec2(0.0
   ]
 });
 
-prefabFactory.AddPrototype("MultiLifeText", new Vec2(3,1.5), new Vec2(0.0,1.0), false, ()=>{
-  return [
-    new ImageRenderer(new Vec2(8.5,12), new Vec2(3,1.5)),
-    new TextBox("LifeText", "XHP","XHP", new Vec2(0.3,0.07), true),
-  ]
-});
-
-prefabFactory.AddPrototype("Chronometer", new Vec2(3,1.5), new Vec2(0.0,1.0), false, ()=>{
+prefabFactory.AddPrototype("Chronometer", new Vec2(3,1.5), new Vec2(1.0,1.0), false, ()=>{
   return [
     new ImageRenderer(new Vec2(8.5,12), new Vec2(3,1.5)),
     new TextBox("chronometer", "","", new Vec2(0.3,0.07), true),
