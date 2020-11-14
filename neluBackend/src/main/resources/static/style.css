@@ -25,8 +25,8 @@ body{
 }
 
 .strokeText{
-  -webkit-text-stroke: 2vmin black;
-  /*text-stroke: 2vmin black;*/
+  -webkit-text-stroke: 0.03vmin black;
+  text-stroke: 0.03vmin black;
 }
 
 p{
