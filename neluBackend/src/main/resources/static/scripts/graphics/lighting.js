@@ -160,7 +160,8 @@ class Lighting{
   }
 
   BeginTransition(targetLighting, time = 1.0){
-    if(this.transitioning) return;
+    if(this.transitioning && targetLighting == this.targetLight) return;
+    //if(this.transitioning) return;
     this.originalParams = this.SaveCurrentParams();
     let light = this.currentLight;
     this.targetLight = targetLighting;

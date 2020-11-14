@@ -1,7 +1,24 @@
+prefabFactory.AddPrototype("CutScene1", new Vec2(20,15), new Vec2(0.5,0.5), false, ()=>{
+  return [
+      new DialogSystem(dialogLevel1XML).SetOnNextText((obj)=>{
+        obj.gameobj.audioSource.PlayAll();
+      }).SetOnDialogEnd("t_movimiento", ()=>{
+        lighting.BeginTransition(2);
+      }),
+      new AudioSource(["dialogSound"]),
+      new VideoRenderer("cutScene1", new Vec2(20,15), 1,false, 16),
+      new CustomBehaviour().SetOnCreate(()=>{
+        dialogSystem.InitDialog("t_movimiento");
+      }),
+  ];
+});
+
 prefabFactory.AddPrototype("DialogSystem", new Vec2(), new Vec2(), false, ()=>{
   return [
       new DialogSystem(dialogLevel1XML).SetOnNextText((obj)=>{
         obj.gameobj.audioSource.PlayAll();
+      }).SetOnDialogEnd("t_movimiento", ()=>{
+        lighting.BeginTransition(2);
       }),
       new AudioSource(["dialogSound"]),
   ];
