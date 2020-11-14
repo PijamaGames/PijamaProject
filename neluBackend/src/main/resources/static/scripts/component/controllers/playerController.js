@@ -441,7 +441,7 @@ class PlayerController extends Component {
 
   MakeFirePower(){
     this.fire.SetActive(true);
-    this.fire.renderer.StDirection(this.gameobj.renderer.dir);
+    this.fire.renderer.SetDirection(this.gameobj.renderer.dir);
     this.fire.renderer.tile.x = 0;
     this.fire.transform.SetWorldPosition(Vec2.Add(this.gameobj.transform.GetWorldFloor(), Vec2.Norm(this.gameobj.renderer.dir).Scale(this.fireDisplacement)));
     let force = Vec2.Norm(this.gameobj.renderer.dir).Scale(this.fireImpulse);

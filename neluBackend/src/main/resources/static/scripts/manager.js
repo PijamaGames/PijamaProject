@@ -21,6 +21,7 @@ class Manager {
     this.changeInMenuEvent=new EventDispatcher();
     this.menuSound;
     this.singleGameMusic;
+    this.cutScene2Music;
     this.inMenu;
   }
 
@@ -149,6 +150,7 @@ class Manager {
     this.menuSound=new AudioSource(["menuSound"]);
     this.singleGameMusic=new AudioSource(["levelSound"]);
     this.changeInMenuEvent.AddListener(this,()=>this.SetInMenu());
+    this.cutScene2Music=new AudioSource(["kinematicSound"]);
     //this.menuSound.PlayAll();
   }
 
@@ -157,7 +159,7 @@ class Manager {
     if(bool){
       this.menuSound.LoopAll();
       this.menuSound.PlayAll();
-    } 
+    }
     else this.menuSound.PauseAll();
   }
 

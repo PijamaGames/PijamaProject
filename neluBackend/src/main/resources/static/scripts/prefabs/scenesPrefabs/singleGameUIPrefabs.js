@@ -48,8 +48,7 @@ prefabFactory.AddPrototype("SkipCutscene2", new Vec2(4,2), new Vec2(0.85,0), fal
     }).SetUpFunc(()=>{
         manager.scene.camera.camera.FadeOut(0.3, ()=>manager.LoadScene("credits"), false);
         manager.SetInMenu(true);
-        let obj=finder.FindObjectsByType("CutScene2");
-        obj[0].audioSource.Stop("kinematicSound");
+        manager.cutScene2Music.StopAll();
     }),
     new AudioSource(["UISound1"]),
     new TextBox(null, "Saltar","Skip", new Vec2(0.3,0.07), true),
@@ -85,7 +84,7 @@ prefabFactory.AddPrototype("CutScene2", new Vec2(20,15), new Vec2(0.5,0.5), fals
         //lighting.BeginTransition(2);
         manager.scene.camera.camera.FadeOut(2, ()=>manager.LoadScene("cutScene3"));
       }),
-      new AudioSource(["dialogSound", "kinematicSound"]),
+      new AudioSource(["dialogSound"]),
       new VideoRenderer("cutScene2", new Vec2(20,15), 8,false, 16),
       new CustomBehaviour().SetOnCreate((obj)=>{
         //dialogSystem.InitDialog("t_movimiento");

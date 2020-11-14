@@ -39,13 +39,13 @@ function Main(){
     obj[0].audioSource.Stop("kinematicSound");
   }));
   manager.AddScene(new Scene("cutScene2", BC_CutScene2).SetOnLoad(()=>{
-    let obj=finder.FindObjectsByType("CutScene2");
-    obj[0].audioSource.Loop("kinematicSound",true);
-    obj[0].audioSource.Play("kinematicSound");
+    let obj=manager.cutScene2Music;
+    obj.LoopAll(true);
+    obj.PlayAll();
   }));
   manager.AddScene(new Scene("cutScene3", BC_CutScene3).SetOnUnload(()=>{
-    let obj=finder.FindObjectsByType("CutScene2");
-    obj[0].audioSource.Stop("kinematicSound");
+    let obj=manager.cutScene2Music;
+    obj.StopAll();
     manager.SetInMenu(true);
   }));
   manager.AddScene(new Scene("multiGame1", BC_MultiGame1).SetOnLoad(()=>{
