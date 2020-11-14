@@ -27,9 +27,9 @@ class TextBox extends Component{
   }
 
   Update(){
-    if(manager.scene.camera.camera.fading){
+    //if(manager.scene.camera.camera.fading){
       this.element.style.opacity = manager.scene.camera.camera.brightness/manager.scene.camera.camera.maxBrightness;
-    }
+    //}
 
     this.ElementResponsive();
   }

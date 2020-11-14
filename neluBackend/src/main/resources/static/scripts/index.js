@@ -43,12 +43,10 @@ function Main(){
     obj[0].audioSource.Loop("kinematicSound",true);
     obj[0].audioSource.Play("kinematicSound");
   }));
-  manager.AddScene(new Scene("cutScene3", BC_CutScene3).SetOnLoad(()=>{
-  }).SetOnUnload(()=>{
+  manager.AddScene(new Scene("cutScene3", BC_CutScene3).SetOnUnload(()=>{
     let obj=finder.FindObjectsByType("CutScene2");
     obj[0].audioSource.Stop("kinematicSound");
-  }).SetOnUnload(()=>{
-    manager.menuSound.PlayAll();
+    manager.SetInMenu(true);
   }));
   manager.AddScene(new Scene("multiGame1", BC_MultiGame1).SetOnLoad(()=>{
     ArenaScene(false);
@@ -95,8 +93,6 @@ function ReturnGame(newScene){
 function ExitGame(sleep){
   let music=finder.FindComponents("AudioSource");
   if(sleep){
-    Log("EXIT GAME SLEEP");
-    manager.menuSound.PlayAll();
     manager.singleGameMusic.PauseAll();
     for(var m of music){
       m.PauseAll();
@@ -110,8 +106,6 @@ function ExitGame(sleep){
     }
   }
   input.HideVirtualInputs(true);
-
-
 }
 
 function ArenaScene(out){
