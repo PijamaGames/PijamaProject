@@ -153,10 +153,11 @@ class EnemyController extends Component {
     }).SetStartFunc(()=>{
       that.gameobj.renderer.SetAnimation('enemyIdle');
     }).SetEdges([
-      new Edge('attackAD').AddCondition(()=>that.contTimeAD>=that.resetADAttackTime && that.FindClosestPlayer(that.attackADRange) != null && that.FindClosestPlayer(that.attackCACRange) == null && (!manager.easy || (user && user.isHost))),
-      new Edge('attackCAC').AddCondition(()=>that.contTimeCAC>=that.resetCACAttackTime && that.FindClosestPlayer(that.attackCACRange) != null),
-      new Edge('approachPlayer').AddCondition(()=>that.FindClosestPlayer(that.attackADRange) == null && that.FindClosestPlayer(that.detectionRange) != null && that.FindClosestPlayer(that.attackCACRange) == null),
-      new Edge('patrol').AddCondition(()=>that.target.playerController.life<0),
+      new Edge('attackAD').AddCondition(()=>that.contTimeAD>=that.resetADAttackTime && that.FindClosestPlayer(that.attackADRange) != null && that.FindClosestPlayer(that.attackCACRange) == null && (!manager.easy || (user && user.isHost))  && that.life>0),
+      new Edge('attackCAC').AddCondition(()=>that.contTimeCAC>=that.resetCACAttackTime && that.FindClosestPlayer(that.attackCACRange) != null  && that.life>0),
+      new Edge('approachPlayer').AddCondition(()=>that.FindClosestPlayer(that.attackADRange) == null && that.FindClosestPlayer(that.detectionRange) != null && that.FindClosestPlayer(that.attackCACRange) == null  && that.life>0),
+      new Edge('patrol').AddCondition(()=>that.target.playerController.life<0 && that.life>0),
+      new Edge('dead').AddCondition(()=>that.life<=0),
 
     ]);
 
@@ -177,9 +178,9 @@ class EnemyController extends Component {
       if (that.isMonkey) that.PauseMonkeySound("screamingMonkeySound");
 
     }).SetEdges([
-      new Edge('patrol').AddCondition(()=> that.FindClosestPlayer(that.detectionRange) == null || that.target.playerController.life<=0),
-      new Edge('attackAD').AddCondition(()=>that.FindClosestPlayer(that.attackADRange) != null && this.target.playerController.life>0 && (!manager.easy || (user && user.isHost))),
-      new Edge('attackCAC').AddCondition(()=>that.FindClosestPlayer(that.attackCACRange) != null && this.target.playerController.life>0),
+      new Edge('patrol').AddCondition(()=> that.FindClosestPlayer(that.detectionRange) == null || that.target.playerController.life<=0  && that.life>0),
+      new Edge('attackAD').AddCondition(()=>that.FindClosestPlayer(that.attackADRange) != null && this.target.playerController.life>0 && (!manager.easy || (user && user.isHost))  && that.life>0),
+      new Edge('attackCAC').AddCondition(()=>that.FindClosestPlayer(that.attackCACRange) != null && this.target.playerController.life>0 && that.life>0),
       new Edge('dead').AddCondition(()=> that.life<=0),
     ]);
 
@@ -209,10 +210,10 @@ class EnemyController extends Component {
         if(!this.isMonkey)this.PauseMonkeySound("beekeeperAttack");
 
     }).SetEdges([
-      new Edge('approachPlayer').AddCondition(()=>(that.FindClosestPlayer(that.attackADRange) == null || that.target.playerController.life<=0) && (that.endAttackADAnim || that.FindClosestPlayer(that.detectionRange) != null)),
-      new Edge('attackCAC').AddCondition(()=>that.FindClosestPlayer(that.attackCACRange) != null && this.target.playerController.life>0 && that.endAttackADAnim),
-      new Edge('dead').AddCondition(()=> that.life<=0 && that.endAttackADAnim),
-      new Edge('recharge').AddCondition(()=> that.contTimeAD<that.resetADAttackTime && that.endAttackADAnim && that.isMonkey),
+      new Edge('approachPlayer').AddCondition(()=>(that.FindClosestPlayer(that.attackADRange) == null || that.target.playerController.life<=0) && (that.endAttackADAnim || that.FindClosestPlayer(that.detectionRange) != null) && that.life>0),
+      new Edge('attackCAC').AddCondition(()=>that.FindClosestPlayer(that.attackCACRange) != null && this.target.playerController.life>0 && that.endAttackADAnim  && that.life>0),
+      new Edge('dead').AddCondition(()=> that.life<=0),
+      new Edge('recharge').AddCondition(()=> that.contTimeAD<that.resetADAttackTime && that.endAttackADAnim && that.isMonkey && that.life>0),
     ]);
 
     let attackCACNode = new Node('attackCAC').SetOnCreate(()=>{
@@ -234,9 +235,9 @@ class EnemyController extends Component {
       }
 
     }).SetEdges([
-      new Edge('approachPlayer').AddCondition(()=>(that.FindClosestPlayer(that.attackCACRange) == null || that.target.playerController.life<0) && (that.endAttackCACAnim || that.FindClosestPlayer(that.detectionRange) != null || manager.easy)),
-      new Edge('dead').AddCondition(()=> that.life<=0 && that.endAttackCACAnim),
-      new Edge('recharge').AddCondition(()=> that.contTimeCAC<that.resetCACAttackTime && that.endAttackCACAnim && !manager.easy),
+      new Edge('approachPlayer').AddCondition(()=>(that.FindClosestPlayer(that.attackCACRange) == null || that.target.playerController.life<0) && (that.endAttackCACAnim || that.FindClosestPlayer(that.detectionRange) != null || manager.easy) && that.life>0),
+      new Edge('dead').AddCondition(()=> that.life<=0),
+      new Edge('recharge').AddCondition(()=> that.contTimeCAC<that.resetCACAttackTime && that.endAttackCACAnim && !manager.easy && that.life>0),
 
     ]);
 
@@ -247,9 +248,7 @@ class EnemyController extends Component {
       that.gameobj.renderer.SetAnimation('enemyDead');
       that.gameobj.renderer.endAnimEvent.AddListener(this, ()=>that.gameobj.Destroy(), true);
       that.onDeadCallBack();
-    }).SetEdges([
-      new Edge('patrol').AddCondition(()=>true),
-    ]);
+    });
 
     this.enemyFSM = new FSM([patrolNode, approachPlayerNode, attackADNode, attackCACNode, rechargeNode, deadNode]).Start('patrol');
   }
