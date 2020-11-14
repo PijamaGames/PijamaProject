@@ -12,6 +12,12 @@ class DialogSystem extends Component {
     this.currentText = null;
     this.currentDialogLength = 0;
     this.currentDialogCount = 0;
+    this.onNextText = function(){};
+  }
+
+  SetOnNextText(func){
+    this.onNextText = func;
+    return this;
   }
 
   Update(){
@@ -67,6 +73,7 @@ class DialogSystem extends Component {
       that.textBox.textBox.SetText(manager.english ? that.currentText.message.en : that.currentText.message.es);
       that.textName.textBox.SetText(manager.english ? that.currentText.name.en : that.currentText.name.es);
       that.currentDialogCount++;
+      that.onNextText(this);
     }).SetEdges([
       new Edge("nextText").AddCondition(()=>{
         return that.currentDialogCount < that.currentDialogLength &&

@@ -16,7 +16,10 @@ function Main(){
   manager.AddScene(new Scene("gallery", BC_Gallery));
   manager.AddScene(new Scene("start", BC_Start));
   manager.AddScene(new Scene("pause", BC_Pause));
-  manager.AddScene(new Scene("singleGame", BC_SingleGame));
+  manager.AddScene(new Scene("singleGame", BC_SingleGame).SetOnLoad((scene)=>{
+    scene.canUseColibri = false;
+    scene.canUseBees = false;
+  }));
   manager.AddScene(new Scene("multiGame1", BC_MultiGame1));
   manager.AddScene(new Scene("multiGame2", BC_MultiGame2));
   manager.AddScene(new Scene("multiGame3", BC_MultiGame3));

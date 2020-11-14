@@ -9,13 +9,11 @@ class PlayerController extends Component {
     this.lerpLeftAxis = 10.0;
     this.endAttackAnim=false;
 
-
-    this.maxLife = 800;
-    this.life = 800;
+    this.maxLife = 45;
+    this.life = 30;
     this.canTakeDamage = true;
     this.damageCooldown = 0.5;
     this.damageTime = 0.0;
-
 
     this.combo = false;
     this.numCombo = 1;
@@ -161,6 +159,7 @@ class PlayerController extends Component {
   }
 
   ThrowColibri(){
+    if(!this.gameobj.scene.canUseColibri) return;
     if(Renderer.hoverSet && Renderer.hoverSet.size != 0) return;
     Log("THROW COLIBRI");
     this.hasColibri = false;
@@ -176,6 +175,7 @@ class PlayerController extends Component {
   }
 
   ThrowBees(){
+    if(!this.gameobj.scene.canUseBees) return;
     if(Renderer.hoverSet && Renderer.hoverSet.size != 0) return;
     this.beesTarget = this.GetBeesTarget();
     if(this.beesTarget != null){

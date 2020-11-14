@@ -1,6 +1,8 @@
 prefabFactory.AddPrototype("DialogSystem", new Vec2(), new Vec2(), false, ()=>{
   return [
-      new DialogSystem(dialogLevel1XML),
+      new DialogSystem(dialogLevel1XML).SetOnNextText(()=>{
+
+      }),
   ];
 });
 
