@@ -23,7 +23,7 @@ function FinishCutScene(obj){
   manager.graphics.config.bloom = obj.bloom;
 }
 
-prefabFactory.AddPrototype("SkipCutscene1", new Vec2(4,2), new Vec2(0.5,0), false, ()=>{
+prefabFactory.AddPrototype("SkipCutscene1", new Vec2(4,2), new Vec2(0.85,0), false, ()=>{
   return [
     new ImageRenderer(new Vec2(7,10), new Vec2(4,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
       obj.gameobj.renderer.MultiplyTint(0.8);
@@ -31,14 +31,16 @@ prefabFactory.AddPrototype("SkipCutscene1", new Vec2(4,2), new Vec2(0.5,0), fals
       let tint=obj.gameobj.renderer.realTint;
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
-      manager.scene.camera.camera.FadeOut(2, ()=>manager.LoadScene("singleGame"));
+      if(!manager.scene.camera.camera.fading){
+        manager.scene.camera.camera.FadeOut(0.3, ()=>manager.LoadScene("singleGame"));
+      }
     }),
     new AudioSource(["UISound1"]),
     new TextBox(null, "Saltar","Skip", new Vec2(0.3,0.07), true),
   ]
 });
 
-prefabFactory.AddPrototype("SkipCutscene2", new Vec2(4,2), new Vec2(0.5,0), false, ()=>{
+prefabFactory.AddPrototype("SkipCutscene2", new Vec2(4,2), new Vec2(0.85,0), false, ()=>{
   return [
     new ImageRenderer(new Vec2(7,10), new Vec2(4,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
       obj.gameobj.renderer.MultiplyTint(0.8);
@@ -46,7 +48,8 @@ prefabFactory.AddPrototype("SkipCutscene2", new Vec2(4,2), new Vec2(0.5,0), fals
       let tint=obj.gameobj.renderer.realTint;
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
-      manager.scene.camera.camera.FadeOut(2, ()=>manager.LoadScene("credits"));
+      if(!manager.scene.camera.camera.fading)
+        manager.scene.camera.camera.FadeOut(0.3, ()=>manager.LoadScene("credits"));
     }),
     new AudioSource(["UISound1"]),
     new TextBox(null, "Saltar","Skip", new Vec2(0.3,0.07), true),

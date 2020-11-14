@@ -15,7 +15,6 @@ prefabFactory.AddPrototype("MenuFromStart", new Vec2(4,2), new Vec2(0.5,0.5), fa
           name:nombreUsuario,
         });
       }
-
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();
     }),

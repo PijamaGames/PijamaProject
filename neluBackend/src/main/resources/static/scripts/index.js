@@ -21,9 +21,9 @@ function Main(){
     scene.canUseBees = false;
     scene.camera.camera.FadeIn(2.0);
     lighting.SetCurrentLight(1);
-    ReturnGame();
+    ReturnGame(true);
   }).SetOnWakeUp((scene)=>{
-    ReturnGame();
+    ReturnGame(false);
   }).SetOnSleep(()=>{
     ExitGame(true);
   }).SetOnUnload(()=>{
@@ -84,10 +84,11 @@ function Log(text){
   if(DEBUG) console.log(text);
 }
 
-function ReturnGame(){
+function ReturnGame(newScene){
+  if(!newScene)input.HideVirtualInputs(false);
   manager.singleGameMusic.LoopAll(true);
   manager.singleGameMusic.PlayAll();
-  input.HideVirtualInputs(false);
+
   manager.SetInMenu(false);
 }
 

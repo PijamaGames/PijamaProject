@@ -63,6 +63,7 @@ class Spawner extends Component{
     this.spawnedAlive = true;
     this.spawnEvent.Dispatch();
     let obj = prefabFactory.CreateObj("MonkeyEnemy", this.gameobj.transform.GetWorldCenter());
+    obj.enemyController.detectionRange = 50.0;
     var that = this;
     obj.enemyController.onDeadCallBack = ()=>{
       //Spawner.enemyCount-=1;

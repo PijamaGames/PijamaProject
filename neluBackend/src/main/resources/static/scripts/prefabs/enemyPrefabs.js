@@ -6,7 +6,7 @@ prefabFactory.AddPrototype("MonkeyEnemy", new Vec2(1, 1), new Vec2(0.5, 0.5), fa
     //new ShadowCaster(new Vec2(0,-0.75), 0.75),
     new EnemyController(1.0),
     new Burnable().SetOnBurn((obj)=>{
-      obj.enemyController.TakeDamage(10, true);
+      obj.enemyController.TakeDamage(8, true);
     }),
     new NetworkEntity(),
     new AudioSource(["screamingMonkeySound","monkeyDamageSound","beekeeperDied","throwMissileSound","fireSound"]),
@@ -193,7 +193,7 @@ prefabFactory.AddPrototype("BeekeeperEnemy", new Vec2(2, 2), new Vec2(0.5, 0.5),
     //new ShadowCaster(new Vec2(0,-0.75), 0.75),
     new BeekeeperController(0.7),
     new Burnable().SetOnBurn((obj)=>{
-      obj.enemyController.TakeDamage(10, true);
+      obj.enemyController.TakeDamage(8, true);
     }),
     new NetworkEntity(),
     new AudioSource(["fireSound","beekeeperAttack","beekeeperDied","beekeeperDamage"]),
@@ -223,7 +223,7 @@ prefabFactory.AddPrototype("particle", new Vec2(2, 2), new Vec2(0.5, 0.5), false
     new ColliderGroup([new CircleCollider(new Vec2(0.0,0.0), 0.3, true,
     function(obj){
       let particle=this.gameobj;
-      let damage=0.5;
+      let damage=3.0;
       if(obj.playerController){
         obj.playerController.TakeDamage(damage);
         particle.particlesController.enemy.enemyController.PoolAdd(particle);

@@ -13,15 +13,15 @@ class EnemyController extends Component {
 
     this.lastPlayerPos = new Vec2();
 
-    this.detectionRange = 15.0;
+    this.detectionRange = 9.0;
     this.attackADRange = 4.0;
     this.attackCACRange = 1.5;
     this.target = null;
 
-    this.resetADAttackTime=2;
-    this.resetCACAttackTime=1;
-    this.contTimeAD=2;
-    this.contTimeCAC=1;
+    this.resetADAttackTime=3;
+    this.resetCACAttackTime=1.5;
+    this.contTimeAD=3;
+    this.contTimeCAC=1.5;
     this.endAttackCACAnim=false;
     this.endAttackADAnim=false;
 
@@ -33,7 +33,7 @@ class EnemyController extends Component {
 
     this.attackADDamage=5;
     this.attackCACDamage=1;
-    this.maxMissiles=5;
+    this.maxMissiles=3;
     this.pool = [];
     this.allApples = [];
     this.missileHeight=1;

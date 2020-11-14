@@ -3,7 +3,7 @@ class AppleController extends Component{
     super();
     this.type = "appleController";
 
-    this.timeLimit=5;
+    this.timeLimit=4;
     this.appleImpulse=20;
     this.startCoolDown=false;
     this.contTime=0;

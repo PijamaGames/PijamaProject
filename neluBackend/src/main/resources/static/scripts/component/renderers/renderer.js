@@ -180,7 +180,7 @@ class Renderer extends Component{
       //Log(this.touchesCount);
       if(this.touchesCount == 1){
         if(this.downFunc != null)
-          this.downFunc();
+          this.downFunc(this);
         this.pressed = true;
       }
     }
@@ -193,7 +193,7 @@ class Renderer extends Component{
       this.touchesCount--;
       if(this.touchesCount == 0){
         if(!outOfBoundaries && this.upFunc != null){
-          this.upFunc();
+          this.upFunc(this);
         }
         this.pressed=false;
       }
