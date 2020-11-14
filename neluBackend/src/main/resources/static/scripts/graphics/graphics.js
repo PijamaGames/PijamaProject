@@ -798,12 +798,13 @@ class Graphics {
     let uiProgram = new Program('UI', 'vs_UI', 'fs_UI', true, false, true);
     uiProgram.SetUniforms([
       //new UniformTex('colorTex', ()=>uiTileMap),
-      new Uniform2f('tileMapResDIVtileSize', () => new Vec2(uiTileMap.width / tileSize, uiTileMap.height / tileSize)),
+
       new Uniform2f('tileSizeDIVres', () => new Vec2(tileSize / manager.graphics.res.x, tileSize / manager.graphics.res.y)),
       new Uniform1f('anchorXScalse', ()=>canvas.width / manager.graphics.res.x),
       new Uniform1f('aspectRatio', ()=> manager.graphics.res.x/ manager.graphics.res.y),
     ]);
     uiProgram.SetObjUniforms([
+      new Uniform2f('tileMapResDIVtileSize', (obj) => new Vec2((obj.texture ? obj.texture : uiTileMap).width / tileSize, (obj.texture ? obj.texture : uiTileMap).height / tileSize)),
       new UniformTex('colorTex', (obj)=>(obj.texture ? obj.texture : uiTileMap)),
       new Uniform2f('numTiles', (obj) => obj.numTiles),
       new Uniform4f('tint', (obj) => obj.tint),
