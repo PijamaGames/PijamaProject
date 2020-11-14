@@ -45,6 +45,9 @@ prefabFactory.AddPrototype("GraphicsText", new Vec2(8,2), new Vec2(0.5,0.5), fal
   return [
     new ImageRenderer(new Vec2(7,4), new Vec2(8,2)),
     new TextBox("QualityTextOptions", "Calidad: máxima", "Quality: maximum", new Vec2(0.5,0.1), true),
+    new CustomBehaviour().SetOnCreate(()=>{
+      ChangeQualityText(manager.graphics.currentConfig);
+    }),
   ]
 });
 prefabFactory.AddPrototype("MenuFromOptions", new Vec2(4,2), new Vec2(0.5,0.0), false, ()=>{
@@ -146,12 +149,15 @@ prefabFactory.AddPrototype("DificultyText", new Vec2(4,2), new Vec2(0.5,0.5), fa
       let tint=obj.gameobj.renderer.realTint;
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
-      ChangeDificulty();
+      ChangeDificulty(true);
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox("Dificulty", "Fácil","Easy", new Vec2(0.3,0.07), true),
     new AudioSource(["UISound1"]),
+    new CustomBehaviour().SetOnCreate(()=>{
+      ChangeDificulty(false);
+    }),
   ]
 });
 prefabFactory.AddPrototype("OptionsTitle", new Vec2(14,2), new Vec2(0.5,0.5), false, ()=>{
@@ -162,9 +168,9 @@ prefabFactory.AddPrototype("OptionsTitle", new Vec2(14,2), new Vec2(0.5,0.5), fa
   ]
 });
 
-function ChangeDificulty(){
+function ChangeDificulty(bool=true){
   let text=document.getElementById("Dificulty");
-  manager.easy=!manager.easy;
+  if(bool) manager.easy=!manager.easy;
   if(manager.easy) text.innerHTML=manager.english? "Easy": "Fácil";
   else text.innerHTML=manager.english? "Hard": "Difícil";
 }
