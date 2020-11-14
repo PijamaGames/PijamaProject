@@ -422,6 +422,7 @@ class PlayerController extends Component {
       SendEndGame(false);
     } else {
       manager.LoadScene("connectionFailed");
+      manager.SetInMenu(true);
       var text=document.getElementById("ConnectionTitle");
       text.innerHTML=manager.english? "Game over":"Fin del juego";
     }

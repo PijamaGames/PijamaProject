@@ -64,9 +64,7 @@ var soundsURLs=[
   ["neluDied",'resources/sounds/Muerte_Nelu.mp3'],
   ["neluDamage",'resources/sounds/Nelu_Danio.mp3'],
   ["putEnemy",'resources/sounds/Tropa_Soltar_3.mp3'],
-
-
-
+  ["arenaMusic",'resources/sounds/musica_Arena.mp3'],
 ];
 
 var resources;

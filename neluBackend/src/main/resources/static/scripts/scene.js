@@ -55,6 +55,7 @@ class Scene{
   }
 
   Sleep(){
+    Log("SLEEP " + this.name);
     this.onSleep(this);
     for(var elem of this.domElements){
       elem.element.hidden = true;
@@ -62,6 +63,7 @@ class Scene{
   }
 
   WakeUp(){
+    Log("WAKE UP " + this.name);
     this.onWakeUp(this);
     for(var elem of this.domElements){
       elem.element.hidden = !elem.active;
@@ -93,6 +95,7 @@ class Scene{
   }
 
   Unload(){
+    Log("UNLOAD " + this.name);
     this.onUnload(this);
     for(let [key, gameobj] of this.gameobjs){
       gameobj.Destroy();
@@ -147,6 +150,7 @@ class Scene{
         //func(pos, height, new Vec2(scaleX, scaleY));
       }
     }
+    Log("LOAD " +this.name);
     this.onLoad(this);
     Log(this);
   }

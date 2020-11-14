@@ -31,9 +31,7 @@ prefabFactory.AddPrototype("SkipCutscene1", new Vec2(4,2), new Vec2(0.85,0), fal
       let tint=obj.gameobj.renderer.realTint;
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
-      if(!manager.scene.camera.camera.fading){
-        manager.scene.camera.camera.FadeOut(0.3, ()=>manager.LoadScene("singleGame"));
-      }
+        manager.scene.camera.camera.FadeOut(0.3, ()=>manager.LoadScene("singleGame"), false);
     }),
     new AudioSource(["UISound1"]),
     new TextBox(null, "Saltar","Skip", new Vec2(0.3,0.07), true),
@@ -48,8 +46,10 @@ prefabFactory.AddPrototype("SkipCutscene2", new Vec2(4,2), new Vec2(0.85,0), fal
       let tint=obj.gameobj.renderer.realTint;
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
-      if(!manager.scene.camera.camera.fading)
-        manager.scene.camera.camera.FadeOut(0.3, ()=>manager.LoadScene("credits"));
+        manager.scene.camera.camera.FadeOut(0.3, ()=>manager.LoadScene("credits"), false);
+        manager.SetInMenu(true);
+        let obj=finder.FindObjectsByType("CutScene2");
+        obj[0].audioSource.Stop("kinematicSound");
     }),
     new AudioSource(["UISound1"]),
     new TextBox(null, "Saltar","Skip", new Vec2(0.3,0.07), true),
@@ -128,8 +128,13 @@ prefabFactory.AddPrototype("DialogSystem", new Vec2(), new Vec2(), false, ()=>{
         //lighting.BeginTransition(2);
       }).SetOnAnyDialogStart(()=>{
         input.HideVirtualInputs(true);
+        let obj=finder.FindObjectsByType("PauseFromSingleGame");
+        obj[0].SetActive(false);
       }).SetOnAnyDialogEnd(()=>{
+        let obj=finder.FindObjectsByType("PauseFromSingleGame");
+        obj[0].SetActive(true);
         input.HideVirtualInputs(false);
+
       }),
       new AudioSource(["dialogSound"]),
   ];

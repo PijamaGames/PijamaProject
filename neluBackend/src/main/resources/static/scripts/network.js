@@ -379,7 +379,6 @@ function Login(msg) {
   var inputField = document.getElementById("userName");
   if (msg.userAvaible && inputField.value != "") {
     new User(inputField.value, msg.points, msg.controlPoint);
-    manager.menuSound.LoopAll(true);
     manager.SetInMenu(true);
     manager.LoadScene("mainMenu");
     Log("user avaible");

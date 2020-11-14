@@ -43,32 +43,30 @@ function Main(){
     obj[0].audioSource.Loop("kinematicSound",true);
     obj[0].audioSource.Play("kinematicSound");
   }));
-  manager.AddScene(new Scene("cutScene3", BC_CutScene3).SetOnLoad(()=>{
-  }).SetOnUnload(()=>{
-    let obj=finder.FindObjectsByType("CutScene3");
+  manager.AddScene(new Scene("cutScene3", BC_CutScene3).SetOnUnload(()=>{
+    let obj=finder.FindObjectsByType("CutScene2");
     obj[0].audioSource.Stop("kinematicSound");
-  }).SetOnUnload(()=>{
-    manager.menuSound.PlayAll();
+    manager.SetInMenu(true);
   }));
   manager.AddScene(new Scene("multiGame1", BC_MultiGame1).SetOnLoad(()=>{
-    if(user.isHost) input.HideVirtualInputs(false);
+    ArenaScene(false);
   }).SetOnUnload(()=>{
-    if(user.isHost) input.HideVirtualInputs(true);
+    ArenaScene(true);
   }));
   manager.AddScene(new Scene("multiGame2", BC_MultiGame2).SetOnLoad(()=>{
-    if(user.isHost) input.HideVirtualInputs(false);
+    ArenaScene(false);
   }).SetOnUnload(()=>{
-    if(user.isHost) input.HideVirtualInputs(true);
+    ArenaScene(true);
   }));
   manager.AddScene(new Scene("multiGame3", BC_MultiGame3).SetOnLoad(()=>{
-    if(user.isHost) input.HideVirtualInputs(false);
+    ArenaScene(false);
   }).SetOnUnload(()=>{
-    if(user.isHost) input.HideVirtualInputs(true);
+    ArenaScene(true);
   }));
   manager.AddScene(new Scene("multiGame4", BC_MultiGame4).SetOnLoad(()=>{
-    if(user.isHost) input.HideVirtualInputs(false);
+    ArenaScene(false);
   }).SetOnUnload(()=>{
-    if(user.isHost) input.HideVirtualInputs(true);
+    ArenaScene(true);
   }));
   manager.AddScene(new Scene("lobby", BC_Lobby));
   manager.AddScene(new Scene("chooseEnviroment", BC_ChooseEnviroment));
@@ -95,11 +93,11 @@ function ReturnGame(newScene){
 function ExitGame(sleep){
   let music=finder.FindComponents("AudioSource");
   if(sleep){
-    manager.menuSound.PlayAll();
     manager.singleGameMusic.PauseAll();
     for(var m of music){
       m.PauseAll();
     }
+    manager.SetInMenu(true);
   }
   else{
     manager.singleGameMusic.StopAll();
@@ -108,6 +106,17 @@ function ExitGame(sleep){
     }
   }
   input.HideVirtualInputs(true);
-  manager.SetInMenu(true);
+}
 
+function ArenaScene(out){
+  if(user.isHost) input.HideVirtualInputs(out);
+  let music=finder.FindObjectsByType("PauseFromMultiGame");
+  if(!out) {
+    music[0].audioSource.Play("arenaMusic");
+    manager.menuSound.PauseAll();
+  }
+  else {
+    manager.menuSound.PlayAll();
+    music[0].audioSource.Stop("arenaMusic");
+  }
 }
