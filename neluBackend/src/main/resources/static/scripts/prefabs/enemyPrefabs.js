@@ -161,11 +161,16 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
 
     ]).SetOnStartBattle((obj)=>{
       Log(obj)
-      manager.singleGameMusic.PauseAll();
+      if(manager.singleGameMusic.Playing("levelSound")){
+        manager.singleGameMusic.PauseAll();
+      }
       obj.audioSource.PlayAll();
 
     }).SetOnEndBattle((obj)=>{
-      manager.singleGameMusic.PlayAll();
+      if(!manager.singleGameMusic.Playing("levelSound")){
+        manager.singleGameMusic.LoopAll();
+        manager.singleGameMusic.PlayAll();
+      }
       obj.audioSource.StopAll();
 
     }),

@@ -17,6 +17,7 @@ class AudioSource extends Component{
     this.lastVol=0;
     this.distanceSound=distanceSound;
     this.soundOnAwake=soundOnAwake;
+    this.first=true;
   }
 
   Destroy(){
@@ -24,6 +25,10 @@ class AudioSource extends Component{
 
   Update(){
     if(this.distanceSound){
+      if(this.soundOnAwake!=null && this.first){
+        this.Play(this.soundOnAwake);
+        this.first=false;
+      }
 
       let player = manager.scene.players.values().next().value;
       if(player){
@@ -33,9 +38,8 @@ class AudioSource extends Component{
         this.volume=((-Math.pow(normDist,3))+1)*this.maxVol;
         this.volume=this.volume<0?0:this.volume;
         Log(this.volume);
-        if(this.lastVol!=this.volume){
-          this.ChangeVol(this.soundOnAwake,this.volume);
-        }
+        this.ChangeVolAll(this.volume);
+
         this.lastVol=this.volume;
       }
     }
