@@ -49,7 +49,7 @@ class PlayerController extends Component {
     this.beesTarget = null;
 
     this.firePower = false;
-    this.firePowerMaxTime = 20;
+    this.firePowerMaxTime = 10;
     this.firePowerTime = 0.0;
     this.fire = null;
     this.fireDisplacement = 1.2;

@@ -14,6 +14,18 @@ class DialogSystem extends Component {
     this.currentDialogCount = 0;
     this.onNextText = function(){};
     this.endDialogEvents = new Map();
+    this.onStartDialog = function(){};
+    this.onEndDialog = function(){};
+  }
+
+  SetOnStartDialog(func){
+    this.onStartDialog = func;
+    return this;
+  }
+
+  SetOnEndDialog(func){
+    this.onEndDialog = func;
+    return this;
   }
 
   SetOnNextText(func){
@@ -42,6 +54,7 @@ class DialogSystem extends Component {
       return;
     }
     Log("init dialog");
+    this.onStartDialog();
     this.initDialog = true;
     this.currentDialog = dialog;
     this.currentDialogLength = this.currentDialog.texts.length;
@@ -92,6 +105,7 @@ class DialogSystem extends Component {
       }).SetFunc(()=>{
         that.clickTrigger = false;
         Log("end dialog");
+        this.onEndDialog();
         Log(dialogSystem.currentDialog);
         if(dialogSystem.endDialogEvents.has(dialogSystem.currentDialog.id)){
           Log("dialog end event");

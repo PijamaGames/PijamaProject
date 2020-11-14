@@ -42,7 +42,7 @@ class EnemyController extends Component {
     this.canTakeDamage = true;
     this.damageCooldown = 0.2;
     this.damageTime = 0.0;
-    this.damageForce = 1.0;
+    this.damageForce = 0.8;
 
     this.isMonkey=true;
 
