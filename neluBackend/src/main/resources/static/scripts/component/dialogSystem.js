@@ -2,7 +2,6 @@ var dialogSystem;
 class DialogSystem extends Component {
   constructor(xml){
     super();
-    Log("HEREEEEEEEEE");
     this.type = "dialogSystem";
     var rawDialogs = parseXml(xml).root;
     this.dialogs = this.FormatDialogs(rawDialogs);
@@ -79,6 +78,8 @@ class DialogSystem extends Component {
     let enabledNode = new Node("enabled").SetStartFunc(()=>{
       Log("dialog system enabled");
       that.gameobj.scene.paused = true;
+      that.textBox.textBox.SetText("");
+      that.textName.textBox.SetText("");
       that.textBox.SetActive(true);
       that.textName.SetActive(true);
       that.currentDialogCount = 0;
@@ -90,18 +91,45 @@ class DialogSystem extends Component {
       Log("dialog system next text");
       that.clickTrigger = false;
       that.currentText = that.currentDialog.texts[that.currentDialogCount];
-      that.textBox.textBox.SetText(manager.english ? that.currentText.message.en : that.currentText.message.es);
+      that.textBox.textBox.SetText("");
+      //that.textBox.textBox.SetText(manager.english ? that.currentText.message.en : that.currentText.message.es);
       that.textName.textBox.SetText(manager.english ? that.currentText.name.en : that.currentText.name.es);
       that.currentDialogCount++;
       that.onNextText(this);
+
+      that.count = 0;
+      that.speed = 0.03;
+      that.time = 0.0;
+
+
+    }).SetUpdateFunc(()=>{
+      that.maxCount = manager.english ? that.currentText.message.en.length : that.currentText.message.es.length;
+      if(that.count < that.maxCount){
+        let msg = manager.english ? that.currentText.message.en : that.currentText.message.es;
+        if(input.GetKeyDown("Space", true) || input.clicked){
+          input.clicked = false;
+          that.count = that.maxCount;
+          that.textBox.textBox.SetText(msg);
+        } else {
+          that.time += manager.delta;
+          if(that.time >= that.speed){
+            that.time = 0.0;
+            that.textBox.textBox.SetText(that.textBox.textBox.text+msg[that.count]);
+            that.count+=1;
+          }
+        }
+      }
+
+
+
     }).SetEdges([
       new Edge("nextText").AddCondition(()=>{
         return that.currentDialogCount < that.currentDialogLength &&
-        (input.GetKeyDown("Space", true) || input.clicked)
+        (input.GetKeyDown("Space") || input.clicked) && that.count >= that.maxCount;
       }),
       new Edge("disabled").AddCondition(()=>{
         return that.currentDialogCount >= that.currentDialogLength &&
-        (input.GetKeyDown("Space", true) || input.clicked)
+        (input.GetKeyDown("Space") || input.clicked) && that.count >= that.maxCount;
       }).SetFunc(()=>{
         that.clickTrigger = false;
         Log("end dialog");

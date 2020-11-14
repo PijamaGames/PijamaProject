@@ -251,6 +251,7 @@ prefabFactory.AddPrototype("LogVertical", new Vec2(1,2), new Vec2(0,0), true, ()
 
 prefabFactory.AddPrototype("CampLog", new Vec2(1,2), new Vec2(0,0), true, ()=>{
   return [
+    new ColliderGroup([new CircleCollider(new Vec2(0,-0.85), 0.3, false)]),
     new Renderer(new Vec2(5,3), new Vec2(1,2), true),
   ]
 });
