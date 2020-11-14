@@ -1,5 +1,5 @@
 class AudioSource extends Component{
-  constructor(names=[], soundOnAwake=null){
+  constructor(names=[], distanceSound, soundOnAwake=null){
     super();
     this.type="AudioSource";
     this.sounds= new Map();
@@ -15,24 +15,28 @@ class AudioSource extends Component{
     this.minDistance=0;
     this.volume;
     this.lastVol=0;
+    this.distanceSound=distanceSound;
   }
 
   Destroy(){
   }
 
   Update(){
-    let player = manager.scene.players.values().next().value;
-    if(player){
-      this.maxVol=manager.maxVolume;
-      this.distance=Vec2.Distance(this.gameobj.transform.GetWorldCenter(),player.transform.GetWorldCenter());
-      let normDist=this.distance/this.maxDistance;
-      this.volume=((-Math.pow(normDist,3))+1)*this.maxVol;
-      this.volume=this.volume<0?0:this.volume;
-      if(this.lastVol!=this.volume){
-        this.ChangeVolAll(this.volume);
+    if(this.distanceSound){
+      let player = manager.scene.players.values().next().value;
+      if(player){
+        this.maxVol=manager.maxVolume;
+        this.distance=Vec2.Distance(this.gameobj.transform.GetWorldCenter(),player.transform.GetWorldCenter());
+        let normDist=this.distance/this.maxDistance;
+        this.volume=((-Math.pow(normDist,3))+1)*this.maxVol;
+        this.volume=this.volume<0?0:this.volume;
+        if(this.lastVol!=this.volume){
+          this.ChangeVolAll(this.volume);
+        }
+        this.lastVol=this.volume;
       }
-      this.lastVol=this.volume;
     }
+
   }
 
   SetGameobj(gameobj){

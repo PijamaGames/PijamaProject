@@ -160,9 +160,12 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
       new ScriptedEvent("cap1_fin", true, new Vec2(208,-40), 5.0, false, ()=>dialogSystem.InitDialog("cap1_fin")),
 
     ]).SetOnStartBattle((obj)=>{
+      Log(obj)
+      manager.singleGameMusic.PauseAll();
       obj.audioSource.PlayAll();
 
     }).SetOnEndBattle((obj)=>{
+      manager.singleGameMusic.PlayAll();
       obj.audioSource.StopAll();
 
     }),
@@ -174,7 +177,7 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
     new CustomBehaviour().SetOnUpdate((obj)=>{
       obj.renderer.tile.x = DEBUG_VISUAL ? 6 : 5;
     }),
-    new AudioSource(["monkeyHouseSound"]),
+    new AudioSource(["fireSound"]),
   ]
 });
 

@@ -41,7 +41,7 @@ var soundsURLs=[
   ["comboSound3",'resources/sounds/Combo_Nelu_3.mp3'],
   ["healSound",'resources/sounds/Curar.mp3'],
   ["dashSound",'resources/sounds/Dash.mp3'],
-  ["dialogSoundX",'resources/sounds/Dialogo.mp3'],
+  ["dialogSound",'resources/sounds/Dialogo.mp3'],
   ["hitsSoundX",'resources/sounds/Efecto_golpes.mp3'],
   ["fireSound",'resources/sounds/Fuego.mp3'],
   ["throwMissileSound",'resources/sounds/Lanzar_Proyectil.mp3'],
@@ -55,7 +55,7 @@ var soundsURLs=[
   ["poweupFireSound",'resources/sounds/Song_Powerup_Fuego.mp3'],
   ["UISound1",'resources/sounds/UI_1.mp3'],
   ["kinematicSoundX",'resources/sounds/musica_Barco.mp3'],
-  ["monkeyHouseSound",'resources/sounds/musica_Fortaleza_Monos.mp3'],
+  ["monkeyHouseSound",'resources/sounds/musica_Pelea_Mono.mp3'],
   ["menuSound",'resources/sounds/musica_menu.mp3'],
   ["levelSound",'resources/sounds/musica_Nivel1.mp3'],
 

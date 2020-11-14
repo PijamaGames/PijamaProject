@@ -1,8 +1,9 @@
 prefabFactory.AddPrototype("DialogSystem", new Vec2(), new Vec2(), false, ()=>{
   return [
-      new DialogSystem(dialogLevel1XML).SetOnNextText(()=>{
-
+      new DialogSystem(dialogLevel1XML).SetOnNextText((obj)=>{
+        obj.gameobj.audioSource.PlayAll();
       }),
+      new AudioSource(["dialogSound"]),
   ];
 });
 
