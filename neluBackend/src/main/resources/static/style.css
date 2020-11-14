@@ -24,6 +24,11 @@ body{
   background: #cae68000;
 }
 
+.strokeText{
+  -webkit-text-stroke: 2vmin black;
+  /*text-stroke: 2vmin black;*/
+}
+
 p{
   padding-left: 2vmin;
   padding-right: 2vmin;

@@ -86,9 +86,9 @@ class Gameobj {
 
   get bytecode(){
     let str = this.type+' '+this.transform.position.x+' '+this.transform.position.y+' '+this.transform.height;
-    if(!this.renderer || !this.renderer.vertical){
-      str += ' ' + this.transform.scale.x + ' ' + this.transform.scale.y
-    }
+    //if(!this.renderer || !this.renderer.vertical){
+    str += ' ' + this.transform.scale.x + ' ' + this.transform.scale.y;
+    //}
     return str;
   }
 

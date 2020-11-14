@@ -1,10 +1,10 @@
 function PrepareCutScene(obj){
   dialogSystem.textBox.transform.SetWorldPosition(new Vec2(0,0.72));
   dialogSystem.textName.transform.SetWorldPosition(new Vec2(-0.3, 0.92));
-  dialogSystem.textBox.renderer.SetAlpha(0.15);
-  dialogSystem.textName.renderer.SetAlpha(0.15);
-  dialogSystem.textBox.textBox.element.style.color = "#000000";
-  dialogSystem.textName.textBox.element.style.color ="#000000";
+  dialogSystem.textBox.renderer.SetAlpha(/*0.15*/0.0);
+  dialogSystem.textName.renderer.SetAlpha(/*0.15*/0.0);
+  dialogSystem.textBox.textBox.element.style.color = "#FFFFFF";
+  dialogSystem.textName.textBox.element.style.color ="#FFFFFF";
   dialogSystem.textBox.renderer.tile.Set(16,6);
   dialogSystem.textBox.renderer.numTiles.Set(1,1);
   dialogSystem.textName.renderer.tile.Set(16,6);
@@ -14,6 +14,7 @@ function PrepareCutScene(obj){
   manager.graphics.colorsPerChannel = 255.0;
   obj.bloom = manager.graphics.config.bloom;
   manager.graphics.config.bloom = false;
+  dialogSystem.textBox.textBox.element.className += " strokeText";
 }
 
 function FinishCutScene(obj){
