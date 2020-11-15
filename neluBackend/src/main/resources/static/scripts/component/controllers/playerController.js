@@ -499,8 +499,11 @@ class PlayerController extends Component {
   }
 
   ActivateFirePower(){
+    let battle=finder.FindObjectsByType("BattleManager");
     if(this.gameobj.audioSource.Playing("powerupFireSound"))
       this.gameobj.audioSource.Stop("powerupFireSound");
+    if(battle[0].audioSource.Playing("monkeyHouseSound"))
+      battle[0].audioSource.Stop("monkeyHouseSound");
     this.gameobj.audioSource.Play("powerupFireSound");
     manager.singleGameMusic.PauseAll();
     this.firePower = true;
@@ -510,10 +513,16 @@ class PlayerController extends Component {
   }
 
   DeactivateFirePower(){
+    let battle=finder.FindObjectsByType("BattleManager");
     this.gameobj.audioSource.Stop("powerupFireSound");
-    if(!manager.singleGameMusic.Playing("levelSound")){
+
+    if(!manager.singleGameMusic.Playing("levelSound") && !battleController.inBattle){
       manager.singleGameMusic.LoopAll(true);
       manager.singleGameMusic.PlayAll();
+    }
+    else if(battleController.inBattle){
+      battle[0].audioSource.LoopAll(true);
+      battle[0].audioSource.Play("monkeyHouseSound");
     }
     this.firePower = false;
     Log("deactivate fire power");
