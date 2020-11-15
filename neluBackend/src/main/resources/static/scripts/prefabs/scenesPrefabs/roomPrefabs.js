@@ -53,3 +53,42 @@ prefabFactory.AddPrototype("ChoosingFromRoom", new Vec2(4,2), new Vec2(0.5,0.0),
     new AudioSource(["UISound1"]),
   ]
 });
+
+prefabFactory.AddPrototype("Publi1", new Vec2(6,7), new Vec2(0.5,0.5), false, ()=>{
+  return [
+    new ImageRenderer(new Vec2(7,10), new Vec2(6,7)).GiveFunctionality().SetHoverInFunc((obj)=>{
+      obj.gameobj.renderer.MultiplyTint(0.8);
+    }).SetHoverOutFunc((obj)=>{
+      let tint=obj.gameobj.renderer.realTint;
+      obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
+
+      /*TEST*/
+      var win = window.open("https://pijamagames.github.io/", '_blank');
+      if(win && win!=null){
+        win.focus();
+      }
+    }).SetTexture("cutScene2_0"),
+    new AudioSource(["UISound1"]),
+  ]
+});
+prefabFactory.AddPrototype("Publi2", new Vec2(6,7), new Vec2(0.5,0.5), false, ()=>{
+  return [
+    new ImageRenderer(new Vec2(7,10), new Vec2(6,7)).GiveFunctionality().SetHoverInFunc((obj)=>{
+      obj.gameobj.renderer.MultiplyTint(0.8);
+    }).SetHoverOutFunc((obj)=>{
+      let tint=obj.gameobj.renderer.realTint;
+      obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
+
+      /*TEST*/
+      var win = window.open("https://pijamagames.github.io/", '_blank');
+      if(win && win!=null){
+        win.focus();
+      }
+    }).SetTexture("cutScene2_0"),
+    new AudioSource(["UISound1"]),
+  ]
+});

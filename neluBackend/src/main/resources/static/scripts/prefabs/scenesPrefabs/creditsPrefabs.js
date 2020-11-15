@@ -27,7 +27,7 @@ prefabFactory.AddPrototype("CreditsTitle", new Vec2(14,2), new Vec2(0.5,0.5), fa
 prefabFactory.AddPrototype("CreditsTextBox", new Vec2(14,9), new Vec2(0.5,0.5), false, ()=>{
   return [
     new ImageRenderer(new Vec2(0,23), new Vec2(14,9)),
-    new ScrollButton("creditsText", "","", new Vec2(0.9,0.55), true),
+    new ScrollButton("creditsText", "","", new Vec2(0.85,0.55), true),
     new CustomBehaviour().SetOnCreate((obj)=>{
       GetCreditsText();
     }),
