@@ -172,6 +172,17 @@ class BattleController extends Component{
     this.onEndBattle = function(){};
   }
 
+
+  get inBattle(){
+    let inBattle = false;
+    for(let battle of this.battles){
+      if(battle.started && !battle.ended){
+        inBattle = true;
+      }
+    }
+    return inBattle;
+  }
+
   AddEvent(e){
     this.events.push(e);
     this.battleMap.set(e.id, e);
@@ -207,6 +218,7 @@ class BattleController extends Component{
 
   Update(){
     if(this.started){
+      Log(this.inBattle);
       for(var battle of this.battles){
         this.CheckBattle(battle);
       }
