@@ -1,4 +1,4 @@
-var serverURL = "https://localhost:8080";
+var serverURL = "https://locahost:8080";
 var webSocketURL = "localhost:8080/player/websocket";
 var socket = null;
 var publicRooms = [];

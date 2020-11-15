@@ -172,22 +172,31 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 		
 		
 		if(room != null) {
-			if(player == room.getMasterClient()) {
-				//room.setMasterClient(null);
+			if(room.started) {
 				Player host = room.getSlaveHost();
-				if(host != null) {
-					host.sendMessage(outMsg.toString());
-				}
-				room.setClient(null);
-			} else if (player == room.getSlaveHost()) {
-				//room.setSlaveHost(null);
+				host.sendMessage(outMsg.toString());
 				Player client = room.getMasterClient();
-				if(client != null) {
-					client.sendMessage(outMsg.toString());
-					client.setRoom(null);
-				}
+				client.sendMessage(outMsg.toString());
 				room.stopGame();
+			} else {
+				if(player == room.getMasterClient()) {
+					//room.setMasterClient(null);
+					Player host = room.getSlaveHost();
+					if(host != null) {
+						host.sendMessage(outMsg.toString());
+					}
+					room.setClient(null);
+				} else if (player == room.getSlaveHost()) {
+					//room.setSlaveHost(null);
+					Player client = room.getMasterClient();
+					if(client != null) {
+						client.sendMessage(outMsg.toString());
+						client.setRoom(null);
+					}
+					room.stopGame();
+				}
 			}
+			
 			player.setRoom(null);
 			player.setIsClient(false);
 			player.setIsHost(false);
