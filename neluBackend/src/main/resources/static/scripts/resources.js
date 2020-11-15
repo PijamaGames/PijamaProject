@@ -52,7 +52,7 @@ var soundsURLs=[
   ["breakObjectSound1",'resources/sounds/Romper_Objeto_1.mp3'],
   ["breakObjectSound2",'resources/sounds/Romper_Objeto_2.mp3'],
   ["breakObjectSound3",'resources/sounds/Romper_Objeto_3.mp3'],
-  ["poweupFireSound",'resources/sounds/Song_Powerup_Fuego.mp3'],
+  ["powerupFireSound",'resources/sounds/Song_Powerup_Fuego.mp3'],
   ["UISound1",'resources/sounds/UI_1.mp3'],
   ["kinematicSound",'resources/sounds/musica_Barco.mp3'],
   ["monkeyHouseSound",'resources/sounds/musica_Pelea_Mono.mp3'],
