@@ -146,6 +146,7 @@ input:focus{
   padding: 0;
   width:0;
   height:0;
+  text-rendering: geometricPrecision;
 }
 
 #game_surface{

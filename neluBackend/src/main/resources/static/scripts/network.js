@@ -10,6 +10,7 @@ var seconds;
 var networkDelta = 0.0;
 var networkMs = 0.0;
 var lastAliveSet = new Set();
+var couldNotConnectEvent = new EventDispatcher();
 
 const frontendEvents = {
   LOGIN: "LOGIN",
@@ -206,6 +207,11 @@ function SendEnemy(type, position){
 
 function InitWebSocket(onOpenCallback) {
   socket = new WebSocket("ws://" + webSocketURL);
+
+  socket.onerror = ()=>{
+    Log("WEBSOCKET ERROR");
+    couldNotConnectEvent.Dispatch();
+  }
 
   socket.onopen = () => {
     Log("WebSocket opened");

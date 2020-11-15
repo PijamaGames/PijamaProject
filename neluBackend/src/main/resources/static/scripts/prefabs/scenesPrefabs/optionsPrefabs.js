@@ -137,7 +137,7 @@ prefabFactory.AddPrototype("LanguageText", new Vec2(4,2), new Vec2(0.5,0.5), fal
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();
     }),
-    new TextBox("Language", "Inglés","Spanish", new Vec2(0.3,0.07), true),
+    new TextBox("Language", "English","Español", new Vec2(0.3,0.07), true),
     new AudioSource(["UISound1"]),
   ]
 });
@@ -170,18 +170,23 @@ prefabFactory.AddPrototype("OptionsTitle", new Vec2(14,2), new Vec2(0.5,0.5), fa
 
 function ChangeDificulty(bool=true){
   let text=document.getElementById("Dificulty");
-  if(bool) manager.easy=!manager.easy;
-  if(manager.easy) text.innerHTML=manager.english? "Easy": "Fácil";
-  else text.innerHTML=manager.english? "Hard": "Difícil";
+  if(text && text != null){
+    if(bool) manager.easy=!manager.easy;
+    if(manager.easy) text.innerHTML=manager.english? "Easy": "Fácil";
+    else text.innerHTML=manager.english? "Hard": "Difícil";
+  }
 }
 function ChangeLanguage(id,textEn,textSp){
   let text=document.getElementById(id);
-  text.innerHTML=manager.english? textEn: textSp;
+  if(text && text != null)
+    text.innerHTML=manager.english? textEn: textSp;
 }
 function ChangeVolumeText(){
   var text=document.getElementById("VolumeTextOptions");
-  if(manager.english) text.innerHTML="Volume: "+(manager.maxVolume*100)+"%";
-  else text.innerHTML="Volumen: "+(manager.maxVolume*100)+"%";
+  if(text && text != null){
+    if(manager.english) text.innerHTML="Volume: "+(manager.maxVolume*100)+"%";
+    else text.innerHTML="Volumen: "+(manager.maxVolume*100)+"%";
+  }
 }
 function ChangeQualityText(config){
   switch(config){
@@ -199,6 +204,9 @@ function ChangeQualityText(config){
 }
 function QualityMessage(msgEn,msgSp){
   var text=document.getElementById("QualityTextOptions");
-  if(manager.english) text.innerHTML="Quality: "+msgEn;
-  else text.innerHTML="Calidad: "+msgSp;
+  if(text && text != null){
+    if(manager.english) text.innerHTML="Quality: "+msgEn;
+    else text.innerHTML="Calidad: "+msgSp;
+  }
+
 }

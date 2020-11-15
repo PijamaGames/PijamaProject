@@ -171,6 +171,7 @@ class PlayerController extends Component {
 
   ThrowColibri(){
     if(!this.gameobj.scene.canUseColibri) return;
+    if(this.gameobj.scene.paused) return;
     if(Renderer.hoverSet && Renderer.hoverSet.size != 0) return;
     Log("THROW COLIBRI");
     this.hasColibri = false;
