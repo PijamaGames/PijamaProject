@@ -65,7 +65,7 @@ prefabFactory.AddPrototype("MonkeyButton", new Vec2(8,2), new Vec2(0.5,0.0), fal
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();
     }),
-    new TextBox("monkeyText", "Monos: X/Y","Monkeys: X/Y", new Vec2(0.5,0.07), true),
+    new TextBox("monkeyText", "Monos: X/Y","Monkeys: X/Y", new Vec2(0.3,0.07), false),
     new AudioSource(["UISound1"]),
   ]
 });
@@ -91,7 +91,7 @@ prefabFactory.AddPrototype("BeekeeperButton", new Vec2(8,2), new Vec2(0.5,0.0), 
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();
     }),
-    new TextBox("beekeeperText", "Apicultores: X/Y","Beekeepers: X/Y", new Vec2(0.5,0.07), true),
+    new TextBox("beekeeperText", "Apicultores: X/Y","Beekeepers: X/Y", new Vec2(0.35,0.07), false),
     new AudioSource(["UISound1"]),
   ]
 });
@@ -121,7 +121,10 @@ prefabFactory.AddPrototype("GameFromPauseMultiGame", new Vec2(8,2), new Vec2(0.5
       obj.gameobj.audioSource.PlayAll();
     }),
     new TextBox(null, "Volver al juego","Return to game", new Vec2(0.3,0.07), true),
-    new CustomBehaviour().SetOnCreate((obj)=> obj.SetActive(false)),
+    new CustomBehaviour().SetOnCreate((obj)=> {
+      obj.SetActive(false);
+
+    }),
     new AudioSource(["UISound1"]),
   ]
 });

@@ -20,7 +20,7 @@ prefabFactory.AddPrototype("BoxColliderScalable", new Vec2(1, 1), new Vec2(0,0),
 prefabFactory.AddPrototype("RiverSoundPrefab", new Vec2(1,1), new Vec2(0,0), false, ()=>{
   return [
     new Renderer(new Vec2(6,13), new Vec2(1,1), false),
-    new AudioSource(["riverSound"],true,"riverSound"),
+    //new AudioSource(["riverSound"],true,"riverSound"),
     new CustomBehaviour().SetOnUpdate((obj)=>{
       obj.renderer.tile.x=DEBUG_VISUAL? 7: 5;
       obj.renderer.tile.y=DEBUG_VISUAL? 3: 13;

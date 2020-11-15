@@ -70,6 +70,7 @@ function Main(){
     ArenaScene(true);
   }));
   manager.AddScene(new Scene("multiGame4", BC_MultiGame4).SetOnLoad(()=>{
+
     ArenaScene(false);
   }).SetOnUnload(()=>{
     ArenaScene(true);
@@ -118,10 +119,13 @@ function ArenaScene(out){
   if(user.isHost) input.HideVirtualInputs(out);
   let music=finder.FindObjectsByType("PauseFromMultiGame");
   if(!out) {
+    manager.scene.players.values().next().value.playerController.life=50;
+    if(!input.isDesktop) input.HideVirtualInputs(false);
     music[0].audioSource.Play("arenaMusic");
     manager.menuSound.PauseAll();
   }
   else {
+    if(!input.isDesktop) input.HideVirtualInputs(true);
     manager.menuSound.PlayAll();
     music[0].audioSource.Stop("arenaMusic");
   }
