@@ -11,7 +11,7 @@ prefabFactory.AddPrototype("Nelu", new Vec2(2, 2), new Vec2(0.5, 0.5), false, ()
     new ShadowCaster(new Vec2(0,-0.75), 0.75),
     new PlayerController(),
     new NetworkEntity(),
-    new AudioSource(["comboSound1","comboSound2","comboSound3","healSound","dashSound","poweupFireSound","neluDied","neluDamage"]),
+    new AudioSource(["comboSound1","comboSound2","comboSound3","healSound","dashSound","powerupFireSound","neluDied","neluDamage"]),
   ]
 });
 

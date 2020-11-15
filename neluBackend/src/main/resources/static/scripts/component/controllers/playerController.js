@@ -499,9 +499,9 @@ class PlayerController extends Component {
   }
 
   ActivateFirePower(){
-    if(this.gameobj.audioSource.Playing("poweupFireSound"))
-      this.gameobj.audioSource.Stop("poweupFireSound");
-    this.gameobj.audioSource.Play("poweupFireSound");
+    if(this.gameobj.audioSource.Playing("powerupFireSound"))
+      this.gameobj.audioSource.Stop("powerupFireSound");
+    this.gameobj.audioSource.Play("powerupFireSound");
     manager.singleGameMusic.PauseAll();
     this.firePower = true;
     this.firePowerTime = 0.0;
@@ -510,7 +510,7 @@ class PlayerController extends Component {
   }
 
   DeactivateFirePower(){
-    this.gameobj.audioSource.Stop("poweupFireSound");
+    this.gameobj.audioSource.Stop("powerupFireSound");
     if(!manager.singleGameMusic.Playing("levelSound")){
       manager.singleGameMusic.LoopAll(true);
       manager.singleGameMusic.PlayAll();
