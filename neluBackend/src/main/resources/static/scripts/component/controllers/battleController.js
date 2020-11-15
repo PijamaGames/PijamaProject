@@ -218,7 +218,6 @@ class BattleController extends Component{
 
   Update(){
     if(this.started){
-      Log(this.inBattle);
       for(var battle of this.battles){
         this.CheckBattle(battle);
       }
