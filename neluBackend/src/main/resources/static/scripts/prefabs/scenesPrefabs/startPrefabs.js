@@ -23,6 +23,26 @@ prefabFactory.AddPrototype("MenuFromStart", new Vec2(4,2), new Vec2(0.5,0.5), fa
   ]
 });
 
+prefabFactory.AddPrototype("PubliPortfolio", new Vec2(15,3.5), new Vec2(0.5,0.0), false, ()=>{
+  return [
+    new ImageRenderer(new Vec2(7,10), new Vec2(15,3.5)).GiveFunctionality().SetHoverInFunc((obj)=>{
+      obj.gameobj.renderer.MultiplyTint(0.8);
+    }).SetHoverOutFunc((obj)=>{
+      let tint=obj.gameobj.renderer.realTint;
+      obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
+
+      /*TEST*/
+      var win = window.open("https://pijamagames.github.io/", '_blank');
+      if(win && win!=null){
+        win.focus();
+      }
+    }).SetTexture("cutScene2_0"),
+    new AudioSource(["UISound1"]),
+  ]
+});
+
 prefabFactory.AddPrototype("GameTitle", new Vec2(), new Vec2(0.5,0.5), false, ()=>{
   return [
     new TextBox("gameTitle", "Nelu: Lotus Guardian","Nelu: Lotus Guardian", new Vec2(1,0.07), true),
