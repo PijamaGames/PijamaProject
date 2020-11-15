@@ -7,7 +7,7 @@ prefabFactory.AddPrototype("PauseFromMultiGame", new Vec2(1.5,1.5), new Vec2(0.0
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       ShowButtons(true, ["PauseTitleMultiGame", "GameFromPauseMultiGame","MenuFromPauseMultiGame"]);
-      ShowButtons(false, ["MultiLifeText","Chronometer","PauseFromMultiGame"]);
+      ShowButtons(false, ["Chronometer","PauseFromMultiGame","MonkeyButton","BeekeeperButton","LifeUnitUI"]);
       manager.lastGame="multiGame";
       if(!input.isDesktop) input.HideVirtualInputs(true);
     }).SetDownFunc((obj)=>{
@@ -43,39 +43,58 @@ prefabFactory.AddPrototype("Chronometer", new Vec2(3,1.5), new Vec2(1.0,1.0), fa
     }),
   ]
 });
-prefabFactory.AddPrototype("ChangeEnemy", new Vec2(8,2), new Vec2(0.5,0.0), false, ()=>{
+prefabFactory.AddPrototype("MonkeyButton", new Vec2(8,2), new Vec2(0.5,0.0), false, ()=>{
   return [
     new ImageRenderer(new Vec2(15,4), new Vec2(8,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
-      obj.gameobj.renderer.MultiplyTint(0.8);
+      if(obj.gameobj.scene.masterController.enemyType != 0){
+        obj.gameobj.renderer.MultiplyTint(0.8);
+      }
     }).SetHoverOutFunc((obj)=>{
-      let tint=obj.gameobj.renderer.realTint;
-      obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
+      if(obj.gameobj.scene.masterController.enemyType != 0){
+        let tint=obj.gameobj.renderer.realTint;
+        obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
+      }
     }).SetUpFunc((obj)=>{
-      let enemyType=obj.gameobj.scene.masterController.enemyType;
-      var text=document.getElementById("changeEnemyBtn");
-      if(enemyType==0){
-        enemyType=1;
-        obj.gameobj.renderer.SetTile(new Vec2(15,2));
-        text.innerHTML=manager.english?"Enemy: beekeeper": "Enemigo: apicultor";
+      if(obj.gameobj.scene.masterController.enemyType != 0){
+        let selectedTint = obj.gameobj.scene.masterController.selectedTint;
+        obj.gameobj.renderer.SetTint(selectedTint[0],selectedTint[1],selectedTint[2]);
+        let tint=obj.gameobj.scene.masterController.beekeeperButton.renderer.realTint;
+        obj.gameobj.scene.masterController.beekeeperButton.renderer.SetTint(tint[0], tint[1], tint[2]);
+        obj.gameobj.scene.masterController.enemyType = 0;
       }
-      else{
-        enemyType=0;
-        obj.gameobj.renderer.SetTile(new Vec2(15,4));
-        text.innerHTML=manager.english?"Enemy: monkey": "Enemigo: mono";
-      }
-      obj.gameobj.scene.masterController.enemyType=enemyType;
-
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();
     }),
-    new TextBox("changeEnemyBtn", "Enemigo: mono","Enemy: monkey", new Vec2(0.5,0.07), true),
-    new CustomBehaviour().SetOnCreate((obj)=>{
-      if(user.isHost) obj.SetActive(false);
-    }),
+    new TextBox("monkeyText", "Monos: X/Y","Monkeys: X/Y", new Vec2(0.5,0.07), true),
     new AudioSource(["UISound1"]),
   ]
 });
-
+prefabFactory.AddPrototype("BeekeeperButton", new Vec2(8,2), new Vec2(0.5,0.0), false, ()=>{
+  return [
+    new ImageRenderer(new Vec2(15,2), new Vec2(8,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
+      if(obj.gameobj.scene.masterController.enemyType != 1){
+        obj.gameobj.renderer.MultiplyTint(0.8);
+      }
+    }).SetHoverOutFunc((obj)=>{
+      if(obj.gameobj.scene.masterController.enemyType != 1){
+        let tint=obj.gameobj.renderer.realTint;
+        obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
+      }
+    }).SetUpFunc((obj)=>{
+      if(obj.gameobj.scene.masterController.enemyType != 1){
+        let selectedTint = obj.gameobj.scene.masterController.selectedTint;
+        obj.gameobj.renderer.SetTint(selectedTint[0],selectedTint[1],selectedTint[2]);
+        let tint=obj.gameobj.scene.masterController.monkeyButton.renderer.realTint;
+        obj.gameobj.scene.masterController.monkeyButton.renderer.SetTint(tint[0], tint[1], tint[2]);
+        obj.gameobj.scene.masterController.enemyType = 1;
+      }
+    }).SetDownFunc((obj)=>{
+      obj.gameobj.audioSource.PlayAll();
+    }),
+    new TextBox("beekeeperText", "Apicultores: X/Y","Beekeepers: X/Y", new Vec2(0.5,0.07), true),
+    new AudioSource(["UISound1"]),
+  ]
+});
 
 //PAUSA
 prefabFactory.AddPrototype("PauseTitleMultiGame", new Vec2(14,2), new Vec2(0.5,0.5), false, ()=>{
@@ -96,7 +115,7 @@ prefabFactory.AddPrototype("GameFromPauseMultiGame", new Vec2(8,2), new Vec2(0.5
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
       ShowButtons(false, ["PauseTitleMultiGame", "GameFromPauseMultiGame","MenuFromPauseMultiGame"]);
-      ShowButtons(true, ["MultiLifeText","Chronometer","PauseFromMultiGame","MultiTextBox"]);
+      ShowButtons(true, ["Chronometer","PauseFromMultiGame","MonkeyButton","BeekeeperButton","LifeUnitUI"]);
       if(!input.isDesktop) input.HideVirtualInputs(false);
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();
@@ -134,7 +153,9 @@ prefabFactory.AddPrototype("MenuFromPauseMultiGame", new Vec2(8,2), new Vec2(0.5
 function ShowButtons(show, buttons){
   var obj;
   for (var button of buttons){
-    obj=finder.FindObjectsByType(button);
-    if(obj.length>0) obj[0].SetActive(show);
+    objs=finder.FindObjectsByType(button);
+    for(let obj of objs){
+      obj.SetActive(show);
+    }
   }
 }
