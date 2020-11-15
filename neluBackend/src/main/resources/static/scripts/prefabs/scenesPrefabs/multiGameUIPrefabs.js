@@ -43,9 +43,9 @@ prefabFactory.AddPrototype("Chronometer", new Vec2(3,1.5), new Vec2(1.0,1.0), fa
     }),
   ]
 });
-prefabFactory.AddPrototype("MonkeyButton", new Vec2(6,2), new Vec2(0.5,0.0), false, ()=>{
+prefabFactory.AddPrototype("MonkeyButton", new Vec2(7,2), new Vec2(0.5,0.0), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(15,4), new Vec2(6,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
+    new ImageRenderer(new Vec2(15,4), new Vec2(7,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
       if(obj.gameobj.scene.masterController.enemyType != 0){
         obj.gameobj.renderer.MultiplyTint(0.8);
       }
@@ -69,9 +69,9 @@ prefabFactory.AddPrototype("MonkeyButton", new Vec2(6,2), new Vec2(0.5,0.0), fal
     new AudioSource(["UISound1"]),
   ]
 });
-prefabFactory.AddPrototype("BeekeeperButton", new Vec2(6,2), new Vec2(0.5,0.0), false, ()=>{
+prefabFactory.AddPrototype("BeekeeperButton", new Vec2(7,2), new Vec2(0.5,0.0), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(15,2), new Vec2(6,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
+    new ImageRenderer(new Vec2(15,2), new Vec2(7,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
       if(obj.gameobj.scene.masterController.enemyType != 1){
         obj.gameobj.renderer.MultiplyTint(0.8);
       }

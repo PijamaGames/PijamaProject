@@ -85,7 +85,7 @@ prefabFactory.AddPrototype("CreditsFromMenu", new Vec2(8,2), new Vec2(0.5,0.5), 
       let tint=obj.gameobj.renderer.realTint;
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
-      manager.LoadScene('multiGame3');
+      manager.LoadScene('multiGame4');
       //manager.LoadScene('credits');
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();

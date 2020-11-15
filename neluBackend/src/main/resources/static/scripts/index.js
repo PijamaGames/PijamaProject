@@ -122,11 +122,11 @@ function ArenaScene(out){
     manager.scene.players.values().next().value.playerController.life=50;
     if(!input.isDesktop) input.HideVirtualInputs(false);
     music[0].audioSource.Play("arenaMusic");
-    manager.menuSound.PauseAll();
+    manager.SetInMenu(false);
   }
   else {
     if(!input.isDesktop) input.HideVirtualInputs(true);
-    manager.menuSound.PlayAll();
+    manager.SetInMenu(true);
     music[0].audioSource.Stop("arenaMusic");
   }
 }

@@ -287,7 +287,6 @@ function StartGame(msg){
     case 4: manager.LoadScene("multiGame4");
       break;
   }
-  manager.SetInMenu(false);
   gameStarted = true;
 
   if(user.isHost){
@@ -380,7 +379,6 @@ function Onclick(room,enviroment,light){
 }
 
 function ConnectionLost(msg) {
-  manager.SetInMenu(true);
   if(gameStarted || user.isClient){
     manager.LoadScene("connectionFailed");
   } else if(user.isHost) {

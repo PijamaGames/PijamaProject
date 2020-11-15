@@ -500,10 +500,15 @@ class PlayerController extends Component {
     let battle=finder.FindObjectsByType("BattleManager");
     if(this.gameobj.audioSource.Playing("powerupFireSound"))
       this.gameobj.audioSource.Stop("powerupFireSound");
-    if(battle[0].audioSource.Playing("monkeyHouseSound"))
+
+    if(battle[0] && battle[0].audioSource.Playing("monkeyHouseSound"))
       battle[0].audioSource.Stop("monkeyHouseSound");
     this.gameobj.audioSource.Play("powerupFireSound");
     manager.singleGameMusic.PauseAll();
+    let music=finder.FindObjectsByType("PauseFromMultiGame");
+    if(music[0]){
+      music[0].audioSource.Pause("arenaMusic");
+    }
     this.firePower = true;
     this.firePowerTime = 0.0;
 
@@ -513,14 +518,19 @@ class PlayerController extends Component {
   DeactivateFirePower(){
     let battle=finder.FindObjectsByType("BattleManager");
     this.gameobj.audioSource.Stop("powerupFireSound");
-
-    if(!manager.singleGameMusic.Playing("levelSound") && !battleController.inBattle){
-      manager.singleGameMusic.LoopAll(true);
-      manager.singleGameMusic.PlayAll();
+    if(battleController && battle[0]){
+      if(!manager.singleGameMusic.Playing("levelSound") && !battleController.inBattle){
+        manager.singleGameMusic.LoopAll(true);
+        manager.singleGameMusic.PlayAll();
+      }
+      else if(battleController.inBattle){
+        battle[0].audioSource.LoopAll(true);
+        battle[0].audioSource.Play("monkeyHouseSound");
+      }
     }
-    else if(battleController.inBattle){
-      battle[0].audioSource.LoopAll(true);
-      battle[0].audioSource.Play("monkeyHouseSound");
+    let music=finder.FindObjectsByType("PauseFromMultiGame");
+    if(music[0]){
+      music[0].audioSource.Play("arenaMusic");
     }
     this.firePower = false;
     Log("deactivate fire power");
