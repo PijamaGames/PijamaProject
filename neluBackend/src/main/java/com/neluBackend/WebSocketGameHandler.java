@@ -1,6 +1,8 @@
 package com.neluBackend;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -29,6 +31,7 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 		public final static String RECEIVE_ENTITIES = "RECEIVE_ENTITIES";
 		public final static String RECEIVE_ENEMY = "RECEIVE_ENEMY";
 		public final static String END_GAME = "END_GAME";
+		public final static String GET_RANKING = "GET_RANKING";
 	}
 
 	private class BackEndEvents {
@@ -42,6 +45,7 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 		public final static String SEND_ENEMY = "SEND_ENEMY";
 		public final static String END_GAME = "END_GAME";
 		public final static String UPDATE_CONTROLPOINT = "UPDATE_CONTROLPOINT";
+		public final static String GET_RANKING = "GET_RANKING";
 	}
 
 	private GameHandler game = GameHandler.INSTANCE;
@@ -119,12 +123,38 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 			case BackEndEvents.UPDATE_CONTROLPOINT:
 				updateControlPoint(inMsg, player);
 				break;
+			case BackEndEvents.GET_RANKING:
+				getRanking(inMsg, outMsg, player);
+				break;
 			}
 
 		} catch (Exception e) {
 			System.err.println("Exception processing message" + message.getPayload());
 			e.printStackTrace(System.err);
 		}
+	}
+	
+	private void getRanking(JsonNode inMsg, ObjectNode outMsg, Player player) throws Exception {
+		outMsg.put("event", FrontEndEvents.GET_RANKING);
+		List<User> users = repository.findAll();
+		users.sort((a,b)->{
+			return Integer.compare(-a.getPoints(), -b.getPoints());
+		});
+		//List<User> rankingUsers = new ArrayList<User>();
+		int usersCount = users.size();
+		int limit = 30;
+		if(usersCount < 30) {
+			limit = usersCount;
+		}
+		System.out.println(limit);
+		outMsg.put("numUsers", limit);
+		User user;
+		for(int i = 0; i < limit; i++) {
+			user = users.get(i);
+			outMsg.put("user"+i, user.getId());
+			outMsg.put("point"+i, user.getPoints());
+		}
+		player.sendMessage(outMsg.toString());
 	}
 	
 	private void updateControlPoint(JsonNode inMsg, Player player) {

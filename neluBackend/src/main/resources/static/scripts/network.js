@@ -1,5 +1,5 @@
-var serverURL = "http://localhost:8080";
-var webSocketURL = "localhost:8080/player";
+var serverURL = "https://localhost:8080";
+var webSocketURL = "localhost:8080/player/websocket";
 var socket = null;
 var publicRooms = [];
 var roomButtons = [];
@@ -22,6 +22,7 @@ const frontendEvents = {
   RECEIVE_ENTITIES:"RECEIVE_ENTITIES",
   RECEIVE_ENEMY:"RECEIVE_ENEMY",
   END_GAME:"END_GAME",
+  GET_RANKING:"GET_RANKING",
 }
 
 const backendEvents = {
@@ -35,6 +36,7 @@ const backendEvents = {
   SEND_ENEMY:"SEND_ENEMY",
   END_GAME:"END_GAME",
   UPDATE_CONTROLPOINT:"UPDATE_CONTROLPOINT",
+  GET_RANKING:"GET_RANKING",
 }
 
 function CreateEntitiesMsg(){
@@ -166,13 +168,17 @@ function ReceiveEntities(msg){
   manager.scene.camera.camera.UpdateCam(networkDelta);
 }
 
-async function getRanking() {
-  let response = await fetch(serverURL + "/users/ranking");
-  let rankingInfo = await response.json();
+function RequestRanking(){
+  SendWebSocketMsg({
+    event:backendEvents.GET_RANKING
+  });
+}
+
+function GetRanking(msg) {
   var ranking = document.getElementById("rankingText");
   var text="";
-  for (i=0; i<rankingInfo.length; i++){
-    text+=rankingInfo[i].points+ " "+rankingInfo[i].id+"<br>";
+  for (i=0; i<msg.numUsers; i++){
+    text+=msg["point"+i]+ " "+msg["user"+i]+"<br>";
   }
   ranking.innerHTML=text;
 }
@@ -261,6 +267,9 @@ function InitWebSocket(onOpenCallback) {
         break;
       case frontendEvents.END_GAME:
         EndGame(msg);
+        break;
+      case frontendEvents.GET_RANKING:
+        GetRanking(msg);
         break;
     }
   };

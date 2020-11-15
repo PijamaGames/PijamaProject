@@ -81,7 +81,8 @@ prefabFactory.AddPrototype("RankingTextBox", new Vec2(7,9), new Vec2(0.5,0.5), f
     new ImageRenderer(new Vec2(0,0), new Vec2(7,9)),
     new ScrollButton("rankingText", "","", new Vec2(0.4,0.55), false),
     new CustomBehaviour().SetOnCreate((obj)=>{
-      getRanking();
+      //getRanking();
+      RequestRanking();
     }),
 
   ]

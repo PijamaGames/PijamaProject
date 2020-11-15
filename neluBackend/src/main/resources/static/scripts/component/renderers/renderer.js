@@ -227,6 +227,10 @@ class Renderer extends Component{
   }
 
   Destroy(){
+    if(this.button && !input.isDesktop){
+      this.startListener.Remove();
+      this.endListener.Remove();
+    }
     for(var program of this.programs){
       program.renderers.delete(this);
     }

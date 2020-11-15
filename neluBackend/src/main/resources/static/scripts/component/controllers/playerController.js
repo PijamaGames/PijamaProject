@@ -31,7 +31,6 @@ class PlayerController extends Component {
     this.dashTime = 0.0;
     this.dashMaxCooldown = 0.4;
     this.dashCooldown = this.dashMaxCooldown;
-    this.canAttack = true;
 
     this.particlePosition = new Vec2(0,-1);
     this.particleDisplacement = 0.4;
@@ -49,7 +48,7 @@ class PlayerController extends Component {
     this.beesTarget = null;
 
     this.firePower = false;
-    this.firePowerMaxTime = 10;
+    this.firePowerMaxTime = 14;
     this.firePowerTime = 0.0;
     this.fire = null;
     this.fireDisplacement = 1.2;
@@ -101,7 +100,7 @@ class PlayerController extends Component {
     }*/
     this.ReloadBees();
     this.ManageBeesTarget();
-    this.canAttack = this.canAttack || input.GetKeyUp("Space");
+    //this.canAttack = this.canAttack || input.GetKeyUp("Space");
 
     if(this.firePower){
       this.firePowerTime += manager.delta;
@@ -251,7 +250,7 @@ class PlayerController extends Component {
         that.gameobj.renderer.SetAnimation('run');
       }),
       new Edge('attack1').AddCondition(()=>{
-        return input.GetAttackCACDown() && that.canAttack && !manager.scene.paused
+        return input.GetAttackCACDown() && !manager.scene.paused
       }),
       new Edge('die').AddCondition(()=>that.life <= 0),
     ]);
@@ -272,7 +271,7 @@ class PlayerController extends Component {
     }).SetEdges([
       new Edge('idle').AddCondition(()=>that.rawLeftAxis.mod < 0.05),
       new Edge('idle').AddCondition(()=>manager.scene.paused),
-      new Edge('attack1').AddCondition(()=>input.GetAttackCACDown() && that.canAttack),
+      new Edge('attack1').AddCondition(()=>input.GetAttackCACDown()),
       new Edge('dash').AddCondition(()=>input.GetDashDown() && that.dashCooldown > that.dashMaxCooldown),
       new Edge('die').AddCondition(()=>that.life <= 0),
     ]);
@@ -364,7 +363,6 @@ class PlayerController extends Component {
       //that.combo = false;
       that.numCombo = 4;
       that.particles.SetActive(false);
-      this.canAttack = false;
     }).SetEdges([
       new Edge('idle').AddCondition(()=>manager.scene.paused),
       new Edge('waitCombo').AddCondition(()=>that.endAttackAnim),
@@ -411,7 +409,7 @@ class PlayerController extends Component {
       new Edge('idle').AddCondition(()=>that.rawLeftAxis.mod < 0.05 && that.dashTime > that.dashMaxTime),
       new Edge('run').AddCondition(()=>that.rawLeftAxis.mod > 0.05 && that.dashTime > that.dashMaxTime),
       new Edge('attack1').AddCondition(()=>{
-        return input.GetAttackCACDown() && that.canAttack && !manager.scene.paused
+        return input.GetAttackCACDown() && !manager.scene.paused
       }),
     ]);
 

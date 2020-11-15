@@ -18,7 +18,6 @@ import com.neluBackend.repository.UserRepository;
 
 @SpringBootApplication
 @EnableWebSocket
-//@EnableMongoRepositories(basePackageClasses=UserRepository.class)
 public class NeluBackendApplication implements WebSocketConfigurer {
 
 	@Autowired
@@ -30,7 +29,7 @@ public class NeluBackendApplication implements WebSocketConfigurer {
 	
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(gameHandler(), "/player");
+		registry.addHandler(gameHandler(), "/player").setAllowedOrigins("*").withSockJS();
 	}
 	
 	@Bean

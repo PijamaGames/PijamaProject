@@ -26,6 +26,7 @@ class User{
 
       if(this.entity.controlPoint >= 2){
         battleController.eventMap.get("t_movimiento").ForceEnd();
+        input.HideVirtualInputs(false);
       }
 
       if(this.entity.controlPoint == 2){

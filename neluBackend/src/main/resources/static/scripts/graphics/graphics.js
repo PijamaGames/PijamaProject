@@ -62,6 +62,9 @@ class Graphics {
   }
 
   SetMinimumSettings(){
+    if(!input.isDesktop){
+      manager.targetFPS = 30;
+    }
     this.currentConfig = 0;
     this.config = {
       bloom : false,
@@ -75,6 +78,9 @@ class Graphics {
   }
 
   SetLowSettings(){
+    if(!input.isDesktop){
+      manager.targetFPS = 30;
+    }
     this.currentConfig = 1;
     this.config = {
       bloom : false,
@@ -88,6 +94,9 @@ class Graphics {
   }
 
   SetMediumSettings(){
+    if(!input.isDesktop){
+      manager.targetFPS = 30;
+    }
     this.currentConfig = 2;
     this.config = {
       bloom : true,
@@ -101,6 +110,9 @@ class Graphics {
   }
 
   SetHighSettings(){
+    if(!input.isDesktop){
+      manager.targetFPS = 60;
+    }
     this.currentConfig = 3;
     this.config = {
       bloom : true,
@@ -114,6 +126,9 @@ class Graphics {
   }
 
   SetMaxSettings(){
+    if(!input.isDesktop){
+      manager.targetFPS = 60;
+    }
     this.currentConfig = 4;
     this.config = {
       bloom : true,
