@@ -142,8 +142,8 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 		});
 		//List<User> rankingUsers = new ArrayList<User>();
 		int usersCount = users.size();
-		int limit = 30;
-		if(usersCount < 30) {
+		int limit = 10;
+		if(usersCount < limit) {
 			limit = usersCount;
 		}
 		System.out.println(limit);
