@@ -138,6 +138,23 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
       BindWeed 187 11 0.05 1 2
       BindWeed 188 11 0.05 1 2
       `),
+      new Battle("RiverBattle", true, new Vec2(107,-34), 5.0, `
+      MonkeySpawner1 118 -34 0.05 1 1
+      MonkeySpawner1 120 -33 0.05 1 1
+      MonkeySpawner1 120 -35 0.05 1 1
+      MonkeySpawner1 130 -33 0.05 1 1
+      MonkeySpawner1 132 -33 0.05 1 1
+      MonkeySpawner1 134 -33 0.05 1 1
+      MonkeySpawner1 133 -34 0.05 1 1
+      MonkeySpawner1 131 -34 0.05 1 1
+      MonkeySpawner1 151 -33 0.05 1 1
+      MonkeySpawner1 151 -34 0.05 1 1
+      MonkeySpawner1 153 -33 0.05 1 1
+      MonkeySpawner1 157 -33 0.05 1 1
+      MonkeySpawner1 159 -34 0.05 1 1
+      `,``,``,``,`
+      BindWeed 161 -32 0 1 2
+      `)
     ], [
       //constructor(id, autoStart, pos, dist, repeat, onStart = function(){}){
       new ScriptedEvent("toMorning", true, new Vec2(178,-19), 3.0, true, ()=>lighting.BeginTransition(1, 1)),

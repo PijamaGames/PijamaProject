@@ -1564,23 +1564,9 @@ DryPlant 168 -34 0
 DryPlant 168 -33 0
 DryPlant 168 -32 0
 BigLog 110 -33 0.1 1 3
-MonkeyEnemy 118.25 -32.75 0
-MonkeyEnemy 119.8725814819336 -31.961044311523438 0
-MonkeyEnemy 120.24418640136719 -33.993133544921875 0
-MonkeyEnemy 130.29367065429688 -32.97595977783203 0
-MonkeyEnemy 131.4867706298828 -34.06180953979492 0
-MonkeyEnemy 132.60238647460938 -32.78981399536133 0
-MonkeyEnemy 133.1757049560547 -34.13936996459961 0
-MonkeyEnemy 133.718017578125 -32.7743034362793 0
 BigLog 140 -35 0.1 1 3
 BigLog 149 -35 0.1 1 3
 BigLog 161 -35 0.1 1 3
-MonkeyEnemy 151.25 -33.75 0
-MonkeyEnemy 153.25 -33.75 0
-MonkeyEnemy 155.25 -33.75 0
-MonkeyEnemy 157.25 -33.75 0
-MonkeyEnemy 159.25 -33.75 0
-MonkeyEnemy 157.25 -33.75 0
 LogVertical 10 1 0.3 1 2
 LogVertical 3 3 0.6 1 2
 BoxColliderScalable 18 -13 0 7 13
@@ -1814,4 +1800,18 @@ DryPlant 97 -11 0 1 1
 DryPlant 105 -13 0 1 1
 DryPlant 105 -12 0 1 1
 DryPlant 105 -11 0 1 1
+MonkeySpawner1 118 -34 0.05 1 1
+MonkeySpawner1 120 -33 0.05 1 1
+MonkeySpawner1 120 -35 0.05 1 1
+MonkeySpawner1 130 -33 0.05 1 1
+MonkeySpawner1 132 -33 0.05 1 1
+MonkeySpawner1 134 -33 0.05 1 1
+MonkeySpawner1 133 -34 0.05 1 1
+MonkeySpawner1 131 -34 0.05 1 1
+MonkeySpawner1 151 -33 0.05 1 1
+MonkeySpawner1 151 -34 0.05 1 1
+MonkeySpawner1 153 -33 0.05 1 1
+MonkeySpawner1 157 -33 0.05 1 1
+MonkeySpawner1 159 -34 0.05 1 1
+BindWeed 161 -32 0 1 2
 `
