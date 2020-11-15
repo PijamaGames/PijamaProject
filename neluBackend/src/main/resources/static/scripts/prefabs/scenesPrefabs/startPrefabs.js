@@ -18,7 +18,7 @@ prefabFactory.AddPrototype("MenuFromStart", new Vec2(4,2), new Vec2(0.5,0.5), fa
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();
     }),
-    new TextBox(null, "Entrar","Entry", new Vec2(0.3,0.07), true),
+    new TextBox(null, "Entrar","Enter", new Vec2(0.3,0.07), true),
     new AudioSource(["UISound1"]),
   ]
 });
@@ -51,7 +51,7 @@ prefabFactory.AddPrototype("GameTitle", new Vec2(), new Vec2(0.5,0.5), false, ()
 
 prefabFactory.AddPrototype("introduceName", new Vec2(), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new TextBox("introduceNameText", "Introduce tu nombre","Introduce your name", new Vec2(0.4,0.07), true),
+    new TextBox("introduceNameText", "Introduce tu nombre","Enter your name", new Vec2(0.4,0.07), true),
   ]
 });
 
