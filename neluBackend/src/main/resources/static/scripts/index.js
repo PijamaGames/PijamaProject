@@ -119,8 +119,10 @@ function ArenaScene(out){
   if(user.isHost) input.HideVirtualInputs(out);
   let music=finder.FindObjectsByType("PauseFromMultiGame");
   if(!out) {
-    manager.scene.players.values().next().value.playerController.life=50;
-    if(!input.isDesktop) input.HideVirtualInputs(false);
+    if(user.isHost){
+      manager.scene.players.values().next().value.playerController.GainLife(20);
+      if(!input.isDesktop) input.HideVirtualInputs(false);
+    }
     music[0].audioSource.Play("arenaMusic");
     manager.SetInMenu(false);
   }
