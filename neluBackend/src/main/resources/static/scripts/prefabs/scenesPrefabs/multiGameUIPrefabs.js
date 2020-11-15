@@ -9,7 +9,7 @@ prefabFactory.AddPrototype("PauseFromMultiGame", new Vec2(1.5,1.5), new Vec2(0.0
       ShowButtons(true, ["PauseTitleMultiGame", "GameFromPauseMultiGame","MenuFromPauseMultiGame"]);
       ShowButtons(false, ["Chronometer","PauseFromMultiGame","MonkeyButton","BeekeeperButton","LifeUnitUI"]);
       manager.lastGame="multiGame";
-      if(!input.isDesktop) input.HideVirtualInputs(true);
+      if(!input.isDesktop && user.isHost) input.HideVirtualInputs(true);
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();
     }),
@@ -43,9 +43,9 @@ prefabFactory.AddPrototype("Chronometer", new Vec2(3,1.5), new Vec2(1.0,1.0), fa
     }),
   ]
 });
-prefabFactory.AddPrototype("MonkeyButton", new Vec2(8,2), new Vec2(0.5,0.0), false, ()=>{
+prefabFactory.AddPrototype("MonkeyButton", new Vec2(6,2), new Vec2(0.5,0.0), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(15,4), new Vec2(8,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
+    new ImageRenderer(new Vec2(15,4), new Vec2(6,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
       if(obj.gameobj.scene.masterController.enemyType != 0){
         obj.gameobj.renderer.MultiplyTint(0.8);
       }
@@ -65,13 +65,13 @@ prefabFactory.AddPrototype("MonkeyButton", new Vec2(8,2), new Vec2(0.5,0.0), fal
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();
     }),
-    new TextBox("monkeyText", "Monos: X/Y","Monkeys: X/Y", new Vec2(0.3,0.07), false),
+    new TextBox("monkeyText", "Monos: X/Y","Monkeys: X/Y", new Vec2(0.3,0.07), true),
     new AudioSource(["UISound1"]),
   ]
 });
-prefabFactory.AddPrototype("BeekeeperButton", new Vec2(8,2), new Vec2(0.5,0.0), false, ()=>{
+prefabFactory.AddPrototype("BeekeeperButton", new Vec2(6,2), new Vec2(0.5,0.0), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(15,2), new Vec2(8,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
+    new ImageRenderer(new Vec2(15,2), new Vec2(6,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
       if(obj.gameobj.scene.masterController.enemyType != 1){
         obj.gameobj.renderer.MultiplyTint(0.8);
       }
@@ -91,7 +91,7 @@ prefabFactory.AddPrototype("BeekeeperButton", new Vec2(8,2), new Vec2(0.5,0.0), 
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();
     }),
-    new TextBox("beekeeperText", "Apicultores: X/Y","Beekeepers: X/Y", new Vec2(0.35,0.07), false),
+    new TextBox("beekeeperText", "Apicultores: X/Y","Beekeepers: X/Y", new Vec2(0.3,0.07), true),
     new AudioSource(["UISound1"]),
   ]
 });
@@ -116,7 +116,7 @@ prefabFactory.AddPrototype("GameFromPauseMultiGame", new Vec2(8,2), new Vec2(0.5
     }).SetUpFunc(()=>{
       ShowButtons(false, ["PauseTitleMultiGame", "GameFromPauseMultiGame","MenuFromPauseMultiGame"]);
       ShowButtons(true, ["Chronometer","PauseFromMultiGame","MonkeyButton","BeekeeperButton","LifeUnitUI"]);
-      if(!input.isDesktop) input.HideVirtualInputs(false);
+      if(!input.isDesktop  && user.isHost) input.HideVirtualInputs(false);
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();
     }),
