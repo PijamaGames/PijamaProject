@@ -34,6 +34,7 @@ const backendEvents = {
   SEND_ENTITIES:"SEND_ENTITIES",
   SEND_ENEMY:"SEND_ENEMY",
   END_GAME:"END_GAME",
+  UPDATE_CONTROLPOINT:"UPDATE_CONTROLPOINT",
 }
 
 function CreateEntitiesMsg(){

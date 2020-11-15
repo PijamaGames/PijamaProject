@@ -13,7 +13,8 @@ prefabFactory.AddPrototype("SingleGameFromMenu", new Vec2(8,2), new Vec2(0.5,0.5
         let tint=obj.gameobj.renderer.realTint;
         obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
     }).SetUpFunc(()=>{
-      manager.LoadScene('cutScene1');
+      user.LoadProgress();
+      
       manager.SetInMenu(false);
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();

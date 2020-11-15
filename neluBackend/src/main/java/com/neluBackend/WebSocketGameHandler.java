@@ -41,6 +41,7 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 		public final static String SEND_ENTITIES = "SEND_ENTITIES";
 		public final static String SEND_ENEMY = "SEND_ENEMY";
 		public final static String END_GAME = "END_GAME";
+		public final static String UPDATE_CONTROLPOINT = "UPDATE_CONTROLPOINT";
 	}
 
 	private GameHandler game = GameHandler.INSTANCE;
@@ -115,12 +116,22 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 			case BackEndEvents.END_GAME:
 				endGame(inMsg, outMsg, player);
 				break;
+			case BackEndEvents.UPDATE_CONTROLPOINT:
+				updateControlPoint(inMsg, player);
+				break;
 			}
 
 		} catch (Exception e) {
 			System.err.println("Exception processing message" + message.getPayload());
 			e.printStackTrace(System.err);
 		}
+	}
+	
+	private void updateControlPoint(JsonNode inMsg, Player player) {
+		User user = player.getUser();
+		int controlPoint = inMsg.get("controlPoint").asInt();
+		user.setControlPoint(controlPoint);
+		repository.save(user);
 	}
 	
 	private void leaveRoom(Player player) throws Exception {

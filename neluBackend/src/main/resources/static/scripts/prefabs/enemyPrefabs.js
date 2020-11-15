@@ -79,7 +79,12 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
       BindWeed 67 -10 0.5 1 2
       BindWeed 67 -11 0.5 1 2
       BindWeed 67 -12 0.5 1 2
-      `),
+      `).SetOnEnd(()=>{
+        if(user.entity.controlPoint < 2){
+          user.entity.controlPoint = 2;
+          user.SaveProgress();
+        }
+      }),
       new Battle("2", true, new Vec2(80,-10), 9.0, `
       MonkeySpawner2 71 -3 0 1 1
       MonkeySpawner2 74 -3 0 1 1
@@ -93,7 +98,13 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
       BindWeed 85 -14 0.5 1 2
       BindWeed 85 -16 0.5 1 2
       BindWeed 85 -15 0.5 1 2
-      `).SetOnEnd(()=>dialogSystem.InitDialog("cap1_nelu_nido")),
+      `).SetOnEnd(()=>{
+        dialogSystem.InitDialog("cap1_nelu_nido");
+        if(user.entity.controlPoint < 3){
+          user.entity.controlPoint = 3;
+          user.SaveProgress();
+        }
+      }),
       new Battle("3", false, new Vec2(80,-10), 9.0, `
       MonkeySpawner1 100 -11 0 1 1
       MonkeySpawner1 101 -11 0 1 1
@@ -157,6 +168,12 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
       `)
     ], [
       //constructor(id, autoStart, pos, dist, repeat, onStart = function(){}){
+      new ScriptedEvent("saveProgress4", true, new Vec2(175,-33), 4.0, false, ()=>{
+        if(user.entity.controlPoint < 4){
+          user.entity.controlPoint = 4;
+          user.SaveProgress();
+        }
+      }),
       new ScriptedEvent("toMorning", true, new Vec2(178,-19), 3.0, true, ()=>lighting.BeginTransition(1, 1)),
       new ScriptedEvent("toNight", true, new Vec2(178,-11), 3.0, true, ()=>lighting.BeginTransition(3, 1)),
       new ScriptedEvent("t_movimiento", true, new Vec2(0,2), 100.0, false, ()=>dialogSystem.InitDialog("t_movimiento")),
@@ -168,13 +185,23 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
       new ScriptedEvent("cap1_intro_colibri", true, new Vec2(107,-31), 4.0, false, ()=>dialogSystem.InitDialog("cap1_intro_colibri")),
       new ScriptedEvent("cap1_colibri_fortaleza", true, new Vec2(177,-18), 5.0, false, ()=>dialogSystem.InitDialog("cap1_colibri_fortaleza")),
       new ScriptedEvent("cap1_colibri_fin_pelea", true, new Vec2(152,1), 2.5, false, ()=>{
+        if(user.entity.controlPoint < 5){
+          user.entity.controlPoint = 5;
+          user.SaveProgress();
+        }
         dialogSystem.InitDialog("cap1_colibri_fin_pelea");
         battleController.AddEvent(new ScriptedEvent("t_colibri", true, new Vec2(151,5), 1.7, false, ()=>{
           dialogSystem.InitDialog("t_colibri");
           manager.scene.canUseColibri = true;
         }));
       }),
-      new ScriptedEvent("cap1_fin", true, new Vec2(208,-40), 5.0, false, ()=>dialogSystem.InitDialog("cap1_fin")),
+      new ScriptedEvent("cap1_fin", true, new Vec2(208,-40), 5.0, false, ()=>{
+        dialogSystem.InitDialog("cap1_fin");
+        if(user.entity.controlPoint < 6){
+          user.entity.controlPoint = 0;
+          user.SaveProgress();
+        }
+      }),
 
     ]).SetOnStartBattle((obj)=>{
       if(manager.singleGameMusic.Playing("levelSound")){
@@ -190,11 +217,11 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
       obj.audioSource.StopAll();
 
     }),
-    new ColliderGroup([new CircleCollider(new Vec2(), 3.0, true, (obj, self)=>{
+    /*new ColliderGroup([new CircleCollider(new Vec2(), 3.0, true, (obj, self)=>{
       if(obj.playerController){
         self.battleController.Start();
       }
-    })]),
+    })]),*/
     new CustomBehaviour().SetOnUpdate((obj)=>{
       obj.renderer.tile.x = DEBUG_VISUAL ? 6 : 5;
     }),

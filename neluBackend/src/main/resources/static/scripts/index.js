@@ -17,11 +17,17 @@ function Main(){
   manager.AddScene(new Scene("start", BC_Start));
   manager.AddScene(new Scene("pause", BC_Pause));
   manager.AddScene(new Scene("singleGame", BC_SingleGame).SetOnLoad((scene)=>{
+    battleController.Start();
     scene.canUseColibri = false;
     scene.canUseBees = false;
     scene.camera.camera.FadeIn(2.0);
     lighting.SetCurrentLight(1);
     ReturnGame(true);
+    if(user.entity.controlPoint <= 0){
+      user.entity.controlPoint=1;
+      user.SaveProgress();
+    }
+
   }).SetOnWakeUp((scene)=>{
     ReturnGame(false);
   }).SetOnSleep(()=>{

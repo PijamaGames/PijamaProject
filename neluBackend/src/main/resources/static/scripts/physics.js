@@ -8,8 +8,8 @@ class Physics {
     this.timer = 0.0;
     this.fpsCount = 0;
     this.timeCount = 0.0;
-    this.rigidbodyMaxDist = 7.5;
-    this.staticMaxDist = 9.0;
+    this.rigidbodyMaxDist = 7.7;
+    this.staticMaxDist = 6.8;
     this.checkCollidersInBoundsInterval = 0.2;
     this.CheckCollidersInBoundsLoop();
   }

@@ -31,6 +31,11 @@ class ScriptedEvent extends AbstractEvent{
       this.onStart();
     }
   }
+
+  ForceEnd(){
+    this.used = true;
+    Log("FORCED ENDED SCRIPTED EVENT: " + this.id);
+  }
 }
 
 class Battle extends AbstractEvent{
@@ -126,6 +131,24 @@ class Battle extends AbstractEvent{
     }
     this.ended = true;
     this.onEndFunc();
+  }
+
+  ForceEnd(){
+    Log("battle " + this.id + "forced ended");
+    for(let obj of this.startEnableObjs){
+      obj.SetActive(true);
+    }
+    for(let obj of this.startDisableObjs){
+      obj.SetActive(false);
+    }
+    for(let obj of this.endEnableObjs){
+      obj.SetActive(true);
+    }
+    for(let obj of this.endDisableObjs){
+      obj.SetActive(false);
+    }
+    this.started = true;
+    this.ended = true;
   }
 }
 
