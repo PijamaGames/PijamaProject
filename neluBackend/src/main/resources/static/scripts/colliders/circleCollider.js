@@ -6,6 +6,9 @@ class CircleCollider extends Collider{
     this.scale = new Vec2(radius*2.0, radius*2.0);
     this.circular = 1.0;
   }
+  get isCircular(){
+    return this.circular >= 0.98;
+  }
 
   get vertDisplacement(){
     let pos = this.worldCenter;

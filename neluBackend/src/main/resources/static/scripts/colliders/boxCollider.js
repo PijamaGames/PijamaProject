@@ -6,6 +6,37 @@ class BoxCollider extends Collider{
     this.scale = new Vec2(width, height);
   }
 
+  GetProjection(center){
+    let corners = [this.leftUpCorner, this.rightUpCorner, this.leftDownCorner, this.rightDownCorner];
+    let projections = [ //up, down, left, right
+      Vec2.ProjectOnRect(center, corners[0], corners[1], true),
+      Vec2.ProjectOnRect(center, corners[2], corners[3], true),
+      Vec2.ProjectOnRect(center, corners[2], corners[0], true),
+      Vec2.ProjectOnRect(center, corners[3], corners[1], true)
+    ];
+
+    //nearestPoint is the projection point that has the minimum distance to the center of the circle
+
+    let distances = [
+      Vec2.Sub(center, projections[0]).mod,
+      Vec2.Sub(center, projections[1]).mod,
+      Vec2.Sub(center, projections[2]).mod,
+      Vec2.Sub(center, projections[3]).mod
+    ];
+
+
+    //minDist = Math.min(distD, distL, distR, distU);
+    let minDist = distances[0];
+    let closest = projections[0];
+    for(var i = 1; i < 4; i++){
+      if(distances[i] < minDist){
+        minDist = distances[i];
+        closest = projections[i];
+      }
+    }
+    return [minDist, closest];
+  }
+
   get leftUpCorner(){
     return new Vec2(this.leftPos.x,this.upPos.y);
   }

@@ -21,7 +21,7 @@ class Rigidbody extends Component{
     if(!this.gameobj.colliderGroup) return;
     let maxDist = physics.rigidbodyMaxDist;
     let dist = Vec2.Distance(this.gameobj.scene.camera.transform.GetWorldPos(), this.gameobj.transform.GetWorldCenter());
-    if(dist >= maxDist && !this.overDist){
+    if((dist >= maxDist && !this.overDist) || !this.gameobj.active){
       this.overDist = true;
       this.RemoveColliderGroupWithRb();
     } else if(dist < maxDist && this.overDist){

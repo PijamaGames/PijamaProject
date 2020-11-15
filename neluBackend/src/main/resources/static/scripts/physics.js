@@ -8,8 +8,10 @@ class Physics {
     this.timer = 0.0;
     this.fpsCount = 0;
     this.timeCount = 0.0;
-    this.rigidbodyMaxDist = 7.9;
-    this.staticMaxDist = 18.0;
+    this.rigidbodyMaxDist = 7.5;
+    this.staticMaxDist = 9.0;
+    this.checkCollidersInBoundsInterval = 0.2;
+    this.CheckCollidersInBoundsLoop();
   }
 
   SetSteps(steps){
@@ -17,6 +19,21 @@ class Physics {
     this.stepPCT = 1.0 / this.steps;
     this.repulsion = this.rawRepusltion/this.steps;
     Log("PHYSICS STEPS: "+this.steps);
+  }
+
+  CheckCollidersInBoundsLoop(){
+    var that = this;
+    setTimeout(()=>{
+      if(!(user && user.isClient) && manager.scene && manager.scene != null){
+        for (var rb of manager.scene.rigidbodies) {
+          rb.CheckMaxDist();
+        }
+        for (var col of manager.scene.colliderGroupsSet){
+          col.CheckMaxDist();
+        }
+      }
+      that.CheckCollidersInBoundsLoop();
+    },that.checkCollidersInBoundsInterval*1000);
   }
 
   Update() {
@@ -35,12 +52,12 @@ class Physics {
     }
 
     if(user && user.isClient) return;
-    for (var rb of manager.scene.rigidbodies) {
+    /*for (var rb of manager.scene.rigidbodies) {
       rb.CheckMaxDist();
     }
     for (var col of manager.scene.colliderGroupsSet){
       col.CheckMaxDist();
-    }
+    }*/
     for (var rb of manager.scene.rigidbodies) {
       rb.PrepareVelocity();
     }
@@ -113,7 +130,7 @@ class Physics {
     }
 
     if(DEBUG_PHYSICS && this.logStep){
-      Log("StaticNum: "+ groups.length + " | RbNum: " + groupsWithRb.length + " | Triggers: " + triggers.size + " | StaticIter: " + resolveColNotRb + " | RbIter: " + resolveColWithRb);
+      Log("ColStaticNum: "+ groups.length + " | ColRbNum: " + groupsWithRb.length + " | Triggers: " + triggers.size + " | StaticIter: " + resolveColNotRb + " | RbIter: " + resolveColWithRb);
     }
 
     for (var rb of manager.scene.rigidbodies) {

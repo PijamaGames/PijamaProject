@@ -151,7 +151,7 @@ class Collider {
     }
     //let inside = circleCenter.x > sides
 
-    let corners = [box.leftUpCorner, box.rightUpCorner, box.leftDownCorner, box.rightDownCorner];
+    /*let corners = [box.leftUpCorner, box.rightUpCorner, box.leftDownCorner, box.rightDownCorner];
     let projections = [ //up, down, left, right
       Vec2.ProjectOnRect(circleCenter, corners[0], corners[1], true),
       Vec2.ProjectOnRect(circleCenter, corners[2], corners[3], true),
@@ -177,7 +177,10 @@ class Collider {
         minDist = distances[i];
         closest = projections[i];
       }
-    }
+    }*/
+    let minDist;
+    let closest;
+    [minDist, closest] = box.GetProjection(circleCenter);
 
     let dir = Vec2.Sub(circleCenter, closest);
     if(minDist > circle.radius){

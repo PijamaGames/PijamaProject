@@ -39,8 +39,17 @@ class ColliderGroup extends Component{
   CheckMaxDist(){
     //if(!this.gameobj.colliderGroup) return;
     let maxDist = physics.staticMaxDist;
-    let dist = Vec2.Distance(this.gameobj.scene.camera.transform.GetWorldPos(), this.gameobj.transform.GetWorldCenter());
-    if(dist >= maxDist && !this.overDist){
+    let collider = this.firstCollider;
+    let dist;
+    if(collider.isCircular){
+      dist = Vec2.Distance(this.gameobj.scene.camera.transform.GetWorldPos(),collider.worldCenter) - collider.radius;
+    } else {
+      let closest;
+      [dist, closest] = collider.GetProjection(this.gameobj.scene.camera.transform.GetWorldPos());
+    }
+
+    //let dist = Vec2.Distance(this.gameobj.scene.camera.transform.GetWorldPos(), this.firstCollider.worldCenter/*this.gameobj.transform.GetWorldCenter()*/);
+    if((dist >= maxDist && !this.overDist)||!this.gameobj.active){
       this.overDist = true;
       this.RemoveColliderGroup();
     } else if(dist < maxDist && this.overDist){
