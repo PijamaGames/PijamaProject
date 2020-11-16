@@ -38,9 +38,6 @@ class Camera extends Component {
   }
 
   Update() {
-    this.brightness += 0.1 * input.GetKeyDownF("KeyO");
-    this.brightness -= 0.1 * input.GetKeyDownF("KeyL");
-
     if(this.fading){
       this.time += manager.delta;
       if(this.time >= this.maxTime){

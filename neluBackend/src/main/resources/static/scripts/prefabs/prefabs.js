@@ -24,8 +24,6 @@ prefabFactory.AddPrototype("RiverSoundPrefab", new Vec2(1,1), new Vec2(0,0), fal
     new CustomBehaviour().SetOnUpdate((obj)=>{
       obj.renderer.tile.x=DEBUG_VISUAL? 7: 5;
       obj.renderer.tile.y=DEBUG_VISUAL? 3: 13;
-    }).SetOnCreate((obj)=>{
-      //obj.audioSource.PlayAll()
     }),
   ]
 });
@@ -133,6 +131,24 @@ prefabFactory.AddPrototype("Dirt", new Vec2(1,1), new Vec2(0,0), true, ()=>{
 });
 
 prefabFactory.AddPrototype("Sand", new Vec2(1,1), new Vec2(0,0), true, ()=>{
+  return [
+    new Renderer(new Vec2(2,0), new Vec2(1,1), false),
+  ]
+});
+
+prefabFactory.AddPrototype("GrassBound", new Vec2(1,1), new Vec2(0,0), true, ()=>{
+  return [
+    new Renderer(new Vec2(0,0), new Vec2(1,1), false),
+  ]
+});
+
+prefabFactory.AddPrototype("DirtBound", new Vec2(1,1), new Vec2(0,0), true, ()=>{
+  return [
+    new Renderer(new Vec2(1,0), new Vec2(1,1), false),
+  ]
+});
+
+prefabFactory.AddPrototype("SandBound", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(2,0), new Vec2(1,1), false),
   ]

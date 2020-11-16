@@ -65,15 +65,30 @@ class MasterController extends Component{
 
   SpawnEnemy(){
     if(Renderer.hoverSet && Renderer.hoverSet.size != 0) return;
+
+    let position = input.clickPosition;
+    let overlappingObjs = manager.scene.GetObjectsInBoundaries(position);
+    let inBound = false;
+    let i = 0;
+    let obj;
+    while(i < overlappingObjs.length && !inBound){
+      obj = overlappingObjs[i];
+      if(obj.type == "GrassBound" || obj.type == "DirtBound" || obj.type == "SandBound"){
+        inBound = true;
+      }
+      i++;
+    }
+    if(!inBound) return;
+
     if(this.enemyType == 0){
       if(this.monkeys > 0){
         this.monkeys--;
-        SendEnemy(this.enemyType, input.clickPosition);
+        SendEnemy(this.enemyType, position);
       }
     } else {
       if(this.beekeepers>0){
         this.beekeepers--;
-        SendEnemy(this.enemyType, input.clickPosition);
+        SendEnemy(this.enemyType, position);
       }
     }
   }
