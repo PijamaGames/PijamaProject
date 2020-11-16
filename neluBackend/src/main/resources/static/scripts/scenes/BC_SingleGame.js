@@ -6,7 +6,6 @@ PauseFromSingleGame 0.1 -0.07 0
 SingleLifeText 0.5 -0.07 0
 DialogSystem 0 0 0
 SingleGameMusic 0 0 0
-SaveImage 0 0 0
 Nelu 0 2 0
 WaterLeft -13 -12 0 1 18
 WaterLeft -13 6 0 1 18

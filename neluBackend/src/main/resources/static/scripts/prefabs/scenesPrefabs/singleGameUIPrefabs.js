@@ -180,10 +180,17 @@ prefabFactory.AddPrototype("SingleNameText", new Vec2(4,2), new Vec2(0.5,0.0), f
   ]
 });
 
-prefabFactory.AddPrototype("SaveImage", new Vec2(4,2), new Vec2(0.5,0.5), false, ()=>{
+prefabFactory.AddPrototype("SaveImage", new Vec2(4,2), new Vec2(0,1), false, ()=>{
   return [
     new ImageRenderer(new Vec2(7,10), new Vec2(4,2)),
     new TextBox(null, "Guardando...","Saving progress...", new Vec2(0.3,0.07), true),
-    new CustomBehaviour().SetOnCreate((obj)=>obj.SetActive(false))
+    new CustomBehaviour().SetOnCreate((obj)=>{
+      obj.maxTime=5;
+      obj.cont=0;
+    }).SetOnUpdate((obj)=>{
+      obj.cont+=manager.delta;
+      if(obj.cont>=obj.maxTime)
+        obj.Destroy();
+    })
   ]
 });

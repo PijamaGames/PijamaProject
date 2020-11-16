@@ -12,6 +12,7 @@ class User{
     this.hostName = "";
 
     user = this;
+
   }
 
   LoadProgress(){
@@ -49,7 +50,6 @@ class User{
         battleController.battleMap.get("4").ForceEnd();
         playerPos = new Vec2(152,0);
         camPos = new Vec2(152,0);
-        lighting.SetCurrentLight(3);
       }
 
       player.transform.SetWorldPosition(playerPos);
@@ -60,17 +60,11 @@ class User{
   }
 
   SaveProgress(){
-
+    let saveImage = prefabFactory.CreateObj("SaveImage", new Vec2(0.7,-0.07));
     SendWebSocketMsg({
       event:backendEvents.UPDATE_CONTROLPOINT,
       controlPoint:this.entity.controlPoint
     })
-    let saveImage=finder.FindObjectsByType("SaveImage");
-    saveImage[0].SetActive(true);
-    Log(saveImage[0])
-    setTimeout(()=>{
-      saveImage[0].SetActive(false);
-    },2000);
   }
 
   SetUserWinner(winner){
