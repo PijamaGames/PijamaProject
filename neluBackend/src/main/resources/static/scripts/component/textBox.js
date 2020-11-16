@@ -13,6 +13,7 @@ class TextBox extends Component{
   }
 
   ChangeTextLanguage(){
+    Log("man en: " + manager.english);
     this.element.innerHTML=manager.english? this.textEn: this.textSp;
   }
 
@@ -42,6 +43,7 @@ class TextBox extends Component{
     this.gameobj.scene.domElements.add(this);
     var that=this;
     if(this.change) this.listener=manager.changeLanguageEvent.AddListener(this,()=>that.ChangeTextLanguage());
+    //this.ChangeTextLanguage();
   }
 
   CreateElement(){
@@ -50,6 +52,7 @@ class TextBox extends Component{
     if(this.centered){
       this.element.style.textAlign = "center";
     }
+    Log("man en: " + manager.english);
     var text = manager.english? document.createTextNode(this.textEn) : document.createTextNode(this.textSp);
     this.element.appendChild(text);
 

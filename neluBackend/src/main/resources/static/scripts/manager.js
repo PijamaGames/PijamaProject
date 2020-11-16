@@ -10,7 +10,19 @@ class Manager {
     this.ms = null;
     this.targetFPS = 60;
     this.maxVolume=1.0;
-    this.english=false;
+    var eng = localStorage.getItem("english");
+    if(!eng || eng == null){
+      eng = false;
+    }
+    console.log(eng);
+    if(eng == "true"){
+      this.english = true;
+    } else {
+      this.english = false;
+    }
+    //this.english=eng;
+    Log("english "+this.english);
+    //Log(this.english);
     this.easy=true;
     finder = new Finder();
     physics = new Physics();
@@ -40,6 +52,7 @@ class Manager {
   SetEnglish(english){
     this.english=english;
     this.changeLanguageEvent.Dispatch();
+    localStorage.setItem("english", this.english);
   }
 
   ManageTime() {
@@ -132,15 +145,22 @@ class Manager {
           mapEditor = new MapEditor();
         }
 
-        if(input.isDesktop){
-          that.graphics.SetMaxSettings();
+        let savedGraphics = localStorage.getItem("graphics");
+        if(savedGraphics && savedGraphics != null){
+          that.graphics.SetSettingsByNumber(savedGraphics);
         } else {
-          that.graphics.SetLowSettings();
-          manager.targetFPS = 30;
+          if(input.isDesktop){
+            that.graphics.SetSettingsByNumber(4);
+          } else {
+            that.graphics.SetSettingsByNumber(1);
+          }
         }
+
+
 
         that.LoadScene(initScene);
         that.ms = Date.now();
+        //that.changeLanguageEvent.Dispatch();
         that.GameLoop(that);
       });
     });

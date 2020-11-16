@@ -398,6 +398,7 @@ function Login(msg) {
   var inputField = document.getElementById("userName");
   if (msg.userAvaible && inputField.value != "") {
     new User(inputField.value, msg.points, msg.controlPoint);
+    localStorage.setItem("userName", inputField.value);
     manager.SetInMenu(true);
     manager.LoadScene("mainMenu");
     Log("user avaible");

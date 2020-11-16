@@ -61,6 +61,13 @@ prefabFactory.AddPrototype("nameInputField", new Vec2(), new Vec2(0.5,0.5), fals
     new CustomBehaviour().SetOnCreate(()=>{
       var inputField=document.getElementById("userName");
       if (user) inputField.value=user.name;
+      else {
+        let savedUser = localStorage.getItem("userName");
+        if(savedUser && savedUser != null){
+          inputField.value = savedUser;
+        }
+      }
+
     }),
   ]
 });

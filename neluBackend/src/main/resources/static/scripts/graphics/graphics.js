@@ -42,6 +42,7 @@ class Graphics {
   }
 
   SetSettingsByNumber(number){
+    localStorage.setItem("graphics", number);
     switch(number){
       case 0:
         this.SetMinimumSettings();
