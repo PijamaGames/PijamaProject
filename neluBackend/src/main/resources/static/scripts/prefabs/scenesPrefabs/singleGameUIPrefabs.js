@@ -30,8 +30,9 @@ prefabFactory.AddPrototype("SkipCutscene1", new Vec2(4,2), new Vec2(0.85,0), fal
     }).SetHoverOutFunc((obj)=>{
       let tint=obj.gameobj.renderer.realTint;
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
-    }).SetUpFunc(()=>{
+    }).SetUpFunc((obj)=>{
         manager.scene.camera.camera.FadeOut(0.3, ()=>manager.LoadScene("singleGame"), false);
+        obj.Destroy();
     }),
     new AudioSource(["UISound1"]),
     new TextBox(null, "Saltar","Skip", new Vec2(0.3,0.07), true),
@@ -45,10 +46,11 @@ prefabFactory.AddPrototype("SkipCutscene2", new Vec2(4,2), new Vec2(0.85,0), fal
     }).SetHoverOutFunc((obj)=>{
       let tint=obj.gameobj.renderer.realTint;
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
-    }).SetUpFunc(()=>{
+    }).SetUpFunc((obj)=>{
         manager.scene.camera.camera.FadeOut(0.3, ()=>manager.LoadScene("credits"), false);
         manager.SetInMenu(true);
         manager.cutScene2Music.StopAll();
+        obj.Destroy();
     }),
     new AudioSource(["UISound1"]),
     new TextBox(null, "Saltar","Skip", new Vec2(0.3,0.07), true),

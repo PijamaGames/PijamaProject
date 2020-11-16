@@ -246,7 +246,7 @@ prefabFactory.AddPrototype("BeekeeperEnemy", new Vec2(2, 2), new Vec2(0.5, 0.5),
 
 prefabFactory.AddPrototype("apple", new Vec2(1, 1), new Vec2(0.5, 0.5), false, ()=>{
   return [
-    new ColliderGroup([new CircleCollider(new Vec2(0.0,0.0), 0.3, true,
+    /*new ColliderGroup([new CircleCollider(new Vec2(0.0,0.0), 0.3, true,
     function(obj){
       let apple=this.gameobj;
       if(obj.playerController){
@@ -254,9 +254,9 @@ prefabFactory.AddPrototype("apple", new Vec2(1, 1), new Vec2(0.5, 0.5), false, (
         apple.appleController.enemy.enemyController.PoolAdd(apple);
       }
     }, null, null
-    )]),
+  )]),*/
     new Renderer(new Vec2(4,3), new Vec2(1,1), false),
-    new Rigidbody(0.9),
+    new Rigidbody(0.1),
     new AppleController(),
     new NetworkEntity(),
   ]

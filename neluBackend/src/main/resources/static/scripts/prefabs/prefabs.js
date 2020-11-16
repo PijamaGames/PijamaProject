@@ -2,8 +2,11 @@ prefabFactory.AddPrototype("BoxColliderScalable", new Vec2(1, 1), new Vec2(0,0),
   return [
     new Renderer(new Vec2(6, 13), new Vec2(1,1), false),
     new ColliderGroup([new BoxCollider(new Vec2(0.0,0.0), 1.0, 1.0)]),
-    new CustomBehaviour().SetOnCreate(()=>{
-
+    new CustomBehaviour().SetOnCreate((obj)=>{
+      obj.colliderGroup.colliders[0].scale.Set(obj.transform.scale.x, obj.transform.scale.y);
+      obj.colliderGroup.colliders[0].width = obj.transform.scale.x;
+      obj.colliderGroup.colliders[0].height = obj.transform.scale.y;
+      obj.renderer.tile.x = 5;
     }).SetOnUpdate((obj)=>{
       obj.colliderGroup.colliders[0].scale.Set(obj.transform.scale.x, obj.transform.scale.y);
       obj.colliderGroup.colliders[0].width = obj.transform.scale.x;

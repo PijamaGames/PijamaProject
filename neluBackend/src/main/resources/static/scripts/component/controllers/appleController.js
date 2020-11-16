@@ -4,9 +4,11 @@ class AppleController extends Component{
     this.type = "appleController";
 
     this.timeLimit=1.5;
-    this.appleImpulse=20;
+    this.appleImpulse=4;
     this.startCoolDown=false;
     this.contTime=0;
+    this.damageDist = 0.3;
+    this.damage = 3.0;
   }
 
   Update(){
@@ -19,6 +21,19 @@ class AppleController extends Component{
       //this.startCoolDown=false;
       //this.contTime=0;
     }
+    let player = manager.scene.players.values().next().value;
+    if(player && player!=null){
+      let dist = Vec2.Distance(this.gameobj.transform.GetWorldPos(), player.transform.GetWorldFloor());
+      Log(dist);
+      if(dist <= this.damageDist){
+        player.playerController.TakeDamage(this.damage);
+        this.enemy.enemyController.PoolAdd(this.gameobj);
+      }
+    }
+
+
+
+
   }
 
   MissileMove(missile,target) {
