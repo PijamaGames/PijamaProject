@@ -2,6 +2,8 @@ class VirtualInput{
   constructor(name = "unknownInput", img='btn_placeHolder', position = new Vec2(), anchor = new Vec2(0.5,0.5), scale = new Vec2(0.3,0.3), ratio = 0.25){
     Object.assign(this,{name,img,position,anchor,scale,ratio});
 
+    this.originalRatio = ratio;
+
     this.originalPosition = this.position.Copy();
 
     this.down = false;

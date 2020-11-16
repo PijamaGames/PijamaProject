@@ -258,6 +258,13 @@ class Input {
     } else {
       for(let [key, vi] of this.virtualInputs){
         vi.Update();
+        if(key == "leftJoystick"){
+          let aspect = canvas.width / canvas.height;
+          if(aspect < 1){
+            aspect = 1;
+          }
+          vi.ratio = vi.originalRatio * aspect;
+        }
       }
     }
   }
