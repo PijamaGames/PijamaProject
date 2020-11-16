@@ -59,10 +59,17 @@ class User{
   }
 
   SaveProgress(){
+
     SendWebSocketMsg({
       event:backendEvents.UPDATE_CONTROLPOINT,
       controlPoint:this.entity.controlPoint
     })
+    let saveImage=finder.FindObjectsByType("SaveImage");
+    saveImage[0].SetActive(true);
+    Log(saveImage[0])
+    setTimeout(()=>{
+      saveImage[0].SetActive(false);
+    },2000);
   }
 
   SetUserWinner(winner){

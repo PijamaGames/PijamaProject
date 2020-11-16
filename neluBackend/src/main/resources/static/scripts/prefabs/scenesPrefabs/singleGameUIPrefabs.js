@@ -179,3 +179,11 @@ prefabFactory.AddPrototype("SingleNameText", new Vec2(4,2), new Vec2(0.5,0.0), f
     new TextBox(null, "","", new Vec2(0.3,0.07), true),
   ]
 });
+
+prefabFactory.AddPrototype("SaveImage", new Vec2(4,2), new Vec2(0.5,0.5), false, ()=>{
+  return [
+    new ImageRenderer(new Vec2(7,10), new Vec2(4,2)),
+    new TextBox(null, "Guardando...","Saving progress...", new Vec2(0.3,0.07), true),
+    new CustomBehaviour().SetOnCreate((obj)=>obj.SetActive(false))
+  ]
+});

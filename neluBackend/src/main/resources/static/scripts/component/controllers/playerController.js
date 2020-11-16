@@ -569,6 +569,7 @@ class PlayerController extends Component {
 
     //this.lifeText = prefabFactory.CreateObj("lifeText", new Vec2(0.15,-0.1));
     this.TakeDamage(0);
+
   }
 
   CreateLifeUnitUI(){
