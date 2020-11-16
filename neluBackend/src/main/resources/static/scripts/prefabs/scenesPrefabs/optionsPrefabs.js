@@ -130,7 +130,7 @@ prefabFactory.AddPrototype("LanguageTextOptions", new Vec2(7,2), new Vec2(0.5,0.
 
       manager.SetEnglish(!manager.english);
       if(manager.easy) ChangeLanguage("Dificulty","Difficulty: Easy","Dificultad: Fácil");
-      else ChangeLanguage("Dificulty","Hard","Difícil");
+      else ChangeLanguage("Dificulty","Difficulty: Hard","Dificultad: Difícil");
       ChangeQualityText(manager.graphics.currentConfig);
       ChangeVolumeText();
 
@@ -152,7 +152,7 @@ prefabFactory.AddPrototype("LanguageText", new Vec2(4,2), new Vec2(0.5,0.5), fal
 
       manager.SetEnglish(!manager.english);
       if(manager.easy) ChangeLanguage("Dificulty","Difficulty: Easy","Dificultad: Fácil");
-      else ChangeLanguage("Dificulty","Hard","Difícil");
+      else ChangeLanguage("Dificulty","Difficulty: Hard","Dificultad:Difícil");
       ChangeQualityText(manager.graphics.currentConfig);
       ChangeVolumeText();
 
@@ -175,7 +175,7 @@ prefabFactory.AddPrototype("DificultyText", new Vec2(7,2), new Vec2(0.5,0.5), fa
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();
     }),
-    new TextBox("Dificulty", "Fácil","Easy", new Vec2(0.5,0.07), true),
+    new TextBox("Dificulty", "Difilcultad: Fácil","Difficulty: Easy", new Vec2(0.5,0.07), true),
     new AudioSource(["UISound1"]),
     new CustomBehaviour().SetOnCreate(()=>{
       ChangeDificulty(false);
