@@ -43,12 +43,16 @@ function GetCreditsText(){
   text+=manager.english?"Programmers<br>":"Programadores<br>";
   text+="PEDRO CASAS MARTÍNEZ<br>";
   text+="ALEJANDRA CASADO CEBALLOS<br><br>";
+  text+=manager.english?"Graphics<br>":"Gráficos<br>";
+  text+="PEDRO CASAS MARTÍNEZ<br>";
   text+=manager.english?"Audio Director<br>":"Director de Sonido<br>";
   text+="JUAN MANUEL CARRETERO ÁVILA<br><br>";
   text+=manager.english?"Concept Artist<br>":"Artista 2D<br>";
   text+="ADRIÁN VAQUERO PORTILLO<br><br>";
   text+=manager.english?"Screenwriter<br>":"Guionista<br>";
   text+="MARTÍN ARIZA GARCÍA<br><br>";
+  text+=manager.english?"Game Designer<br>":"Diseñador de Juego<br>";
+  text+="JUAN MANUEL CARRETERO ÁVILA<br>";
   text+=manager.english?"Level Designers<br>":"Diseñadores de Nivel<br>";
   text+="ADRIÁN VAQUERO PORTILLO<br>";
   text+="MARTÍN ARIZA GARCÍA<br><br>";
