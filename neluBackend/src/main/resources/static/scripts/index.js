@@ -90,9 +90,22 @@ function Log(text){
 }
 
 function ReturnGame(newScene){
-  if(!newScene)input.HideVirtualInputs(false);
-  manager.singleGameMusic.LoopAll(true);
-  manager.singleGameMusic.PlayAll();
+  let player= manager.scene.players.values().next().value.playerController;
+  let battle=finder.FindObjectsByType("BattleManager");
+  if(!newScene){
+    input.HideVirtualInputs(false);
+  }
+  if(player && player.firePower){
+    player.gameobj.audioSource.Play("powerupFireSound");
+  }
+  else if(battleController && battleController.inBattle){
+    battle[0].audioSource.LoopAll(true);
+    battle[0].audioSource.Play("monkeyHouseSound");
+  }
+  else{
+    manager.singleGameMusic.LoopAll(true);
+    manager.singleGameMusic.PlayAll();
+  }
 
   manager.SetInMenu(false);
 }
@@ -116,19 +129,27 @@ function ExitGame(sleep){
 }
 
 function ArenaScene(out){
+  let player= manager.scene.players.values().next().value.playerController;
   if(user.isHost) input.HideVirtualInputs(out);
   let music=finder.FindObjectsByType("PauseFromMultiGame");
   if(!out) {
     if(user.isHost){
-      manager.scene.players.values().next().value.playerController.GainLife(20);
+      player.GainLife(20);
       if(!input.isDesktop) input.HideVirtualInputs(false);
     }
-    music[0].audioSource.Play("arenaMusic");
+    if(player.firePower){
+      player.gameobj.audioSource.Play("powerupFireSound");
+    }
+    else{
+      music[0].audioSource.Play("arenaMusic");
+    }
+
     manager.SetInMenu(false);
   }
   else {
     if(!input.isDesktop) input.HideVirtualInputs(true);
     manager.SetInMenu(true);
     music[0].audioSource.Stop("arenaMusic");
+
   }
 }

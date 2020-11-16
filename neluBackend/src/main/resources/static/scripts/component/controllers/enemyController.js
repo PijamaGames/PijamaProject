@@ -68,7 +68,10 @@ class EnemyController extends Component {
     if(user && user.isClient) return;
     if(this.canTakeDamage || forced){
       if (this.isMonkey) this.PlayMonkeySound("monkeyDamageSound");
-      else this.PlayMonkeySound("beekeeperDamage");
+      else{
+        this.PlayMonkeySound("beekeeperDamage");
+        //Log("hola");
+      }
       this.life -= damage;
       this.canTakeDamage = false;
       this.gameobj.renderer.SetTint(1.0,0.0,0.0);
@@ -244,7 +247,8 @@ class EnemyController extends Component {
     let deadNode = new Node('dead').SetOnCreate(()=>{
       that.gameobj.renderer.AddAnimation('enemyDead', this.dieAnim, 14);
     }).SetStartFunc(()=>{
-      that.PlayMonkeySound("beekeeperDied");
+      //that.PlayMonkeySound("beekeeperDied");
+      //Log("ME CAGO EN TUS MUERTOS");
       that.gameobj.renderer.SetAnimation('enemyDead');
       that.gameobj.renderer.endAnimEvent.AddListener(this, ()=>that.gameobj.Destroy(), true);
       that.onDeadCallBack();
@@ -291,6 +295,7 @@ class EnemyController extends Component {
   Destroy(){
     //this.onDeadEvent.Dispatch();
     this.gameobj.scene.enemies.delete(this.gameobj);
+    this.gameobj.audioSource.Stop("beekeeperDied");
     for(let apple of this.allApples){
       apple.Destroy();
     }
