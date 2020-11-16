@@ -109,17 +109,13 @@ Campfire -3.115511178970337 -3.909895658493042 0.05 1 1
 Campfire 3.4415700435638428 -3.894383192062378 0.05 1 1
 LifeFlowerBig -19.166900634765625 -3.4945120811462402 0 1 1
 FireFlower -15.982616424560547 -3.4512248039245605 0 1 1
-CampTop2 -20 2 2 6 2
-CampTop3 -20 4 2 6 1
 CampTop2 -20 7 2 6 2
 CampTop3 -20 9 2 6 1
-CampLog -20 2 0 1 2
 CampLog -15 2 0 1 2
 CampTop1 -19 2 1 4 1
 CampTop1 -19 7 1 4 1
 CampLog -15 7 0 1 2
 CampLog -20 7 0 1 2
-BigLog -17.490501403808594 4.472984790802002 0.05 1 3
 BigLog -2 1 0.1 1 3
 BigLog -5 -5 0.15000000000000002 1 3
 BigLog -5 -3 0.10000000000000002 1 3
@@ -143,6 +139,33 @@ BigLog 6 11 0.05 1 3
 BigLog 3 10 0.05 1 3
 BigLog -3 10 0.05 1 3
 BigLog -6 11 0.05 1 3
+CampLog -20 2 0 1 2
+BigLog -17.515056610107422 4.0151753425598145 0.05 1 3
+CampTop2 -20 2 2 6 2
+CampTop3 -20 4 2 6 1
+SandBound -20 7 0 6 7
+SandBound 6 -5 0 4 7
+SandBound 3 2 0 7 4
+SandBound 3 -5 0 2 7
+SandBound -4 -5 0 2 7
+SandBound -9 -5 0 4 7
+SandBound -9 2 0 7 4
+SandBound -2 -5 0 5 4
+SandBound -1 -1 0 3 11
+SandBound -2 10 0 5 4
+SandBound 7 10 0 3 4
+SandBound 6 10 0 1 1
+SandBound 3 13 0 1 1
+SandBound 4 10 0 2 4
+SandBound -5 10 0 2 4
+SandBound -9 10 0 3 4
+SandBound -3 13 0 1 1
+SandBound -6 10 0 1 1
+SandBound -14 11 0 5 2
+SandBound -14 -1 0 5 3
+SandBound -20 -5 0 6 9
+SandBound -20 4 0 2 3
+SandBound -16 4 0 2 3
 
 Nelu 0 0 0
 `

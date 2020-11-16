@@ -103,6 +103,23 @@ Water1 22 -11 0.05 1 1
 LifeFlower 18.175050735473633 1.2926872968673706 0 1 1
 LifeFlower -19.121368408203125 -4.881138324737549 0 1 1
 FireFlower -0.5090019702911377 1.5098570585250854 0 1 1
+GrassBound -24 -5 0 6 7
+GrassBound -18 -2 0 6 4
+GrassBound -11 -2 0 6 4
+GrassBound -12 -2 0 1 1
+GrassBound -17 -5 0 11 3
+GrassBound -5 -5 0 6 3
+GrassBound -1 -1 0 6 3
+GrassBound 1 -5 0 1 1
+GrassBound -2 1 0 1 1
+GrassBound -1 -2 0 2 1
+GrassBound -5 -2 0 3 4
+GrassBound 2 -5 0 3 4
+GrassBound 5 -5 0 6 4
+GrassBound 11 -2 0 1 1
+GrassBound 6 -1 0 11 3
+GrassBound 12 -5 0 6 4
+GrassBound 18 -5 0 6 7
 
 Nelu 0 0 0
 `

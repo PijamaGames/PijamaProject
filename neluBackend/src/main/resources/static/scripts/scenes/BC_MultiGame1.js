@@ -128,6 +128,23 @@ BrokenEggs 0.47292518615722656 0.5649734735488892 0.1 1 1
 BrokenEggs 5.907571792602539 -1.8549178838729858 0.1 1 1
 BrokenEggs 2.826390266418457 -1.0638002157211304 0.1 1 1
 BrokenEggs -1.1218576431274414 -0.7380450963973999 0.1 1 1
+GrassBound -9 -10 0 24 4
+GrassBound -9 7 0 24 3
+GrassBound -9 -3 0 24 2
+GrassBound -9 -6 0 3 3
+GrassBound -5 -6 0 5 3
+GrassBound 1 -6 0 4 3
+GrassBound 6 -6 0 5 3
+GrassBound 12 -6 0 3 3
+GrassBound -9 -1 0 6 3
+GrassBound 9 -1 0 6 3
+GrassBound -2 -1 0 10 3
+GrassBound -9 2 0 24 2
+GrassBound -9 4 0 3 3
+GrassBound -5 4 0 5 3
+GrassBound 1 4 0 4 3
+GrassBound 6 4 0 5 3
+GrassBound 12 4 0 3 3
 
 Nelu 0 0 0
 `
