@@ -2,6 +2,9 @@ var serverURL = "https://locahost:8080";
 var webSocketURL = "localhost:8080/player/websocket";
 //var serverURL = "https://192.168.18.31:8080";
 //var webSocketURL = "192.168.18.31:8080/player/websocket";
+//var serverURL = "https://25.28.206.117:8080";
+//var webSocketURL = "25.28.206.117:8080/player/websocket";
+
 var socket = null;
 var publicRooms = [];
 var roomButtons = [];
