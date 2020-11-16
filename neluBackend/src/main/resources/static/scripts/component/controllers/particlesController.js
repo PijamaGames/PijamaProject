@@ -7,6 +7,8 @@ class ParticlesController extends Component{
     this.particleImpulse=3;
     this.startCoolDown=false;
     this.contTime=0;
+    this.damageDist = 0.3;
+    this.damage = 2.5;
   }
 
   Update(){
@@ -18,6 +20,15 @@ class ParticlesController extends Component{
       this.enemy.enemyController.PoolAdd(this.gameobj);
       //this.startCoolDown=false;
       //this.contTime=0;
+    }
+    let player = manager.scene.players.values().next().value;
+    if(player && player!=null){
+      let dist = Vec2.Distance(this.gameobj.transform.GetWorldPos(), player.transform.GetWorldFloor());
+      Log(dist);
+      if(dist <= this.damageDist){
+        player.playerController.TakeDamage(this.damage);
+        this.enemy.enemyController.PoolAdd(this.gameobj);
+      }
     }
   }
 

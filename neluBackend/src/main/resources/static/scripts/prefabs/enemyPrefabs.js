@@ -246,16 +246,7 @@ prefabFactory.AddPrototype("BeekeeperEnemy", new Vec2(2, 2), new Vec2(0.5, 0.5),
 
 prefabFactory.AddPrototype("apple", new Vec2(1, 1), new Vec2(0.5, 0.5), false, ()=>{
   return [
-    /*new ColliderGroup([new CircleCollider(new Vec2(0.0,0.0), 0.3, true,
-    function(obj){
-      let apple=this.gameobj;
-      if(obj.playerController){
-        obj.playerController.TakeDamage(3);
-        apple.appleController.enemy.enemyController.PoolAdd(apple);
-      }
-    }, null, null
-  )]),*/
-    new Renderer(new Vec2(4,3), new Vec2(1,1), false),
+    new Renderer(new Vec2(4,3), new Vec2(1,1), false, 1.0, ['color', 'depth', 'mask']),
     new Rigidbody(0.1),
     new AppleController(),
     new NetworkEntity(),
@@ -264,18 +255,8 @@ prefabFactory.AddPrototype("apple", new Vec2(1, 1), new Vec2(0.5, 0.5), false, (
 
 prefabFactory.AddPrototype("particle", new Vec2(2, 2), new Vec2(0.5, 0.5), false, ()=>{
   return [
-    new ColliderGroup([new CircleCollider(new Vec2(0.0,0.0), 0.3, true,
-    function(obj){
-      let particle=this.gameobj;
-      let damage=2.5;
-      if(obj.playerController){
-        obj.playerController.TakeDamage(damage);
-        particle.particlesController.enemy.enemyController.PoolAdd(particle);
-      }
-    }, null, null
-    )]),
-    new SpriteRenderer('smoke', new Vec2(0, 0),new Vec2(2,2), true, 1, [0], 8, true),
-    new Rigidbody(0.2),
+    new SpriteRenderer('smoke', new Vec2(0, 0),new Vec2(2,2), false, 1, [0], 8, false),
+    new Rigidbody(0.1),
     new ParticlesController(),
     new NetworkEntity(),
   ]
