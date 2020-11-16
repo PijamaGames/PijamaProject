@@ -72,7 +72,7 @@ prefabFactory.AddPrototype("MultiGameFromMenu", new Vec2(8,2), new Vec2(0.5,0.5)
     }).SetDownFunc((obj)=>{
       obj.gameobj.audioSource.PlayAll();
     }),
-    new TextBox(null, "Arena","Lobby", new Vec2(0.3,0.07), true),
+    new TextBox(null, "Arena","Versus", new Vec2(0.3,0.07), true),
     new AudioSource(["UISound1"]),
   ]
 });
