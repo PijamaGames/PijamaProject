@@ -24,7 +24,6 @@ class AppleController extends Component{
     let player = manager.scene.players.values().next().value;
     if(player && player!=null){
       let dist = Vec2.Distance(this.gameobj.transform.GetWorldPos(), player.transform.GetWorldFloor());
-      Log(dist);
       if(dist <= this.damageDist){
         player.playerController.TakeDamage(this.damage);
         this.enemy.enemyController.PoolAdd(this.gameobj);
