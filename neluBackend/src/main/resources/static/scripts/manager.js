@@ -143,8 +143,9 @@ class Manager {
         }
 
         let savedGraphics = localStorage.getItem("graphics");
-        if(savedGraphics && savedGraphics != null){
-          that.graphics.SetSettingsByNumber(savedGraphics);
+        Log("saved graphics " + savedGraphics);
+        if(savedGraphics != null){
+          that.graphics.SetSettingsByNumber(parseInt(savedGraphics));
         } else {
           if(input.isDesktop){
             that.graphics.SetSettingsByNumber(4);
