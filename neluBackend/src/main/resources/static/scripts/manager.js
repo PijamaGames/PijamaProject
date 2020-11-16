@@ -14,15 +14,12 @@ class Manager {
     if(!eng || eng == null){
       eng = false;
     }
-    console.log(eng);
     if(eng == "true"){
       this.english = true;
     } else {
       this.english = false;
     }
-    //this.english=eng;
     Log("english "+this.english);
-    //Log(this.english);
     this.easy=true;
     finder = new Finder();
     physics = new Physics();
