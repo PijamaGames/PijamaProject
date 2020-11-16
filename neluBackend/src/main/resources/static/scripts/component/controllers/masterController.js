@@ -16,6 +16,7 @@ class MasterController extends Component{
     this.beekeeperCooldown = 10.0;
     this.beekeeperTime=0.0;
     this.selectedTint = new Float32Array([0.6,0.6,1.0]);
+    this.camBounds = 32;
   }
 
   UpdateCounts(){
@@ -120,12 +121,40 @@ class MasterController extends Component{
     this.fsm = new FSM([followNode, moveNode]).Start("follow");
   }
 
+  CameraBounds(){
+    let cam = manager.scene.camera.transform;
+    let bound = this.camBounds*0.5;
+    let wp = cam.GetWorldPos();
+    let newPos;
+    if(wp.x > bound){
+      newPos = new Vec2(bound, wp.y);
+      cam.SetWorldPosition(newPos);
+      cam.gameobj.camera.target = newPos;
+    } else if (wp.x < -bound){
+      newPos = new Vec2(-bound, wp.y);
+      cam.SetWorldPosition(newPos);
+      cam.gameobj.camera.target = newPos;
+    }
+    wp = cam.GetWorldPos();
+
+    if(wp.y > bound){
+      newPos = new Vec2(wp.x, bound);
+      cam.SetWorldPosition(newPos);
+      cam.gameobj.camera.target = newPos;
+    } else if(wp.y < -bound){
+      newPos = new Vec2(wp.x, -bound);
+      cam.SetWorldPosition(newPos);
+      cam.gameobj.camera.target = newPos;
+    }
+  }
+
   Update(){
     if(this.cameraFree){
       if(input.GetBlockCamera()){
         Log("block cam");
         this.cameraFree = false;
       }
+      this.CameraBounds();
     } else {
       if (input.GetFreeCamera()){
         Log("free cam");
