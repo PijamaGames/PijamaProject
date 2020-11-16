@@ -163,6 +163,7 @@ input:focus{
   image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
   image-rendering: pixelated;                 /* Awesome future-browsers       */
   -ms-interpolation-mode: nearest-neighbor;   /* IE                            */
+  cursor: url(http://www.javascriptkit.com/dhtmltutors/cursor-hand.gif), auto;
 }
 
 
