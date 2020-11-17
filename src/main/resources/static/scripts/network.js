@@ -218,7 +218,7 @@ function SendEnemy(type, position){
 }
 
 function InitWebSocket(onOpenCallback) {
-  socket = new WebSocket("ws://" + webSocketURL);
+  socket = new WebSocket("wss://" + webSocketURL);
 
   socket.onerror = ()=>{
     Log("WEBSOCKET ERROR");
