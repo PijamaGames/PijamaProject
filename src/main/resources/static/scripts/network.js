@@ -1,5 +1,5 @@
-var serverURL = "https://localhost:8080";
-var webSocketURL = "localhost:8080/player/websocket";
+var serverURL = "https://nelu-lotus-guardian.herokuapp.com/";
+var webSocketURL = "https://nelu-lotus-guardian.herokuapp.com/player/websocket";
 //var serverURL = "https://192.168.18.31:8080";
 //var webSocketURL = "192.168.18.31:8080/player/websocket";
 //var serverURL = "https://25.28.206.117:8080";
