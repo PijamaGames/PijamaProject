@@ -38,7 +38,7 @@ prefabFactory.AddPrototype("FullScreenText", new Vec2(14,2), new Vec2(0.5,1.0), 
 
 prefabFactory.AddPrototype("PubliPortfolio", new Vec2(15,3.5), new Vec2(0.5,0.0), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(7,10), new Vec2(15,3.5)).GiveFunctionality().SetHoverInFunc((obj)=>{
+    new ImageRenderer(new Vec2(0,0), new Vec2(15,3.5)).GiveFunctionality().SetHoverInFunc((obj)=>{
       obj.gameobj.renderer.MultiplyTint(0.8);
     }).SetHoverOutFunc((obj)=>{
       let tint=obj.gameobj.renderer.realTint;
@@ -51,7 +51,7 @@ prefabFactory.AddPrototype("PubliPortfolio", new Vec2(15,3.5), new Vec2(0.5,0.0)
       if(win && win!=null){
         win.focus();
       }
-    }).SetTexture("cutScene2_0"),
+    }).SetTexture("ad1"),
     new AudioSource(["UISound1"]),
   ]
 });
