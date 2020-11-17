@@ -91,9 +91,11 @@ class Manager {
       this.graphics.SetMaxSettings();
     }
 
-    if(input.GetKeyDown('KeyM')){
-      mapEditor.SetActive(!mapEditor.fsm.active);
-      DEBUG_VISUAL = mapEditor.fsm.active;
+    if(mapEditor){
+      if(input.GetKeyDown('KeyM')){
+        mapEditor.SetActive(!mapEditor.fsm.active);
+        DEBUG_VISUAL = mapEditor.fsm.active;
+      }
     }
   }
 
