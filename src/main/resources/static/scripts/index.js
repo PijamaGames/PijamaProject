@@ -1,7 +1,7 @@
 "use strict;"
-const DEBUG = false;
-var DEBUG_VISUAL = false;
-const EDITOR_MODE = false;
+const DEBUG = true;
+var DEBUG_VISUAL = true;
+const EDITOR_MODE = true;
 const DEBUG_PHYSICS = false;
 
 var timesCalled = 0.0;
@@ -92,9 +92,9 @@ function Log(text){
 function ReturnGame(newScene){
   let player= manager.scene.players.values().next().value.playerController;
   let battle=finder.FindObjectsByType("BattleManager");
-  if(!newScene){
-    input.HideVirtualInputs(false);
-  }
+
+  input.HideVirtualInputs(false);
+
   if(player && player.firePower){
     player.gameobj.audioSource.Play("powerupFireSound");
   }
@@ -117,7 +117,8 @@ function ExitGame(sleep){
     for(var m of music){
       m.PauseAll();
     }
-    manager.SetInMenu(true);
+    if(!manager.inMenu)
+      manager.SetInMenu(true);
   }
   else{
     manager.singleGameMusic.StopAll();

@@ -176,9 +176,15 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
       }),
       new ScriptedEvent("toMorning", true, new Vec2(178,-19), 3.0, true, ()=>lighting.BeginTransition(1, 1)),
       new ScriptedEvent("toNight", true, new Vec2(178,-11), 3.0, true, ()=>lighting.BeginTransition(3, 1)),
-      new ScriptedEvent("t_movimiento", true, new Vec2(0,2), 100.0, false, ()=>dialogSystem.InitDialog("t_movimiento")),
+      new ScriptedEvent("t_movimiento", true, new Vec2(0,2), 100.0, false, ()=>{
+        if(input.isDesktop)
+          dialogSystem.InitDialog("t_movimiento")
+      }),
       new ScriptedEvent("cap1_intro_nelu", true, new Vec2(14,2), 5.0, false, ()=>dialogSystem.InitDialog("cap1_intro_nelu")),
-      new ScriptedEvent("t_ataque_dash", true, new Vec2(38,-11), 5.0, false, ()=>dialogSystem.InitDialog("t_ataque_dash")),
+      new ScriptedEvent("t_ataque_dash", true, new Vec2(38,-11), 5.0, false, ()=>{
+        if(input.isDesktop)
+          dialogSystem.InitDialog("t_ataque_dash")
+      }),
       new ScriptedEvent("cap1_intro_monos", true, new Vec2(48,-10), 4.0, false, ()=>dialogSystem.InitDialog("cap1_intro_monos")),
       //new ScriptedEvent("t_dash", false, new Vec2(14,2), 5.0, false, ()=>dialogSystem.InitDialog("t_dash")),
       new ScriptedEvent("cap1_nelu_nido", false, new Vec2(14,2), 5.0, false, ()=>dialogSystem.InitDialog("cap1_nelu_nido")),
@@ -190,9 +196,11 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
           user.entity.controlPoint = 5;
           user.SaveProgress();
         }
+        if(!input.isDesktop) manager.scene.canUseColibri = true;
+
         dialogSystem.InitDialog("cap1_colibri_fin_pelea");
         battleController.AddEvent(new ScriptedEvent("t_colibri", true, new Vec2(151,5), 1.7, false, ()=>{
-          dialogSystem.InitDialog("t_colibri");
+          if (input.isDesktop) dialogSystem.InitDialog("t_colibri");
           manager.scene.canUseColibri = true;
         }));
       }),
@@ -208,7 +216,10 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
       if(manager.singleGameMusic.Playing("levelSound")){
         manager.singleGameMusic.PauseAll();
       }
-      obj.audioSource.PlayAll();
+      if(!obj.audioSource.Playing("monkeyHouseSound")){
+        obj.audioSource.PlayAll();
+      }
+
 
     }).SetOnEndBattle((obj)=>{
       if(!manager.singleGameMusic.Playing("levelSound")){
