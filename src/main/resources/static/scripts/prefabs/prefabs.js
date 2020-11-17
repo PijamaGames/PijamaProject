@@ -1,4 +1,4 @@
-prefabFactory.AddPrototype("WebsocketKeeper", new Vec2(1, 1), new Vec2(1,1), true, ()=>{
+prefabFactory.AddPrototype("WebsocketKeeper", new Vec2(1, 1), new Vec2(1,1), false, ()=>{
   return [
     new CustomBehaviour().SetOnCreate((obj)=>{
       obj.time = 0.0;
