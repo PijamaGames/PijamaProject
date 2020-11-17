@@ -529,7 +529,7 @@ class PlayerController extends Component {
       }
     }
     let music=finder.FindObjectsByType("PauseFromMultiGame");
-    if(music[0]){
+    if(music[0] && !music[0].audioSource.Playing("arenaMusic")){
       music[0].audioSource.Play("arenaMusic");
     }
     this.firePower = false;

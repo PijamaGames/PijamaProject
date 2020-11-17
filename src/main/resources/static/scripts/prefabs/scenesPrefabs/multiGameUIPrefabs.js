@@ -11,7 +11,7 @@ prefabFactory.AddPrototype("PauseFromMultiGame", new Vec2(1.5,1.5), new Vec2(0.0
       manager.lastGame="multiGame";
       if(!input.isDesktop && user.isHost) input.HideVirtualInputs(true);
     }).SetDownFunc((obj)=>{
-      obj.gameobj.audioSource.PlayAll();
+      obj.gameobj.audioSource.Play("UISound1");
     }),
     new AudioSource(["UISound1","putEnemy","arenaMusic"]),
   ]

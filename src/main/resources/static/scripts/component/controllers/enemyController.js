@@ -69,8 +69,9 @@ class EnemyController extends Component {
     if(this.canTakeDamage || forced){
       if (this.isMonkey) this.PlayMonkeySound("monkeyDamageSound");
       else{
-        this.gameobj.audioSource.Play("beekeeperDamage");
-        this.gameobj.audioSource.Loop("beekeeperDamage",false);
+        this.gameobj.audioSource.Loop("beekeeperDied",false);
+        this.gameobj.audioSource.Play("beekeeperDied");
+
       }
       this.life -= damage;
       this.canTakeDamage = false;

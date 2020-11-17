@@ -141,7 +141,7 @@ function ArenaScene(out){
     if(player.firePower){
       player.gameobj.audioSource.Play("powerupFireSound");
     }
-    else{
+    else if (!music[0].audioSource.Playing("arenaMusic")){
       music[0].audioSource.Play("arenaMusic");
     }
 
