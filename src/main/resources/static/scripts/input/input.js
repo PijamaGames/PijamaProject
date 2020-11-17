@@ -138,10 +138,11 @@ class Input {
   HideVirtualInputs(hide){
     if(!this.isDesktop){
       this.virtualInputs.get("leftJoystick").active=!hide;
-      this.virtualInputs.get("rightJoystick").active=!hide;
-      this.virtualInputs.get("beeBtn").active=!hide;
       this.virtualInputs.get("cacBtn").active=!hide;
       this.virtualInputs.get("dashBtn").active=!hide;
+      if(manager.scene.name=="singleGame") this.virtualInputs.get("rightJoystick").active=(user && user.entity.controlPoint>=5) ? !hide : false;
+      else this.virtualInputs.get("rightJoystick").active=!hide;
+      this.virtualInputs.get("beeBtn").active=manager.scene.name=="singleGame"? false:!hide;
     }
   }
 
