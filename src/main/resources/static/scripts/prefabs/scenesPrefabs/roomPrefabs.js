@@ -56,7 +56,7 @@ prefabFactory.AddPrototype("ChoosingFromRoom", new Vec2(4,2), new Vec2(0.5,0.0),
 
 prefabFactory.AddPrototype("Publi1", new Vec2(6,7), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(7,10), new Vec2(6,7)).GiveFunctionality().SetHoverInFunc((obj)=>{
+    new ImageRenderer(new Vec2(0,0), new Vec2(6,7)).GiveFunctionality().SetHoverInFunc((obj)=>{
       obj.gameobj.renderer.MultiplyTint(0.8);
     }).SetHoverOutFunc((obj)=>{
       let tint=obj.gameobj.renderer.realTint;
@@ -69,13 +69,13 @@ prefabFactory.AddPrototype("Publi1", new Vec2(6,7), new Vec2(0.5,0.5), false, ()
       if(win && win!=null){
         win.focus();
       }
-    }).SetTexture("cutScene2_0"),
+    }).SetTexture("ad2"),
     new AudioSource(["UISound1"]),
   ]
 });
 prefabFactory.AddPrototype("Publi2", new Vec2(6,7), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new ImageRenderer(new Vec2(7,10), new Vec2(6,7)).GiveFunctionality().SetHoverInFunc((obj)=>{
+    new ImageRenderer(new Vec2(0,0), new Vec2(6,7)).GiveFunctionality().SetHoverInFunc((obj)=>{
       obj.gameobj.renderer.MultiplyTint(0.8);
     }).SetHoverOutFunc((obj)=>{
       let tint=obj.gameobj.renderer.realTint;
@@ -88,7 +88,7 @@ prefabFactory.AddPrototype("Publi2", new Vec2(6,7), new Vec2(0.5,0.5), false, ()
       if(win && win!=null){
         win.focus();
       }
-    }).SetTexture("cutScene2_0"),
+    }).SetTexture("ad3"),
     new AudioSource(["UISound1"]),
   ]
 });
