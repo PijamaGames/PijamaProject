@@ -1,7 +1,7 @@
-//var serverURL = "https://nelu-lotus-guardian.herokuapp.com/";
-//var webSocketURL = "nelu-lotus-guardian.herokuapp.com/player/websocket";
-var serverURL = "https://localhost:8080";
-var webSocketURL = "localhost:8080/player/websocket";
+var serverURL = "https://nelu-lotus-guardian.herokuapp.com/";
+var webSocketURL = "nelu-lotus-guardian.herokuapp.com/player/websocket";
+//var serverURL = "https://localhost:8080";
+//var webSocketURL = "localhost:8080/player/websocket";
 //var serverURL = "https://192.168.18.31:8080";
 //var webSocketURL = "192.168.18.31:8080/player/websocket";
 
@@ -223,8 +223,8 @@ function SendEnemy(type, position){
 }
 
 function InitWebSocket(onOpenCallback) {
-  //socket = new WebSocket("wss://" + webSocketURL);
-  socket = new WebSocket("ws://" + webSocketURL);
+  socket = new WebSocket("wss://" + webSocketURL);
+  //socket = new WebSocket("ws://" + webSocketURL);
 
   socket.onerror = (evt)=>{
     console.log("WEBSOCKET ERROR");
