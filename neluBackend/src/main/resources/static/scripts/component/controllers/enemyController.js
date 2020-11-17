@@ -69,8 +69,8 @@ class EnemyController extends Component {
     if(this.canTakeDamage || forced){
       if (this.isMonkey) this.PlayMonkeySound("monkeyDamageSound");
       else{
-        this.PlayMonkeySound("beekeeperDamage");
-        //Log("hola");
+        this.gameobj.audioSource.Play("beekeeperDamage");
+        this.gameobj.audioSource.Loop("beekeeperDamage",false);
       }
       this.life -= damage;
       this.canTakeDamage = false;
@@ -247,8 +247,7 @@ class EnemyController extends Component {
     let deadNode = new Node('dead').SetOnCreate(()=>{
       that.gameobj.renderer.AddAnimation('enemyDead', this.dieAnim, 14);
     }).SetStartFunc(()=>{
-      //that.PlayMonkeySound("beekeeperDied");
-      //Log("ME CAGO EN TUS MUERTOS");
+      that.PlayMonkeySound("beekeeperDied");
       that.gameobj.renderer.SetAnimation('enemyDead');
       that.gameobj.renderer.endAnimEvent.AddListener(this, ()=>that.gameobj.Destroy(), true);
       that.onDeadCallBack();
