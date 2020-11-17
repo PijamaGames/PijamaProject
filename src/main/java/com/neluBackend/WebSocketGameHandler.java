@@ -46,6 +46,7 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 		public final static String END_GAME = "END_GAME";
 		public final static String UPDATE_CONTROLPOINT = "UPDATE_CONTROLPOINT";
 		public final static String GET_RANKING = "GET_RANKING";
+		public final static String ALIVE_WS = "ALIVE_WS";
 	}
 
 	private GameHandler game = GameHandler.INSTANCE;
@@ -125,6 +126,9 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 				break;
 			case BackEndEvents.GET_RANKING:
 				getRanking(inMsg, outMsg, player);
+				break;
+			case BackEndEvents.ALIVE_WS:
+				System.out.println("Alive: " + player.getName());
 				break;
 			}
 

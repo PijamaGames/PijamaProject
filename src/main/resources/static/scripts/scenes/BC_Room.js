@@ -1,4 +1,5 @@
 var BC_Room = `
+WebsocketKeeper 0 0 0
 RoomTitle 0 0.4 0
 Publi1 -0.25 -0.07 0
 Publi2 0.25 -0.07 0

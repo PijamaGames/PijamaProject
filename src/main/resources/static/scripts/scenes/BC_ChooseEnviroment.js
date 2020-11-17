@@ -1,4 +1,5 @@
 var BC_ChooseEnviroment = `
+WebsocketKeeper 0 0 0
 SelectionTitle 0 0.4 0
 PrivacityOption 0 0.1 0
 LobbyFromChoosing -0.3 0.1 0

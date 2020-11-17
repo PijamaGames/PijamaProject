@@ -1,3 +1,19 @@
+prefabFactory.AddPrototype("WebsocketKeeper", new Vec2(1, 1), new Vec2(1,1), true, ()=>{
+  return [
+    new CustomBehaviour().SetOnCreate((obj)=>{
+      obj.time = 0.0;
+      obj.maxTime = 30.0;
+    }).SetOnUpdate((obj)=>{
+      obj.time += manager.delta;
+      if(obj.time >= obj.maxTime){
+        SendWebSocketMsg({
+          event:backendEvents.ALIVE_WS
+        });
+      }
+    }),
+  ]
+});
+
 prefabFactory.AddPrototype("BoxColliderScalable", new Vec2(1, 1), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(6, 13), new Vec2(1,1), false),

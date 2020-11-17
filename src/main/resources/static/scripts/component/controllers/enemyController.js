@@ -199,7 +199,6 @@ class EnemyController extends Component {
         this.PlayMonkeySound("beekeeperAttack");
         this.gameobj.audioSource.LoopAll(true);
       }
-
     }).SetUpdateFunc(()=>{
       let target=that.FindClosestPlayer(that.attackADRange);
       this.SetAnimDir(target);

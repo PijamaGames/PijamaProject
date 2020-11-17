@@ -1,4 +1,5 @@
 var BC_Options = `
+WebsocketKeeper 0 0 0
 MoreGraphics 0.4 0 0
 LessGraphics -0.4 0 0
 GraphicsText 0 0 0

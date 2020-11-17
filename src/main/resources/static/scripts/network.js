@@ -1,9 +1,7 @@
 var serverURL = "https://nelu-lotus-guardian.herokuapp.com/";
 var webSocketURL = "nelu-lotus-guardian.herokuapp.com/player/websocket";
-//var serverURL = "https://192.168.18.31:8080";
-//var webSocketURL = "192.168.18.31:8080/player/websocket";
-//var serverURL = "https://25.28.206.117:8080";
-//var webSocketURL = "25.28.206.117:8080/player/websocket";
+//var serverURL = "https://localhost:8080";
+//var webSocketURL = "localhost:8080/player/websocket";
 
 var socket = null;
 var publicRooms = [];
@@ -42,6 +40,7 @@ const backendEvents = {
   END_GAME:"END_GAME",
   UPDATE_CONTROLPOINT:"UPDATE_CONTROLPOINT",
   GET_RANKING:"GET_RANKING",
+  ALIVE_WS:"ALIVE_WS",
 }
 
 function CreateEntitiesMsg(){
@@ -219,21 +218,23 @@ function SendEnemy(type, position){
 
 function InitWebSocket(onOpenCallback) {
   socket = new WebSocket("wss://" + webSocketURL);
+  //socket = new WebSocket("ws://" + webSocketURL);
 
-  socket.onerror = ()=>{
-    Log("WEBSOCKET ERROR");
+  socket.onerror = (evt)=>{
+    console.log("WEBSOCKET ERROR");
+    console.log(evt);
     couldNotConnectEvent.Dispatch();
   }
 
   socket.onopen = () => {
-    Log("WebSocket opened");
+    console.log("WebSocket opened");
     if(onOpenCallback){
       onOpenCallback();
     }
   };
 
   socket.onclose = ()=>{
-    Log("Websocket closed");
+    console.log("Websocket closed");
     manager.LoadScene('focusLost');
     if(user && user != null){
       user.isHost = false;

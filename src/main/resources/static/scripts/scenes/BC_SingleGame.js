@@ -1,4 +1,5 @@
 var BC_SingleGame = `
+WebsocketKeeper 0 0 0
 BindWeed 67 -12 0.5 1 2
 BindWeed 67 -10 0.5 1 2
 BindWeed 67 -11 0.5 1 2
