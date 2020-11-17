@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.pijamaGames</groupId>
 	<artifactId>neluBackend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-BETA</version>
 	<name>neluBackend</name>
 	<description>Nelu Backend</description>
 
