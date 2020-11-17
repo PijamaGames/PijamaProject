@@ -29,7 +29,8 @@ class PlayerController extends Component {
     this.dashInitImpulse = 2.0;
     this.dashMaxTime = 0.25;
     this.dashTime = 0.0;
-    this.dashMaxCooldown = 0.4;
+    this.dashing = false;
+    this.dashMaxCooldown = 0.3;
     this.dashCooldown = this.dashMaxCooldown;
 
     this.particlePosition = new Vec2(0,-1);
@@ -48,11 +49,13 @@ class PlayerController extends Component {
     this.beesTarget = null;
 
     this.firePower = false;
+    this.fireTint = new Float32Array([1.6,1.2,1.0]);
     this.firePowerMaxTime = 14;
     this.firePowerTime = 0.0;
     this.fire = null;
     this.fireDisplacement = 1.2;
     this.fireImpulse = 5.0;
+    this.fireLightLerp = 2.0;
 
     this.allBeesDiedEvent=new EventDispatcher();
     this.beeSourceSound;
@@ -84,6 +87,19 @@ class PlayerController extends Component {
     }
   }
 
+  CheckFirePower(){
+    if(this.firePower){
+      this.firePowerTime += manager.delta;
+      if(this.firePowerTime > this.firePowerMaxTime){
+        this.DeactivateFirePower();
+      }
+    }
+
+    let target = this.firePower ? this.originalFireLightStrength : 0.0;
+    let lerp = manager.delta * this.fireLightLerp;
+    this.gameobj.lightSource.strength = this.gameobj.lightSource.strength * (1.0-lerp) + target * lerp;
+  }
+
   Update(){
     //Log("playerSpd: " + this.gameobj.rigidbody.velocity.mod);
     if(user && user.isClient) return;
@@ -95,6 +111,8 @@ class PlayerController extends Component {
     this.playerFSM.Update();
     this.dashCooldown+=manager.delta;
 
+
+
     /*if(input.GetChangeSkillDown()){
       this.ChangeSkill();
     }*/
@@ -102,18 +120,19 @@ class PlayerController extends Component {
     this.ManageBeesTarget();
     //this.canAttack = this.canAttack || input.GetKeyUp("Space");
 
-    if(this.firePower){
-      this.firePowerTime += manager.delta;
-      if(this.firePowerTime > this.firePowerMaxTime){
-        this.DeactivateFirePower();
-      }
-    }
+    this.CheckFirePower();
 
     if(!this.canTakeDamage && this.life > 0){
       this.damageTime+=manager.delta;
       if(this.damageTime > this.damageCooldown){
         this.canTakeDamage = true;
-        this.gameobj.renderer.SetTint(1,1,1);
+        if(this.firePower){
+          this.gameobj.renderer.SetTint(this.fireTint[0], this.fireTint[1], this.fireTint[2]);
+        } else {
+          let aux = this.gameobj.renderer.realTint;
+          this.gameobj.renderer.SetTint(aux[0],aux[1],aux[2]);
+        }
+
       }
     }
   }
@@ -227,6 +246,7 @@ class PlayerController extends Component {
   OnCreate(){
     //Log("center: " + this.gameobj.transform.GetWorldCenter().toString());
     //Log(this.gameobj.scene.name);
+    this.originalFireLightStrength = this.gameobj.lightSource.strength;
     this.gameobj.scene.camera.transform.SetWorldPosition(this.gameobj.transform.GetWorldCenter().Copy());
     //Log(this.gameobj.scene.camera.transform.GetWorldPos().toString("camPos:"));
   }
@@ -395,6 +415,7 @@ class PlayerController extends Component {
       that.gameobj.audioSource.Play("dashSound");
       //this.dashMaxTime = 0.2;
       this.dashTime = 0.0;
+      this.dashing = true;
       let dir = that.gameobj.renderer.dir.Copy();
       that.gameobj.rigidbody.force.Add(dir.Scale(that.dashInitImpulse));
     }).SetUpdateFunc(()=>{
@@ -402,6 +423,7 @@ class PlayerController extends Component {
       let dir = that.gameobj.renderer.dir.Copy();
       that.gameobj.rigidbody.force.Add(dir.Scale(that.dashImpulse));
     }).SetExitFunc(()=>{
+      this.dashing = false;
       that.gameobj.renderer.paused = false;
       that.dashCooldown = 0.0;
     }).SetEdges([
@@ -449,7 +471,7 @@ class PlayerController extends Component {
   }
 
   TakeDamage(damage){
-    if(this.canTakeDamage){
+    if(this.canTakeDamage && !this.dashing){
       if (this.gameobj.audioSource)this.gameobj.audioSource.Play("neluDamage");
       this.life -= damage;
       if(this.life <= 0){
@@ -512,6 +534,10 @@ class PlayerController extends Component {
     this.firePower = true;
     this.firePowerTime = 0.0;
 
+    if(this.canTakeDamage){
+      this.gameobj.renderer.SetTint(this.fireTint[0], this.fireTint[1], this.fireTint[2]);
+    }
+
     Log("activate fire power");
   }
 
@@ -532,6 +558,12 @@ class PlayerController extends Component {
     if(music[0] && !music[0].audioSource.Playing("arenaMusic")){
       music[0].audioSource.Play("arenaMusic");
     }
+
+    if(this.canTakeDamage){
+      let aux = this.gameobj.renderer.realTint;
+      this.gameobj.renderer.SetTint(aux[0], aux[1], aux[2]);
+    }
+
     this.firePower = false;
     Log("deactivate fire power");
   }
@@ -539,6 +571,8 @@ class PlayerController extends Component {
   SetGameobj(gameobj){
     this.gameobj = gameobj;
     this.gameobj.playerController = this;
+
+
 
     this.particles = prefabFactory.CreateObj("neluParticles", new Vec2(/*1.5*/0.0,-1), 1);
     this.particles.SetParent(this.gameobj);

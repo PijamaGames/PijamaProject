@@ -21,6 +21,12 @@ class Physics {
     Log("PHYSICS STEPS: "+this.steps);
   }
 
+  MovileSettings(){
+    this.rigidbodyMaxDist = 5.5;
+    this.staticMaxDist = 3.7;
+    this.checkCollidersInBoundsInterval = 0.25;
+  }
+
   CheckCollidersInBoundsLoop(){
     var that = this;
     setTimeout(()=>{

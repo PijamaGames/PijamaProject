@@ -9,8 +9,8 @@ class MasterController extends Component{
     this.listener = input.clickEvent.AddListener(this, ()=>that.SpawnEnemy(), false);
     this.maxMonkeys = 7;
     this.maxBeekeepers = 3;
-    this.monkeys = 0;
-    this.beekeepers = 0;
+    this.monkeys = 1;
+    this.beekeepers = 1;
     this.monkeyCooldown = 5.0;
     this.monkeyTime = 0.0;
     this.beekeeperCooldown = 10.0;

@@ -30,6 +30,7 @@ prefabFactory.AddPrototype("neluFire", new Vec2(2,2), new Vec2(0.5,0.5), false, 
     new NetworkEntity(),
     new LightSource(10.0, 1.5, 1.0),
     new CustomBehaviour().SetOnUpdate((obj)=>{
+      if(user && user.isClient) return;
       let r = obj.renderer;
       let pct = ((r.tile.x / r.numTiles.x)+(r.time / r.interval)) /r.maxFrames.x;
       pct = 1.0-Math.pow(Math.abs(0.5-pct)*2.0, 8.0);

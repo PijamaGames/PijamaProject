@@ -1,7 +1,7 @@
-var serverURL = "https://nelu-lotus-guardian.herokuapp.com/";
-var webSocketURL = "nelu-lotus-guardian.herokuapp.com/player/websocket";
-//var serverURL = "https://localhost:8080";
-//var webSocketURL = "localhost:8080/player/websocket";
+//var serverURL = "https://nelu-lotus-guardian.herokuapp.com/";
+//var webSocketURL = "nelu-lotus-guardian.herokuapp.com/player/websocket";
+var serverURL = "https://localhost:8080";
+var webSocketURL = "localhost:8080/player/websocket";
 
 var socket = null;
 var publicRooms = [];
@@ -152,11 +152,15 @@ function ReceiveEntities(msg){
       obj.SetActive(info.active);
     }
 
-    if(info.tileX != -1){
+    if(info.tileX){
       obj.renderer.tile.Set(info.tileX, info.tileY);
       obj.renderer.SetTint(info.tintR, info.tintG, info.tintB);
     }
-    if(info.anim != -1){
+    if(info.ratio && obj.lightSource){
+      obj.lightSource.ratio = info.ratio;
+      obj.lightSource.strength = info.strength;
+    }
+    if(info.anim){
       if(obj.renderer.anim != info.anim){
         obj.renderer.SetAnimation(info.anim);
       }
@@ -217,8 +221,8 @@ function SendEnemy(type, position){
 }
 
 function InitWebSocket(onOpenCallback) {
-  socket = new WebSocket("wss://" + webSocketURL);
-  //socket = new WebSocket("ws://" + webSocketURL);
+  //socket = new WebSocket("wss://" + webSocketURL);
+  socket = new WebSocket("ws://" + webSocketURL);
 
   socket.onerror = (evt)=>{
     console.log("WEBSOCKET ERROR");

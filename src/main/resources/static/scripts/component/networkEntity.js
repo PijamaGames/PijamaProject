@@ -7,7 +7,7 @@ class NetworkEntity extends Component{
   Destroy(){
     this.gameobj.scene.networkEntities.delete(this.gameobj.key);
 
-    
+
   }
 
   GetInfo(){
@@ -22,26 +22,31 @@ class NetworkEntity extends Component{
       active:this.gameobj.active,
     }
 
+    if(this.gameobj.lightSource){
+      info.ratio = this.gameobj.lightSource.ratio;
+      info.strength = this.gameobj.lightSource.strength;
+    }
+
     if(this.gameobj.renderer){
       info.tileX = this.gameobj.renderer.tile.x;
       info.tileY = this.gameobj.renderer.tile.y;
       if(this.gameobj.renderer.anim){
         info.anim = this.gameobj.renderer.anim;
       }
-      else{
+      /*else{
         info.anim = -1;
-      }
+      }*/
       info.tintR = this.gameobj.renderer.tint[0];
       info.tintG = this.gameobj.renderer.tint[1];
       info.tintB = this.gameobj.renderer.tint[2];
-    } else {
+    } /*else {
       info.tileX = -1;
       info.tileY = -1;
       info.anim = -1;
       info.tintR = -1;
       info.tintG = -1;
       info.tintB = -1;
-    }
+    }*/
     return info;
   }
 

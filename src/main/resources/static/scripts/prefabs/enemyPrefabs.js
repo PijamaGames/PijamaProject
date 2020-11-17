@@ -16,7 +16,7 @@ prefabFactory.AddPrototype("MonkeyEnemy", new Vec2(1, 1), new Vec2(0.5, 0.5), fa
 prefabFactory.AddPrototype("MonkeySpawner1", new Vec2(1,1), new Vec2(0.0,0.0), false, ()=>{
   return [
     new Renderer(new Vec2(6, 13), new Vec2(1,1), false),
-    new Spawner("MonkeyEnemy", 1),
+    new Spawner("MonkeyEnemy", 1, 1.5),
     new CustomBehaviour().SetOnUpdate((obj)=>{
       obj.renderer.tile.x = DEBUG_VISUAL ? 6 : 5;
     }),
@@ -26,7 +26,7 @@ prefabFactory.AddPrototype("MonkeySpawner1", new Vec2(1,1), new Vec2(0.0,0.0), f
 prefabFactory.AddPrototype("MonkeySpawner2", new Vec2(1,1), new Vec2(0.0,0.0), false, ()=>{
   return [
     new Renderer(new Vec2(6, 13), new Vec2(1,1), false),
-    new Spawner("MonkeyEnemy", 2),
+    new Spawner("MonkeyEnemy", 2, 3),
     new CustomBehaviour().SetOnUpdate((obj)=>{
       obj.renderer.tile.x = DEBUG_VISUAL ? 6 : 5;
     }),
@@ -46,7 +46,7 @@ prefabFactory.AddPrototype("MonkeySpawner3", new Vec2(1,1), new Vec2(0.0,0.0), f
 prefabFactory.AddPrototype("MonkeySpawner4", new Vec2(1,1), new Vec2(0.0,0.0), false, ()=>{
   return [
     new Renderer(new Vec2(6, 13), new Vec2(1,1), false),
-    new Spawner("MonkeyEnemy", 9),
+    new Spawner("MonkeyEnemy", 7),
     new CustomBehaviour().SetOnUpdate((obj)=>{
       obj.renderer.tile.x = DEBUG_VISUAL ? 6 : 5;
     }),
@@ -56,7 +56,7 @@ prefabFactory.AddPrototype("MonkeySpawner4", new Vec2(1,1), new Vec2(0.0,0.0), f
 prefabFactory.AddPrototype("MonkeySpawner5", new Vec2(1,1), new Vec2(0.0,0.0), false, ()=>{
   return [
     new Renderer(new Vec2(6, 13), new Vec2(1,1), false),
-    new Spawner("MonkeyEnemy", 12),
+    new Spawner("MonkeyEnemy", 10),
     new CustomBehaviour().SetOnUpdate((obj)=>{
       obj.renderer.tile.x = DEBUG_VISUAL ? 6 : 5;
     }),
@@ -69,7 +69,7 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
     new Renderer(new Vec2(6, 13), new Vec2(1,1), false),
     new BattleController([
       //constructor(id, autoStart, pos, dist, spawnerRefs='', startEnable = '', startDisable = '', endEnable = '', endDisable = ''){
-      new Battle("1", true, new Vec2(57, -10), 4.0, `
+      new Battle("1", true, new Vec2(57, -10), 5.0, `
       MonkeySpawner1 54 -9 0 1 1
       MonkeySpawner1 57 -9 0 1 1
       `,`

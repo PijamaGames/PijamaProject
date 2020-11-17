@@ -60,6 +60,7 @@ prefabFactory.AddPrototype("FireFlower", new Vec2(1,1), new Vec2(0,0), false, ()
     }),
     new LightSource(8.0, 1.5, 0.8),
     new CustomBehaviour().SetOnUpdate((obj)=>{
+      if(user && user.isClient) return;
       let target = obj.flowerController.used ? 0.0 : 8.0;
       let l = obj.lightSource;
       let lerp = 4.0 * manager.delta;
@@ -83,6 +84,7 @@ prefabFactory.AddPrototype("FireFlowerBattle", new Vec2(1,1), new Vec2(0,0), fal
     }),
     new LightSource(8.0, 1.5, 0.8),
     new CustomBehaviour().SetOnUpdate((obj)=>{
+      if(user && user.isClient) return;
       let target = obj.flowerController.used ? 0.0 : 8.0;
       let l = obj.lightSource;
       let lerp = 4.0 * manager.delta;

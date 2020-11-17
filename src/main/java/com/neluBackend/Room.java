@@ -98,12 +98,17 @@ public class Room {
 	public void stopGame() {
 		if(started) {
 			//task.cancel(true);
-			masterClient.setIsClient(false);
-			masterClient.setIsHost(false);
-			slaveHost.setIsClient(false);
-			slaveHost.setIsHost(false);
-			masterClient.setRoom(null);
-			slaveHost.setRoom(null);
+			if(masterClient != null) {
+				masterClient.setIsClient(false);
+				masterClient.setIsHost(false);
+				masterClient.setRoom(null);
+			}
+			if(slaveHost != null) {
+				slaveHost.setIsClient(false);
+				slaveHost.setIsHost(false);
+				slaveHost.setRoom(null);
+			}
+			
 			masterClient = null;
 			slaveHost = null;
 			started = false;
