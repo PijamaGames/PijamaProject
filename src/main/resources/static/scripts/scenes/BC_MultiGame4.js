@@ -426,4 +426,5 @@ GrassBound 7 5 0 3 5
 GrassBound 5 7 0 2 3
 GrassBound -8 7 0 2 3
 GrassBound -9 8 0 1 2
+Grass 10 -6 0 2 4
 `

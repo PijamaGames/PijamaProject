@@ -263,6 +263,9 @@ class Input {
           if(aspect < 1){
             aspect = 1;
           }
+          aspect -= 1.0;
+          aspect *= 0.5;
+          aspect += 1.0;
           vi.ratio = vi.originalRatio * aspect;
         }
       }

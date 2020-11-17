@@ -1,8 +1,8 @@
 "use strict;"
-const DEBUG = false;
+const DEBUG = true;
 var DEBUG_VISUAL = false;
-const EDITOR_MODE = false;
-const DEBUG_PHYSICS = false;
+const EDITOR_MODE = true;
+const DEBUG_PHYSICS = true;
 
 var timesCalled = 0.0;
 var timesComputed = 0.0;

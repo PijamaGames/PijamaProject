@@ -91,6 +91,10 @@ class Manager {
       this.graphics.SetMaxSettings();
     }
 
+    if(input.GetKeyDown("Digit9")){
+      this.LoadScene("multiGame4");
+    }
+
     if(mapEditor){
       if(input.GetKeyDown('KeyM')){
         mapEditor.SetActive(!mapEditor.fsm.active);
@@ -153,9 +157,11 @@ class Manager {
             that.graphics.SetSettingsByNumber(4);
           } else {
             that.graphics.SetSettingsByNumber(1);
+            physics.MovileSettings();
           }
         }
-
+        
+        physics.MovileSettings();
 
 
         that.LoadScene(initScene);

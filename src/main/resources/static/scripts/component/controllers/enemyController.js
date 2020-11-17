@@ -42,7 +42,7 @@ class EnemyController extends Component {
     this.canTakeDamage = true;
     this.damageCooldown = 0.2;
     this.damageTime = 0.0;
-    this.damageForce = 0.8;
+    this.damageForce = 3.0;
 
     this.isMonkey=true;
 
@@ -61,7 +61,8 @@ class EnemyController extends Component {
   }
 
   Push(){
-    this.gameobj.rigidbody.force.Add(Vec2.Scale(this.gameobj.renderer.dir, - this.damageForce));
+    let force = Vec2.Scale(this.gameobj.renderer.dir, - this.damageForce);
+    this.gameobj.rigidbody.force.Set(force.x, force.y);
   }
 
   TakeDamage(damage, forced = false){

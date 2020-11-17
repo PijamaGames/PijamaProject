@@ -6,6 +6,7 @@ prefabFactory.AddPrototype("WebsocketKeeper", new Vec2(1, 1), new Vec2(1,1), fal
     }).SetOnUpdate((obj)=>{
       obj.time += manager.delta;
       if(obj.time >= obj.maxTime){
+        obj.time = 0.0;
         SendWebSocketMsg({
           event:backendEvents.ALIVE_WS
         });
@@ -50,6 +51,7 @@ prefabFactory.AddPrototype("RiverSoundPrefab", new Vec2(1,1), new Vec2(0,0), fal
 prefabFactory.AddPrototype("DryPlant", new Vec2(1,1), new Vec2(0,0), false, ()=>{
   return [
     new Renderer(new Vec2(5,2), new Vec2(1,1), true),
+    new NetworkEntity(),
     new ColliderGroup([new BoxCollider(new Vec2(0,0), 1.0, 1.0, false)]),
     new Burnable().SetOnEndBurn((obj)=>{
       obj.colliderGroup.firstCollider.isTrigger = true;
