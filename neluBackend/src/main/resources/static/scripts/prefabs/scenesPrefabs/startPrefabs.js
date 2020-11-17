@@ -23,6 +23,19 @@ prefabFactory.AddPrototype("MenuFromStart", new Vec2(4,2), new Vec2(0.5,0.5), fa
   ]
 });
 
+prefabFactory.AddPrototype("FullScreenText", new Vec2(14,2), new Vec2(0.5,1.0), false, ()=>{
+  return [
+    //new ImageRenderer(new Vec2(0,21), new Vec2(14,2)),
+    new TextBox("introduceNameText", "Play in fullscreen mode for a better experience","Juega en pantalla completa para una mejor experiencia", new Vec2(0.6,0.07), true),
+    new CustomBehaviour().SetOnCreate((obj)=>{
+
+      if(input.isDesktop){
+        obj.Destroy();
+      }
+    })
+  ]
+});
+
 prefabFactory.AddPrototype("PubliPortfolio", new Vec2(15,3.5), new Vec2(0.5,0.0), false, ()=>{
   return [
     new ImageRenderer(new Vec2(7,10), new Vec2(15,3.5)).GiveFunctionality().SetHoverInFunc((obj)=>{

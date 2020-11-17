@@ -47,6 +47,7 @@ class User{
         camPos = new Vec2(176,-33);
       }
       if(this.entity.controlPoint == 5){
+        lighting.SetCurrentLight(3);
         battleController.battleMap.get("4").ForceEnd();
         playerPos = new Vec2(152,0);
         camPos = new Vec2(152,0);

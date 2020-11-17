@@ -42,6 +42,7 @@ class TextBox extends Component{
     this.gameobj.scene.domElements.add(this);
     var that=this;
     if(this.change) this.listener=manager.changeLanguageEvent.AddListener(this,()=>that.ChangeTextLanguage());
+    this.ElementResponsive();
     //this.ChangeTextLanguage();
   }
 

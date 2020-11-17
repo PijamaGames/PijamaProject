@@ -1,5 +1,6 @@
 var BC_Start = `
-GameTitle 0 0.3 0
+FullScreenText 0.0 -0.05 0
+GameTitle 0 0.29 0
 introduceName 0.0 0.12 0
 nameInputField 0 0.02 0
 wrongName 0.0 -0.061 0

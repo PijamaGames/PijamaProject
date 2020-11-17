@@ -1,4 +1,4 @@
-prefabFactory.AddPrototype("BoxColliderScalable", new Vec2(1, 1), new Vec2(0,0), false, ()=>{
+prefabFactory.AddPrototype("BoxColliderScalable", new Vec2(1, 1), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(6, 13), new Vec2(1,1), false),
     new ColliderGroup([new BoxCollider(new Vec2(0.0,0.0), 1.0, 1.0)]),
@@ -141,19 +141,28 @@ prefabFactory.AddPrototype("Sand", new Vec2(1,1), new Vec2(0,0), true, ()=>{
 
 prefabFactory.AddPrototype("GrassBound", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
-    new Renderer(new Vec2(0,0), new Vec2(1,1), false),
+    new Renderer(new Vec2(5,13), new Vec2(1,1), false),
+    new CustomBehaviour().SetOnCreate((obj)=>{
+      obj.transform.height = 0.01;
+    })
   ]
 });
 
 prefabFactory.AddPrototype("DirtBound", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
-    new Renderer(new Vec2(1,0), new Vec2(1,1), false),
+    new Renderer(new Vec2(5,13), new Vec2(1,1), false),
+    new CustomBehaviour().SetOnCreate((obj)=>{
+      obj.transform.height = 0.01;
+    })
   ]
 });
 
 prefabFactory.AddPrototype("SandBound", new Vec2(1,1), new Vec2(0,0), true, ()=>{
   return [
-    new Renderer(new Vec2(2,0), new Vec2(1,1), false),
+    new Renderer(new Vec2(5,13), new Vec2(1,1), false),
+    new CustomBehaviour().SetOnCreate((obj)=>{
+      obj.transform.height = 0.01;
+    })
   ]
 });
 
@@ -185,6 +194,7 @@ prefabFactory.AddPrototype("Stump", new Vec2(2,1), new Vec2(0,0), true, ()=>{
 prefabFactory.AddPrototype("Tent", new Vec2(3,3), new Vec2(0,0), true, ()=>{
   return [
     new Renderer(new Vec2(0,2), new Vec2(3,3), true),
+    new ColliderGroup([new BoxCollider(new Vec2(0.0,-1.5), 3.0, 1.0)]),
   ]
 });
 
