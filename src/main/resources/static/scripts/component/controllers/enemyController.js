@@ -31,8 +31,8 @@ class EnemyController extends Component {
     this.dieAnim='monkey_die';
     this.runAnim='monkey_run';
 
-    this.attackADDamage=5;
-    this.attackCACDamage=5;
+    this.attackADDamage=4;
+    this.attackCACDamage=2.5;
     this.maxMissiles=3;
     this.pool = [];
     this.allApples = [];
