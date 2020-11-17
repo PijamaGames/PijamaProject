@@ -2,6 +2,8 @@
 //var webSocketURL = "nelu-lotus-guardian.herokuapp.com/player/websocket";
 var serverURL = "https://localhost:8080";
 var webSocketURL = "localhost:8080/player/websocket";
+//var serverURL = "https://192.168.18.31:8080";
+//var webSocketURL = "192.168.18.31:8080/player/websocket";
 
 var socket = null;
 var publicRooms = [];

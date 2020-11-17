@@ -67,6 +67,7 @@ class Manager {
   }
 
   DebugIteration(){
+
     if(input.GetKeyDown('KeyT'))
       lighting.BeginTransition(1, 3);
     if(input.GetKeyDown('KeyY'))
@@ -160,9 +161,6 @@ class Manager {
             physics.MovileSettings();
           }
         }
-        
-        physics.MovileSettings();
-
 
         that.LoadScene(initScene);
         that.ms = Date.now();
