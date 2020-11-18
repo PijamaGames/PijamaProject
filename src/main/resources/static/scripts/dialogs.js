@@ -1028,18 +1028,6 @@ var dialogLevel1XML = `
 		<text>
 
 				<name>
-        			<es>Phoro</es>
-        			<en>Phoro</en>
-      			</name>
-      			<message>
-        			<es>Y al río. Y al resto de niños.</es>
-        			<en>And the river. And the other kids at the villiage.</en>
-      			</message>
-		</text>
-
-		<text>
-
-				<name>
         			<es>Alliacea</es>
         			<en>Alliacea</en>
       			</name>
