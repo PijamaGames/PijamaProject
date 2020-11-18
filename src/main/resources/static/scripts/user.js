@@ -53,6 +53,8 @@ class User{
           battleController.battleMap.get("4").ForceEnd();
           playerPos = new Vec2(152,0);
           camPos = new Vec2(152,0);
+        } else {
+          lighting.SetCurrentLight(1);
         }
 
         player.transform.SetWorldPosition(playerPos);

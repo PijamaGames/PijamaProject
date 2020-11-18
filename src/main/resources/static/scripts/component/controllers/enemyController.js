@@ -18,9 +18,9 @@ class EnemyController extends Component {
     this.attackCACRange = 1.3;
     this.target = null;
 
-    this.resetADAttackTime=3;
+    this.resetADAttackTime=2.0;
     this.resetCACAttackTime=1.5;
-    this.contTimeAD=3;
+    this.contTimeAD=2.0;
     this.contTimeCAC=1.5;
     this.endAttackCACAnim=false;
     this.endAttackADAnim=false;
