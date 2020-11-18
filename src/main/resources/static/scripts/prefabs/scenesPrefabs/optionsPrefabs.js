@@ -193,7 +193,7 @@ prefabFactory.AddPrototype("OptionsTitle", new Vec2(14,2), new Vec2(0.5,0.5), fa
 function ChangeDificulty(bool=true){
   let text=document.getElementById("Dificulty");
   if(text && text != null){
-    if(bool) manager.easy=!manager.easy;
+    if(bool) manager.SetEasy(!manager.easy);
     if(manager.easy) text.innerHTML=manager.english? "Difficulty: Easy": "Dificultad: Fácil";
     else text.innerHTML=manager.english? "Difficulty: Hard": "Dificultad: Difícil";
   }
