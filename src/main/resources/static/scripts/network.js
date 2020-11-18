@@ -400,7 +400,7 @@ function ConnectionLost(msg) {
     manager.LoadScene("connectionFailed");
   } else if(user.isHost) {
     var text=document.getElementById("WaitingMessage");
-    text.innerHTML=manager.english? "Waiting some player...":"Esperando a otro jugador...";
+    text.innerHTML=manager.english? "Waiting for a player...":"Esperando a otro jugador...";
     var obj=finder.FindObjectsByType("MultiGameFromRoom");
     if(obj.length>0) obj[0].SetActive(false);
   }

@@ -6,7 +6,7 @@ prefabFactory.AddPrototype("RoomTitle", new Vec2(14,2), new Vec2(0.5,0.5), false
 });
 prefabFactory.AddPrototype("WaitingMessage", new Vec2(17,2), new Vec2(0.5,0.5), false, ()=>{
   return [
-    new TextBox("WaitingMessage", "Esperando a otro jugador...","Waiting some player...", new Vec2(1,0.07), true),
+    new TextBox("WaitingMessage", "Esperando a otro jugador...","Waiting for a player...", new Vec2(1,0.07), true),
 
   ]
 });
