@@ -55,7 +55,7 @@ class Camera extends Component {
       }
     }
 
-    if(user && user.isClient) return;
+    //if(user && user.isClient) return;
     this.UpdateCam(manager.delta);
   }
 

@@ -93,7 +93,7 @@ class Manager {
     }
 
     if(input.GetKeyDown("Digit9")){
-      this.LoadScene("multiGame4");
+      this.LoadScene("multiGame1");
     }
 
     if(mapEditor){

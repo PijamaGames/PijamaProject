@@ -247,6 +247,7 @@ class PlayerController extends Component {
     //Log("center: " + this.gameobj.transform.GetWorldCenter().toString());
     //Log(this.gameobj.scene.name);
     this.originalFireLightStrength = this.gameobj.lightSource.strength;
+    this.gameobj.lightSource.strength = 0.0;
     this.gameobj.scene.camera.transform.SetWorldPosition(this.gameobj.transform.GetWorldCenter().Copy());
     //Log(this.gameobj.scene.camera.transform.GetWorldPos().toString("camPos:"));
   }

@@ -4,7 +4,7 @@ class ParticlesController extends Component{
     this.type = "particlesController";
 
     this.timeLimit=1;
-    this.particleImpulse=3;
+    this.particleImpulse=2.0;
     this.startCoolDown=false;
     this.contTime=0;
     this.damageDist = 0.3;

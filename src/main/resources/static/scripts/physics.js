@@ -57,7 +57,7 @@ class Physics {
 
     }
 
-    if(user && user.isClient) return;
+    //if(user && user.isClient) return;
     /*for (var rb of manager.scene.rigidbodies) {
       rb.CheckMaxDist();
     }

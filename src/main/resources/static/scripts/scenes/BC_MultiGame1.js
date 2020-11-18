@@ -145,6 +145,7 @@ GrassBound -5 4 0 5 3
 GrassBound 1 4 0 4 3
 GrassBound 6 4 0 5 3
 GrassBound 12 4 0 3 3
-
+LifeFlower 1.5344467163085938 -0.8855257034301758 0 1 1
+FireFlower 3.851774215698242 -0.8071556091308594 0 1 1
 Nelu 0 0 0
 `

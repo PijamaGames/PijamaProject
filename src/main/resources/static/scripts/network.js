@@ -9,7 +9,7 @@ var socket = null;
 var publicRooms = [];
 var roomButtons = [];
 var gameStarted = false;
-var sendEntitiesRate = 30;
+var sendEntitiesRate = 12;
 var minutes;
 var seconds;
 var networkDelta = 0.0;
@@ -147,7 +147,8 @@ function ReceiveEntities(msg){
       obj = manager.scene.networkEntities.get(info.key).gameobj;
     }
 
-    obj.transform.SetWorldPosition(new Vec2(info.posX, info.posY));
+    obj.networkEntity.SetTargetPosition(new Vec2(info.posX, info.posY));
+    //obj.transform.SetWorldPosition(new Vec2(info.posX, info.posY));
     obj.transform.height = info.height;
 
     if(obj.active != info.active){
@@ -167,6 +168,10 @@ function ReceiveEntities(msg){
         obj.renderer.SetAnimation(info.anim);
       }
     }
+    if(obj.rigidbody && info.velocityX) {
+      obj.rigidbody.velocity.x = info.velocityX;
+      obj.rigidbody.velocity.y = info.velocityY;
+    }
   }
 
   /*for(var [key,value] of manager.scene.networkEntities){
@@ -175,7 +180,7 @@ function ReceiveEntities(msg){
     }
   }*/
 
-  manager.scene.camera.camera.UpdateCam(networkDelta);
+  //manager.scene.camera.camera.UpdateCam(networkDelta);
 }
 
 function RequestRanking(){

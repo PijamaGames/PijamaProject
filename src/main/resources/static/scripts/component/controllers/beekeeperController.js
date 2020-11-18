@@ -6,7 +6,7 @@ class BeekeeperController extends EnemyController {
 
     this.detectionRange = 10.0;
     this.attackADRange = 3.5;
-    this.attackCACRange = 1.5;
+    this.attackCACRange = 1.3;
 
     this.resetADAttackTime=0.15;
     this.resetCACAttackTime=1;
@@ -20,7 +20,7 @@ class BeekeeperController extends EnemyController {
     this.runAnim='beekeeper_run';
 
     this.attackCACDamage=5;
-    this.maxParticles=8;
+    this.maxParticles=7;
     this.pool = [];
     this.allParticles = [];
 
