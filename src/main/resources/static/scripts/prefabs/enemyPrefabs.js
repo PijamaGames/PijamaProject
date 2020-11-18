@@ -213,6 +213,7 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
       }),
 
     ]).SetOnStartBattle((obj)=>{
+      let player= manager.scene.players.values().next().value.playerController;
       if(manager.singleGameMusic.Playing("levelSound")){
         manager.singleGameMusic.PauseAll();
       }
