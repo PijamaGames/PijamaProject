@@ -48,11 +48,15 @@ function Main(){
     let obj=manager.cutScene2Music;
     obj.LoopAll(true);
     obj.PlayAll();
+  }).SetOnUnload(()=>{
+    let obj=manager.cutScene2Music;
+    obj.PauseAll();
   }));
   manager.AddScene(new Scene("cutScene3", BC_CutScene3).SetOnUnload(()=>{
     let obj=manager.cutScene2Music;
     obj.StopAll();
-    manager.SetInMenu(true);
+    if(!manager.inMenu)
+      manager.SetInMenu(true);
   }));
   manager.AddScene(new Scene("multiGame1", BC_MultiGame1).SetOnLoad(()=>{
     ArenaScene(false);
