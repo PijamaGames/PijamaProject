@@ -192,6 +192,7 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
       new ScriptedEvent("cap1_colibri_fortaleza", true, new Vec2(177,-18), 5.0, false, ()=>dialogSystem.InitDialog("cap1_colibri_fortaleza")),
       new ScriptedEvent("cap1_colibri_fin_pelea", true, new Vec2(152,1), 2.5, false, ()=>{
         prefabFactory.CreateObj("BindWeed", new Vec2(166,0));
+        prefabFactory.CreateObj("BindWeed", new Vec2(166,-1));
         if(user.entity.controlPoint < 5){
           user.entity.controlPoint = 5;
           user.SaveProgress();
