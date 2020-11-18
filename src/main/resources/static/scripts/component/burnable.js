@@ -18,6 +18,7 @@ class Burnable extends Component{
     if(user && user.isClient) return;
     if(this.isBurning) return;
     this.isBurning = true;
+    this.gameobj.audioSource.Loop("fireSound",false);
     this.gameobj.audioSource.Play("fireSound");
     Log("burn");
     if(!this.burned){
