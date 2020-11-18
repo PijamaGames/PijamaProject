@@ -67,6 +67,7 @@ class BeekeeperController extends EnemyController {
   }
 
   Destroy(){
+    
     this.gameobj.audioSource.Stop("beekeeperDied");
     this.gameobj.scene.enemies.delete(this.gameobj);
     for(let particle of this.allParticles){

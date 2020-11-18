@@ -216,13 +216,14 @@ prefabFactory.AddPrototype("BattleManager", new Vec2(1,1), new Vec2(0.5,0.5), fa
       if(manager.singleGameMusic.Playing("levelSound")){
         manager.singleGameMusic.PauseAll();
       }
-      if(!obj.audioSource.Playing("monkeyHouseSound")){
+      if(!obj.audioSource.Playing("monkeyHouseSound") && !player.firePower){
         obj.audioSource.PlayAll();
       }
 
 
     }).SetOnEndBattle((obj)=>{
-      if(!manager.singleGameMusic.Playing("levelSound")){
+      let player= manager.scene.players.values().next().value.playerController;
+      if(!manager.singleGameMusic.Playing("levelSound") && !player.firePower){
         manager.singleGameMusic.LoopAll(true);
         manager.singleGameMusic.PlayAll();
       }
