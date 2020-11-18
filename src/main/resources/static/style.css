@@ -108,6 +108,7 @@ input:focus{
 }
 
 .game_scrollBox{
+  cursor: url(resources/input/cursor.png), auto;
   z-index: 1000;
   position: absolute;
   font-family: "Pixel Play";
@@ -147,6 +148,7 @@ input:focus{
   width:0;
   height:0;
   text-rendering: geometricPrecision;
+  cursor: url(resources/input/cursor.png), auto;
 }
 
 #game_surface{
