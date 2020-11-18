@@ -21,6 +21,7 @@ class AudioSource extends Component{
   }
 
   Destroy(){
+    this.StopAll();
   }
 
   Update(){
