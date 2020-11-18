@@ -421,6 +421,8 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 		Player player = (Player) session.getAttributes().get(PLAYER_ATTRIBUTE);
 		game.removePlayer(player);
 		connectionLost(player);
-		Log("Player disconnected: " + player.getPlayerId()+ " status: " + status);
+		User user = player.getUser();
+		String name = user == null ? "unknown" : player.getName();
+		Log("Player disconnected: " + player.getPlayerId()+ " status: " + status + " name: " + name);
 	}
 }
