@@ -151,6 +151,6 @@ function ArenaScene(out){
     if(!input.isDesktop) input.HideVirtualInputs(true);
     manager.SetInMenu(true);
     music[0].audioSource.Stop("arenaMusic");
-
+    player.gameobj.audioSource.Stop("powerupFireSound");
   }
 }
