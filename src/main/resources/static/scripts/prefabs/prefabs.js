@@ -2,7 +2,7 @@ prefabFactory.AddPrototype("WebsocketKeeper", new Vec2(1, 1), new Vec2(1,1), fal
   return [
     new CustomBehaviour().SetOnCreate((obj)=>{
       obj.time = 0.0;
-      obj.maxTime = 30.0;
+      obj.maxTime = 15.0;
     }).SetOnUpdate((obj)=>{
       obj.time += manager.delta;
       if(obj.time >= obj.maxTime){
