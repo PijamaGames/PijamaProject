@@ -23,8 +23,10 @@ class Manager {
     let easy = localStorage.getItem("easy");
     if(easy){
       this.easy = easy == "true" ? true : false;
+    } else {
+      this.easy=true;
     }
-    this.easy=true;
+
     finder = new Finder();
     physics = new Physics();
     this.lastScene="";
