@@ -7,7 +7,8 @@ prefabFactory.AddPrototype("SelectionTitle", new Vec2(14,2), new Vec2(0.5,0.5), 
 prefabFactory.AddPrototype("RoomFromChoosing", new Vec2(4,2), new Vec2(0.5,0.0), false, ()=>{
   return [
     new ImageRenderer(new Vec2(7,10), new Vec2(4,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
-      obj.gameobj.renderer.MultiplyTint(0.8);
+      let selectedTint = new Float32Array([0.6,0.6,1.0]);
+      obj.gameobj.renderer.SetTint(selectedTint[0],selectedTint[1],selectedTint[2]);
     }).SetHoverOutFunc((obj)=>{
       let tint=obj.gameobj.renderer.realTint;
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
@@ -30,7 +31,8 @@ prefabFactory.AddPrototype("RoomFromChoosing", new Vec2(4,2), new Vec2(0.5,0.0),
 prefabFactory.AddPrototype("LobbyFromChoosing", new Vec2(4,2), new Vec2(0.5,0.0), false, ()=>{
   return [
     new ImageRenderer(new Vec2(7,10), new Vec2(4,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
-      obj.gameobj.renderer.MultiplyTint(0.8);
+      let selectedTint = new Float32Array([0.6,0.6,1.0]);
+      obj.gameobj.renderer.SetTint(selectedTint[0],selectedTint[1],selectedTint[2]);
     }).SetHoverOutFunc((obj)=>{
       let tint=obj.gameobj.renderer.realTint;
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
@@ -47,7 +49,8 @@ prefabFactory.AddPrototype("LobbyFromChoosing", new Vec2(4,2), new Vec2(0.5,0.0)
 prefabFactory.AddPrototype("Option1", new Vec2(6,4), new Vec2(0.5,0.0), false, ()=>{
   return [
     new ImageRenderer(new Vec2(17,19), new Vec2(6,4)).GiveFunctionality().SetHoverInFunc((obj)=>{
-      obj.gameobj.renderer.MultiplyTint(0.8);
+      let selectedTint = new Float32Array([0.6,0.6,1.0]);
+      obj.gameobj.renderer.SetTint(selectedTint[0],selectedTint[1],selectedTint[2]);
     }).SetHoverOutFunc((obj)=>{
       let tint=obj.gameobj.renderer.realTint;
       if(manager.choosenEnviroment!=1)
@@ -73,12 +76,19 @@ prefabFactory.AddPrototype("Option1", new Vec2(6,4), new Vec2(0.5,0.0), false, (
       obj.gameobj.audioSource.PlayAll();
     }),
     new AudioSource(["UISound1"]),
+    new CustomBehaviour().SetOnCreate((obj)=>{
+      if(manager.choosenEnviroment==1){
+        let selectedTint = new Float32Array([0.6,0.6,1.0]);
+        obj.renderer.SetTint(selectedTint[0],selectedTint[1],selectedTint[2]);
+      }
+    }),
   ]
 });
 prefabFactory.AddPrototype("Option2", new Vec2(6,4), new Vec2(0.5,0.0), false, ()=>{
   return [
     new ImageRenderer(new Vec2(17,15), new Vec2(6,4)).GiveFunctionality().SetHoverInFunc((obj)=>{
-      obj.gameobj.renderer.MultiplyTint(0.8);
+      let selectedTint = new Float32Array([0.6,0.6,1.0]);
+      obj.gameobj.renderer.SetTint(selectedTint[0],selectedTint[1],selectedTint[2]);
     }).SetHoverOutFunc((obj)=>{
       let tint=obj.gameobj.renderer.realTint;
       if(manager.choosenEnviroment!=2)
@@ -104,12 +114,19 @@ prefabFactory.AddPrototype("Option2", new Vec2(6,4), new Vec2(0.5,0.0), false, (
       obj.gameobj.audioSource.PlayAll();
     }),
     new AudioSource(["UISound1"]),
+    new CustomBehaviour().SetOnCreate((obj)=>{
+      if(manager.choosenEnviroment==2){
+        let selectedTint = new Float32Array([0.6,0.6,1.0]);
+        obj.renderer.SetTint(selectedTint[0],selectedTint[1],selectedTint[2]);
+      }
+    }),
   ]
 });
 prefabFactory.AddPrototype("Option3", new Vec2(6,4), new Vec2(0.5,0.0), false, ()=>{
   return [
     new ImageRenderer(new Vec2(17,11), new Vec2(6,4)).GiveFunctionality().SetHoverInFunc((obj)=>{
-      obj.gameobj.renderer.MultiplyTint(0.8);
+      let selectedTint = new Float32Array([0.6,0.6,1.0]);
+      obj.gameobj.renderer.SetTint(selectedTint[0],selectedTint[1],selectedTint[2]);
     }).SetHoverOutFunc((obj)=>{
       let tint=obj.gameobj.renderer.realTint;
       if(manager.choosenEnviroment!=3)
@@ -134,12 +151,19 @@ prefabFactory.AddPrototype("Option3", new Vec2(6,4), new Vec2(0.5,0.0), false, (
       obj.gameobj.audioSource.PlayAll();
     }),
     new AudioSource(["UISound1"]),
+    new CustomBehaviour().SetOnCreate((obj)=>{
+      if(manager.choosenEnviroment==3){
+        let selectedTint = new Float32Array([0.6,0.6,1.0]);
+        obj.renderer.SetTint(selectedTint[0],selectedTint[1],selectedTint[2]);
+      }
+    }),
   ]
 });
 prefabFactory.AddPrototype("Option4", new Vec2(6,4), new Vec2(0.5,0.0), false, ()=>{
   return [
     new ImageRenderer(new Vec2(17,7), new Vec2(6,4)).GiveFunctionality().SetHoverInFunc((obj)=>{
-      obj.gameobj.renderer.MultiplyTint(0.8);
+      let selectedTint = new Float32Array([0.6,0.6,1.0]);
+      obj.gameobj.renderer.SetTint(selectedTint[0],selectedTint[1],selectedTint[2]);
     }).SetHoverOutFunc((obj)=>{
       let tint=obj.gameobj.renderer.realTint;
       if(manager.choosenEnviroment!=4)
@@ -164,12 +188,19 @@ prefabFactory.AddPrototype("Option4", new Vec2(6,4), new Vec2(0.5,0.0), false, (
       obj.gameobj.audioSource.PlayAll();
     }),
     new AudioSource(["UISound1"]),
+    new CustomBehaviour().SetOnCreate((obj)=>{
+      if(manager.choosenEnviroment==4){
+        let selectedTint = new Float32Array([0.6,0.6,1.0]);
+        obj.renderer.SetTint(selectedTint[0],selectedTint[1],selectedTint[2]);
+      }
+    }),
   ]
 });
 prefabFactory.AddPrototype("Lighting", new Vec2(2,2), new Vec2(0.5,0.5), false, ()=>{
   return [
     new ImageRenderer(new Vec2(7,13.5), new Vec2(2,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
-      obj.gameobj.renderer.MultiplyTint(0.8);
+      let selectedTint = new Float32Array([0.6,0.6,1.0]);
+      obj.gameobj.renderer.SetTint(selectedTint[0],selectedTint[1],selectedTint[2]);
     }).SetHoverOutFunc((obj)=>{
       let tint=obj.gameobj.renderer.realTint;
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
@@ -189,7 +220,8 @@ prefabFactory.AddPrototype("Lighting", new Vec2(2,2), new Vec2(0.5,0.5), false, 
 prefabFactory.AddPrototype("PrivacityOption", new Vec2(4,2), new Vec2(0.5,0.0), false, ()=>{
   return [
     new ImageRenderer(new Vec2(7,10), new Vec2(4,2)).GiveFunctionality().SetHoverInFunc((obj)=>{
-      obj.gameobj.renderer.MultiplyTint(0.8);
+      let selectedTint = new Float32Array([0.6,0.6,1.0]);
+      obj.gameobj.renderer.SetTint(selectedTint[0],selectedTint[1],selectedTint[2]);
     }).SetHoverOutFunc((obj)=>{
       let tint=obj.gameobj.renderer.realTint;
       obj.gameobj.renderer.SetTint(tint[0],tint[1],tint[2]);
