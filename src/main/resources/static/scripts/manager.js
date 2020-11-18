@@ -20,6 +20,10 @@ class Manager {
       this.english = false;
     }
     Log("english "+this.english);
+    let easy = localStorage.getItem("easy");
+    if(easy){
+      this.easy = easy == "true" ? true : false;
+    }
     this.easy=true;
     finder = new Finder();
     physics = new Physics();
@@ -32,6 +36,11 @@ class Manager {
     this.singleGameMusic;
     this.cutScene2Music;
     this.inMenu;
+  }
+
+  SetEasy(easy){
+    this.easy = easy;
+    localStorage.setItem("easy", easy);
   }
 
   VolumeFromDistance(pos1, pos2){
