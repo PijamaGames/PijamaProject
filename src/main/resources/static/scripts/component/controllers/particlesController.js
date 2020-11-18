@@ -17,7 +17,12 @@ class ParticlesController extends Component{
     }
     if(this.gameobj.active && this.contTime>=this.timeLimit){
       this.gameobj.SetActive(false);
-      this.enemy.enemyController.PoolAdd(this.gameobj);
+      if(this.enemy.enemyController){
+        this.enemy.enemyController.PoolAdd(this.gameobj);
+      } else {
+        this.gameobj.Destroy();
+      }
+
       //this.startCoolDown=false;
       //this.contTime=0;
     }
@@ -26,7 +31,12 @@ class ParticlesController extends Component{
       let dist = Vec2.Distance(this.gameobj.transform.GetWorldPos(), player.transform.GetWorldFloor());
       if(dist <= this.damageDist){
         player.playerController.TakeDamage(this.damage);
-        this.enemy.enemyController.PoolAdd(this.gameobj);
+        if(this.enemy.enemyController){
+          this.enemy.enemyController.PoolAdd(this.gameobj);
+        } else {
+          this.gameobj.Destroy();
+        }
+
       }
     }
   }
