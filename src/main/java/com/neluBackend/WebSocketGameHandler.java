@@ -128,7 +128,7 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 				getRanking(inMsg, outMsg, player);
 				break;
 			case BackEndEvents.ALIVE_WS:
-				System.out.println("Alive: " + player.getName());
+				Log("ALIVE: " + player.getName());
 				break;
 			}
 
@@ -150,7 +150,7 @@ public class WebSocketGameHandler extends TextWebSocketHandler {
 		if(usersCount < limit) {
 			limit = usersCount;
 		}
-		System.out.println(limit);
+		Log("RANKING COUNT: " + limit);
 		outMsg.put("numUsers", limit);
 		User user;
 		for(int i = 0; i < limit; i++) {
