@@ -66,6 +66,7 @@ input{
   border-style: solid;
   border-color: #cae680;
   box-sizing: border-box;
+  cursor: url(resources/input/cursor.png), auto;
 }
 
 input:focus{
@@ -74,6 +75,7 @@ input:focus{
   border-color: #80bf00;
   outline: none;
   border-radius:3vmin;
+  cursor: url(resources/input/cursor.png), auto;
 }
 
 .game_input{
