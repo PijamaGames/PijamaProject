@@ -26,6 +26,7 @@ class Manager {
     } else {
       this.easy=true;
     }
+    console.log("easy: " + this.easy);
 
     finder = new Finder();
     physics = new Physics();
