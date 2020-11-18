@@ -140,7 +140,6 @@ BigLog 3 10 0.05 1 3
 BigLog -3 10 0.05 1 3
 BigLog -6 11 0.05 1 3
 CampLog -20 2 0 1 2
-BigLog -17.515056610107422 4.0151753425598145 0.05 1 3
 CampTop2 -20 2 2 6 2
 CampTop3 -20 4 2 6 1
 SandBound -20 7 0 6 7
