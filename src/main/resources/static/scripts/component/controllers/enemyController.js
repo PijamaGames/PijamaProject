@@ -299,6 +299,7 @@ class EnemyController extends Component {
     for(let apple of this.allApples){
       apple.Destroy();
     }
+    this.gameobj.audioSource.StopAll();
   }
 
   SetAnimDir(target) {

@@ -12,6 +12,7 @@ class Burnable extends Component{
 
   Destroy(){
     this.fire.Destroy();
+    this.gameobj.audioSource.StopAll();
   }
 
   Burn(){

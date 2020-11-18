@@ -72,6 +72,7 @@ class BeekeeperController extends EnemyController {
     for(let particle of this.allParticles){
       particle.Destroy();
     }
+    this.gameobj.audioSource.StopAll();
   }
 
 }
