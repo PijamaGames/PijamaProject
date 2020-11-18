@@ -274,7 +274,9 @@ class PlayerController extends Component {
         return input.GetAttackCACDown() && !manager.scene.paused
       }),
       new Edge('die').AddCondition(()=>that.life <= 0),
-      new Edge('dash').AddCondition(()=>input.GetDashDown() && that.dashCooldown > that.dashMaxCooldown && !manager.scene.paused),
+      new Edge('dash').AddCondition(()=>input.GetDashDown() && that.dashCooldown > that.dashMaxCooldown && !manager.scene.paused).SetFunc(()=>{
+        that.gameobj.renderer.SetAnimation('run');
+      }),
     ]);
 
     let runNode = new Node('run').SetOnCreate(()=>{
