@@ -1,5 +1,5 @@
 "use strict;"
-const DEBUG = false;
+const DEBUG = true;
 var DEBUG_VISUAL = false;
 const EDITOR_MODE = false;
 const DEBUG_PHYSICS = false;

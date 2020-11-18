@@ -147,6 +147,19 @@ class Input {
   }
 
   AddListeners(){
+
+    function outOfFocus(){
+      Log("focus out");
+      for (var [key, value] of that.keys) {
+        if (value.pressed || value.down) {
+          value.down = false;
+          value.pressed = false;
+          value.up = true;
+        }
+      }
+    }
+
+
     var that = this;
     if(this.isDesktop){
       //canvas.addEventListener('onmousedown', (e) => {
@@ -156,6 +169,9 @@ class Input {
           that.mouseLeft = true;
           that.mouseLeftUp = false;
           that.clickEvent.Dispatch();
+        }
+        if(e.button != 0){
+          outOfFocus();
         }
       };
 
@@ -171,6 +187,24 @@ class Input {
         that.mousePosition.Set(e.offsetX, e.offsetY);
         that.mouseMovement.Set(e.movementX, e.movementY);
       };
+
+
+
+      /*document.addEventListener('focusout', (evt)=>{
+        outOfFocus();
+      });
+
+      canvas.addEventListener('focusout', (evt)=>{
+        outOfFocus();
+      });
+
+      document.addEventListener('mouseleave', (evt)=>{
+        outOfFocus();
+      });
+
+      canvas.addEventListener('mouseleave', (evt)=>{
+        outOfFocus();
+      });*/
 
       document.addEventListener('keydown', (e) => {
         for (var [key, value] of that.keys) {
