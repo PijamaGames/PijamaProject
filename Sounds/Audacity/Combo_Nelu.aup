@@ -1,0 +1,72 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="Combo_Nelu_data" version="1.3.0" audacityversion="2.4.2" sel0="0.0000000000" sel1="0.2753287982" vpos="512" h="0.0000000000" zoom="991.5135973282" rate="44100.0" snapto="off" selectionformat="hh:mm:ss + milliseconds" frequencyformat="Hz" bandwidthformat="octaves">
+	<tags>
+		<tag name="ARTIST" value="Juanma"/>
+		<tag name="TITLE" value="Combo 3"/>
+		<tag name="ALBUM" value="Nelu"/>
+		<tag name="YEAR" value="2020"/>
+		<tag name="TRACKNUMBER" value="4"/>
+		<tag name="GENRE" value="Aventura"/>
+	</tags>
+	<wavetrack name="Combo_Nelu" isSelected="0" height="150" minimized="0" channel="0" linked="1" mute="1" solo="0" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="6182">
+				<waveblock start="0">
+					<simpleblockfile filename="e080823f.au" len="6182" min="-0.794328" max="0.658303" rms="0.12279"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="Combo_Nelu" isSelected="0" height="150" minimized="0" channel="1" linked="0" mute="1" solo="0" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="6182">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808580.au" len="6182" min="-0.788418" max="0.661166" rms="0.122331"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="Combo_Nelu" isSelected="0" height="150" minimized="0" channel="0" linked="1" mute="1" solo="0" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="7873">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808f4b.au" len="7873" min="-0.793977" max="0.44835" rms="0.17854"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="Combo_Nelu" isSelected="0" height="150" minimized="0" channel="1" linked="0" mute="1" solo="0" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="7873">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808ffd.au" len="7873" min="-0.794369" max="0.448561" rms="0.178333"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="Combo_Nelu" isSelected="1" height="150" minimized="0" channel="0" linked="1" mute="0" solo="1" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="12142">
+				<waveblock start="0">
+					<simpleblockfile filename="e08080c5.au" len="12142" min="-0.794342" max="0.716054" rms="0.173701"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="Combo_Nelu" isSelected="1" height="150" minimized="0" channel="1" linked="0" mute="0" solo="1" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="12142">
+				<waveblock start="0">
+					<simpleblockfile filename="e080815f.au" len="12142" min="-0.790555" max="0.712869" rms="0.173156"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+</project>

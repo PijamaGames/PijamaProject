@@ -1,0 +1,58 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="Powerup_Fuego_data" version="1.3.0" audacityversion="2.4.2" sel0="13.3193165533" sel1="13.3193165533" vpos="0" h="0.0000000000" zoom="4.8801302785" rate="44100.0" snapto="off" selectionformat="hh:mm:ss + milliseconds" frequencyformat="Hz" bandwidthformat="octaves">
+	<tags>
+		<tag name="ARTIST" value="Kevin MacLeod"/>
+		<tag name="Encoded by" value="iTunes 10.2.2"/>
+		<tag name="TITLE" value="Firebrand"/>
+		<tag name="COMMENTS" value="Modificado por Juan Manuel Carretero"/>
+		<tag name="ALBUM" value="Royalty Free"/>
+		<tag name="YEAR" value="2011"/>
+		<tag name="GENRE" value="World"/>
+		<tag name="BPM (beats per minute)" value="164"/>
+	</tags>
+	<wavetrack name="firebrand-by-kevin-macleod-from-filmmusic-io" isSelected="1" height="150" minimized="0" channel="0" linked="1" mute="0" solo="0" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="1176458">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808b42.au" len="261615" min="-0.959922" max="0.967666" rms="0.190488"/>
+				</waveblock>
+				<waveblock start="261615">
+					<simpleblockfile filename="e0808d0e.au" len="262144" min="-1.038776" max="1.00251" rms="0.19473"/>
+				</waveblock>
+				<waveblock start="523759">
+					<simpleblockfile filename="e080802c.au" len="262144" min="-1.100936" max="1.051186" rms="0.20684"/>
+				</waveblock>
+				<waveblock start="785903">
+					<simpleblockfile filename="e08084ea.au" len="195277" min="-1.027618" max="1.050745" rms="0.215761"/>
+				</waveblock>
+				<waveblock start="981180">
+					<simpleblockfile filename="e0808328.au" len="195278" min="-1.000046" max="0.930297" rms="0.144756"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="firebrand-by-kevin-macleod-from-filmmusic-io" isSelected="1" height="150" minimized="0" channel="1" linked="0" mute="0" solo="0" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="1176458">
+				<waveblock start="0">
+					<simpleblockfile filename="e08085a2.au" len="261615" min="-1.028192" max="0.977254" rms="0.216752"/>
+				</waveblock>
+				<waveblock start="261615">
+					<simpleblockfile filename="e0808e5e.au" len="262144" min="-1.005724" max="1.034041" rms="0.223721"/>
+				</waveblock>
+				<waveblock start="523759">
+					<simpleblockfile filename="e0808ebd.au" len="262144" min="-1.081108" max="1.066329" rms="0.221258"/>
+				</waveblock>
+				<waveblock start="785903">
+					<simpleblockfile filename="e08080b7.au" len="195277" min="-1.037512" max="1.041633" rms="0.224666"/>
+				</waveblock>
+				<waveblock start="981180">
+					<simpleblockfile filename="e080849b.au" len="195278" min="-1.011621" max="1.029077" rms="0.152389"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+</project>
